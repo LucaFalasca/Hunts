@@ -3,10 +3,7 @@ package logic;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-
 import java.io.IOException;
 
 import javafx.application.Application;
