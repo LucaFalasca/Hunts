@@ -18,7 +18,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			stage = primaryStage;
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/LoginLayout.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageHunt.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();

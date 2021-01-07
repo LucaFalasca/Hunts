@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -17,21 +18,204 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageHuntGController">
    <top>
-      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Hunt" BorderPane.alignment="CENTER" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Hunt" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font></Label>
    </top>
-   <left>
-      <GridPane prefHeight="983.0" prefWidth="501.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="806.0" minHeight="10.0" prefHeight="767.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <GridPane fx:id="riddleConteiner" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="495.0">
                <children>
-                  <Button fx:id="btnCreateMap" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map">
+                  <Label text="Text" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Solution" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfRiddleText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfRiddleSolution" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="lbRiddle" text="Riddle " GridPane.halignment="CENTER">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Label>
+                  <Label text="Reward" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cmbObject" prefHeight="25.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <VBox prefHeight="203.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <GridPane fx:id="clueConteiner" prefHeight="30.0" prefWidth="313.0">
+                           <children>
+                              <Label text="Clue 1" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfClueText1" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" prefWidth="44.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="286.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <GridPane fx:id="clueConteiner1" prefHeight="30.0" prefWidth="313.0">
+                           <children>
+                              <Label text="Clue 2" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfClueText2" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" prefWidth="44.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="286.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <GridPane fx:id="clueConteiner2" prefHeight="30.0" prefWidth="313.0">
+                           <children>
+                              <Label text="Clue 3" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="tfClueText3" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" prefWidth="44.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="286.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="76.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.0" minWidth="10.0" prefWidth="382.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="205.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <HBox alignment="CENTER" prefHeight="27.0" prefWidth="499.0">
+               <children>
+                  <Button fx:id="btnAddRiddle" mnemonicParsing="false" onAction="#handlerAddRiddle" prefHeight="33.0" prefWidth="130.0" text="Add the new Riddle">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Label fx:id="lbRiddleError" textFill="RED" visible="false">
+                     <HBox.margin>
+                        <Insets left="10.0" right="100.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnRemoveRiddle" mnemonicParsing="false" onAction="#handleRemoveRiddle" text="X" visible="false" />
+               </children>
+            </HBox>
+            <ListView fx:id="lvRiddle" onMouseClicked="#handleRiddleSelected" prefHeight="493.0" prefWidth="496.0" />
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <Button fx:id="bntFinish" mnemonicParsing="false" onAction="#handleFinish" text="Finish" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <VBox prefHeight="928.0" prefWidth="504.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="504.0">
+               <children>
+                  <Label text="Hunt Name:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfHuntName" prefHeight="25.0" prefWidth="322.0">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <Label prefHeight="73.0" prefWidth="499.0" text="Add an Object for your Hunt. That can be a reward for getting a Riddle or the solution of a Riddle" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <HBox fx:id="objectConteiner" alignment="CENTER" prefHeight="22.0" prefWidth="501.0">
+               <children>
+                  <Label text="Insert the name of the Object">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tfObjectName">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnUploadFile" mnemonicParsing="false" text="Upload File">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="501.0">
+               <children>
+                  <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddObject" text="Add">
+                     <HBox.margin>
+                        <Insets left="200.0" right="30.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label fx:id="lbErrorObjName" alignment="CENTER" textFill="#ff001e" visible="false">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ListView fx:id="lvObject" onMouseClicked="#handleObjectSelected" prefHeight="264.0" prefWidth="358.0" />
+            <Button fx:id="btnRemoveObject" mnemonicParsing="false" onAction="#handleRemoveObject" text="X" visible="false" />
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="515.0">
+               <children>
+                  <Button fx:id="btnCreateMap1" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map">
                      <HBox.margin>
                         <Insets right="60.0" />
                      </HBox.margin>
@@ -40,17 +224,6 @@
                </children>
             </HBox>
          </children>
-      </GridPane>
-   </left>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnaddRiddle" mnemonicParsing="false" onAction="#handlerAddRiddleBoxes" text="Add riddle box" />
-            <ListView fx:id="lvRiddle" prefHeight="911.0" prefWidth="499.0" />
-         </children>
       </VBox>
-   </center>
-   <bottom>
-      <Button fx:id="bntFinish" mnemonicParsing="false" onAction="#handleFinish" text="Finish" BorderPane.alignment="CENTER" />
-   </bottom>
+   </left>
 </BorderPane>

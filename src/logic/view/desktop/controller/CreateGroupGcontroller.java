@@ -45,7 +45,7 @@ public class CreateGroupGcontroller {
     void handleCreateGroup(ActionEvent event) {
     	ManageMapControl manageMapControl = new ManageMapControl();
     	
-    	manageMapControl.createGroup();
+    	//manageMapControl.createGroup();
     }
 
 
