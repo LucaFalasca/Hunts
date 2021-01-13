@@ -108,15 +108,16 @@ public class ManageHuntGController{
 	    @FXML
 	    private Button btnModifyRiddle;
 		
-		ManageHuntControl manageHuntControl = new ManageHuntControl();
+		private static final String RIDDLE = "Riddle";
+	    ManageHuntControl manageHuntControl = new ManageHuntControl();
 		
 		RiddleBean riddleBean = new RiddleBean();
 		ObjectBean objectBean = new ObjectBean();
-		
+	
 	    @FXML
 	    void initialize() {
 	    	
-	    	lbRiddle.setText("Riddle " + rdlList.size());
+	    	lbRiddle.setText(RIDDLE + rdlList.size());
 	    	
 	    	lvObject.setItems(objList);
 	    	cmbObject.setItems(objList);
@@ -150,12 +151,12 @@ public class ManageHuntGController{
 	    		
 	    		
 	    		
-	    		String riddle = String.format("Number: %s   Text: %s   Solution: %s   Clue1: %s   Clue2: %s   Clue3: %s   Object: %s", 
+	    		String riddleLabel = String.format("Number: %s   Text: %s   Solution: %s   Clue1: %s   Clue2: %s   Clue3: %s   Object: %s", 
 	    									   String.valueOf(rdlList.size()), tfRiddleText.getText(), tfRiddleSolution.getText(), tfClueText.get(0).getText(), tfClueText.get(1).getText(), tfClueText.get(2).getText(), cmbObject.getSelectionModel().getSelectedItem());
 	    		
-	    		rdlList.add(riddle);
+	    		rdlList.add(riddleLabel);
 	    		
-	    		lbRiddle.setText("Riddle " + rdlList.size());
+	    		lbRiddle.setText(RIDDLE + rdlList.size());
 	    		
 	    		btnAddRiddle.setText("Add new Riddle");
 	    		
@@ -271,15 +272,14 @@ public class ManageHuntGController{
 	    
 	    @FXML
 	    void handleObjectSelected(MouseEvent event) {
-	    	if((event.getEventType() == MouseEvent.MOUSE_CLICKED) && (lvObject.getSelectionModel().getSelectedItem() != null))
-	    		btnRemoveObject.setVisible(true);
-	    	else
-	    		btnRemoveObject.setVisible(false);
+	    	
+	    	visible(event, lvObject.getSelectionModel().getSelectedItem());
+	    
 	    }
 	    
 	    @FXML
 	    void handleUplaodFile(ActionEvent event) {
-
+	    	//TODO
 	    }
 	    
 	    @FXML
@@ -307,7 +307,7 @@ public class ManageHuntGController{
 	    		
 	    		btnAddRiddle.setText("Add modify");
 	    		
-	    		lbRiddle.setText("Riddle " + nRiddle);
+	    		lbRiddle.setText(RIDDLE + nRiddle);
 	    		
 	    		
 	    		
@@ -338,8 +338,7 @@ public class ManageHuntGController{
 	    	}
 	    }
 	    
-	    
-	    
+
 	    private void cancelTextView() {
 	    	tfRiddleText.setText("");
 	    	
@@ -353,4 +352,10 @@ public class ManageHuntGController{
 
 	    }
 	    
+	    private void visible(MouseEvent type, String element) {
+	    	if((type.getEventType() == MouseEvent.MOUSE_CLICKED) && (element != null))
+	    		btnRemoveObject.setVisible(true);
+	    	else
+	    		btnRemoveObject.setVisible(false);
+	    }
 }

@@ -9,9 +9,9 @@ public class Hunt {
 	
 	private String huntName;
 	
-	private List<String> riddleList = new ArrayList<String>();
+	private List<String> riddleList = new ArrayList<>();
 	
-	private List<String> solutionList = new ArrayList<String>();
+	private List<String> solutionList = new ArrayList<>();
 	
 	private Map<Integer, String> clueList = new HashMap<>();
 	

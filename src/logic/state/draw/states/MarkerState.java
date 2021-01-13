@@ -4,14 +4,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class MarkerState implements State {
 
-private static MarkerState INSTANCE = new MarkerState();
+private static MarkerState instance = new MarkerState();
 	
 	private MarkerState() {
 		
 	}
 	
 	public static MarkerState getInstance() {
-		return INSTANCE;
+		return instance;
 	}
 	
 	@Override

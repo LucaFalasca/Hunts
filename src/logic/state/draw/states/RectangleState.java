@@ -4,14 +4,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class RectangleState implements State{
 
-	private static RectangleState INSTANCE = new RectangleState();
+	private static RectangleState instance = new RectangleState();
 	
 	private RectangleState() {
 		
 	}
 	
 	public static RectangleState getInstance() {
-		return INSTANCE;
+		return instance;
 	}
 	
 	@Override

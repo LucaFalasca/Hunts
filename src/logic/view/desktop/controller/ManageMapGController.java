@@ -50,13 +50,17 @@ public class ManageMapGController {
     @FXML
     private Canvas canvasDraw;
     
-    private GraphicsContext gcDraw, gcTemp;
+    private GraphicsContext gcDraw;
+    
+    private GraphicsContext gcTemp;
     
     private boolean onDrawing;
     
     private DrawMachine drawMachine;
     
-    private double startX, startY;
+    private double startX;
+    
+    private double startY;
     
     @FXML
     void initialize() {
@@ -69,7 +73,7 @@ public class ManageMapGController {
     }
     
     @FXML
-    void HandleUploadFile(ActionEvent event) {
+    void handleUploadFile(ActionEvent event) {
     	
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");

@@ -4,7 +4,6 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -32,7 +31,7 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	public void changeScene(String fxml) {
+	public void changeScene() {
 		try {
 			Parent pane = (Parent)FXMLLoader.load(getClass().getResource(""));
 			Scene scene = new Scene(pane);

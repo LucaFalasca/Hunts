@@ -31,21 +31,17 @@ public class CreateGroupGcontroller {
     @FXML
     private CheckBox cbVisibility;
 
-    private int idHunt;
-    
     @FXML
     void handleChooseHunt(ActionEvent event) {
-    	int rtnidHunt = 15;
+    	
     	String nomeHunt = "nome";
-    	idHunt = rtnidHunt;
     	tfChooseHunt.setText(nomeHunt);
+    	
     }
 
     @FXML
     void handleCreateGroup(ActionEvent event) {
-    	ManageMapControl manageMapControl = new ManageMapControl();
-    	
-    	//manageMapControl.createGroup();
+    	//TODO
     }
 
 

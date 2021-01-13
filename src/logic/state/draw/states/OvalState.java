@@ -4,14 +4,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class OvalState implements State{
 
-	private static OvalState INSTANCE = new OvalState();
+	private static OvalState instance = new OvalState();
 	
 	private OvalState() {
 		
 	}
 	
 	public static OvalState getInstance() {
-		return INSTANCE;
+		return instance;
 	}
 	
 	@Override

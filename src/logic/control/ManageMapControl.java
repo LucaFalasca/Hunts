@@ -1,6 +1,5 @@
 package logic.control;
 
-import javafx.scene.image.Image;
 import logic.bean.UploadFileBean;
 
 public class ManageMapControl {

@@ -4,7 +4,7 @@ public class User {
 
 	private String username;
 	private String password;
-	private String Nome;
+	private String nome;
 	private String cognome;
 	private String email;
 	private String dataDiNascita;
@@ -31,11 +31,11 @@ public class User {
 	}
 	
 	public String getNome() {
-		return Nome;
+		return nome;
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.nome = nome;
 	}
 
 	public String getCognome() {

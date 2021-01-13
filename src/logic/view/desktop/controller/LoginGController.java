@@ -31,7 +31,7 @@ public class LoginGController {
     private Button btnLoginGoogle;
 
     @FXML
-    void HandleLogin(ActionEvent event) {
+    void handleLogin(ActionEvent event) {
     		LoginControl loginController = new LoginControl();
     		
     		LoginBean loginBean = new LoginBean();
@@ -60,7 +60,7 @@ public class LoginGController {
 
     @FXML
     void HandleLoginGoogle(ActionEvent event) {
-
+    	//TODO
     }
 
 }

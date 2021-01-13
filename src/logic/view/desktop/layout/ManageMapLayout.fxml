@@ -12,7 +12,7 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-            <Button fx:id="btnUploadFile" mnemonicParsing="false" onAction="#HandleUploadFile" text="Upload File" />
+            <Button fx:id="btnUploadFile" mnemonicParsing="false" onAction="#handleUploadFile" text="Upload File" />
           <Button mnemonicParsing="false" text="Add Zone" />
             <Button fx:id="btnAddMarker" mnemonicParsing="false" onAction="#handleAddMarker" text="Add Marker" />
             <Button fx:id="btnRect" mnemonicParsing="false" onAction="#handleRect">

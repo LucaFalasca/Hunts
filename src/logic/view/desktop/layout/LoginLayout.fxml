@@ -35,7 +35,7 @@
                   <Insets right="50.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="BtnLogin" mnemonicParsing="false" onAction="#HandleLogin" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="BtnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             <Button fx:id="BtnLoginGoogle" mnemonicParsing="false" onAction="#HandleLoginGoogle" text="Login con Google" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
