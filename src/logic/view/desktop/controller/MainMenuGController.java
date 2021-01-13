@@ -18,6 +18,9 @@ public class MainMenuGController {
     private Button btnHuntCreate;
 
     @FXML
+    private Button btnCreateMap;
+    
+    @FXML
     private ToolBar btnHome;
 
     private Stage stage;
@@ -26,6 +29,20 @@ public class MainMenuGController {
     void handleManageHunt(ActionEvent event) {
     	try {
     		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("logic.view.desktop.layout.ManageHunt"));
+			Scene scene = new Scene(pane);
+			stage.setScene(scene);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+
+    @FXML
+    void handleCreateMap(ActionEvent event) {
+    	stage = (Stage) btnCreateMap.getScene().getWindow();
+    	try {
+    		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageMapLayout.fxml"));
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
 		} catch (IOException e) {

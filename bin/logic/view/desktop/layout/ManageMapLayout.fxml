@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -7,17 +8,42 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageMapGController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageMapGController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" text="Add Zone" />
-            <Button mnemonicParsing="false" text="Add Marker" />
             <Button fx:id="btnUploadFile" mnemonicParsing="false" onAction="#HandleUploadFile" text="Upload File" />
+          <Button mnemonicParsing="false" text="Add Zone" />
+            <Button fx:id="btnAddMarker" mnemonicParsing="false" onAction="#handleAddMarker" text="Add Marker" />
+            <Button fx:id="btnRect" mnemonicParsing="false" onAction="#handleRect">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../Downloads/rectangular-geometrical-shape-outline.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnOval" mnemonicParsing="false" onAction="#handleOval">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../Downloads/ellipse.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnCleanAll" mnemonicParsing="false" onAction="#handleCleanAll" text="Clean all" />
         </items>
       </ToolBar>
    </top>
    <center>
-      <ImageView fx:id="ivMap" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <StackPane maxHeight="300.0" maxWidth="300.0" style="-fx-border-color: black;">
+         <children>
+            <ImageView fx:id="ivMap" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            <Canvas fx:id="canvasDraw" height="300.0" onMouseDragged="#handleMovedOnMap" onMousePressed="#handlePressedOnMap" onMouseReleased="#handleReleasedOnMap" width="300.0" />
+            <Canvas fx:id="canvasTemp" height="300.0" onMouseDragged="#handleMovedOnMap" onMousePressed="#handlePressedOnMap" onMouseReleased="#handleReleasedOnMap" width="300.0" />
+         </children>
+      </StackPane>
    </center>
 </BorderPane>

@@ -3,6 +3,7 @@ package logic;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			stage = primaryStage;
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageHunt.fxml"));
+			SplitPane root = (SplitPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/MainMenu.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
