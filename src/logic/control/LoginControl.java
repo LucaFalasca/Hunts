@@ -6,7 +6,6 @@ import logic.model.entity.User;
 
 public class LoginControl {
 
-	
 	public boolean verifyAccount(LoginBean bean) {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
