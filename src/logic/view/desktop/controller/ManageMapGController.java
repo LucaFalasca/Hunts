@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import logic.bean.MapBean;
 import logic.bean.UploadFileBean;
 import logic.control.ManageMapControl;
 import logic.state.draw.DrawMachine;
@@ -62,6 +63,10 @@ public class ManageMapGController {
     
     private double startY;
     
+    private int idMap = -1;
+    
+    
+    
     @FXML
     void initialize() {
         drawMachine = new DrawMachine(RectangleState.getInstance());
@@ -74,7 +79,6 @@ public class ManageMapGController {
     
     @FXML
     void handleUploadFile(ActionEvent event) {
-    	
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(
@@ -130,7 +134,16 @@ public class ManageMapGController {
     }
     @FXML
     void handleSave(ActionEvent event) {
+    	ManageMapControl control = new ManageMapControl();
     	
+    	if(idMap == -1) {
+    		idMap = control.requestId();
+    	}
+    	MapBean bean = new MapBean(idMap, getMapName(), canvasDraw);
+    	if(getImage() != null) {
+    		bean.setImage(getImage());
+    	}
+    	control.save(bean);
     }
     
     @FXML
@@ -147,5 +160,15 @@ public class ManageMapGController {
     @FXML
     void handleAddMarker(ActionEvent event) {
     	drawMachine.setState(MarkerState.getInstance());
+    }
+    
+    private String getMapName() {
+		return "example_map_name";
+    	
+    }
+    
+    private Image getImage() {
+		return ivMap.getImage();
+    	
     }
 }
