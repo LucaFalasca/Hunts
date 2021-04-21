@@ -4,6 +4,8 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.BorderPane;
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -18,7 +20,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			stage = primaryStage;
-			SplitPane root = (SplitPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/MainMenu.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageHunt.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();

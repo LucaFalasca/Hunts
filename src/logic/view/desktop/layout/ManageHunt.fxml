@@ -149,15 +149,18 @@
                      </font>
                   </Label>
                   <Button fx:id="btnRemoveRiddle" mnemonicParsing="false" onAction="#handleRemoveRiddle" prefHeight="37.0" prefWidth="36.0" text="X" visible="false" GridPane.columnIndex="1" />
-                  <Button fx:id="btnModifyRiddle" mnemonicParsing="false" onAction="#handleModifyRiddle" prefHeight="35.0" prefWidth="112.0" text="Modify Riddle" GridPane.columnIndex="3" />
+                  <Button fx:id="btnModifyRiddle" mnemonicParsing="false" onAction="#handleModifyRiddle" prefHeight="35.0" prefWidth="112.0" text="Modify Riddle" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                </children>
             </GridPane>
-            <Label text="There are the Textes of the already added Riddle">
+            <Label text="There are the information about the already added Riddle">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="lvRiddle" prefHeight="467.0" prefWidth="496.0" />
+            <ListView fx:id="lvRiddle" onMouseClicked="#handleRiddleSelected" prefHeight="467.0" prefWidth="496.0" />
          </children>
       </VBox>
    </center>
@@ -203,13 +206,21 @@
                      </font>
                   </Label>
                   <TextField fx:id="tfObjectName" GridPane.columnIndex="1" />
-                  <Button fx:id="btnUploadFile" mnemonicParsing="false" text="Upload File" GridPane.columnIndex="2" />
-                  <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddObject" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="btnUploadFile" mnemonicParsing="false" prefHeight="31.0" prefWidth="76.0" text="Upload File" GridPane.columnIndex="2" />
+                  <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
                   <Label fx:id="lbErrorObjName" alignment="CENTER" prefHeight="35.0" prefWidth="226.0" textFill="#ff001e" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
+                  <Button fx:id="btnModifyObject" mnemonicParsing="false" prefHeight="22.0" prefWidth="70.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </GridPane>
             <ListView fx:id="lvObject" editable="true" onMouseClicked="#handleObjectSelected" prefHeight="264.0" prefWidth="358.0" />
