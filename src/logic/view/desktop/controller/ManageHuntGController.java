@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import logic.bean.Hunt;
+import logic.bean.HuntBean;
 import logic.bean.ObjectBean;
 import logic.bean.RiddleBean;
 import logic.control.ManageHuntControl;
@@ -148,8 +148,8 @@ public class ManageHuntGController{
     		
     		riddleBean.setSolutionText(tfRiddleSolution.getText());
     		
-    		for(int index = 0; index < tfClueText.size(); index++)
-    			riddleBean.addClueListElement(tfClueText.get(index).getText());
+    		//for(int index = 0; index < tfClueText.size(); index++)
+    		//	riddleBean.getClueListElement(tfClueText.get(index).getText());
     		    		
     		objectBean.setObject(cmbObject.getSelectionModel().getSelectedItem());
     		
@@ -336,7 +336,7 @@ public class ManageHuntGController{
     		
     	}
     	else {
-    		Hunt hunt = new Hunt();
+    		HuntBean hunt = new HuntBean();
     		
     		hunt.setHuntName(tfHuntName.getText());
     		
