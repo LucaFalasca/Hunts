@@ -17,6 +17,7 @@
                   <Bloom threshold="1.0" />
                </effect>
             </Button>
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.3093645484949833" prefHeight="160.0" prefWidth="200.0">

@@ -24,6 +24,10 @@ public class MainMenuGController {
 
     private Stage stage;
     
+
+    @FXML
+    private Button btnLogin;
+    
     @FXML
     void handleManageHunt(ActionEvent event) {
     	try {
@@ -42,6 +46,19 @@ public class MainMenuGController {
     	stage = (Stage) btnCreateMap.getScene().getWindow();
     	try {
     		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageMapLayout.fxml"));
+			Scene scene = new Scene(pane);
+			stage.setScene(scene);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML
+    void handleLogin(ActionEvent event) {
+    	stage = (Stage) btnLogin.getScene().getWindow();
+    	try {
+    		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/LoginLayout.fxml"));
 			Scene scene = new Scene(pane);
 			stage.setScene(scene);
 		} catch (IOException e) {

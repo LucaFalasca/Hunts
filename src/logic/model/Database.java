@@ -17,7 +17,7 @@ public abstract class Database {
 	
 	public static Connection getConnection() {
 		if(conn == null) {
-			conn = connect(Users.LOGIN);
+			conn = connect(Users.NOT_LOGGED);
 		}
 		return conn;
 	}
@@ -40,8 +40,8 @@ public abstract class Database {
 	private static Connection connect(Users user) {
 		try {
 			switch(user) {
-			case LOGIN:
-				Database.user = Users.LOGIN;
+			case NOT_LOGGED:
+				Database.user = Users.NOT_LOGGED;
 				break;
 			case USER:
 				Database.user = Users.USER;

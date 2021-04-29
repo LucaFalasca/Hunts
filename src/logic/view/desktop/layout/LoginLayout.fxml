@@ -25,18 +25,18 @@
          <children>
             <Label text="Nome Utente" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Password" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <PasswordField fx:id="TfPassword" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <PasswordField fx:id="tfPassword" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>
             </PasswordField>
-            <TextField fx:id="TfUserName" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1">
+            <TextField fx:id="tfUserName" prefHeight="25.0" prefWidth="282.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="BtnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Button fx:id="BtnLoginGoogle" mnemonicParsing="false" onAction="#HandleLoginGoogle" text="Login con Google" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="btnLoginGoogle" mnemonicParsing="false" onAction="#HandleLoginGoogle" text="Login con Google" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>

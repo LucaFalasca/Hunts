@@ -1,6 +1,6 @@
 package logic.model;
 
 public enum Users {
-	LOGIN,
+	NOT_LOGGED,
 	USER
 }
