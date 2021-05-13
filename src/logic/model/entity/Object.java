@@ -1,11 +1,11 @@
 package logic.model.entity;
 
 public class Object {
-private int idObject;
-	
 	private String name;
 	
 	private String path;
+	
+	private String description;
 
 	public String getName() {
 		return name;
@@ -23,11 +23,13 @@ private int idObject;
 		this.path = path;
 	}
 
-	public int getIdObject() {
-		return idObject;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setIdObject(int idObject) {
-		this.idObject = idObject;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+	
+	
 }

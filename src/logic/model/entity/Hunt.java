@@ -7,15 +7,17 @@ import java.util.Map;
 
 public class Hunt {
 	
+	private int idHunt;
+	
 	private String huntName;
 	
-	private List<String> riddleList = new ArrayList<>();
-	
-	private List<String> solutionList = new ArrayList<>();
-	
-	private Map<Integer, String> clueList = new HashMap<>();
-	
-	private Map<Integer, String> objectList = new HashMap<>();
+	public int getIdHunt() {
+		return idHunt;
+	}
+
+	public void setIdHunt(int idHunt) {
+		this.idHunt = idHunt;
+	}
 
 	public String getHuntName() {
 		return huntName;
@@ -24,38 +26,5 @@ public class Hunt {
 	public void setHuntName(String huntName) {
 		this.huntName = huntName;
 	}
-
-	public List<String> getRiddleList() {
-		return riddleList;
-	}
-
-	public void setRiddleList(List<String> riddleList) {
-		this.riddleList = riddleList;
-	}
-
-	public List<String> getSolutionList() {
-		return solutionList;
-	}
-
-	public void setSolutionList(List<String> solutionList) {
-		this.solutionList = solutionList;
-	}
-
-	public Map<Integer, String> getClueList() {
-		return clueList;
-	}
-
-	public void setClueList(Map<Integer, String> clueList) {
-		this.clueList = clueList;
-	}
-
-	public Map<Integer, String> getObjectList() {
-		return objectList;
-	}
-
-	public void setObjectList(Map<Integer, String> objectList) {
-		this.objectList = objectList;
-	}
-	
 	
 }

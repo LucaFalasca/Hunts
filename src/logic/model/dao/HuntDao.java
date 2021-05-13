@@ -1,19 +1,24 @@
 package logic.model.dao;
 
-import logic.model.entity.Hunt;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import logic.model.Database;
 
 public class HuntDao {
 	
-	public boolean getHuntByName(String name) {
-		return true;
-	}
+	Connection conn;
 	
-	public boolean addHunt(Hunt hunt) {
-		return true;
-	}
-	
-	public boolean removeHunt(String name) {
-		return true;
+	public int createHunt() {
+		
+		Connection conn = Database.getConnection();
+		CallableStatement stmt = null;
+		
+		
+		return -1;
 	}
 	
 	

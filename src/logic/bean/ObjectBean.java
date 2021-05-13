@@ -2,18 +2,18 @@ package logic.bean;
 
 public class ObjectBean {
 	
-	private int idObject;
-	
-	private String object;
+	private String name;
 
 	private String path;
+
+	private String description;
 	
 	public String getObject() {
-		return object;
+		return name;
 	}
 
-	public void setObject(String object) {
-		this.object = object;
+	public void setName(String object) {
+		this.name = object;
 	}
 
 	public String getPath() {
@@ -24,12 +24,12 @@ public class ObjectBean {
 		this.path = path;
 	}
 
-	public int getIdObject() {
-		return idObject;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setIdObject(int idObject) {
-		this.idObject = idObject;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	
