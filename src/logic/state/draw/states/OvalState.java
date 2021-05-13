@@ -23,6 +23,10 @@ public class OvalState implements State{
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		return "OvalState";
+	}
 	
 
 }

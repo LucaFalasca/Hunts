@@ -20,4 +20,11 @@ private static MarkerState instance = new MarkerState();
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "MarkerState";
+	}
+	
+	
+
 }

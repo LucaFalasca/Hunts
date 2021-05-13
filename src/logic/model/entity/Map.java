@@ -11,6 +11,10 @@ public class Map {
 	private Image image;
 	private List<Zone> zones;
 	
+	public Map(String name) {
+		super();
+		this.name = name;
+	}
 	public String getName() {
 		return name;
 	}
@@ -28,6 +32,12 @@ public class Map {
 	}
 	public void setZones(List<Zone> zones) {
 		this.zones = zones;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

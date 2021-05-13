@@ -1,5 +1,7 @@
 package logic.bean;
 
+import java.util.List;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
@@ -8,17 +10,16 @@ public class MapBean {
 	private int id;
 	private String name;
 	private Image image;
-	private Canvas canvas;
+	private List<ZoneBean> zones;
 	
 	public MapBean() {
 		
 	}
-	public MapBean(int id, String name, Canvas canvas) {
+	public MapBean(int id, String name, List<ZoneBean> zones) {
 		this.id = id;
 		this.name = name;
-		this.canvas = canvas;
+		this.zones = zones;
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -37,12 +38,14 @@ public class MapBean {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	public Canvas getCanvas() {
-		return canvas;
+	public List<ZoneBean> getZones() {
+		return zones;
 	}
-	public void setCanvas(Canvas canvas) {
-		this.canvas = canvas;
+	public void setZones(List<ZoneBean> zones) {
+		this.zones = zones;
 	}
+	
+	
 	
 	
 }

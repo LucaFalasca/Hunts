@@ -1,19 +1,13 @@
-package logic.model.entity;
+package logic.bean;
 
-import logic.model.enums.Type;
-
-public class Zone {
-	private String Name;
+public class ZoneBean {
+	
+	private String name;
 	private double startX, startY, endX, endY;
-	private Type type;
+	private String type;
 	
-	public Zone() {
-		
-	}
-	
-	public Zone(String name, double startX, double startY, double endX, double endY, Type type) {
-		super();
-		Name = name;
+	public ZoneBean(String name, double startX, double startY, double endX, double endY, String type) {
+		this.name = name;
 		this.startX = startX;
 		this.startY = startY;
 		this.endX = endX;
@@ -22,11 +16,11 @@ public class Zone {
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public double getStartX() {
@@ -61,14 +55,13 @@ public class Zone {
 		this.endY = endY;
 	}
 
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
-
 	
 	
 }

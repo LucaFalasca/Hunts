@@ -23,5 +23,9 @@ public class RectangleState implements State{
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "RectangleState";
+	}
 
 }
