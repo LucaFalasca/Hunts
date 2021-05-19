@@ -21,7 +21,7 @@ import logic.bean.HuntBean;
 import logic.bean.ObjectBean;
 import logic.control.ManageHuntControl;
 
-public class ManageHuntGController{
+public class ManageHuntGController extends ControllerWithLogin{
 	@FXML
     private Label lbRiddle;
 
@@ -406,4 +406,10 @@ public class ManageHuntGController{
     	tfClueText3.setText("");
 
     }
+
+	@Override
+	void start() {
+		// TODO Auto-generated method stub
+		
+	}
 }

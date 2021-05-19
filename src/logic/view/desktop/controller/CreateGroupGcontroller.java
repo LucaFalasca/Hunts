@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
-public class CreateGroupGcontroller {
+public class CreateGroupGcontroller extends ControllerWithLogin{
 
     @FXML
     private Button btnChooseHunt;
@@ -42,6 +42,12 @@ public class CreateGroupGcontroller {
     void handleCreateGroup(ActionEvent event) {
     	//TODO
     }
+
+	@Override
+	void start() {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

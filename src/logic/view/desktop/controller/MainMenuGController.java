@@ -10,8 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import logic.enumeration.Pages;
+import logic.exception.PageNotFoundException;
 
-public class MainMenuGController {
+public class MainMenuGController extends ControllerWithLogin{
 
     @FXML
     private Button btnHuntCreate;
@@ -24,18 +26,27 @@ public class MainMenuGController {
 
     private Stage stage;
     
-
     @FXML
     private Button btnLogin;
+    
+    @Override
+	void start() {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    @FXML
+    void initialize() {
+    	
+    }
+    
     
     @FXML
     void handleManageHunt(ActionEvent event) {
     	try {
-    		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("logic.view.desktop.layout.ManageHunt"));
-			Scene scene = new Scene(pane);
-			stage.setScene(scene);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			changeScene(Pages.MANAGE_HUNT, true);
+		} catch (PageNotFoundException e) {
+			System.out.println("beh");
 			e.printStackTrace();
 		}
     }
@@ -43,26 +54,20 @@ public class MainMenuGController {
 
     @FXML
     void handleCreateMap(ActionEvent event) {
-    	stage = (Stage) btnCreateMap.getScene().getWindow();
     	try {
-    		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ManageMapLayout.fxml"));
-			Scene scene = new Scene(pane);
-			stage.setScene(scene);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			changeScene(Pages.MANAGE_MAP, true);
+		} catch (PageNotFoundException e) {
+			System.out.println("beh");
 			e.printStackTrace();
 		}
     }
     
     @FXML
     void handleLogin(ActionEvent event) {
-    	stage = (Stage) btnLogin.getScene().getWindow();
     	try {
-    		BorderPane pane = (BorderPane)FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/LoginLayout.fxml"));
-			Scene scene = new Scene(pane);
-			stage.setScene(scene);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			changeScene(Pages.LOGIN, false);
+		} catch (PageNotFoundException e) {
+			System.out.println("beh");
 			e.printStackTrace();
 		}
     }

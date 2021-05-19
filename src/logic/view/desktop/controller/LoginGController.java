@@ -1,23 +1,16 @@
 package logic.view.desktop.controller;
 
-import java.io.IOException;
-
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import logic.bean.LoginBean;
 import logic.control.LoginControl;
+import logic.enumeration.Pages;
+import logic.exception.PageNotFoundException;
 
-public class LoginGController {
+public class LoginGController extends ControllerWithLogin{
 
     @FXML
     private Button btnLogin;
@@ -37,23 +30,21 @@ public class LoginGController {
     		
     		LoginBean loginBean = new LoginBean();
     		
-    		loginBean.setUsername(tfUserName.getText());
-    		loginBean.setPassword(tfPassword.getText());
+    		String username = tfUserName.getText();
+    		String password = tfPassword.getText();
+    		
+    		loginBean.setUsername(username);
+    		loginBean.setPassword(password);
     		
     		boolean result = loginController.verifyAccount(loginBean);
     		if(result) {
-    			//change stage
-    			
-    			//start session
+    			setAsLogged(username);
     			try {
-	    			Stage stage = (Stage) btnLogin.getScene().getWindow();
-	    			SplitPane newRoot = (SplitPane) FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/MainMenu.fxml"));
-	    			stage.setScene(new Scene(newRoot));
-    			}
-    			catch(IOException e) {
-    				//to gesture
-    				e.printStackTrace();
-    			}
+					changeScene(Pages.MAIN_MENU, true);
+				} catch (PageNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     		}
     		else {
 				//TODO
@@ -64,5 +55,11 @@ public class LoginGController {
     void HandleLoginGoogle(ActionEvent event) {
     	//TODO
     }
+
+	@Override
+	void start() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

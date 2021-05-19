@@ -24,7 +24,7 @@ import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
 
-public class ManageMapGController {
+public class ManageMapGController extends ControllerWithLogin{
 	
     @FXML
     private ImageView ivMap;
@@ -189,4 +189,11 @@ public class ManageMapGController {
     	if(y2 > y1)	return x < y2 && x > y1;
     	else return x < y1 && x > y2;
     }
+
+
+	@Override
+	void start() {
+		// TODO Auto-generated method stub
+		
+	}
 }
