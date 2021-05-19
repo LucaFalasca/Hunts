@@ -14,9 +14,15 @@ import logic.state.login.states.NotLoggedState;
 
 public abstract class ControllerWithLogin {
 	
+	private Stage stage;
+	
 	private LogMachine logMachine;
 	
 	abstract void start();
+	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 	
 	//Only Use after check the credential
 	protected void setAsLogged(String username) {
@@ -40,7 +46,7 @@ public abstract class ControllerWithLogin {
 		return logMachine.isLogged();
 	}
 	
-	protected void changeScene(Stage stage, Pages page, boolean needLogin) throws PageNotFoundException {
+	protected void changeScene(Pages page, boolean needLogin) throws PageNotFoundException {
 		if(needLogin) {
 			if(!logMachine.isLogged()) {
 				return;
@@ -51,6 +57,7 @@ public abstract class ControllerWithLogin {
 			Parent root = (Parent)loader.load();
 			ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
 			controller.setLogMachine(logMachine);
+			controller.setStage(stage);
 			controller.start();
 			stage.setScene(new Scene(root));
 			
