@@ -14,13 +14,14 @@ import logic.state.login.states.NotLoggedState;
 
 public abstract class ControllerWithLogin {
 	
-	LogMachine logMachine;
+	private LogMachine logMachine;
 	
 	abstract void start();
 	
 	//Only Use after check the credential
-	protected void setAsLogged() {
+	protected void setAsLogged(String username) {
 		logMachine.setState(LoggedState.getIstance());
+		logMachine.setUsername(username);
 	}
 	
 	protected ControllerWithLogin() {
