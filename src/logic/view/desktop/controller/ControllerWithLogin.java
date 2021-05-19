@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
 import logic.state.login.LogMachine;
+import logic.state.login.states.LoggedState;
 import logic.state.login.states.NotLoggedState;
 
 public abstract class ControllerWithLogin {
@@ -19,7 +20,7 @@ public abstract class ControllerWithLogin {
 	
 	//Only Use after check the credential
 	protected void setAsLogged() {
-		
+		logMachine.setState(LoggedState.getIstance());
 	}
 	
 	protected ControllerWithLogin() {
