@@ -18,6 +18,7 @@
                </effect>
             </Button>
             <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
+            <Label fx:id="lbUsername" text="Username" visible="false" />
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.3093645484949833" prefHeight="160.0" prefWidth="200.0">

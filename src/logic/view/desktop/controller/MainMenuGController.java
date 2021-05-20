@@ -1,17 +1,14 @@
 package logic.view.desktop.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
+import logic.exception.UsernameNotLoggedException;
 
 public class MainMenuGController extends ControllerWithLogin{
 
@@ -22,17 +19,24 @@ public class MainMenuGController extends ControllerWithLogin{
     private Button btnCreateMap;
     
     @FXML
+    private Label lbUsername;
+    
+    @FXML
     private ToolBar btnHome;
-
-    private Stage stage;
     
     @FXML
     private Button btnLogin;
     
     @Override
 	void start() {
-		// TODO Auto-generated method stub
-		
+		if(isLogged()) {
+			try {
+				lbUsername.setText(getUsername());
+				lbUsername.setVisible(true);
+			} catch (UsernameNotLoggedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
     
     @FXML
@@ -46,7 +50,7 @@ public class MainMenuGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.MANAGE_HUNT, true);
 		} catch (PageNotFoundException e) {
-			System.out.println("beh");
+			System.out.println("");
 			e.printStackTrace();
 		}
     }
