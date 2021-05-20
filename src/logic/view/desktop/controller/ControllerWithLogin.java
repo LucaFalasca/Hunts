@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
+import logic.exception.UsernameNotLoggedException;
 import logic.state.login.LogMachine;
 import logic.state.login.states.LoggedState;
 import logic.state.login.states.NotLoggedState;
@@ -46,9 +47,14 @@ public abstract class ControllerWithLogin {
 		return logMachine.isLogged();
 	}
 	
+	protected String getUsername() throws UsernameNotLoggedException {
+		return logMachine.getUsername();
+	}
+	
 	protected void changeScene(Pages page, boolean needLogin) throws PageNotFoundException {
 		if(needLogin) {
 			if(!logMachine.isLogged()) {
+				changeScene(Pages.LOGIN, false);
 				return;
 			}
 		}
