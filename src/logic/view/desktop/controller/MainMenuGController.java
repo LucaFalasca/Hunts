@@ -33,6 +33,7 @@ public class MainMenuGController extends ControllerWithLogin{
 			try {
 				lbUsername.setText(getUsername());
 				lbUsername.setVisible(true);
+				btnLogin.setVisible(false);
 			} catch (UsernameNotLoggedException e) {
 				e.printStackTrace();
 			}
@@ -59,7 +60,7 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	try {
-			changeScene(Pages.MANAGE_MAP, true);
+			changeScene(Pages.MANAGE_MAP, false);
 		} catch (PageNotFoundException e) {
 			System.out.println("beh");
 			e.printStackTrace();

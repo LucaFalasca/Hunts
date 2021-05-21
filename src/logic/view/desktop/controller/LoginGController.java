@@ -50,6 +50,16 @@ public class LoginGController extends ControllerWithLogin{
 				//TODO
     		}
     }
+    
+    @FXML
+    void handleLoginMenu(ActionEvent event) {
+    	try {
+			changeScene(Pages.LOGIN, false);
+		} catch (PageNotFoundException e) {
+			System.out.println("beh");
+			e.printStackTrace();
+		}
+    }
 
     @FXML
     void HandleLoginGoogle(ActionEvent event) {

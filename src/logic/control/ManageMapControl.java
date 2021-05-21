@@ -7,10 +7,10 @@ import javafx.scene.image.Image;
 import logic.bean.MapBean;
 import logic.bean.UploadFileBean;
 import logic.bean.ZoneBean;
+import logic.enumeration.Type;
 import logic.model.dao.MapDao;
 import logic.model.entity.Map;
 import logic.model.entity.Zone;
-import logic.model.enums.Type;
 
 public class ManageMapControl {
 	

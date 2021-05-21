@@ -109,8 +109,7 @@ public class ManageMapGController extends ControllerWithLogin{
     	drawMachine.clean(gcTemp);
     	onDrawing = false;
     }
-    
-    
+
     
     @FXML
     void handleCleanAll(ActionEvent event) {
@@ -193,7 +192,7 @@ public class ManageMapGController extends ControllerWithLogin{
 
 	@Override
 	void start() {
-		// TODO Auto-generated method stub
+		this.ivMap.requestFocus();
 		
 	}
 }

@@ -16,6 +16,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			primaryStage.setMinWidth(1280);
+			primaryStage.setMinHeight(720);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(Pages.MAIN_MENU.getPath()));
 			Parent root = (Parent)loader.load();
 			ControllerWithLogin controller = loader.getController();

@@ -8,49 +8,101 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.MainMenuGController">
-   <items>
-      <ToolBar fx:id="btnHome" prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button mnemonicParsing="false" text="Hunt">
-               <effect>
-                  <Bloom threshold="1.0" />
-               </effect>
-            </Button>
-            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-            <Label fx:id="lbUsername" text="Username" visible="false" />
-        </items>
-      </ToolBar>
-      <SplitPane dividerPositions="0.3093645484949833" prefHeight="160.0" prefWidth="200.0">
-         <items>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.MainMenuGController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="33.0" prefWidth="620.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Crea Gruppo">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
+                  <Label fx:id="lbUsername" layoutX="47.0" layoutY="4.0" text="Username" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="0.0" />
+                <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="64.0" text="Hunt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <effect>
+                        <Bloom threshold="1.0" />
+                     </effect>
                   </Button>
-                  <Button fx:id="btnHuntCreate" mnemonicParsing="false" onAction="#handleManageHunt" text="Crea Hunt">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
+                  <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="471.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="32.0" prefWidth="64.0" text="Login" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="CercaGruppo">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnCreateMap" mnemonicParsing="false" onAction="#handleCreateMap" text="Crea Mappa">
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin></Button>
                </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-         </items>
-      </SplitPane>
-   </items>
-</SplitPane>
+            </AnchorPane>
+         </top>
+         <left>
+            <AnchorPane>
+               <children>
+                  <AnchorPane prefHeight="434.0" prefWidth="174.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnCreateMap" layoutY="165.0" mnemonicParsing="false" onAction="#handleCreateMap" prefHeight="32.0" text="Crea Mappa" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="148.0">
+                           <VBox.margin>
+                              <Insets bottom="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="btnHuntCreate" layoutY="55.0" mnemonicParsing="false" onAction="#handleManageHunt" prefHeight="32.0" text="Crea Hunt" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="56.0">
+                           <VBox.margin>
+                              <Insets bottom="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button layoutY="110.0" mnemonicParsing="false" prefHeight="32.0" text="Cerca Gruppo" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="102.0">
+                           <VBox.margin>
+                              <Insets bottom="30.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="32.0" text="Crea Gruppo" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets bottom="30.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefWidth="254.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="133.0" layoutY="84.0" prefHeight="32.0" text="Hunts" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ListView layoutX="14.0" layoutY="44.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <right>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane disable="true" prefWidth="254.0" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="16.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Hunts" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ListView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane disable="true" prefWidth="254.0" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Maps" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
