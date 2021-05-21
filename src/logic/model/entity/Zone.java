@@ -1,6 +1,6 @@
 package logic.model.entity;
 
-import logic.model.enums.Type;
+import logic.enumeration.Type;
 
 public class Zone {
 	private String Name;
