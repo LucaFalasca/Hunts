@@ -1,7 +1,9 @@
 language: java
 jdk:
     -openjdk15
-node_js: "10"
+language: node_js
+node_js:
+  - "10"
 addons:
   sonarcloud:
     organization: "lucafalasca"
