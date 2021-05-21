@@ -1,4 +1,4 @@
-package logic.model.enums;
+package logic.enumeration;
 
 public enum Type {
 	RECTANGLE, OVAL;
