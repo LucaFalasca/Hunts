@@ -80,6 +80,22 @@ public class ManageMapControl {
 		return bean;
 	}
 	
+	public List<MapBean> getAllMaps(String username){
+		MapDao dao = new MapDao();
+		List<Map> maps = dao.getMapList(username);
+		
+		List<MapBean> beans = new ArrayList<MapBean>();
+		
+		for(Map map : maps) {
+			MapBean bean = new MapBean();
+			bean.setName(map.getName());
+			bean.setImage(map.getImage());
+			beans.add(bean);
+		}
+		
+		return beans;
+	}
+	
 	public void uploadFile(UploadFileBean bean) {
 		UploadFileControl uploadFileControl = new UploadFileControl();
 		uploadFileControl.uploadImage(bean.getFile());
