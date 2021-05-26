@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
-import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;

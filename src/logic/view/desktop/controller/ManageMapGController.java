@@ -19,6 +19,7 @@ import logic.bean.MapBean;
 import logic.bean.UploadFileBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
+import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
@@ -32,9 +33,9 @@ public class ManageMapGController extends ControllerWithLogin{
     private Canvas canvasTemp;
     @FXML
     private Canvas canvasDraw;
+    @FXML
+    private TextField tfMapName;
     
-
-    private TextField tfNameMap;
     private GraphicsContext gcDraw, gcTemp;
     private DrawMachine drawMachine;
     private boolean onDrawing;
@@ -127,7 +128,12 @@ public class ManageMapGController extends ControllerWithLogin{
     	if(getImage() != null) {
     		bean.setImage(getImage());
     	}
-    	control.save(bean);
+    	try {
+			control.save(getUsername(), bean);
+		} catch (UsernameNotLoggedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     
@@ -153,7 +159,7 @@ public class ManageMapGController extends ControllerWithLogin{
     
     
     private String getMapName() {
-		return tfNameMap.getText();
+		return tfMapName.getText();
     }
     
     

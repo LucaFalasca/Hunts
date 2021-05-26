@@ -14,7 +14,7 @@ import logic.model.entity.Zone;
 
 public class ManageMapControl {
 	
-	public void save(MapBean bean) {
+	public void save(String username, MapBean bean) {
 		int id = bean.getId();
 		String name = bean.getName();
 		Image image = bean.getImage();
@@ -50,7 +50,7 @@ public class ManageMapControl {
 		}
 		
 		MapDao dao = new MapDao();
-		dao.saveMap(map);
+		dao.saveMap(username, map);
 		
 		
 	}
