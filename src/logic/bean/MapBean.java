@@ -1,8 +1,6 @@
 package logic.bean;
 
 import java.util.List;
-
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
 public class MapBean {

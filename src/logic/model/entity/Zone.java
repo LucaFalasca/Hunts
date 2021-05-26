@@ -3,8 +3,11 @@ package logic.model.entity;
 import logic.enumeration.Type;
 
 public class Zone {
-	private String Name;
-	private double startX, startY, endX, endY;
+	private String name;
+	private double startX;
+	private double startY;
+	private double endX;
+	private double endY;
 	private Type type;
 	
 	public Zone() {
@@ -13,7 +16,7 @@ public class Zone {
 	
 	public Zone(String name, double startX, double startY, double endX, double endY, Type type) {
 		super();
-		Name = name;
+		this.name = name;
 		this.startX = startX;
 		this.startY = startY;
 		this.endX = endX;
@@ -22,11 +25,11 @@ public class Zone {
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public double getStartX() {

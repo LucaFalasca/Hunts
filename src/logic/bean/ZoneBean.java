@@ -3,7 +3,10 @@ package logic.bean;
 public class ZoneBean {
 	
 	private String name;
-	private double startX, startY, endX, endY;
+	private double startX;
+	private double startY;
+	private double endX;
+	private double endY;
 	private String type;
 	
 	public ZoneBean(String name, double startX, double startY, double endX, double endY, String type) {

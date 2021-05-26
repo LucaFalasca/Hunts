@@ -25,7 +25,7 @@ public class ManageMapControl {
 		if(id != -1)				map.setId(id);
 		if(image != null) 			map.setImage(image);
 		if(!zonesBean.isEmpty()) {
-			List<Zone> zones = new ArrayList<Zone>();
+			List<Zone> zones = new ArrayList<>();
 			for(ZoneBean zb : zonesBean) {
 				Type type = null;
 				switch(zb.getType()) {
@@ -66,7 +66,7 @@ public class ManageMapControl {
 			bean.setImage(map.getImage());
 		}
 		if(!map.getZones().isEmpty()){
-			List<ZoneBean> zonesBean = new ArrayList<ZoneBean>();
+			List<ZoneBean> zonesBean = new ArrayList<>();
 			for(Zone zone : map.getZones()) {
 				zonesBean.add(new ZoneBean(zone.getName(),
 						zone.getStartX(),
@@ -84,7 +84,7 @@ public class ManageMapControl {
 		MapDao dao = new MapDao();
 		List<Map> maps = dao.getMapList(username);
 		
-		List<MapBean> beans = new ArrayList<MapBean>();
+		List<MapBean> beans = new ArrayList<>();
 		
 		for(Map map : maps) {
 			MapBean bean = new MapBean();
