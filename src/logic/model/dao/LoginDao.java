@@ -41,13 +41,19 @@ public class LoginDao {
 			//OutputParam
 			boolean log = stmt.getBoolean(3);
 			
-			stmt.close();
-			
 			return log;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null)
+					stmt.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}

@@ -4,8 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import logic.model.Database;
 import logic.model.entity.Clue;
@@ -76,8 +74,6 @@ public class RiddleDao {
 	}
 	
 	public Riddle getRiddleById(Hunt hunt, Riddle riddle) {
-		
-		List<String> clue = new ArrayList<>();
 		
 		Connection conn = Database.getConnection();
 		CallableStatement stmt = null;

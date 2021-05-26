@@ -1,10 +1,5 @@
 package logic.model.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Hunt {
 	
 	private int idHunt;

@@ -1,6 +1,7 @@
 package logic.model.entity;
 
 public class Object {
+	
 	private String name;
 	
 	private String path;

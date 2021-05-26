@@ -388,7 +388,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		hunt.setHuntName(tfHuntName.getText());
     		
-    		manageHuntControl.addHunt(hunt);
+    		manageHuntControl.addHunt();
     	}
     }
     

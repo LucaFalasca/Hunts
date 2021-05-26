@@ -10,10 +10,10 @@ public abstract class Database {
 
 	private static Connection conn;
 	private static Users user;
-	private static String USER = "root";
-    private static String PASS = "root";
-    private static String DB_URL = "jdbc:mysql://localhost:3306/hunt_db";
-    private static String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
+	private static String name = "root";
+    private static String pass = "root";
+    private static String dbUrl = "jdbc:mysql://localhost:3306/hunt_db";
+    private static String driverClassName = "com.mysql.cj.jdbc.Driver";
 	
 	public static Connection getConnection() {
 		if(conn == null) {
@@ -40,15 +40,17 @@ public abstract class Database {
 	private static Connection connect(Users user) {
 		try {
 			switch(user) {
-			case NOT_LOGGED:
-				Database.user = Users.NOT_LOGGED;
-				break;
-			case USER:
-				Database.user = Users.USER;
-				break;
+				case NOT_LOGGED:
+					Database.user = Users.NOT_LOGGED;
+					break;
+				case USER:
+					Database.user = Users.USER;
+					break;
+				default:
+					Database.user = Users.NOT_LOGGED;
 			}
-			Class.forName(DRIVER_CLASS_NAME);
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			Class.forName(driverClassName);
+			conn = DriverManager.getConnection(dbUrl, name, pass);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

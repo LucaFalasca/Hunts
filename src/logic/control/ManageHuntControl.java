@@ -154,15 +154,15 @@ public class ManageHuntControl {
 
 	}
 
-	public boolean getHuntByName(String name) {
+	public boolean getHuntByName() {
 		return true;
 	}
 	
-	public boolean addHunt(Hunt hunt) {		
+	public boolean addHunt() {		
 		return true;
 	}
 	
-	public boolean removeHunt(String name) {
+	public boolean removeHunt() {
 		return true;
 	}
 
