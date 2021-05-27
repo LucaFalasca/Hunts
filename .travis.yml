@@ -1,9 +1,9 @@
--language: java
-    jdk: 
-        -openjdk15
+language: java
+jdk:
+    -openjdk15
 language: node_js
-    node_js:
-        - "10"
+node_js:
+  - "10"
 addons:
   sonarcloud:
     organization: "lucafalasca"
@@ -12,5 +12,4 @@ before-install:
     - sudo apt-get update -q
     - sudo apt-get install ant-optional openjfx -y
 script: 
-    - ant build
-    - sonar-scanner
+    - sonar-scanner -X
