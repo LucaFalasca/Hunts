@@ -15,11 +15,10 @@ public class MapDao {
 	
 	public Map getMapByName(String username, String nameMap) {
 		Connection conn = Database.getConnection();
-		CallableStatement stmt = null;
 		
 		Map map = new Map(nameMap);
-		try {
-			stmt = conn.prepareCall("call get_map_by_name(?, ?);");
+		try(CallableStatement stmt = conn.prepareCall("call get_map_by_name(?, ?);");) {
+			
 			//Input Param
 			stmt.setString(1, username);
 			stmt.setString(2, nameMap);
@@ -78,9 +77,8 @@ public class MapDao {
 	
 	public void saveMap(String username, Map map) {
 		Connection conn = Database.getConnection();
-		CallableStatement stmt = null;
-		try {
-			stmt = conn.prepareCall("call save_map(?, ?, ?);");
+		try(CallableStatement stmt = conn.prepareCall("call save_map(?, ?, ?);");) {
+			
 			//Input Param
 			stmt.setString(1, username);
 			stmt.setString(2, map.getName());
@@ -101,8 +99,8 @@ public class MapDao {
 			List<Zone> zones = map.getZones();
 			int i = 0;
 			for(Zone zone : zones) {
-				try {
-					stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?, ?);");
+				try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?, ?);");) {
+					
 					//Input Param
 					stmt.setString(1, zone.getName() + i++);
 					stmt.setString(2, map.getName());
@@ -137,11 +135,10 @@ public class MapDao {
 	
 	public List<Map> getMapList(String username){
 		Connection conn = Database.getConnection();
-		CallableStatement stmt = null;
 		
 		List<Map> maps = new ArrayList<Map>();
-		try {
-			stmt = conn.prepareCall("call get_maps(?);");
+		try(CallableStatement stmt = conn.prepareCall("call get_maps(?);")) {
+			
 			//Input Param
 			stmt.setString(1, username);
 			
@@ -162,14 +159,12 @@ public class MapDao {
 			      }
 				haveResult = stmt.getMoreResults();
 			}
-			
-			
-			
 			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return maps;
 	}
 }
