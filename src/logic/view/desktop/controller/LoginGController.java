@@ -40,7 +40,7 @@ public class LoginGController extends ControllerWithLogin{
     		if(result) {
     			setAsLogged(username);
     			try {
-					changeScene(Pages.MAIN_MENU, true);
+					changeScene(Pages.MAIN_MENU, true, null);
 				} catch (PageNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class LoginGController extends ControllerWithLogin{
     @FXML
     void handleLoginMenu(ActionEvent event) {
     	try {
-			changeScene(Pages.LOGIN, false);
+			changeScene(Pages.LOGIN, false, null);
 		} catch (PageNotFoundException e) {
 			System.out.println("beh");
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class LoginGController extends ControllerWithLogin{
     }
 
 	@Override
-	void start() {
+	void start(String param) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,53 +6,74 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.enumeration.Type;
 import logic.model.Database;
 import logic.model.entity.Map;
 import logic.model.entity.Zone;
 
 public class MapDao {
 	
-	public Map getMapById(int id) {
-		return null;
-		
-	}
-	
 	public Map getMapByName(String username, String nameMap) {
 		Connection conn = Database.getConnection();
 		CallableStatement stmt = null;
+		
+		Map map = new Map(nameMap);
 		try {
-			stmt = conn.prepareCall("call get_map_by_id(?);");
+			stmt = conn.prepareCall("call get_map_by_name(?, ?);");
 			//Input Param
-			//stmt.setInt(1, id);
+			stmt.setString(1, username);
+			stmt.setString(2, nameMap);
 			
 			boolean haveResult = stmt.execute();
+			int i = 0;
 			
+			List<Zone> zones = new ArrayList<Zone>();
 			while(haveResult) {
-				ResultSet rs = stmt.getResultSet();
+				if(i == 0) {
+					ResultSet rs = stmt.getResultSet();
+					
+					while (rs.next()) {
+				        String image = rs.getString("Immagine");
+				        //map.setImage(image);
+				      }
+				}
+				else if (i == 1){
+					ResultSet rs = stmt.getResultSet();
+					
+					while (rs.next()) {
+				        String name = rs.getString("Nome");
+				        double startX = rs.getInt("StartX");
+				        double startY = rs.getInt("StartY");
+				        double endX = rs.getInt("EndX");
+				        double endY = rs.getInt("EndY");
+				        String shape = rs.getString("Shape");
+				        
+				        Zone zone = new Zone();
+				        zone.setName(name);
+				        zone.setStartX(startX);
+				        zone.setStartY(startY);
+				        zone.setEndX(endX);
+				        zone.setEndY(endY);
+				        switch(shape){
+				        	case "RECT": zone.setType(Type.RECTANGLE);
+				        	break;
+				        	case "OVAL": zone.setType(Type.OVAL);
+				        }
+				        
+				        zones.add(zone);
+				      }
 				
-				while (rs.next()) {
-					/*
-			        String coffeeName = rs.getString("COF_NAME");
-			        int supplierID = rs.getInt("SUP_ID");
-			        float price = rs.getFloat("PRICE");
-			        int sales = rs.getInt("SALES");
-			        int total = rs.getInt("TOTAL");
-			        */
-			      }
-				
+				}
 				haveResult = stmt.getMoreResults();
+				i++;
 			}
-			//OutputParam
-			boolean log = stmt.getBoolean(3);
-			
+			map.setZones(zones);
 			stmt.close();
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-			
-			
-			return null;
+		return map;
 	}
 	
 	public void saveMap(String username, Map map) {

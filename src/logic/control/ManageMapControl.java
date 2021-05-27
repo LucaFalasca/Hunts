@@ -55,17 +55,16 @@ public class ManageMapControl {
 		
 	}
 	
-	public MapBean loadMap(int id) {
+	public MapBean getMapByName(String username, String name) {
 		MapDao dao = new MapDao();
-		Map map = dao.getMapById(id);
+		Map map = dao.getMapByName(username, name);
 		
 		MapBean bean = new MapBean();
-		bean.setId(id);
 		bean.setName(map.getName());
 		if(map.getImage() != null) {
 			bean.setImage(map.getImage());
 		}
-		if(!map.getZones().isEmpty()){
+		if(!(map.getZones() == null  || map.getZones().isEmpty())){
 			List<ZoneBean> zonesBean = new ArrayList<>();
 			for(Zone zone : map.getZones()) {
 				zonesBean.add(new ZoneBean(zone.getName(),
@@ -73,7 +72,7 @@ public class ManageMapControl {
 						zone.getStartY(),
 						zone.getEndX(),
 						zone.getEndY(),
-						zone.getType().toString()));
+						zone.getType().name()));
 			}
 			bean.setZones(zonesBean);
 		}

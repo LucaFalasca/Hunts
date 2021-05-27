@@ -197,8 +197,36 @@ public class ManageMapGController extends ControllerWithLogin{
 
 
 	@Override
-	void start() {
-		this.ivMap.requestFocus();
+	void start(String param) {
+		if(param != null) {
+			ManageMapControl controller = new ManageMapControl();
+			try {
+				MapBean map = controller.getMapByName(getUsername(), param);
+				if(map.getImage() != null) {
+					ivMap.setImage(map.getImage());
+				}
+				tfMapName.setText(param);
+				if(map.getZones() != null) {
+					zones = map.getZones();
+					for(ZoneBean zone : zones) {
+						switch(zone.getType()) {
+							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
+								break;
+							case "OVAL" : drawMachine.setState(OvalState.getInstance());
+								break;
+							default:
+								drawMachine.setState(RectangleState.getInstance());
+						}
+						
+						drawMachine.draw(gcDraw, zone.getStartX(), zone.getStartY(), zone.getEndX(), zone.getEndY());
+					}
+				}
+				
+			} catch (UsernameNotLoggedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 }
