@@ -1,6 +1,6 @@
 -language: java
     jdk: 
-        - openjdk15
+        -openjdk15
 language: node_js
     node_js:
         - "10"
