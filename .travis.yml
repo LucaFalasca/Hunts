@@ -4,12 +4,12 @@ jobs:
             jdk: openjdk15
         -language: node_js
             node_js: "10"
-addons:
-  sonarcloud:
-    organization: "lucafalasca"
-    token: "a611fd6b3ea71ebb515688f1d260df45ca28c9a5" # encrypted value of your token
-before-install:
-    - sudo apt-get update -q
-    - sudo apt-get install ant-optional openjfx -y
-script: 
-    - sonar-scanner -X
+        addons:
+          sonarcloud:
+            organization: "lucafalasca"
+            token: "a611fd6b3ea71ebb515688f1d260df45ca28c9a5" # encrypted value of your token
+        before-install:
+            - sudo apt-get update -q
+            - sudo apt-get install ant-optional openjfx -y
+        script: 
+            - sonar-scanner -X
