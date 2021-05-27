@@ -12,4 +12,5 @@ before-install:
     - sudo apt-get update -q
     - sudo apt-get install ant-optional openjfx -y
 script: 
-    - sonar-scanner -X
+    - ant build
+    - sonar-scanner
