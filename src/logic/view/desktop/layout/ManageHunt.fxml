@@ -21,10 +21,11 @@
       <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Hunt" BorderPane.alignment="CENTER">
          <font>
             <Font size="32.0" />
-         </font></Label>
+         </font>
+      </Label>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="851.0" prefWidth="496.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane fx:id="riddleConteiner" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="495.0">
                <children>
@@ -118,10 +119,16 @@
                         </GridPane>
                      </children>
                   </VBox>
+                  <Label text="Choose the Zone" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox id="cmbZone" prefHeight="25.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="76.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.0" minWidth="10.0" prefWidth="382.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="76.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="382.0" minWidth="10.0" prefWidth="382.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
@@ -129,6 +136,7 @@
                   <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="205.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
             <GridPane prefHeight="32.0" prefWidth="496.0">
@@ -160,13 +168,10 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <ListView fx:id="lvRiddle" onMouseClicked="#handleRiddleSelected" prefHeight="467.0" prefWidth="496.0" />
+            <ListView fx:id="lvRiddle" onMouseClicked="#handleRiddleSelected" prefHeight="398.0" prefWidth="496.0" />
          </children>
       </VBox>
    </center>
-   <bottom>
-      <Button fx:id="bntFinish" mnemonicParsing="false" onAction="#handleFinish" text="Finish" BorderPane.alignment="CENTER" />
-   </bottom>
    <left>
       <VBox prefHeight="928.0" prefWidth="504.0" BorderPane.alignment="CENTER">
          <children>
@@ -230,7 +235,7 @@
                   <TextArea fx:id="txtDescription" prefHeight="54.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <ListView fx:id="lvObject" editable="true" onMouseClicked="#handleObjectSelected" prefHeight="264.0" prefWidth="358.0" />
+            <ListView fx:id="lvObject" editable="true" onMouseClicked="#handleObjectSelected" prefHeight="229.0" prefWidth="504.0" />
             <Button fx:id="btnRemoveObject" mnemonicParsing="false" onAction="#handleRemoveObject" text="X" visible="false" />
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="515.0">
                <children>
@@ -245,4 +250,16 @@
          </children>
       </VBox>
    </left>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="53.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#handleSave" prefHeight="29.0" prefWidth="69.0" text="Save">
+               <HBox.margin>
+                  <Insets right="300.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="bntFinish" mnemonicParsing="false" onAction="#handleFinish" prefHeight="32.0" prefWidth="83.0" text="Finish" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
