@@ -111,7 +111,7 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	try {
-			changeScene(Pages.MANAGE_MAP, false, null);
+			changeScene(Pages.MANAGE_MAP, true, null);
 		} catch (PageNotFoundException e) {
 			System.out.println("beh");
 			e.printStackTrace();
