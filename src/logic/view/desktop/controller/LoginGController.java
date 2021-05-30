@@ -1,5 +1,7 @@
 package logic.view.desktop.controller;
 
+import java.awt.Label;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,12 +25,15 @@ public class LoginGController extends ControllerWithLogin{
 
     @FXML
     private Button btnLoginGoogle;
+    
+    @FXML
+    private Label lblError;
 
     @FXML
     void handleLogin(ActionEvent event) {
-    		LoginControl loginController = new LoginControl();
+    		var loginController = new LoginControl();
     		
-    		LoginBean loginBean = new LoginBean();
+    		var loginBean = new LoginBean();
     		
     		String username = tfUserName.getText();
     		String password = tfPassword.getText();
@@ -47,7 +52,8 @@ public class LoginGController extends ControllerWithLogin{
 				}
     		}
     		else {
-				//TODO
+				lblError.setText("Username or password not correct");
+				lblError.setVisible(true);
     		}
     }
     
@@ -68,7 +74,7 @@ public class LoginGController extends ControllerWithLogin{
 
 	@Override
 	void start(String param) {
-		// TODO Auto-generated method stub
+		lblError.setVisible(false);
 		
 	}
 
