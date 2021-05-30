@@ -54,7 +54,7 @@ public abstract class ControllerWithLogin {
 	protected void changeScene(Pages page, boolean needLogin, String param) throws PageNotFoundException {
 		if(needLogin) {
 			if(!logMachine.isLogged()) {
-				changeScene(Pages.LOGIN, false, null);
+				changeScene(Pages.LOGIN, false, page.name());
 				return;
 			}
 		}
@@ -68,6 +68,7 @@ public abstract class ControllerWithLogin {
 			stage.setScene(new Scene(root));
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new PageNotFoundException();
 		}
 	}

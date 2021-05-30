@@ -28,7 +28,19 @@ public class LoginGController extends ControllerWithLogin{
     
     @FXML
     private Label lblError;
+    
+    private Pages pageAfterLogin = Pages.MAIN_MENU;
 
+    @Override
+	void start(String param) {
+    	if(param != null) {
+    		pageAfterLogin = Pages.valueOf(param);
+    	}
+    	
+		lblError.setVisible(false);
+		
+	}
+    
     @FXML
     void handleLogin(ActionEvent event) {
     		var loginController = new LoginControl();
@@ -45,7 +57,7 @@ public class LoginGController extends ControllerWithLogin{
     		if(result) {
     			setAsLogged(username);
     			try {
-					changeScene(Pages.MAIN_MENU, true, null);
+					changeScene(pageAfterLogin, true, null);
 				} catch (PageNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -72,10 +84,6 @@ public class LoginGController extends ControllerWithLogin{
     	//TODO
     }
 
-	@Override
-	void start(String param) {
-		lblError.setVisible(false);
-		
-	}
+	
 
 }
