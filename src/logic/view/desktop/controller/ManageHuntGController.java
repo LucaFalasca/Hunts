@@ -2,6 +2,7 @@ package logic.view.desktop.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,8 @@ import javafx.scene.layout.HBox;
 import logic.model.entity.Hunt;
 import logic.bean.HuntBean;
 import logic.bean.ObjectBean;
+import logic.bean.RiddleBean;
+import logic.bean.ZoneBean;
 import logic.control.ManageHuntControl;
 
 public class ManageHuntGController extends ControllerWithLogin{
@@ -84,13 +87,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     private Button btnAddToList;
 
     @FXML
+    private TextField tfClueText1;
+    
+    @FXML
     private TextField tfClueText2;
 
     @FXML
     private TextField tfClueText3;
-
-    @FXML
-    private TextField tfClueText1;
     
     private List<TextField> tfClueText = new ArrayList<>();
 
@@ -111,13 +114,25 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     @FXML
     private TextArea txtDescription;
-	
+    
+    @FXML
+    private Button btnSave;
+    
+    @FXML
+    private ComboBox<String> cmbZone;
+    
+    private ObservableList<String> zoneList = FXCollections.observableArrayList();
+    
 	ManageHuntControl manageHuntControl = new ManageHuntControl();
 	
-	ObjectBean objectBean = new ObjectBean();
+	private List<ObjectBean> objectList = new ArrayList<>();
+	private List<RiddleBean> riddleBean = new ArrayList<>();
 	HuntBean huntBean = new HuntBean();
 	
-	int deleteRiddle = 0;
+	private String riddle;
+	
+	int deletedRiddle = 0;
+	int deletedObject = 0;
 	
     @FXML
     void initialize() {
@@ -128,8 +143,9 @@ public class ManageHuntGController extends ControllerWithLogin{
     	lbRiddle.setText("Riddle " + rdlList.size());
     	
     	lvObject.setItems(objList);
-    	cmbObject.setItems(objList);
     	lvRiddle.setItems(rdlList);
+    	cmbObject.setItems(objList);
+    	cmbZone.setItems(zoneList);
     	
     	tfClueText.add(tfClueText1);
     	tfClueText.add(tfClueText2);
@@ -143,29 +159,29 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	if(!(tfRiddleText.getText().equals("")) && !(tfRiddleSolution.getText().equals(""))){
     		
-    		huntBean.setnRiddle(rdlList.size());
-    		
     		if(lbRiddleError.isVisible())
     			lbRiddleError.setVisible(false);
     		
-    		huntBean.setRiddleText(tfRiddleText.getText());
+    		riddle = String.format("%s; %s;", tfRiddleText.getText(), tfRiddleSolution.getText());
     		
-    		huntBean.setSolutionText(tfRiddleSolution.getText());
+    		for(var i = 0; i < 3; i++) {
+    			riddle = riddle.concat(tfClueText.get(i).getText() + "; ");
+    		}
     		
-    		for(int index = 0; index < tfClueText.size(); index++)
-    			huntBean.addClueListElement(index, tfClueText.get(index).getText());
-    		    		
-    		objectBean.setName(cmbObject.getSelectionModel().getSelectedItem());
+    		riddle = riddle.concat(cmbObject.getSelectionModel().getSelectedItem() + "; ");
+    		riddle = riddle.concat(cmbZone.getSelectionModel().getSelectedItem() + "; ");
+    			
+    		rdlList.add(riddle);
     		
-    		manageHuntControl.addRiddle(objectBean, huntBean, "nomeZona");
-    		
-    		rdlList.add(tfRiddleText.getText());
-    		
-    		lbRiddle.setText("Riddle " + rdlList.size());
+    		lbRiddle.setText("Riddle " + (rdlList.size()-deletedRiddle));
     		
     		btnAddRiddle.setText("Add new Riddle");
     		
     		cancelTextView();
+    		
+    		if(lbRiddleError.isVisible()) {
+    			lbRiddleError.setVisible(false);
+    		}
     		
     	} else {
     	
@@ -177,29 +193,25 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     @FXML
     void handleRiddleSelected(MouseEvent event) {
-    	if((event.getEventType() == MouseEvent.MOUSE_CLICKED) && (lvRiddle.getSelectionModel().getSelectedItem() != null))
-    		btnRemoveRiddle.setVisible(true);
-    	else
-    		btnRemoveRiddle.setVisible(false);
+    	
+    	btnRemoveRiddle.setVisible(setVisible(event, lvRiddle.getSelectionModel().getSelectedItem()));
+    	
     }
     
     @FXML
     void handleRemoveRiddle(ActionEvent event) {
     	try {
-	    	
-    		int index = 0;
     		
-    		index = lvRiddle.getSelectionModel().getSelectedIndex() + deleteRiddle;
+    		int index = lvRiddle.getSelectionModel().getSelectedIndex();
     		
-    		huntBean.setnRiddle(index);
-    		
-    		rdlList.remove(index);
-    		
-    		manageHuntControl.deleteRiddle(huntBean);
-    		
-    		if(index != rdlList.size()-1)
-    			deleteRiddle++;
-    		
+    		if(index == -1) 
+    			rdlList.remove(index);
+    		else {
+    			lbRiddleError.setText("You must selected an item from the List");
+        		lbRiddleError.setVisible(true);
+    		}
+    			
+    		deletedRiddle++;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -208,36 +220,36 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleModifyRiddle(ActionEvent event) {
     	
-    	int index = lvRiddle.getSelectionModel().getSelectedIndex() + deleteRiddle;
+    	int index = lvRiddle.getSelectionModel().getSelectedIndex();
     	
     	if(index != -1) {
+    		
+    		riddle = lvRiddle.getItems().get(index);
     		
     		if(lbRiddleError.isVisible())
     			lbRiddleError.setVisible(false);
     		
-    		cancelTextView();
+    		var st = new StringTokenizer(riddle, ";");
     		
-    		huntBean.setnRiddle(index);
-    		
-    		huntBean = manageHuntControl.modifyRiddle(huntBean);
-    		
-    		int nRiddle = huntBean.getnRiddle();
-    		
-    		tfRiddleText.setText(huntBean.getRiddleText());
-    		
-    		tfRiddleSolution.setText(huntBean.getSolutionText());
-    		
-    		for(int i = 0; i < tfClueText.size(); i++) 
-    			tfClueText.get(i).setText(huntBean.getClueListElement(i));
-    		
-    		btnAddRiddle.setText("Add modify");
-    		
-    		lbRiddle.setText("Riddle " + nRiddle);
-    		
-    		manageHuntControl.deleteRiddle(huntBean);
-    		
-    		rdlList.remove(nRiddle);
-    		
+    		if(st.hasMoreElements()) {
+    			tfRiddleText.setText(st.nextToken());
+    			
+    			tfRiddleSolution.setText(st.nextToken());
+    			
+    			for(var i = 0; i < 3; i++)
+    				tfClueText.get(i).setText(st.nextToken());
+    			
+    			cmbObject.setValue(st.nextToken());
+    			
+    			cmbZone.setValue(st.nextToken());
+    			
+    			lvRiddle.getItems().remove(index);
+    			deletedRiddle++;
+    		} else {
+    			lbRiddleError.setText("You must selected an item from the List");
+        		lbRiddleError.setVisible(true);
+    		}
+ 
     	} else {
     		
     		lbRiddleError.setText("You must selected an item from the List");
@@ -261,50 +273,31 @@ public class ManageHuntGController extends ControllerWithLogin{
     void handleAddObject(ActionEvent event) {
     	try {
     		
-    		boolean flag = false;
     		String objectName = tfObjectName.getText();
     		
     		if(!(objectName.equals(""))) {
     			
-	    		for(int i = 0; i < lvObject.getItems().size(); i++){
+	    		for(var i = 0; i < lvObject.getItems().size(); i++){
 	    			
-	    			if(objectName.equals(lvObject.getItems().get(i))) {
+	    			if(!(objectName.equals(lvObject.getItems().get(i)))) {
 	    				
-	    				flag = true;
-	    				break;
-	    			}
-	    			
-	    		}
+	    				objectName = objectName.concat(String.format("%s; %s;", txtDescription.getText(), "Path"));
 	    		
-	    		if(!(flag)) {
-	    			
-	    			objList.add(objectName);
-	    			
-	    			objectBean.setName(objectName);
-	    			
-	    			objectBean.setDescription(txtDescription.getText());
-	    			
-	    			manageHuntControl.addObject(objectBean, huntBean);
-	    			
-	    			if(lbErrorObjName.isVisible()) {
-	    				lbErrorObjName.setVisible(false);
 	    			}
 	    			
-	    		} else {
-	    			
-	    			lbErrorObjName.setVisible(true);
-	    			lbErrorObjName.setText("The name has already been entered");
-	    			
 	    		}
-	    	
+
+	    			
+	    		if(lbErrorObjName.isVisible()) 
+	    			lbErrorObjName.setVisible(false);
+	    		 
     		} else {
 
     			lbErrorObjName.setText("Insert a valid Name");
 				lbErrorObjName.setVisible(true);
 			
-    			
-    		}
-		}
+	    	}
+    	}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -317,78 +310,57 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	objList.remove(index);
     	
-    	objectBean.setName(lvObject.getSelectionModel().getSelectedItem());
-    		
-    	huntBean = manageHuntControl.removeObject(objectBean, huntBean);
-    		
-    	List<Integer> indexList = huntBean.getIndexList();
-    	
-    	for(int i = 0; i < indexList.size(); i++) {
-    		rdlList.remove(indexList.get(i) - deleteRiddle);
-    	}
-    	
-    		
+    	deletedObject++;
     }
     
     @FXML
     void handleModifyObject(ActionEvent event) {
     	
-    	objectBean.setName(lvObject.getSelectionModel().getSelectedItem());
+    	String object = lvObject.getSelectionModel().getSelectedItem();
     	
-    	objectBean = manageHuntControl.modifyObject(objectBean, huntBean);
+    	objList.remove(lvObject.getSelectionModel().getSelectedIndex());
     	
+    	var st = new StringTokenizer(object, ";");
+    	
+    	if(st.hasMoreElements()) {
+    		tfObjectName.setText(st.nextToken());
+    		
+    		txtDescription.setText(st.nextToken());
+    		
+    	}
+    	
+    	deletedObject++;
     	
     }
     
     @FXML
     void handleObjectSelected(MouseEvent event) {
-    	if((event.getEventType() == MouseEvent.MOUSE_CLICKED) && (lvObject.getSelectionModel().getSelectedItem() != null))
-    		btnRemoveObject.setVisible(true);
-    	else
-    		btnRemoveObject.setVisible(false);
+    	
+    	btnRemoveObject.setVisible(setVisible(event, lvObject.getSelectionModel().getSelectedItem()));
+    	
     }
     
     
     @FXML
     void handleUplaodFile(ActionEvent event) {
-    	
-    	int index = lvObject.getSelectionModel().getSelectedIndex();
-    	
-    	if(index != -1) {
-    		
-    		if(lbErrorObjName.isVisible())
-    			lbErrorObjName.setVisible(false);
-    		
-    		cancelTextView();
-    		
-    		//objectBean = manageHuntControl.modifyObject(index);
-    		
-    		tfObjectName.setText(objectBean.getObject());
-    		
-    	} else {
-    		
-    		lbErrorObjName.setText("You must selected an item from the List");
-    		lbErrorObjName.setVisible(true);
-    		
-    	}
+
     }
     
-    
+
+    @FXML
+    void handleSave(ActionEvent event) {
+
+    }
     
     @FXML
     void handleFinish(ActionEvent event) {
     	if(tfHuntName.getText().equals("")) {
     		
-    		lbErrorObjName.setText("Insert the Hunt name");
-    		lbErrorObjName.setVisible(true);
+    		
     		
     	}
     	else {
-    		Hunt hunt = new Hunt();
     		
-    		hunt.setHuntName(tfHuntName.getText());
-    		
-    		manageHuntControl.addHunt();
     	}
     }
     
@@ -406,10 +378,16 @@ public class ManageHuntGController extends ControllerWithLogin{
     	tfClueText3.setText("");
 
     }
-
+    
+    private boolean setVisible(MouseEvent e, String riddleSelected) {
+    	if((e.getEventType() == MouseEvent.MOUSE_CLICKED) && riddleSelected != null){
+    		return true;
+    	}
+    	return false;
+    	
+    }
 	@Override
 	void start(String param) {
-		// TODO Auto-generated method stub
 		
 	}
 }

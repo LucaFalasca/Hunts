@@ -31,13 +31,7 @@ public class ManageHuntControl {
 		
 		hunt.setIdHunt(huntBean.getIdHunt());
 		
-		riddle.setnRiddle(huntBean.getnRiddle());
 		
-		riddle.setRiddleText(huntBean.getRiddleText());
-		
-		riddle.setSolutionText(huntBean.getSolutionText());
-		
-		riddle.setClueList(huntBean.getClueList());
 		
 		riddle.setReward(objectBean.getObject());
 		
@@ -46,12 +40,6 @@ public class ManageHuntControl {
 		zone.setName(nameZone);
 		
 		riddleDao.addRiddle(riddle, object, hunt, zone);
-		
-		for(int i = 0; i < huntBean.getClueList().size(); i++) {
-			clue.setClueIndex(i);
-			clue.setText(huntBean.getClueListElement(i));
-			riddleDao.addClueToRiddle(clue, hunt, riddle);
-		}
 	}
 	
 	public HuntBean modifyRiddle(HuntBean huntBean) {
@@ -64,17 +52,7 @@ public class ManageHuntControl {
 		
 		Riddle riddle = new Riddle();
 		
-		riddle.setnRiddle(huntBean.getnRiddle());
 		
-		riddle = riddleDao.getRiddleById(hunt, riddle);
-		
-		huntBean.setnRiddle(riddle.getnRiddle());
-		
-		huntBean.setRiddleText(riddle.getRiddleText());
-		
-		huntBean.setSolutionText(riddle.getSolutionText());
-		
-		huntBean.setClueList(riddle.getClueList());
 		
 		return huntBean;
 		
@@ -87,8 +65,6 @@ public class ManageHuntControl {
 		Riddle riddle = new Riddle();
 		
 		hunt.setIdHunt(huntBean.getIdHunt());
-		
-		riddle.setnRiddle(huntBean.getnRiddle());
 		
 		RiddleDao riddleDao = new RiddleDao();
 		
@@ -111,7 +87,7 @@ public class ManageHuntControl {
 		
 		object.setPath(objectBean.getPath());
 		
-		zone.setName(huntBean.getNameZone());
+		//zone.setName(huntBean.getNameZone());
 		
 		ObjectDao objectDao = new ObjectDao();
 		
@@ -133,7 +109,7 @@ public class ManageHuntControl {
 		
 		List<Integer> indexList = objectDao.getObjectInRiddle(object, hunt);
 		
-		huntBean.setIndexList(indexList);
+		//huntBean.setIndexList(indexList);
 		
 		return huntBean;
 	}
