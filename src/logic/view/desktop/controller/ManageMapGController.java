@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import logic.bean.MapBean;
-import logic.bean.UploadFileBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
 import logic.exception.UsernameNotLoggedException;
@@ -42,6 +41,41 @@ public class ManageMapGController extends ControllerWithLogin{
     private double startX, startY;
     private int idMap = -1;
     private List<ZoneBean> zones;
+    private String pathImage;
+    
+    @Override
+	void start(String param) {
+		if(param != null) {
+			ManageMapControl controller = new ManageMapControl();
+			try {
+				MapBean map = controller.getMapByName(getUsername(), param);
+				if(map.getImage() != null) {
+					setImageByPath(map.getImage());
+				}
+				tfMapName.setText(param);
+				if(map.getZones() != null) {
+					zones = map.getZones();
+					for(ZoneBean zone : zones) {
+						switch(zone.getType()) {
+							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
+								break;
+							case "OVAL" : drawMachine.setState(OvalState.getInstance());
+								break;
+							default:
+								drawMachine.setState(RectangleState.getInstance());
+						}
+						
+						drawMachine.draw(gcDraw, zone.getStartX(), zone.getStartY(), zone.getEndX(), zone.getEndY());
+					}
+				}
+				
+			} catch (UsernameNotLoggedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
     
     @FXML
     void initialize() {
@@ -64,15 +98,15 @@ public class ManageMapGController extends ControllerWithLogin{
     			new ExtensionFilter("All", "*.*")*/
     			);
     	File selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
-    	String pathFile = selectedFile.getPath();
-    	
-    	Image img = new Image("file:" + pathFile, ivMap.getFitWidth(), ivMap.getFitHeight(), false, false);
-    	ivMap.setImage(img);
-    	
     	ManageMapControl controller = new ManageMapControl();
-    	UploadFileBean bean = new UploadFileBean();
-    	bean.setFile(selectedFile);
-    	controller.uploadFile(bean);
+    	pathImage = controller.uploadFile(selectedFile);
+    	
+    	setImageByPath(pathImage);
+    }
+    
+    private void setImageByPath(String path) {
+    	Image img = new Image("file:" + path, ivMap.getFitWidth(), ivMap.getFitHeight(), false, false);
+    	ivMap.setImage(img);
     }
     
     
@@ -125,8 +159,8 @@ public class ManageMapGController extends ControllerWithLogin{
     	ManageMapControl control = new ManageMapControl();
     	
     	MapBean bean = new MapBean(idMap, getMapName(), zones);
-    	if(getImage() != null) {
-    		bean.setImage(getImage());
+    	if(pathImage != null) {
+    		bean.setImage(pathImage);
     	}
     	try {
 			control.save(getUsername(), bean);
@@ -163,12 +197,6 @@ public class ManageMapGController extends ControllerWithLogin{
     }
     
     
-    private Image getImage() {
-		return ivMap.getImage();
-    	
-    }
-    
-    
     private boolean thereIsInAZoneRange(double x1, double y1, double x2,  double y2) {
     	double rangeX = Math.abs(x2 - x1);
     	double rangeY = Math.abs(y2 - y1);
@@ -196,37 +224,5 @@ public class ManageMapGController extends ControllerWithLogin{
     }
 
 
-	@Override
-	void start(String param) {
-		if(param != null) {
-			ManageMapControl controller = new ManageMapControl();
-			try {
-				MapBean map = controller.getMapByName(getUsername(), param);
-				if(map.getImage() != null) {
-					ivMap.setImage(map.getImage());
-				}
-				tfMapName.setText(param);
-				if(map.getZones() != null) {
-					zones = map.getZones();
-					for(ZoneBean zone : zones) {
-						switch(zone.getType()) {
-							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
-								break;
-							case "OVAL" : drawMachine.setState(OvalState.getInstance());
-								break;
-							default:
-								drawMachine.setState(RectangleState.getInstance());
-						}
-						
-						drawMachine.draw(gcDraw, zone.getStartX(), zone.getStartY(), zone.getEndX(), zone.getEndY());
-					}
-				}
-				
-			} catch (UsernameNotLoggedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
+	
 }

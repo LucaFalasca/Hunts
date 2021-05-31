@@ -7,7 +7,7 @@ public class MapBean {
 
 	private int id;
 	private String name;
-	private Image image;
+	private String image;
 	private List<ZoneBean> zones;
 	
 	public MapBean() {
@@ -30,10 +30,10 @@ public class MapBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Image getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(Image image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public List<ZoneBean> getZones() {

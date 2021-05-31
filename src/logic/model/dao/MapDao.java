@@ -33,7 +33,7 @@ public class MapDao {
 					
 					while (rs.next()) {
 				        String image = rs.getString("Immagine");
-				        //map.setImage(image);
+				        map.setImagePath(image);
 				      }
 				}
 				else if (i == 1){
@@ -82,7 +82,7 @@ public class MapDao {
 			//Input Param
 			stmt.setString(1, username);
 			stmt.setString(2, map.getName());
-			stmt.setString(3, "");
+			stmt.setString(3, map.getImagePath());
 			
 			boolean haveResult = stmt.execute();
 			

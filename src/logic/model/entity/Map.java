@@ -8,7 +8,7 @@ public class Map {
 
 	private int id;
 	private String name;
-	private Image image;
+	private String imagePath;
 	private List<Zone> zones;
 	
 	public Map(String name) {
@@ -21,12 +21,7 @@ public class Map {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Image getImage() {
-		return image;
-	}
-	public void setImage(Image image) {
-		this.image = image;
-	}
+
 	public List<Zone> getZones() {
 		return zones;
 	}
@@ -39,6 +34,13 @@ public class Map {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	
 	
 }

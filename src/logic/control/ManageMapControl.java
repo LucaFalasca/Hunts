@@ -1,11 +1,11 @@
 package logic.control;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
 import logic.bean.MapBean;
-import logic.bean.UploadFileBean;
 import logic.bean.ZoneBean;
 import logic.enumeration.Type;
 import logic.model.dao.MapDao;
@@ -17,13 +17,13 @@ public class ManageMapControl {
 	public void save(String username, MapBean bean) {
 		int id = bean.getId();
 		String name = bean.getName();
-		Image image = bean.getImage();
+		String imagePath = bean.getImage();
 		List<ZoneBean> zonesBean = bean.getZones();
 		
 		Map map = new Map(name);
 		
 		if(id != -1)				map.setId(id);
-		if(image != null) 			map.setImage(image);
+		if(imagePath != null) 			map.setImagePath(imagePath);
 		if(!zonesBean.isEmpty()) {
 			List<Zone> zones = new ArrayList<>();
 			for(ZoneBean zb : zonesBean) {
@@ -61,8 +61,8 @@ public class ManageMapControl {
 		
 		MapBean bean = new MapBean();
 		bean.setName(map.getName());
-		if(map.getImage() != null) {
-			bean.setImage(map.getImage());
+		if(map.getImagePath() != null) {
+			bean.setImage(map.getImagePath());
 		}
 		if(!(map.getZones() == null  || map.getZones().isEmpty())){
 			List<ZoneBean> zonesBean = new ArrayList<>();
@@ -88,16 +88,16 @@ public class ManageMapControl {
 		for(Map map : maps) {
 			MapBean bean = new MapBean();
 			bean.setName(map.getName());
-			bean.setImage(map.getImage());
+			bean.setImage(map.getImagePath());
 			beans.add(bean);
 		}
 		
 		return beans;
 	}
 	
-	public void uploadFile(UploadFileBean bean) {
+	public String uploadFile(File file) {
 		UploadFileControl uploadFileControl = new UploadFileControl();
-		uploadFileControl.uploadImage(bean.getFile());
+		return uploadFileControl.uploadFile(file);
 	}
 	
 	
