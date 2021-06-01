@@ -44,15 +44,16 @@ public class ManageMapGController extends ControllerWithLogin{
     private String pathImage;
     
     @Override
-	void start(String param) {
-		if(param != null) {
+	void start(Object param) {
+    	String par = (String) param;
+		if(par != null) {
 			ManageMapControl controller = new ManageMapControl();
 			try {
-				MapBean map = controller.getMapByName(getUsername(), param);
+				MapBean map = controller.getMapByName(getUsername(), par);
 				if(map.getImage() != null) {
 					setImageByPath(map.getImage());
 				}
-				tfMapName.setText(param);
+				tfMapName.setText(par);
 				if(map.getZones() != null) {
 					zones = map.getZones();
 					for(ZoneBean zone : zones) {
