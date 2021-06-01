@@ -18,4 +18,27 @@ public enum Pages {
 				throw new PageNotFoundException();
 		}
 	}
+	
+	public String getWebPath() throws PageNotFoundException {
+		switch(this) {
+			case MAIN_MENU:		return "";
+			case LOGIN: 		return "";
+			case MANAGE_HUNT: 	return "";
+			case MANAGE_MAP: 	return "";
+			default:
+				throw new PageNotFoundException();
+		}
+	}
+	
+	public boolean needLogin() {
+		switch(this) {
+			case MAIN_MENU:		return false;
+			case LOGIN: 		return false;
+			case MANAGE_HUNT: 	return true;
+			case MANAGE_MAP: 	return true;
+			default:
+				return false;
+		}
+	}
+	
 }

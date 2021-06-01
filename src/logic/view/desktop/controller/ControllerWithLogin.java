@@ -51,26 +51,29 @@ public abstract class ControllerWithLogin {
 		return logMachine.getUsername();
 	}
 	
-	protected void changeScene(Pages page, boolean needLogin, Object param) throws PageNotFoundException {
-		if(needLogin) {
-			if(!logMachine.isLogged()) {
-				changeScene(Pages.LOGIN, false, page.name());
-				return;
+	protected void changeScene(Pages page, Object param) throws PageNotFoundException {
+		if(page.needLogin() && !logMachine.isLogged()) {
+			changeScene(Pages.LOGIN, page.name());
+		}
+		else {
+			try {
+				var loader = new FXMLLoader(getClass().getResource(page.getPath()));
+				Parent root = (Parent)loader.load();
+				ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
+				controller.setLogMachine(logMachine);
+				controller.setStage(stage);
+				controller.start(param);
+				stage.setScene(new Scene(root));
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new PageNotFoundException();
 			}
 		}
-		try {
-			var loader = new FXMLLoader(getClass().getResource(page.getPath()));
-			Parent root = (Parent)loader.load();
-			ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
-			controller.setLogMachine(logMachine);
-			controller.setStage(stage);
-			controller.start(param);
-			stage.setScene(new Scene(root));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new PageNotFoundException();
-		}
+	}
+	
+	protected void changeScene(Pages page) throws PageNotFoundException {
+		changeScene(page, null);
 	}
 	
 	

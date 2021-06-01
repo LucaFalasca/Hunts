@@ -268,7 +268,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     @FXML
     void handleCreateMap(ActionEvent event) throws PageNotFoundException {
-    	changeScene(Pages.MANAGE_MAP, true, null);
+    	changeScene(Pages.MANAGE_MAP);
     }
 
     @FXML

@@ -72,7 +72,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					Button button = (Button) pane.getChildren().get(1);
 					button.setOnAction(e -> {
 						try {
-							changeScene(Pages.MANAGE_MAP, true, mapBean.getName());
+							changeScene(Pages.MANAGE_MAP, mapBean.getName());
 						} catch (PageNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -100,7 +100,7 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     void handleManageHunt(ActionEvent event) {
     	try {
-			changeScene(Pages.MANAGE_HUNT, true, null);
+			changeScene(Pages.MANAGE_HUNT);
 		} catch (PageNotFoundException e) {
 			System.out.println("");
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	try {
-			changeScene(Pages.MANAGE_MAP, true, null);
+			changeScene(Pages.MANAGE_MAP);
 		} catch (PageNotFoundException e) {
 			System.out.println("beh");
 			e.printStackTrace();
@@ -121,7 +121,7 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     void handleLogin(ActionEvent event) {
     	try {
-			changeScene(Pages.LOGIN, false, null);
+			changeScene(Pages.LOGIN);
 		} catch (PageNotFoundException e) {
 			System.out.println("beh");
 			e.printStackTrace();
