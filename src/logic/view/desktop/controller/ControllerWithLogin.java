@@ -19,7 +19,7 @@ public abstract class ControllerWithLogin {
 	
 	private LogMachine logMachine;
 	
-	abstract void start(String param);
+	abstract void start(Object param);
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -51,7 +51,7 @@ public abstract class ControllerWithLogin {
 		return logMachine.getUsername();
 	}
 	
-	protected void changeScene(Pages page, boolean needLogin, String param) throws PageNotFoundException {
+	protected void changeScene(Pages page, boolean needLogin, Object param) throws PageNotFoundException {
 		if(needLogin) {
 			if(!logMachine.isLogged()) {
 				changeScene(Pages.LOGIN, false, page.name());
@@ -59,7 +59,7 @@ public abstract class ControllerWithLogin {
 			}
 		}
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(page.getPath()));
+			var loader = new FXMLLoader(getClass().getResource(page.getPath()));
 			Parent root = (Parent)loader.load();
 			ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
 			controller.setLogMachine(logMachine);

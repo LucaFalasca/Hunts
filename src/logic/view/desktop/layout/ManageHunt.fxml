@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.08228980322003578" maxHeight="-Infinity" maxWidth="-Infinity" orientation="VERTICAL" prefHeight="938.0" prefWidth="1321.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.08228980322003578" maxHeight="-Infinity" maxWidth="-Infinity" orientation="VERTICAL" prefHeight="938.0" prefWidth="1321.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageHuntGController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
