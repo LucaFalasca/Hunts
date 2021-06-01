@@ -47,7 +47,7 @@ public class MainMenuGController extends ControllerWithLogin{
     private AnchorPane apMaps;
     
     @Override
-	void start(String param) {
+	void start(Object param) {
 		if(isLogged()) {
 			try {
 				lbUsername.setText(getUsername());
@@ -57,7 +57,7 @@ public class MainMenuGController extends ControllerWithLogin{
 				apMaps.setDisable(false);
 				lvMaps.setItems(mapsList);
 				
-				ManageMapControl controllerMaps = new ManageMapControl();
+				var controllerMaps = new ManageMapControl();
 				List<MapBean> mapBeans = controllerMaps.getAllMaps(getUsername());
 				
 				for(MapBean mapBean : mapBeans) {

@@ -31,9 +31,9 @@ public class LoginGController extends ControllerWithLogin{
     private Pages pageAfterLogin = Pages.MAIN_MENU;
 
     @Override
-	void start(String param) {
+	void start(Object param) {
     	if(param != null) {
-    		pageAfterLogin = Pages.valueOf(param);
+    		pageAfterLogin = Pages.valueOf(String.valueOf(param));
     	}
     	
 		lblError.setVisible(false);

@@ -17,12 +17,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import logic.model.entity.Hunt;
 import logic.bean.HuntBean;
+import logic.bean.MapBean;
 import logic.bean.ObjectBean;
 import logic.bean.RiddleBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageHuntControl;
+import logic.control.ManageMapControl;
+import logic.enumeration.Pages;
+import logic.exception.PageNotFoundException;
+import logic.exception.UsernameNotLoggedException;
 
 public class ManageHuntGController extends ControllerWithLogin{
 	@FXML
@@ -134,6 +138,9 @@ public class ManageHuntGController extends ControllerWithLogin{
 	int deletedRiddle = 0;
 	int deletedObject = 0;
 	
+	static final String SEPARATOR = "; ";
+	static final String ERRORSELECTED = "You must selected an item from the List";
+	
     @FXML
     void initialize() {
     	
@@ -141,7 +148,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	huntBean.setIdHunt(idHunt);
     	
     	lbRiddle.setText("Riddle " + rdlList.size());
-    	
+    	zoneList.add("");
     	lvObject.setItems(objList);
     	lvRiddle.setItems(rdlList);
     	cmbObject.setItems(objList);
@@ -165,11 +172,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     		riddle = String.format("%s; %s;", tfRiddleText.getText(), tfRiddleSolution.getText());
     		
     		for(var i = 0; i < 3; i++) {
-    			riddle = riddle.concat(tfClueText.get(i).getText() + "; ");
+    			riddle = riddle.concat(tfClueText.get(i).getText() + SEPARATOR);
     		}
     		
-    		riddle = riddle.concat(cmbObject.getSelectionModel().getSelectedItem() + "; ");
-    		riddle = riddle.concat(cmbZone.getSelectionModel().getSelectedItem() + "; ");
+    		riddle = riddle.concat(cmbObject.getSelectionModel().getSelectedItem() + SEPARATOR);
+    		riddle = riddle.concat(cmbZone.getSelectionModel().getSelectedItem() + SEPARATOR);
     			
     		rdlList.add(riddle);
     		
@@ -207,7 +214,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		if(index == -1) 
     			rdlList.remove(index);
     		else {
-    			lbRiddleError.setText("You must selected an item from the List");
+    			lbRiddleError.setText(ERRORSELECTED);
         		lbRiddleError.setVisible(true);
     		}
     			
@@ -229,7 +236,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		if(lbRiddleError.isVisible())
     			lbRiddleError.setVisible(false);
     		
-    		var st = new StringTokenizer(riddle, ";");
+    		var st = new StringTokenizer(riddle, SEPARATOR);
     		
     		if(st.hasMoreElements()) {
     			tfRiddleText.setText(st.nextToken());
@@ -246,13 +253,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     			lvRiddle.getItems().remove(index);
     			deletedRiddle++;
     		} else {
-    			lbRiddleError.setText("You must selected an item from the List");
+    			lbRiddleError.setText(ERRORSELECTED);
         		lbRiddleError.setVisible(true);
     		}
  
     	} else {
     		
-    		lbRiddleError.setText("You must selected an item from the List");
+    		lbRiddleError.setText(ERRORSELECTED);
     		lbRiddleError.setVisible(true);
     		
     	}
@@ -260,13 +267,20 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleCreateMap(ActionEvent event) {
-    	//TODO
+    void handleCreateMap(ActionEvent event) throws PageNotFoundException {
+    	changeScene(Pages.MANAGE_MAP, true, null);
     }
 
     @FXML
-    void handleChooseMap(ActionEvent event) {
-    	//TODO 
+    void handleChooseMap(ActionEvent event) throws UsernameNotLoggedException {
+    	List<MapBean> mapList;
+    	var mpc = new ManageMapControl();
+    	
+    	mapList = mpc.getAllMaps(getUsername());
+    	
+    	
+    	
+    	
     }
 
     @FXML
@@ -282,7 +296,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    			if(!(objectName.equals(lvObject.getItems().get(i)))) {
 	    				
 	    				objectName = objectName.concat(String.format("%s; %s;", txtDescription.getText(), "Path"));
-	    		
+	    				objList.add(objectName);	    		
 	    			}
 	    			
 	    		}
@@ -320,7 +334,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	objList.remove(lvObject.getSelectionModel().getSelectedIndex());
     	
-    	var st = new StringTokenizer(object, ";");
+    	var st = new StringTokenizer(object, SEPARATOR);
     	
     	if(st.hasMoreElements()) {
     		tfObjectName.setText(st.nextToken());
@@ -380,14 +394,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     private boolean setVisible(MouseEvent e, String riddleSelected) {
-    	if((e.getEventType() == MouseEvent.MOUSE_CLICKED) && riddleSelected != null){
-    		return true;
-    	}
-    	return false;
+    	return (e.getEventType() == MouseEvent.MOUSE_CLICKED) && riddleSelected != null;
     	
     }
 	@Override
-	void start(String param) {
+	void start(Object param) {
 		
 	}
 }
