@@ -72,7 +72,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					Button button = (Button) pane.getChildren().get(1);
 					button.setOnAction(e -> {
 						try {
-							changeScene(Pages.MANAGE_MAP, mapBean.getName());
+							changeScene(Pages.MANAGE_MAP, mapBean.getId());
 						} catch (PageNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

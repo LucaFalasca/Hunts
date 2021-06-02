@@ -14,14 +14,14 @@ import logic.model.entity.Zone;
 
 public class ManageMapControl {
 	
-	public void save(String username, MapBean bean) {
+	public int save(String username, MapBean bean) {
 		int id = bean.getId();
 		String name = bean.getName();
 		String imagePath = bean.getImage();
 		List<ZoneBean> zonesBean = bean.getZones();
 		
-		Map map = new Map(name);
-		
+		Map map = new Map();
+		map.setName(name);
 		if(id != -1)				map.setId(id);
 		if(imagePath != null) 			map.setImagePath(imagePath);
 		if(!zonesBean.isEmpty()) {
@@ -48,18 +48,16 @@ public class ManageMapControl {
 			
 			map.setZones(zones);
 		}
-		
 		MapDao dao = new MapDao();
-		dao.saveMap(username, map);
-		
-		
+		return dao.saveMap(username, map);
 	}
 	
-	public MapBean getMapByName(String username, String name) {
+	public MapBean getMapById(String username, int id) {
 		MapDao dao = new MapDao();
-		Map map = dao.getMapByName(username, name);
+		Map map = dao.getMapById(username, id);
 		
 		MapBean bean = new MapBean();
+		bean.setId(id);
 		bean.setName(map.getName());
 		if(map.getImagePath() != null) {
 			bean.setImage(map.getImagePath());
@@ -87,6 +85,7 @@ public class ManageMapControl {
 		
 		for(Map map : maps) {
 			MapBean bean = new MapBean();
+			bean.setId(map.getId());
 			bean.setName(map.getName());
 			bean.setImage(map.getImagePath());
 			beans.add(bean);

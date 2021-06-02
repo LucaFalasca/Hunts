@@ -45,15 +45,16 @@ public class ManageMapGController extends ControllerWithLogin{
     
     @Override
 	void start(Object param) {
-    	String par = (String) param;
-		if(par != null) {
+		if(param != null) {
+			Integer par = (int) param;
 			ManageMapControl controller = new ManageMapControl();
 			try {
-				MapBean map = controller.getMapByName(getUsername(), par);
+				MapBean map = controller.getMapById(getUsername(), (int) par);
+				idMap = map.getId();
 				if(map.getImage() != null) {
 					setImageByPath(map.getImage());
 				}
-				tfMapName.setText(par);
+				tfMapName.setText(map.getName());
 				if(map.getZones() != null) {
 					zones = map.getZones();
 					for(ZoneBean zone : zones) {
@@ -158,13 +159,12 @@ public class ManageMapGController extends ControllerWithLogin{
     @FXML
     void handleSave(ActionEvent event) {
     	ManageMapControl control = new ManageMapControl();
-    	
     	MapBean bean = new MapBean(idMap, getMapName(), zones);
     	if(pathImage != null) {
     		bean.setImage(pathImage);
     	}
     	try {
-			control.save(getUsername(), bean);
+			idMap = control.save(getUsername(), bean);
 		} catch (UsernameNotLoggedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

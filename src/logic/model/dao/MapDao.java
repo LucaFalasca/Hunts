@@ -13,15 +13,14 @@ import logic.model.entity.Zone;
 
 public class MapDao {
 	
-	public Map getMapByName(String username, String nameMap) {
+	public Map getMapById(String username, int idMap) {
 		Connection conn = Database.getConnection();
-		
-		Map map = new Map(nameMap);
-		try(CallableStatement stmt = conn.prepareCall("call get_map_by_name(?, ?);");) {
+		Map map = new Map(idMap);
+		try(CallableStatement stmt = conn.prepareCall("call get_map_by_id(?, ?);");) {
 			
 			//Input Param
 			stmt.setString(1, username);
-			stmt.setString(2, nameMap);
+			stmt.setInt(2, idMap);
 			
 			boolean haveResult = stmt.execute();
 			int i = 0;
@@ -32,7 +31,9 @@ public class MapDao {
 					ResultSet rs = stmt.getResultSet();
 					
 					while (rs.next()) {
+						String name = rs.getString("Nome");
 				        String image = rs.getString("Immagine");
+				        map.setName(name);
 				        map.setImagePath(image);
 				      }
 				}
@@ -75,21 +76,33 @@ public class MapDao {
 		return map;
 	}
 	
-	public void saveMap(String username, Map map) {
+	public int saveMap(String username, Map map) {
 		Connection conn = Database.getConnection();
-		try(CallableStatement stmt = conn.prepareCall("call save_map(?, ?, ?);");) {
+		int id = 0;
+		try(CallableStatement stmt = conn.prepareCall("call save_map(?, ?, ?, ?);");) {
 			
 			//Input Param
-			stmt.setString(1, username);
-			stmt.setString(2, map.getName());
-			stmt.setString(3, map.getImagePath());
+			if(map.getId() != 0) {
+				stmt.setInt(1, map.getId());
+			}
+				
+			stmt.setString(2, username);
+			stmt.setString(3, map.getName());
+			stmt.setString(4, map.getImagePath());
 			
 			boolean haveResult = stmt.execute();
 			
 			while(haveResult) {
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+			      }
 				haveResult = stmt.getMoreResults();
 			}
 			
+			//Output Param
+			id = stmt.getInt(1);
+			System.out.println(id);
 			stmt.close();
 		}
 		catch(Exception e) {
@@ -99,16 +112,15 @@ public class MapDao {
 			List<Zone> zones = map.getZones();
 			int i = 0;
 			for(Zone zone : zones) {
-				try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?, ?);");) {
+				try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?);");) {
 					
 					//Input Param
 					stmt.setString(1, zone.getName() + i++);
-					stmt.setString(2, map.getName());
-					stmt.setString(3, username);
-					stmt.setInt(4, (int) zone.getStartX());
-					stmt.setInt(5, (int) zone.getStartY());
-					stmt.setInt(6, (int) zone.getEndX());
-					stmt.setInt(7, (int) zone.getEndY());
+					stmt.setInt(2, id);
+					stmt.setInt(3, (int) zone.getStartX());
+					stmt.setInt(4, (int) zone.getStartY());
+					stmt.setInt(5, (int) zone.getEndX());
+					stmt.setInt(6, (int) zone.getEndY());
 					int shape = 0;
 					switch(zone.getType()) {
 						case RECTANGLE: shape = 1;
@@ -116,7 +128,7 @@ public class MapDao {
 						case OVAL: shape = 2;
 						default: shape = 1;
 					}
-					stmt.setInt(8, shape);
+					stmt.setInt(7, shape);
 					
 					boolean haveResult = stmt.execute();
 					
@@ -131,6 +143,7 @@ public class MapDao {
 				}
 			}
 		}
+		return id;
 	}
 	
 	public List<Map> getMapList(String username){
@@ -149,11 +162,13 @@ public class MapDao {
 				ResultSet rs = stmt.getResultSet();
 				while (rs.next()) {
 					
+					int id = rs.getInt("IdMap");
 			        String nomeMappa = rs.getString("Nome");
 			        String pathImmagine = rs.getString("Immagine");
 			        
-			        Map map = new Map(nomeMappa);
-			        //setImmagine
+			        Map map = new Map(id);
+			        map.setName(nomeMappa);
+			        map.setImagePath(pathImmagine);
 			        
 			        maps.add(map);
 			      }

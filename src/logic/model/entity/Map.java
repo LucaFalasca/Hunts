@@ -11,9 +11,12 @@ public class Map {
 	private String imagePath;
 	private List<Zone> zones;
 	
-	public Map(String name) {
-		super();
-		this.name = name;
+	public Map(int id) {
+		this.id = id;
+	}
+	
+	public Map() {
+		
 	}
 	public String getName() {
 		return name;
