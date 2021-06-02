@@ -144,7 +144,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void initialize() {
     	
-    	int idHunt = manageHuntControl.createHunt();
+    	int idHunt = -1;
     	huntBean.setIdHunt(idHunt);
     	
     	lbRiddle.setText("Riddle " + rdlList.size());
@@ -363,7 +363,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     void handleSave(ActionEvent event) {
-
+		
     }
     
     @FXML

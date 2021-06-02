@@ -142,11 +142,11 @@ public class ManageHuntControl {
 		return true;
 	}
 
-	public int createHunt() {
+	public int saveHunt(Hunt hunt, String username) {
 		
 		HuntDao huntDao = new HuntDao();
 		
-		return huntDao.createHunt();
+		return huntDao.saveHunt(hunt, username);
 		
 	}
 	
