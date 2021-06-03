@@ -69,10 +69,24 @@ public class MainMenuGController extends ControllerWithLogin{
 						e.printStackTrace();
 					}
 					Label label = (Label) pane.getChildren().get(0);
-					Button button = (Button) pane.getChildren().get(1);
-					button.setOnAction(e -> {
+					Button buttonEdit = (Button) pane.getChildren().get(1);
+					buttonEdit.setOnAction(e -> {
 						try {
 							changeScene(Pages.MANAGE_MAP, mapBean.getId());
+						} catch (PageNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					});
+					
+					Button buttonDelete = (Button) pane.getChildren().get(2);
+					buttonDelete.setOnAction(e -> {
+						try {
+							controllerMaps.deleteMap(mapBean.getId(), getUsername());
+							changeScene(Pages.MAIN_MENU);
+						} catch (UsernameNotLoggedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						} catch (PageNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

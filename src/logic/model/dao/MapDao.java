@@ -182,4 +182,25 @@ public class MapDao {
 		
 		return maps;
 	}
+	
+	public void deleteMap(int id, String username) {
+		Connection conn = Database.getConnection();
+		
+		List<Map> maps = new ArrayList<Map>();
+		try(CallableStatement stmt = conn.prepareCall("call delete_map_by_id(?, ?);")) {
+			
+			//Input Param
+			stmt.setInt(1, id);
+			stmt.setString(2, username);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				haveResult = stmt.getMoreResults();
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

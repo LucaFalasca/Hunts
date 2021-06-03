@@ -99,5 +99,9 @@ public class ManageMapControl {
 		return uploadFileControl.uploadFile(file);
 	}
 	
+	public void deleteMap(int id, String username) {
+		MapDao dao = new MapDao();
+		dao.deleteMap(id, username);
+	}
 	
 }
