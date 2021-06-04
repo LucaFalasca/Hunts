@@ -13,8 +13,6 @@ public class HuntBean {
 	
 	private List<ObjectBean> object = new ArrayList<>();
 	
-	private List<Integer> index = new ArrayList<>();
-	
 	private MapBean map;
 	
 	public int getIdHunt() {
@@ -47,14 +45,6 @@ public class HuntBean {
 
 	public void setObject(List<ObjectBean> object) {
 		this.object = object;
-	}
-
-	public List<Integer> getIndex() {
-		return index;
-	}
-
-	public void setIndex(List<Integer> index) {
-		this.index = index;
 	}
 
 	public MapBean getMap() {

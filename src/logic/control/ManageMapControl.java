@@ -93,6 +93,7 @@ public class ManageMapControl {
 		
 		return beans;
 	}
+
 	
 	public String uploadFile(File file) {
 		UploadFileControl uploadFileControl = new UploadFileControl();

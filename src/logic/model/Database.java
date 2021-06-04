@@ -12,7 +12,7 @@ public abstract class Database {
 	private static Users user;
 	private static String name = "root";
     private static String pass = "root";
-    private static String dbUrl = "jdbc:mysql://localhost:3306/hunt_db";
+    private static String dbUrl = "jdbc:mysql://127.0.0.1:3306/hunt_db";
     private static String driverClassName = "com.mysql.cj.jdbc.Driver";
 	
 	public static Connection getConnection() {

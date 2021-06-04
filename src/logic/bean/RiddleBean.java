@@ -13,6 +13,8 @@ public class RiddleBean {
 	private List<String> clue = new ArrayList<>();
 	
 	private String objectName;
+	
+	private String zoneName;
 
 	public int getNumRidle() {
 		return numRiddle;
@@ -61,6 +63,15 @@ public class RiddleBean {
 	public void setObjectName(String objectName) {
 		this.objectName = objectName;
 	}
+
+	public String getZoneName() {
+		return zoneName;
+	}
+
+	public void setZoneName(String zoneName) {
+		this.zoneName = zoneName;
+	}
+	
 	
 	
 }

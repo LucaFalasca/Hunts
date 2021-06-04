@@ -18,6 +18,7 @@ public class LoginDao {
 			//Input Param
 			stmt.setString(1, username);
 			stmt.setString(2, password);
+			stmt.setBoolean(3, false);
 			
 			boolean haveResult = stmt.execute();
 			

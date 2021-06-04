@@ -6,7 +6,8 @@ public enum Pages {
 	MAIN_MENU,
 	LOGIN,
 	MANAGE_HUNT,
-	MANAGE_MAP;
+	MANAGE_MAP,
+	CHOOSE_MAP;
 	
 	public String getPath() throws PageNotFoundException {
 		switch(this) {
@@ -14,6 +15,7 @@ public enum Pages {
 			case LOGIN: 		return "/logic/view/desktop/layout/LoginLayout.fxml";
 			case MANAGE_HUNT: 	return "/logic/view/desktop/layout/ManageHunt.fxml";
 			case MANAGE_MAP: 	return "/logic/view/desktop/layout/ManageMapLayout.fxml";
+			case CHOOSE_MAP:    return "/logic/view/desktop/layout/ChooseMap.fxml";
 			default:
 				throw new PageNotFoundException();
 		}
@@ -25,6 +27,7 @@ public enum Pages {
 			case LOGIN: 		return "";
 			case MANAGE_HUNT: 	return "";
 			case MANAGE_MAP: 	return "";
+			case CHOOSE_MAP:    return "";
 			default:
 				throw new PageNotFoundException();
 		}

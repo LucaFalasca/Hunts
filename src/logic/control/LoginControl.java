@@ -9,7 +9,7 @@ public class LoginControl {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
 		
-		LoginDao dao = new LoginDao();
+		var dao = new LoginDao();
 		return dao.login(username, password);
 	}
 }

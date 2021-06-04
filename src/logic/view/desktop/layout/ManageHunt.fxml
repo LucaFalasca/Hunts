@@ -110,7 +110,7 @@
                         <ImageView fx:id="imgMap" fitHeight="348.0" fitWidth="685.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </VBox>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#handleSave" prefHeight="29.0" prefWidth="69.0" text="Save" />
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" onMouseClicked="#handleSave" prefHeight="29.0" prefWidth="69.0" text="Save" />
                </children>
             </VBox>
             <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="627.0" text="Hunt">
