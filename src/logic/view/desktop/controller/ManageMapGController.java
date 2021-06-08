@@ -44,7 +44,7 @@ public class ManageMapGController extends ControllerWithLogin{
     private String pathImage;
     
     @Override
-	void start(Object param) {
+	void start(String arg, Object param) {
 		if(param != null) {
 			Integer par = (int) param;
 			ManageMapControl controller = new ManageMapControl();

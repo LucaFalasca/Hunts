@@ -47,7 +47,7 @@ public class MainMenuGController extends ControllerWithLogin{
     private AnchorPane apMaps;
     
     @Override
-	void start(Object param) {
+	void start(String arg, Object param) {
 		if(isLogged()) {
 			try {
 				lbUsername.setText(getUsername());
@@ -72,7 +72,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					Button buttonEdit = (Button) pane.getChildren().get(1);
 					buttonEdit.setOnAction(e -> {
 						try {
-							changeScene(Pages.MANAGE_MAP, mapBean.getId());
+							changeScene(Pages.MANAGE_MAP, "map", mapBean.getId());
 						} catch (PageNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

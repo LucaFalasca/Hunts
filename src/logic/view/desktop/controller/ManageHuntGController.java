@@ -160,7 +160,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
 	
 	@Override
-	void start(Object param) {
+	void start(String arg, Object param) {
 		huntBean.setIdHunt(-1);
     	
     	lbRiddle.setText("Riddle " + rdlList.size());
@@ -171,10 +171,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     	tfClueText.add(tfClueText1);
     	tfClueText.add(tfClueText2);
     	tfClueText.add(tfClueText3);
-    	
-    	idMap = (int) param;
-    	if(idMap != -1) {
-    		setMap();
+    	if(param !=  null) {	
+	    	idMap = (int) param;
+	    	if(idMap != -1) {
+	    		setMap();
+	    	}
     	}
     	
 	}
@@ -301,12 +302,9 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleCreateMap(ActionEvent event) throws PageNotFoundException {
+    void handleCreateMap(ActionEvent event) throws PageNotFoundException, UsernameNotLoggedException {
     	huntBean.setIdHunt(save());
-    	var parameters = new ArrayList<String>();
-    	parameters.add("hunt");
-    	parameters.add(String.valueOf(huntBean.getIdHunt()));
-    	changeScene(Pages.MANAGE_MAP, parameters);
+    	changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
     	
     }
 
@@ -434,12 +432,12 @@ public class ManageHuntGController extends ControllerWithLogin{
     
 
     @FXML
-    void handleSave(MouseEvent event) {
+    void handleSave(MouseEvent event) throws UsernameNotLoggedException {
     	save();
     }
     
     @FXML
-    void handleFinish(ActionEvent event) throws PageNotFoundException {
+    void handleFinish(ActionEvent event) throws PageNotFoundException, UsernameNotLoggedException {
     	if(tfHuntName.getText().equals("")) {
     		save();
     		changeScene(Pages.MAIN_MENU);
@@ -476,15 +474,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
 	
-	private int save() {
+	private int save() throws UsernameNotLoggedException {
 		int idHunt = -1;
 		for(var i = 0; i < rdlList.size(); i++) {
 			var st = new StringTokenizer(rdlList.get(i), SEPARATOR);
     		
     		if(st.hasMoreElements()) {
     			var rb = new RiddleBean();
-    			
-    			rb.setNumRiddle(i);
     			
     			rb.setRiddle(st.nextToken());
     			
@@ -520,7 +516,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		huntBean.setRiddle(riddleBean);
 		huntBean.setObject(objectBean);
 		
-		manageHuntControl.addHunt();
+		manageHuntControl.saveHunt(huntBean, getUsername());
 		
 		return idHunt;
 		

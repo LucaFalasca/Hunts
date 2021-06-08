@@ -32,7 +32,7 @@ public class ChooseMapGController extends ControllerWithLogin{
     
 
 	@Override
-	void start(Object param) {
+	void start(String arg, Object param) {
 		List<MapBean> mapsList = null;
     	
     	var mpc = new ManageMapControl();

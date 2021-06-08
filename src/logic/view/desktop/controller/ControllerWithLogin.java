@@ -19,7 +19,7 @@ public abstract class ControllerWithLogin {
 	
 	private LogMachine logMachine;
 	
-	abstract void start(Object param);
+	abstract void start(String arg, Object param);
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -51,9 +51,9 @@ public abstract class ControllerWithLogin {
 		return logMachine.getUsername();
 	}
 	
-	protected void changeScene(Pages page, Object param) throws PageNotFoundException {
+	protected void changeScene(Pages page, String arg, Object param) throws PageNotFoundException {
 		if(page.needLogin() && !logMachine.isLogged()) {
-			changeScene(Pages.LOGIN, page.name());
+			changeScene(Pages.LOGIN, page.name(), null);
 		}
 		else {
 			try {
@@ -62,7 +62,7 @@ public abstract class ControllerWithLogin {
 				ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
 				controller.setLogMachine(logMachine);
 				controller.setStage(stage);
-				controller.start(param);
+				controller.start(arg, param);
 				stage.setScene(new Scene(root));
 				
 			} catch (IOException e) {
@@ -73,8 +73,7 @@ public abstract class ControllerWithLogin {
 	}
 	
 	protected void changeScene(Pages page) throws PageNotFoundException {
-		changeScene(page, null);
+		changeScene(page, null, null);
 	}
-	
-	
+
 }
