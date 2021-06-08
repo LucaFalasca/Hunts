@@ -37,11 +37,212 @@ public class HuntDao {
 		return idHunt;
 	}
 	
-	/*
+	
 	public Hunt getHuntById(int id, String username) {
+		Connection conn = Database.getConnection();
+		Hunt hunt = new Hunt();
 		
+		int mapId = -1;
+		List<Object> objects = new ArrayList<>();
+		List<Riddle> riddles = new ArrayList<>();
+		List<Integer> riddleNumbers = new ArrayList<>();
+		try(CallableStatement stmt = conn.prepareCall("call get_hunt_by_id(?, ?);");) {
+			
+			//Input Param
+			stmt.setInt(1, id);
+			stmt.setString(2, username);
+			
+			boolean haveResult = stmt.execute();
+			int i = 1;
+			
+			
+			while(haveResult) {
+				ResultSet rs = stmt.getResultSet();
+				
+				switch(i) {
+				case 1:
+					while(rs.next()) {
+						String nome = rs.getString(1);
+						boolean indoor = rs.getBoolean(2);
+						mapId = rs.getInt(3);
+						hunt.setHuntName(nome);
+						//hunt.setIndoor(indoor);
+					}
+					break;
+				case 2:
+					while(rs.next()) {
+						String nome = rs.getString(1);
+						String pathImage = rs.getString(2);
+						String descrizione = rs.getString(3);
+						String zona = rs.getString(4);
+						
+						Object ob = new Object();
+						ob.setName(nome);
+						ob.setPath(pathImage);
+						ob.setDescription(descrizione);
+						//ob.setZone(zona);
+						
+						objects.add(ob);
+					}
+					break;
+				case 3:
+					while(rs.next()) {
+						int numero = rs.getInt(1);
+						String domanda = rs.getString(2);
+						String risposta = rs.getString(3);
+						String oggettoPremio = rs.getString(4);
+						String oggettoRisposta = rs.getString(5);
+						String zona = rs.getString(6);
+						
+						Riddle riddle = new Riddle();
+						riddle.setRiddleText(domanda);
+						riddle.setSolutionText(risposta);
+						riddle.setReward(oggettoPremio);
+						//riddle.setZone(zona);
+						//riddle.setSolutionObject(oggettoRisposta);
+						riddleNumbers.add(numero);
+						riddles.add(riddle);
+					}
+					break;
+					default:
+						
+				}
+				
+				haveResult = stmt.getMoreResults();
+				i++;
+			}
+			stmt.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < riddleNumbers.size(); i++) {
+			riddles.get(i).setClueList(getClueByRiddle(riddleNumbers.get(i), hunt.getIdHunt(), username));
+		}
+		
+		if(mapId != -1) {
+			MapDao mapDao = new MapDao();
+			Map map = mapDao.getMapById(username, mapId);
+			//hunt.setMap(map);
+		}
+		
+		hunt.setObjectList(objects);
+		hunt.setRiddleList(riddles);
+		
+		
+		return hunt;
 	}
-	*/
+	
+	
+	private List<String> getClueByRiddle(int riddle, int hunt, String username){
+		Connection conn = Database.getConnection();
+		List<String> clues = new ArrayList<>();
+		
+		
+		try (CallableStatement stmt = conn.prepareCall("call get_clue_by_riddle(?, ?, ?)")){
+			
+			//Input param
+			stmt.setInt(1, riddle);
+			stmt.setInt(2, hunt);
+			stmt.setString(3, username);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				haveResult = stmt.getMoreResults();
+				ResultSet rs = stmt.getResultSet();
+				while(rs.next()) {
+					int numero = rs.getInt(1);
+					String testo = rs.getString(2);
+					
+					clues.add(testo);
+				}
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return clues;
+	}
+	
+	public List<Hunt> getHuntList(String username){
+		Connection conn = Database.getConnection();
+		
+		List<Hunt> hunts = new ArrayList<>();
+		try(CallableStatement stmt = conn.prepareCall("call get_hunts(?);")) {
+			
+			//Input Param
+			stmt.setString(1, username);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+					int codice = rs.getInt(1);
+			        String nomeHunt = rs.getString(2);
+			        boolean indoor = rs.getBoolean(3);
+			        int idMap = rs.getInt(4);
+			        
+			        Hunt hunt = new Hunt();
+			        hunt.setIdHunt(codice);
+			        hunt.setHuntName(nomeHunt);
+			        //hunt.setIndoor(indoor);
+			        
+			        hunts.add(hunt);
+			      }
+				haveResult = stmt.getMoreResults();
+			}
+			stmt.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return hunts;
+	}
+	
+	public List<Hunt> getHuntList(){
+		Connection conn = Database.getConnection();
+		
+		List<Hunt> hunts = new ArrayList<>();
+		try(CallableStatement stmt = conn.prepareCall("call get_all_hunts();")) {
+			
+			//Input Param
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				
+				ResultSet rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+					int codice = rs.getInt(1);
+					String creatore_hunt = rs.getString(2);
+			        String nomeHunt = rs.getString(3);
+			        boolean indoor = rs.getBoolean(4);
+			        int idMap = rs.getInt(5);
+			        
+			        Hunt hunt = new Hunt();
+			        hunt.setIdHunt(codice);
+			        hunt.setHuntName(nomeHunt);
+			        //hunt.setIndoor(indoor);
+			        
+			        hunts.add(hunt);
+			      }
+				haveResult = stmt.getMoreResults();
+			}
+			stmt.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return hunts;
+	}
 	
 	private int addHunt(int codice, String nome, String username, boolean indoor, int idMap) {
 		Connection conn = Database.getConnection();
