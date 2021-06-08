@@ -18,11 +18,11 @@ public class Main extends Application {
 		try {
 			primaryStage.setMinWidth(1280);
 			primaryStage.setMinHeight(720);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(Pages.MAIN_MENU.getPath()));
+			var loader = new FXMLLoader(getClass().getResource(Pages.MAIN_MENU.getPath()));
 			Parent root = (Parent)loader.load();
 			ControllerWithLogin controller = loader.getController();
 			controller.setStage(primaryStage);
-			Scene scene = new Scene(root);
+			var scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
