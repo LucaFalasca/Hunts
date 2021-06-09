@@ -56,8 +56,10 @@ public class MapDao {
 				        zone.setEndY(endY);
 				        switch(shape){
 				        	case "RECT": zone.setType(Type.RECTANGLE);
-				        	break;
+				        		break;
 				        	case "OVAL": zone.setType(Type.OVAL);
+				        		break;
+				        	default: zone.setType(Type.RECTANGLE);
 				        }
 				        
 				        zones.add(zone);
