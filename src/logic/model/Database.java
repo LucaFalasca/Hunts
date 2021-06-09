@@ -9,11 +9,15 @@ import java.util.Scanner;
 
 import logic.exception.NotConnectedException;
 
-public abstract class Database {
-
+public class Database {
+	
 	private static Connection conn;
 	private static Users user;
 	
+	private Database() {
+		
+	}
+
 	public static Connection getConnection() {
 		if(conn == null) {
 			conn = connect(Users.NOT_LOGGED);
@@ -37,8 +41,8 @@ public abstract class Database {
 	}
 	
 	private static Connection connect(Users user) {
-		Scanner myReader = null;
-		try {
+		File fileConfig = new File("db_conf.txt");
+		try (Scanner myReader = new Scanner(fileConfig)){
 			switch(user) {
 				case NOT_LOGGED:
 					Database.user = Users.NOT_LOGGED;
@@ -50,8 +54,6 @@ public abstract class Database {
 					Database.user = Users.NOT_LOGGED;
 			}
 			String conf[] = new String[4];
-			File fileConfig = new File("db_conf.txt");
-			myReader = new Scanner(fileConfig);
 			int i = 0;
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
@@ -66,8 +68,6 @@ public abstract class Database {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			myReader.close();
 		}
 		return conn;
 		
