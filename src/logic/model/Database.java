@@ -53,7 +53,7 @@ public class Database {
 				default:
 					Database.user = Users.NOT_LOGGED;
 			}
-			String conf[] = new String[4];
+			String[] conf = new String[4];
 			int i = 0;
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
