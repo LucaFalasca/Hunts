@@ -35,10 +35,12 @@ public class ManageMapGController extends ControllerWithLogin{
     @FXML
     private TextField tfMapName;
     
-    private GraphicsContext gcDraw, gcTemp;
+    private GraphicsContext gcDraw;
+    private GraphicsContext gcTemp;
     private DrawMachine drawMachine;
     private boolean onDrawing;
-    private double startX, startY;
+    private double startX;
+    private double startY;
     private int idMap = -1;
     private List<ZoneBean> zones;
     private String pathImage;
@@ -46,10 +48,10 @@ public class ManageMapGController extends ControllerWithLogin{
     @Override
 	void start(String arg, Object param) {
 		if(param != null) {
-			Integer par = (int) param;
-			ManageMapControl controller = new ManageMapControl();
+			var par = (int) param;
+			var controller = new ManageMapControl();
 			try {
-				MapBean map = controller.getMapById(getUsername(), (int) par);
+				var map = controller.getMapById(getUsername(), par);
 				idMap = map.getId();
 				if(map.getImage() != null) {
 					setImageByPath(map.getImage());
@@ -72,7 +74,6 @@ public class ManageMapGController extends ControllerWithLogin{
 				}
 				
 			} catch (UsernameNotLoggedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -87,27 +88,27 @@ public class ManageMapGController extends ControllerWithLogin{
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
         gcTemp.setFill(Color.web("0x61823e", 0.5));
         onDrawing = false;
-        zones = new ArrayList<ZoneBean>();
+        zones = new ArrayList<>();
     }
     
     
     @FXML
     void handleUploadFile(ActionEvent event) {
-    	FileChooser fileChooser = new FileChooser();
+    	var fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(
     			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")/*,
     			new ExtensionFilter("All", "*.*")*/
     			);
-    	File selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
-    	ManageMapControl controller = new ManageMapControl();
+    	var selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
+    	var controller = new ManageMapControl();
     	pathImage = controller.uploadFile(selectedFile);
     	
     	setImageByPath(pathImage);
     }
     
     private void setImageByPath(String path) {
-    	Image img = new Image("file:" + path, ivMap.getFitWidth(), ivMap.getFitHeight(), false, false);
+    	var img = new Image("file:" + path, ivMap.getFitWidth(), ivMap.getFitHeight(), false, false);
     	ivMap.setImage(img);
     }
     
@@ -158,15 +159,14 @@ public class ManageMapGController extends ControllerWithLogin{
     //Save
     @FXML
     void handleSave(ActionEvent event) {
-    	ManageMapControl control = new ManageMapControl();
-    	MapBean bean = new MapBean(idMap, getMapName(), zones);
+    	var control = new ManageMapControl();
+    	var bean = new MapBean(idMap, getMapName(), zones);
     	if(pathImage != null) {
     		bean.setImage(pathImage);
     	}
     	try {
 			idMap = control.save(getUsername(), bean);
 		} catch (UsernameNotLoggedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -202,7 +202,11 @@ public class ManageMapGController extends ControllerWithLogin{
     	double rangeX = Math.abs(x2 - x1);
     	double rangeY = Math.abs(y2 - y1);
     	for(ZoneBean zone : zones) {
-    		double xz1, xz2, yz1, yz2;
+    		double xz1;
+    		double xz2;
+    		double yz1;
+    		double yz2;
+    		
     		xz1 = zone.getStartX();
     		xz2 = zone.getEndX();
     		yz1 = zone.getStartY();

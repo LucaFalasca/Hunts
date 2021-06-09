@@ -328,7 +328,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleCreateMap(ActionEvent event) throws PageNotFoundException, UsernameNotLoggedException {
+    void handleCreateMap(ActionEvent event) throws PageNotFoundException {
     	huntBean.setIdHunt(save());
     	changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
     	
@@ -450,12 +450,12 @@ public class ManageHuntGController extends ControllerWithLogin{
     
 
     @FXML
-    void handleSave(MouseEvent event) throws UsernameNotLoggedException {
+    void handleSave(MouseEvent event) {
     	save();
     }
     
     @FXML
-    void handleFinish(ActionEvent event) throws PageNotFoundException, UsernameNotLoggedException {
+    void handleFinish(ActionEvent event) throws PageNotFoundException {
     	if(tfHuntName.getText().equals("")) {
     		save();
     		changeScene(Pages.MAIN_MENU);
@@ -474,7 +474,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	tfRiddleSolution.setText("");
     	
-    	for(int i = 0; i < tfClueText.size(); i++)
+    	for(var i = 0; i < tfClueText.size(); i++)
     		tfClueText.get(i).setText("");
 
     }
@@ -489,7 +489,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
 	
-	private int save() throws UsernameNotLoggedException {
+	private int save() {
 		int idHunt = -1;
 		for(var i = 0; i < rdlList.size(); i++) {
 			var st = new StringTokenizer(rdlList.get(i), SEPARATOR);
