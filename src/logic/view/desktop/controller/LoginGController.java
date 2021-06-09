@@ -36,6 +36,7 @@ public class LoginGController extends ControllerWithLogin{
     		case "NEXT_PAGE": 
     			pageAfterLogin = Pages.valueOf((String) param);
     			break;
+			default:
     	}
     	
 		lblError.setVisible(false);

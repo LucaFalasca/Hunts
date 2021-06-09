@@ -8,11 +8,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
@@ -61,41 +63,25 @@ public class MainMenuGController extends ControllerWithLogin{
 				List<MapBean> mapBeans = controllerMaps.getAllMaps(getUsername());
 				
 				for(MapBean mapBean : mapBeans) {
-					AnchorPane pane = null;
 					try {
-						pane = FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ItemMapList.fxml"));
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Pane pane = null;
+					pane = FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ItemMapList.fxml"));
+					
 					Label label = (Label) pane.getChildren().get(0);
 					Button buttonEdit = (Button) pane.getChildren().get(1);
-					buttonEdit.setOnAction(e -> {
-						try {
-							changeScene(Pages.MANAGE_MAP, "map", mapBean.getId());
-						} catch (PageNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					});
+					buttonEdit.setOnAction(e -> editMapButton(mapBean.getId()));
 					
 					Button buttonDelete = (Button) pane.getChildren().get(2);
-					buttonDelete.setOnAction(e -> {
-						try {
-							controllerMaps.deleteMap(mapBean.getId(), getUsername());
-							changeScene(Pages.MAIN_MENU);
-						} catch (UsernameNotLoggedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (PageNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					});
+					buttonDelete.setOnAction(e -> deleteMapButton(mapBean.getId()));
 					
 					label.setText(mapBean.getName());
+					mapsList.add((AnchorPane) pane);
+					}
+					catch(IOException e) {
+						e.printStackTrace();
+					}
 					
-					mapsList.add(pane);
+					
 				}
 				
 				
@@ -105,9 +91,27 @@ public class MainMenuGController extends ControllerWithLogin{
 		}
 	}
     
-    @FXML
-    void initialize() {
-    	
+    private void editMapButton(int id) {
+    	try {
+			changeScene(Pages.MANAGE_MAP, "map", id);
+		} catch (PageNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void deleteMapButton(int id) {
+    	var controllerMaps = new ManageMapControl();
+    	try {
+	    	controllerMaps.deleteMap(id, getUsername());
+			changeScene(Pages.MAIN_MENU);
+    	}
+    	catch(PageNotFoundException e) {
+    		e.printStackTrace();
+    	} catch (UsernameNotLoggedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     
