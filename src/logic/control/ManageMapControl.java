@@ -27,7 +27,7 @@ public class ManageMapControl {
 			List<Zone> zones = new ArrayList<>();
 			for(ZoneBean zb : zonesBean) {
 				Type type = null;
-				switch(zb.getType()) {
+				switch(zb.getShape()) {
 					case "RectangleState":
 						type = Type.RECTANGLE;
 						break;
@@ -37,11 +37,11 @@ public class ManageMapControl {
 					default:
 						type = Type.RECTANGLE;	
 				}
-				zones.add(new Zone(zb.getName(),
-						zb.getStartX(),
-						zb.getStartY(),
-						zb.getEndX(),
-						zb.getEndX(),
+				zones.add(new Zone(zb.getNameZone(),
+						zb.getX1(),
+						zb.getY1(),
+						zb.getX2(),
+						zb.getX2(),
 						type));
 			}
 			

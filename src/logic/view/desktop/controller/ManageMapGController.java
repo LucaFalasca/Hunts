@@ -60,7 +60,7 @@ public class ManageMapGController extends ControllerWithLogin{
 				if(map.getZones() != null) {
 					zones = map.getZones();
 					for(ZoneBean zone : zones) {
-						switch(zone.getType()) {
+						switch(zone.getShape()) {
 							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
 								break;
 							case "OVAL" : drawMachine.setState(OvalState.getInstance());
@@ -69,7 +69,7 @@ public class ManageMapGController extends ControllerWithLogin{
 								drawMachine.setState(RectangleState.getInstance());
 						}
 						
-						drawMachine.draw(gcDraw, zone.getStartX(), zone.getStartY(), zone.getEndX(), zone.getEndY());
+						drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
 					}
 				}
 				
@@ -207,10 +207,10 @@ public class ManageMapGController extends ControllerWithLogin{
     		double yz1;
     		double yz2;
     		
-    		xz1 = zone.getStartX();
-    		xz2 = zone.getEndX();
-    		yz1 = zone.getStartY();
-    		yz2 = zone.getEndY();
+    		xz1 = zone.getX1();
+    		xz2 = zone.getX2();
+    		yz1 = zone.getY1();
+    		yz2 = zone.getY2();
     		if(		isBetween(x1, xz1, xz2) && isBetween(y1, yz1, yz2)  || 
     				isBetween(x1, xz1, xz2) && isBetween(y1 + rangeY, yz1, yz2) ||
     				isBetween(x1 + rangeX, xz1, xz2) && isBetween(y1, yz1, yz2) ||

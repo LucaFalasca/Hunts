@@ -1,71 +1,69 @@
 package logic.bean;
 
-import logic.enumeration.Type;
-
 public class ZoneBean {
 	
-	private String name;
-	private double startX;
-	private double startY;
-	private double endX;
-	private double endY;
-	private String type;
+	private String nameZone;
+	private double x1;
+	private double y1;
+	private double x2;
+	private double y2;
+	private String shape;
 	
-	public ZoneBean(String name, double startX, double startY, double endX, double endY, String type) {
-		this.name = name;
-		this.startX = startX;
-		this.startY = startY;
-		this.endX = endX;
-		this.endY = endY;
-		this.type = type;
+	public ZoneBean(String nameZone, double x1, double y1, double x2, double y2, String shape) {
+		this.nameZone = nameZone;
+		this.x1 = x1;
+		this.y1 = x2;
+		this.x2 = x2;
+		this.y2 = y2;
+		this.shape = shape;
 	}
 
-	public String getName() {
-		return name;
+	public String getNameZone() {
+		return nameZone;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameZone(String name) {
+		this.nameZone = name;
 	}
 
-	public double getStartX() {
-		return startX;
+	public double getX1() {
+		return x1;
 	}
 
-	public void setStartX(double startX) {
-		this.startX = startX;
+	public void setX1(double startX) {
+		this.x1 = startX;
 	}
 
-	public double getStartY() {
-		return startY;
+	public double getY1() {
+		return y1;
 	}
 
-	public void setStartY(double startY) {
-		this.startY = startY;
+	public void setY1(double startY) {
+		this.y1 = startY;
 	}
 
-	public double getEndX() {
-		return endX;
+	public double getX2() {
+		return x2;
 	}
 
-	public void setEndX(double endX) {
-		this.endX = endX;
+	public void setX2(double endX) {
+		this.x2 = endX;
 	}
 
-	public double getEndY() {
-		return endY;
+	public double getY2() {
+		return y2;
 	}
 
-	public void setEndY(double endY) {
-		this.endY = endY;
+	public void setY2(double endY) {
+		this.y2 = endY;
 	}
 
-	public String getType() {
-		return type;
+	public String getShape() {
+		return shape;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setShape(String type) {
+		this.shape = type;
 	}
 	
 	
