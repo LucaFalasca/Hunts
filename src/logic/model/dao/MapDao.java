@@ -124,8 +124,9 @@ public class MapDao {
 					int shape = 0;
 					switch(zone.getType()) {
 						case RECTANGLE: shape = 1;
-						break;
+							break;
 						case OVAL: shape = 2;
+							break;
 						default: shape = 1;
 					}
 					stmt.setInt(7, shape);
