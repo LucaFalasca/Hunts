@@ -53,7 +53,7 @@ public abstract class ControllerWithLogin {
 	
 	protected void changeScene(Pages page, String arg, Object param) throws PageNotFoundException {
 		if(page.needLogin() && !logMachine.isLogged()) {
-			changeScene(Pages.LOGIN, page.name(), null);
+			changeScene(Pages.LOGIN, "NEXT_PAGE", page.name());
 		}
 		else {
 			try {
@@ -73,7 +73,7 @@ public abstract class ControllerWithLogin {
 	}
 	
 	protected void changeScene(Pages page) throws PageNotFoundException {
-		changeScene(page, null, null);
+		changeScene(page, "", null);
 	}
 
 }
