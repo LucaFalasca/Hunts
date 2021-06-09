@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Riddle {
-private int nRiddle;
+	private int nRiddle;
 	
 	private String riddleText;
 	
@@ -13,6 +13,8 @@ private int nRiddle;
 	private List<String> clueList = new ArrayList<>();
 	
 	private String reward;
+	
+	private String zone;
 	
 	public int getnRiddle() {
 		return nRiddle;
@@ -61,4 +63,14 @@ private int nRiddle;
 	public void setReward(String reward) {
 		this.reward = reward;
 	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+	
+	
 }

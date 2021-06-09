@@ -11,6 +11,12 @@ public class Hunt {
 	private List<Object> objectList;
 	private List<Riddle> riddleList;
 	
+	private Map map;
+	
+	private String creatorName;
+	
+	private boolean indoor;
+	
 	public int getIdHunt() {
 		return idHunt;
 	}
@@ -42,6 +48,33 @@ public class Hunt {
 	public void setRiddleList(List<Riddle> riddleList) {
 		this.riddleList = riddleList;
 	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+
+	public boolean isIndoor() {
+		return indoor;
+	}
+
+	public void setIndoor(boolean indoor) {
+		this.indoor = indoor;
+	}
+
+	
+	
 	
 	
 }
