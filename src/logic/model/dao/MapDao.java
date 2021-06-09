@@ -114,39 +114,45 @@ public class MapDao {
 			List<Zone> zones = map.getZones();
 			int i = 0;
 			for(Zone zone : zones) {
-				try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?);");) {
-					
-					//Input Param
-					stmt.setString(1, zone.getName() + i++);
-					stmt.setInt(2, id);
-					stmt.setInt(3, (int) zone.getStartX());
-					stmt.setInt(4, (int) zone.getStartY());
-					stmt.setInt(5, (int) zone.getEndX());
-					stmt.setInt(6, (int) zone.getEndY());
-					int shape = 0;
-					switch(zone.getType()) {
-						case RECTANGLE: shape = 1;
-							break;
-						case OVAL: shape = 2;
-							break;
-						default: shape = 1;
-					}
-					stmt.setInt(7, shape);
-					
-					boolean haveResult = stmt.execute();
-					
-					while(haveResult) {
-						haveResult = stmt.getMoreResults();
-					}
-					
-					stmt.close();
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-				}
+				zone.setName(zone.getName() + i++);
+				add_zone_to_map(zone, id);
 			}
 		}
 		return id;
+	}
+	
+	private void add_zone_to_map(Zone zone, int idMap) {
+		Connection conn = Database.getConnection();
+		try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?);");) {
+			
+			//Input Param
+			stmt.setString(1, zone.getName());
+			stmt.setInt(2, idMap);
+			stmt.setInt(3, (int) zone.getStartX());
+			stmt.setInt(4, (int) zone.getStartY());
+			stmt.setInt(5, (int) zone.getEndX());
+			stmt.setInt(6, (int) zone.getEndY());
+			int shape = 0;
+			switch(zone.getType()) {
+				case RECTANGLE: shape = 1;
+					break;
+				case OVAL: shape = 2;
+					break;
+				default: shape = 1;
+			}
+			stmt.setInt(7, shape);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				haveResult = stmt.getMoreResults();
+			}
+			
+			stmt.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Map> getMapList(String username){
