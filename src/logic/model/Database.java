@@ -1,8 +1,11 @@
 package logic.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import logic.exception.NotConnectedException;
 
@@ -10,10 +13,6 @@ public abstract class Database {
 
 	private static Connection conn;
 	private static Users user;
-	private static String name = "root";
-    private static String pass = "root";
-    private static String dbUrl = "jdbc:mysql://127.0.0.1:3306/hunt_db";
-    private static String driverClassName = "com.mysql.cj.jdbc.Driver";
 	
 	public static Connection getConnection() {
 		if(conn == null) {
@@ -49,9 +48,22 @@ public abstract class Database {
 				default:
 					Database.user = Users.NOT_LOGGED;
 			}
-			Class.forName(driverClassName);
-			conn = DriverManager.getConnection(dbUrl, name, pass);
+			String conf[] = new String[4];
+			File fileConfig = new File("db_conf.txt");
+			Scanner myReader = new Scanner(fileConfig);
+			int i = 0;
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				conf[i] = data;
+				i++;
+			}
+		    myReader.close();
+			Class.forName(conf[1]);
+			conn = DriverManager.getConnection(conf[0], conf[2], conf[3]);
 		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

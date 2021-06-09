@@ -1,0 +1,4 @@
+jdbc:mysql://127.0.0.1:3306/hunt_db
+com.mysql.cj.jdbc.Driver
+root
+root
