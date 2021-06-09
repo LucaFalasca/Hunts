@@ -1,6 +1,6 @@
 package logic.model.entity;
 
-public class Object {
+public class RealObject {
 	
 	private String name;
 	

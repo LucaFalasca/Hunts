@@ -8,7 +8,7 @@ public class Hunt {
 	
 	private String huntName;
 	
-	private List<Object> objectList;
+	private List<RealObject> objectList;
 	private List<Riddle> riddleList;
 	
 	private Map map;
@@ -33,11 +33,11 @@ public class Hunt {
 		this.huntName = huntName;
 	}
 
-	public List<Object> getObjectList() {
+	public List<RealObject> getObjectList() {
 		return objectList;
 	}
 
-	public void setObjectList(List<Object> objectList) {
+	public void setObjectList(List<RealObject> objectList) {
 		this.objectList = objectList;
 	}
 

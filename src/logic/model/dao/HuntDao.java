@@ -9,7 +9,7 @@ import java.util.List;
 
 import logic.model.Database;
 import logic.model.entity.Hunt;
-import logic.model.entity.Object;
+import logic.model.entity.RealObject;
 import logic.model.entity.Riddle;
 
 public class HuntDao {
@@ -17,8 +17,8 @@ public class HuntDao {
 	public int saveHunt(Hunt hunt) {
 		int idHunt  = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
 		
-		List<Object> objects = hunt.getObjectList();
-		for(Object object : objects) {
+		List<RealObject> objects = hunt.getObjectList();
+		for(RealObject object : objects) {
 			addObjectToHunt(object.getName(), idHunt, null, object.getDescription(), null, -1);
 		}
 		
@@ -40,7 +40,7 @@ public class HuntDao {
 		var hunt = new Hunt();
 		
 		int mapId = -1;
-		List<Object> objects = new ArrayList<>();
+		List<RealObject> objects = new ArrayList<>();
 		List<Riddle> riddles = new ArrayList<>();
 		List<Integer> riddleNumbers = new ArrayList<>();
 		try(CallableStatement stmt = conn.prepareCall("call get_hunt_by_id(?, ?);");) {
@@ -70,7 +70,7 @@ public class HuntDao {
 						var pathImage = rs.getString(2);
 						var description = rs.getString(3);
 						
-						var ob = new Object();
+						var ob = new RealObject();
 						ob.setName(name);
 						ob.setPath(pathImage);
 						ob.setDescription(description);
