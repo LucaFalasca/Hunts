@@ -37,6 +37,7 @@ public abstract class Database {
 	}
 	
 	private static Connection connect(Users user) {
+		Scanner myReader = null;
 		try {
 			switch(user) {
 				case NOT_LOGGED:
@@ -50,14 +51,13 @@ public abstract class Database {
 			}
 			String conf[] = new String[4];
 			File fileConfig = new File("db_conf.txt");
-			Scanner myReader = new Scanner(fileConfig);
+			myReader = new Scanner(fileConfig);
 			int i = 0;
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
 				conf[i] = data;
 				i++;
 			}
-		    myReader.close();
 			Class.forName(conf[1]);
 			conn = DriverManager.getConnection(conf[0], conf[2], conf[3]);
 		} catch (ClassNotFoundException | SQLException e) {
@@ -66,6 +66,8 @@ public abstract class Database {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			myReader.close();
 		}
 		return conn;
 		

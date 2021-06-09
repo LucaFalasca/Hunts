@@ -27,6 +27,7 @@ public class UploadFileControl {
 		File file = new File(location);
 		FileOutputStream outputStream = new FileOutputStream(file.getAbsolutePath());
 		outputStream.write(data);
+		outputStream.close();
 	}
 	
 }
