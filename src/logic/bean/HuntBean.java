@@ -7,6 +7,8 @@ public class HuntBean {
 	
 	private int idHunt;
 	
+	private String username;
+	
 	private String huntName;
 	
 	private List<RiddleBean> riddle = new ArrayList<>();
@@ -53,6 +55,14 @@ public class HuntBean {
 
 	public void setMap(MapBean map) {
 		this.map = map;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	

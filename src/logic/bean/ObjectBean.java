@@ -8,6 +8,12 @@ public class ObjectBean {
 
 	private String description;
 	
+	public ObjectBean(String name, String description, String path) {
+		this.name = name;
+		this.description = description;
+		this.path = path;
+	}
+
 	public String getObject() {
 		return name;
 	}

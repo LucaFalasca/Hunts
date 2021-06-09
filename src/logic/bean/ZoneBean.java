@@ -1,5 +1,7 @@
 package logic.bean;
 
+import logic.enumeration.Type;
+
 public class ZoneBean {
 	
 	private String name;

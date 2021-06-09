@@ -161,9 +161,31 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	@Override
 	void start(String arg, Object param) {
-		huntBean.setIdHunt(-1);
-    	
-    	lbRiddle.setText("Riddle " + rdlList.size());
+		try {
+			huntBean.setUsername(getUsername());
+		} catch (UsernameNotLoggedException e) {
+			alert.setContentText("Error with Login");
+			try {
+				changeScene(Pages.LOGIN, null, null);
+			} catch (PageNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+		if(arg != null) {
+			if(arg.equals("hunt")) {
+				huntBean.setIdHunt((int) param);
+			} else {
+				List<?> ids = (List<?>) param;
+				huntBean.setIdHunt((Integer) ids.get(0));
+				idMap = (Integer) ids.get(1);
+				setMap();
+			}
+			huntBean = manageHuntControl.getHunt(huntBean);
+		} else {
+			huntBean.setIdHunt(-1);
+		}
+		
+		lbRiddle.setText("Riddle " + rdlList.size());
     	lvObject.setItems(objList);
     	lvRiddle.setItems(rdlList);
     	cmbObject.setItems(objList);
@@ -171,6 +193,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     	tfClueText.add(tfClueText1);
     	tfClueText.add(tfClueText2);
     	tfClueText.add(tfClueText3);
+		
+    	
+    	
+    	
     	if(param !=  null) {	
 	    	idMap = (int) param;
 	    	if(idMap != -1) {
@@ -192,7 +218,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		riddle = String.format("%s; %s;", tfRiddleText.getText(), tfRiddleSolution.getText());
     		
-    		for(var i = 0; i < 3; i++) {
+    		for(var i = 0; i < tfClueText.size(); i++) {
     			riddle = riddle.concat(isEmpty(tfClueText.get(i).getText()));
     		}
     		
@@ -272,7 +298,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			
     			tfRiddleSolution.setText(st.nextToken());
     			
-    			for(var i = 0; i < 3; i++)
+    			for(var i = 0; i < tfClueText.size(); i++)
     				tfClueText.get(i).setText(isTokenEmpty(st.nextToken()));
     			
     			cmbObject.setValue(isTokenEmpty(st.nextToken()));
@@ -332,17 +358,9 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
 		var mpc = new ManageMapControl();
 		
-		try {
-			mapBean = mpc.getMapById(getUsername(), idMap);
-		} catch (UsernameNotLoggedException e) {
-    		alert.setContentText("Problem with login");
-    		alert.showAndWait();
-    		try {
-				changeScene(Pages.LOGIN);
-			} catch (PageNotFoundException e1) {
-				alert.setContentText("Try again");
-			}
-		}
+		
+		mapBean = mpc.getMapById(huntBean.getUsername(), idMap);
+		
 		
 		var img = new Image("file:" + mapBean.getImage(), imgMap.getFitWidth(), imgMap.getFitHeight(), false, false);
     	imgMap.setImage(img);
@@ -456,11 +474,8 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	tfRiddleSolution.setText("");
     	
-    	tfClueText1.setText("");
-    	
-    	tfClueText2.setText("");
-    	
-    	tfClueText3.setText("");
+    	for(int i = 0; i < tfClueText.size(); i++)
+    		tfClueText.get(i).setText("");
 
     }
     
@@ -486,7 +501,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			
     			rb.setSolution(st.nextToken());
     			
-    			for(var j = 0; j < 3; j++) 
+    			for(var j = 0; j < tfClueText.size(); j++) 
     				rb.setClueElement(j, isTokenEmpty(st.nextToken()));
     			
     			rb.setObjectName(isTokenEmpty(st.nextToken()));
@@ -500,11 +515,12 @@ public class ManageHuntGController extends ControllerWithLogin{
 		for(var i = 0; i < objList.size(); i++) {
 			var st = new StringTokenizer(objList.get(i),SEPARATOR);
 			if(st.hasMoreElements()) {
-				var or = new ObjectBean();
+				var nome = st.nextToken();
 				
-				or.setName(st.nextToken());
+				var desc = st.nextToken();
 				
-				or.setDescription(isTokenEmpty(st.nextToken()));
+				var or = new ObjectBean(nome, desc, "");
+				
 				
 				objectBean.add(or);
 			}
@@ -516,7 +532,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		huntBean.setRiddle(riddleBean);
 		huntBean.setObject(objectBean);
 		
-		manageHuntControl.saveHunt(huntBean, getUsername());
+		manageHuntControl.saveHunt(huntBean);
 		
 		return idHunt;
 		

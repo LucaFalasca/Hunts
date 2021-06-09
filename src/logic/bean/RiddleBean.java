@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RiddleBean {
-	int numRiddle;
 	
 	private String riddle;
 	
@@ -15,14 +14,6 @@ public class RiddleBean {
 	private String objectName;
 	
 	private String zoneName;
-
-	public int getNumRidle() {
-		return numRiddle;
-	}
-
-	public void setNumRiddle(int numRiddle) {
-		this.numRiddle = numRiddle;
-	}
 
 	public String getRiddle() {
 		return riddle;

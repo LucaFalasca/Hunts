@@ -7,18 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.enumeration.Type;
 import logic.model.Database;
 import logic.model.entity.Hunt;
-import logic.model.entity.Map;
 import logic.model.entity.Object;
 import logic.model.entity.Riddle;
-import logic.model.entity.Zone;
 
 public class HuntDao {
 	
-	public int saveHunt(Hunt hunt, String username) {
-		int idHunt  = addHunt(hunt.getIdHunt(), hunt.getHuntName(), username, true, -1);
+	public int saveHunt(Hunt hunt) {
+		int idHunt  = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
 		
 		List<Object> objects = hunt.getObjectList();
 		for(Object object : objects) {
@@ -39,8 +36,8 @@ public class HuntDao {
 	
 	
 	public Hunt getHuntById(int id, String username) {
-		Connection conn = Database.getConnection();
-		Hunt hunt = new Hunt();
+		var conn = Database.getConnection();
+		var hunt = new Hunt();
 		
 		int mapId = -1;
 		List<Object> objects = new ArrayList<>();
@@ -53,54 +50,48 @@ public class HuntDao {
 			stmt.setString(2, username);
 			
 			boolean haveResult = stmt.execute();
-			int i = 1;
+			var i = 1;
 			
 			
 			while(haveResult) {
-				ResultSet rs = stmt.getResultSet();
+				var rs = stmt.getResultSet();
 				
 				switch(i) {
 				case 1:
 					while(rs.next()) {
-						String nome = rs.getString(1);
-						boolean indoor = rs.getBoolean(2);
+						var name = rs.getString(1);
 						mapId = rs.getInt(3);
-						hunt.setHuntName(nome);
-						//hunt.setIndoor(indoor);
+						hunt.setHuntName(name);
 					}
 					break;
 				case 2:
 					while(rs.next()) {
-						String nome = rs.getString(1);
-						String pathImage = rs.getString(2);
-						String descrizione = rs.getString(3);
-						String zona = rs.getString(4);
+						var name = rs.getString(1);
+						var pathImage = rs.getString(2);
+						var description = rs.getString(3);
 						
-						Object ob = new Object();
-						ob.setName(nome);
+						var ob = new Object();
+						ob.setName(name);
 						ob.setPath(pathImage);
-						ob.setDescription(descrizione);
-						//ob.setZone(zona);
+						ob.setDescription(description);
 						
 						objects.add(ob);
 					}
 					break;
 				case 3:
 					while(rs.next()) {
-						int numero = rs.getInt(1);
-						String domanda = rs.getString(2);
-						String risposta = rs.getString(3);
-						String oggettoPremio = rs.getString(4);
-						String oggettoRisposta = rs.getString(5);
-						String zona = rs.getString(6);
+						var number = rs.getInt(1);
+						var riddleText = rs.getString(2);
+						var riddleSolution = rs.getString(3);
+						var reward = rs.getString(4);
+						var zone = rs.getString(6);
 						
-						Riddle riddle = new Riddle();
-						riddle.setRiddleText(domanda);
-						riddle.setSolutionText(risposta);
-						riddle.setReward(oggettoPremio);
-						//riddle.setZone(zona);
-						//riddle.setSolutionObject(oggettoRisposta);
-						riddleNumbers.add(numero);
+						var riddle = new Riddle();
+						riddle.setRiddleText(riddleText);
+						riddle.setSolutionText(riddleSolution);
+						riddle.setReward(reward);
+						riddle.setZone(zone);
+						riddleNumbers.add(number);
 						riddles.add(riddle);
 					}
 					break;
@@ -111,20 +102,19 @@ public class HuntDao {
 				haveResult = stmt.getMoreResults();
 				i++;
 			}
-			stmt.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		for(int i = 0; i < riddleNumbers.size(); i++) {
+		for(var i = 0; i < riddleNumbers.size(); i++) {
 			riddles.get(i).setClueList(getClueByRiddle(riddleNumbers.get(i), hunt.getIdHunt(), username));
 		}
 		
 		if(mapId != -1) {
-			MapDao mapDao = new MapDao();
-			Map map = mapDao.getMapById(username, mapId);
-			//hunt.setMap(map);
+			var mapDao = new MapDao();
+			var map = mapDao.getMapById(username, mapId);
+			hunt.setMap(map);
 		}
 		
 		hunt.setObjectList(objects);
@@ -136,7 +126,7 @@ public class HuntDao {
 	
 	
 	private List<String> getClueByRiddle(int riddle, int hunt, String username){
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		List<String> clues = new ArrayList<>();
 		
 		
@@ -151,10 +141,9 @@ public class HuntDao {
 			
 			while(haveResult) {
 				haveResult = stmt.getMoreResults();
-				ResultSet rs = stmt.getResultSet();
+				var rs = stmt.getResultSet();
 				while(rs.next()) {
-					int numero = rs.getInt(1);
-					String testo = rs.getString(2);
+					var testo = rs.getString(2);
 					
 					clues.add(testo);
 				}
@@ -167,7 +156,7 @@ public class HuntDao {
 	}
 	
 	public List<Hunt> getHuntList(String username){
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
 		List<Hunt> hunts = new ArrayList<>();
 		try(CallableStatement stmt = conn.prepareCall("call get_hunts(?);")) {
@@ -179,24 +168,21 @@ public class HuntDao {
 			
 			while(haveResult) {
 				
-				ResultSet rs = stmt.getResultSet();
+				var rs = stmt.getResultSet();
 				while (rs.next()) {
 					
-					int codice = rs.getInt(1);
-			        String nomeHunt = rs.getString(2);
-			        boolean indoor = rs.getBoolean(3);
-			        int idMap = rs.getInt(4);
+					var id = rs.getInt(1);
+			        var huntName = rs.getString(2);
+			        var idMap = rs.getInt(4);
 			        
-			        Hunt hunt = new Hunt();
-			        hunt.setIdHunt(codice);
-			        hunt.setHuntName(nomeHunt);
-			        //hunt.setIndoor(indoor);
+			        var hunt = new Hunt();
+			        hunt.setIdHunt(id);
+			        hunt.setHuntName(huntName);
 			        
 			        hunts.add(hunt);
 			      }
 				haveResult = stmt.getMoreResults();
 			}
-			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -206,7 +192,7 @@ public class HuntDao {
 	}
 	
 	public List<Hunt> getHuntList(){
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
 		List<Hunt> hunts = new ArrayList<>();
 		try(CallableStatement stmt = conn.prepareCall("call get_all_hunts();")) {
@@ -217,25 +203,24 @@ public class HuntDao {
 			
 			while(haveResult) {
 				
-				ResultSet rs = stmt.getResultSet();
+				var rs = stmt.getResultSet();
 				while (rs.next()) {
 					
-					int codice = rs.getInt(1);
-					String creatore_hunt = rs.getString(2);
-			        String nomeHunt = rs.getString(3);
-			        boolean indoor = rs.getBoolean(4);
-			        int idMap = rs.getInt(5);
+					var id = rs.getInt(1);
+					var creatorName = rs.getString(2);
+					var nameHunt = rs.getString(3);
+					var idMap = rs.getInt(5);
 			        
-			        Hunt hunt = new Hunt();
-			        hunt.setIdHunt(codice);
-			        hunt.setHuntName(nomeHunt);
-			        //hunt.setIndoor(indoor);
+					var hunt = new Hunt();
+					
+			        hunt.setIdHunt(id);
+			        hunt.setCreatorName(creatorName);
+			        hunt.setHuntName(nameHunt);
 			        
 			        hunts.add(hunt);
 			      }
 				haveResult = stmt.getMoreResults();
 			}
-			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -245,8 +230,8 @@ public class HuntDao {
 	}
 	
 	private int addHunt(int codice, String nome, String username, boolean indoor, int idMap) {
-		Connection conn = Database.getConnection();
-		int id = 0;
+		var conn = Database.getConnection();
+		var id = 0;
 		
 		try (CallableStatement stmt = conn.prepareCall("call save_hunt(?, ?, ?, ?, ?)")){
 			
@@ -275,7 +260,7 @@ public class HuntDao {
 	}
 	
 	private void addObjectToHunt(String nome, int hunt, String immagine, String descrizione, String nomeZona, int mappaZona) {
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_object_to_hunt(?, ?, ?, ?, ?, ?)")){
 			
@@ -302,8 +287,8 @@ public class HuntDao {
 	}
 
 	private int addRiddleToHunt(int hunt, String domanda, String risposta, String objectPremio, String objectRisposta, String nomeZona, int mappaZona) {
-		Connection conn = Database.getConnection();
-		int idRiddle = 0;
+		var conn = Database.getConnection();
+		var idRiddle = 0;
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_riddle_to_hunt(?, ?, ?, ?, ?, ?, ?, ?)")){
 			
@@ -334,7 +319,7 @@ public class HuntDao {
 	}
 
 	private void addClueToRiddle(int riddle, int hunt, String testo) {
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_clue_to_riddle(?, ?, ?)")){
 			
