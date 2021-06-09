@@ -24,18 +24,6 @@ public class LoginDao {
 			
 			
 			while(haveResult) {
-				ResultSet rs = stmt.getResultSet();
-				
-				while (rs.next()) {
-					/*
-			        String coffeeName = rs.getString("COF_NAME");
-			        int supplierID = rs.getInt("SUP_ID");
-			        float price = rs.getFloat("PRICE");
-			        int sales = rs.getInt("SALES");
-			        int total = rs.getInt("TOTAL");
-			        */
-			      }
-				
 				haveResult = stmt.getMoreResults();
 			}
 			

@@ -76,7 +76,6 @@ public class LoginGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.LOGIN);
 		} catch (PageNotFoundException e) {
-			System.out.println("beh");
 			e.printStackTrace();
 		}
     }

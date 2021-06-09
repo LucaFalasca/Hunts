@@ -95,16 +95,11 @@ public class MapDao {
 			boolean haveResult = stmt.execute();
 			
 			while(haveResult) {
-				ResultSet rs = stmt.getResultSet();
-				while (rs.next()) {
-					
-			      }
 				haveResult = stmt.getMoreResults();
 			}
 			
 			//Output Param
 			id = stmt.getInt(1);
-			System.out.println(id);
 			stmt.close();
 		}
 		catch(Exception e) {

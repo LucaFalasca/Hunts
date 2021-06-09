@@ -63,7 +63,6 @@ public class MainMenuGController extends ControllerWithLogin{
 				List<MapBean> mapBeans = controllerMaps.getAllMaps(getUsername());
 				
 				for(MapBean mapBean : mapBeans) {
-					try {
 					Pane pane = null;
 					pane = FXMLLoader.load(getClass().getResource("/logic/view/desktop/layout/ItemMapList.fxml"));
 					
@@ -76,17 +75,14 @@ public class MainMenuGController extends ControllerWithLogin{
 					
 					label.setText(mapBean.getName());
 					mapsList.add((AnchorPane) pane);
-					}
-					catch(IOException e) {
-						e.printStackTrace();
-					}
-					
-					
 				}
 				
 				
 			} catch (UsernameNotLoggedException e) {
 				e.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -120,7 +116,6 @@ public class MainMenuGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.MANAGE_HUNT);
 		} catch (PageNotFoundException e) {
-			System.out.println("");
 			e.printStackTrace();
 		}
     }
@@ -131,7 +126,6 @@ public class MainMenuGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.MANAGE_MAP);
 		} catch (PageNotFoundException e) {
-			System.out.println("beh");
 			e.printStackTrace();
 		}
     }
@@ -141,7 +135,6 @@ public class MainMenuGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.LOGIN);
 		} catch (PageNotFoundException e) {
-			System.out.println("beh");
 			e.printStackTrace();
 		}
     }
