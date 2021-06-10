@@ -2,6 +2,7 @@ package logic.view.desktop.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -26,13 +27,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.ObjectBean;
 import logic.bean.RiddleBean;
 import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
+import logic.control.UploadFileControl;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
@@ -98,6 +102,16 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     private Button btnAddToList;
+    
+
+    @FXML
+    private Button btnRemoveObject;
+
+    @FXML
+    private Button btnModifyRiddle;
+
+    @FXML
+    private Button btnCreateMap;
 
     @FXML
     private TextField tfClueText1;
@@ -110,11 +124,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     private List<TextField> tfClueText = new ArrayList<>();
 
-    @FXML
-    private Button btnCreateMap;
-
-    @FXML
-    private Button btnRemoveObject;
 
     @FXML
     private TextField tfObjectName;
@@ -122,9 +131,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     private Label lbRiddleError;
     
-    @FXML
-    private Button btnModifyRiddle;
-    
+
     @FXML
     private TextArea txtDescription;
     
@@ -141,17 +148,15 @@ public class ManageHuntGController extends ControllerWithLogin{
     private Label lbMapName;
     
     private ObservableList<String> zoneList = FXCollections.observableArrayList();
-   
-    private ManageHuntControl manageHuntControl = new ManageHuntControl();
 	
-	private List<ObjectBean> objectBean = new ArrayList<>();
-	private List<RiddleBean> riddleBean = new ArrayList<>();
+	
 	private HuntBean huntBean = new HuntBean();
 	private MapBean mapBean = new MapBean();
 	
 	private String riddle;
-	
 	private int idMap = -1;
+	private HashMap<String, String> objectPath = new HashMap<>();
+	private String filePath = null;
 	
 	private static final String SEPARATOR = "; ";
 	private static final String ERRORSELECTED = "You must selected an item from the List";
@@ -161,6 +166,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	@Override
 	void start(String arg, Object param) {
+		var manageHuntControl = new ManageHuntControl();
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
@@ -193,16 +199,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	tfClueText.add(tfClueText1);
     	tfClueText.add(tfClueText2);
     	tfClueText.add(tfClueText3);
-		
-    	
-    	
-    	
-    	if(param !=  null) {	
-	    	idMap = (int) param;
-	    	if(idMap != -1) {
-	    		setMap();
-	    	}
-    	}
     	
 	}
 
@@ -288,8 +284,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		riddle = lvRiddle.getItems().get(index);
     		
-    		if(lbRiddleError.isVisible())
-    			lbRiddleError.setVisible(false);
+    		setLabel(lbRiddleError, "", false);
     		
     		var st = new StringTokenizer(riddle, SEPARATOR);
     		
@@ -307,15 +302,12 @@ public class ManageHuntGController extends ControllerWithLogin{
     			
     			lvRiddle.getItems().remove(index);
     		} else {
-    			lbRiddleError.setText(ERRORSELECTED);
-        		lbRiddleError.setVisible(true);
+        		setLabel(lbRiddleError, ERRORSELECTED, true);
     		}
  
     	} else {
     		
-    		lbRiddleError.setText(ERRORSELECTED);
-    		lbRiddleError.setVisible(true);
-    		
+    		setLabel(lbRiddleError, ERRORSELECTED, true);
     	}
     	
     }
@@ -358,7 +350,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
 		var mpc = new ManageMapControl();
 		
-		
 		mapBean = mpc.getMapById(huntBean.getUsername(), idMap);
 		
 		
@@ -369,38 +360,42 @@ public class ManageHuntGController extends ControllerWithLogin{
     	lbMapName.setVisible(true);
 		lbMapName.setText(mapBean.getName());
 		for(var i = 0; i < mapBean.getZones().size(); i++)
-			zoneList.add(mapBean.getZones().get(i).getName());
+			zoneList.add(mapBean.getZones().get(i).getNameZone());
 		
 	
     }
 
     @FXML
     void handleAddObject(ActionEvent event) {
+    	
+    	String objectName = tfObjectName.getText();
+    	var flag = false;
+   
     	try {
     		
-    		String objectName = tfObjectName.getText();
-    		
     		if(!(objectName.equals(""))) {
-    			
 	    		for(var i = 0; i < lvObject.getItems().size(); i++){
-	    			
-	    			if(!(objectName.equals(lvObject.getItems().get(i)))) {
-	    				
-	    				objectName = objectName.concat(String.format("%s; %s;", txtDescription.getText(), "Path"));
-	    				objList.add(objectName);	    		
+	    			if(objectName.equals(lvObject.getItems().get(i))) {
+	    				flag = true;
 	    			}
-	    			
 	    		}
 
-	    			
-	    		if(lbErrorObjName.isVisible()) 
-	    			lbErrorObjName.setVisible(false);
+	    		if(flag) {
+	    			setLabel(lbErrorObjName, "An object with this name already exist", true);
+	    		}else {
+	    			setLabel(lbErrorObjName, "", false);
+	    			if(filePath != null) {
+	    				objectPath.put(objectName, filePath);
+	    				filePath = null;
+	    				btnUploadFile.setText("Upload File");
+	    			}
+	    			objectName = objectName.concat(SEPARATOR + txtDescription.getText());
+	    			objList.add(objectName);
+	    		}
+	    		
 	    		 
     		} else {
-
-    			lbErrorObjName.setText("Insert a valid Name");
-				lbErrorObjName.setVisible(true);
-			
+				setLabel(lbErrorObjName, "Insert a valid Name", true);
 	    	}
     	}
 		catch(Exception e) {
@@ -408,12 +403,28 @@ public class ManageHuntGController extends ControllerWithLogin{
 		}
     }
     
+    private void setLabel(Label lb, String content, Boolean vis) {
+		lb.setText(content);
+		if(lb.isVisible() == vis)
+			lb.setVisible(vis);
+    }
+    
     @FXML
     void handleRemoveObject(ActionEvent event) {
     	
     	int index = lvObject.getSelectionModel().getSelectedIndex();
     	
+    	String tempName = lvObject.getSelectionModel().getSelectedItem();
+    	
+    	var st = new StringTokenizer(tempName, SEPARATOR);
+    	
+    	if(st.hasMoreElements()) {
+    		tempName = st.nextToken();
+			objectPath.remove(tempName);
+    	}
     	objList.remove(index);
+    	
+    	
     }
     
     @FXML
@@ -430,6 +441,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		txtDescription.setText(isTokenEmpty(st.nextToken()));
     		
+    		if(objectPath.containsKey(tfObjectName.getText())){
+    			objectPath.remove(tfObjectName.getText());
+    			btnUploadFile.setText("Change File");
+    		}
     	}
     	
     	
@@ -445,10 +460,20 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     @FXML
     void handleUplaodFile(ActionEvent event) {
-
+    	var fileChooser = new FileChooser();
+    	var uploadFileControl = new UploadFileControl();
+    	fileChooser.setTitle("Choose Image");
+    	fileChooser.getExtensionFilters().addAll(
+    			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
+    			);
+    	
+    	var file = fileChooser.showOpenDialog(null);
+		filePath = uploadFileControl.uploadFile(file);
+		
+		btnUploadFile.setText("Change File");
+		
     }
     
-
     @FXML
     void handleSave(MouseEvent event) {
     	save();
@@ -490,6 +515,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     
 	
 	private int save() {
+		
+		List<ObjectBean> objectBean = new ArrayList<>();
+		List<RiddleBean> riddleBean = new ArrayList<>();
+		
+		var manageHuntControl = new ManageHuntControl();
 		int idHunt = -1;
 		for(var i = 0; i < rdlList.size(); i++) {
 			var st = new StringTokenizer(rdlList.get(i), SEPARATOR);
@@ -515,11 +545,13 @@ public class ManageHuntGController extends ControllerWithLogin{
 		for(var i = 0; i < objList.size(); i++) {
 			var st = new StringTokenizer(objList.get(i),SEPARATOR);
 			if(st.hasMoreElements()) {
-				var nome = st.nextToken();
+				var name = st.nextToken();
 				
 				var desc = st.nextToken();
 				
-				var or = new ObjectBean(nome, desc, "");
+				var path = objectPath.get(name);
+				
+				var or = new ObjectBean(name, desc, path);
 				
 				
 				objectBean.add(or);
@@ -532,7 +564,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		huntBean.setRiddle(riddleBean);
 		huntBean.setObject(objectBean);
 		
-		manageHuntControl.saveHunt(huntBean);
+		idHunt = manageHuntControl.saveHunt(huntBean);
 		
 		return idHunt;
 		
