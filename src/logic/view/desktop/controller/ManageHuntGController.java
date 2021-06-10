@@ -102,7 +102,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     private Button btnAddToList;
-    
 
     @FXML
     private Button btnRemoveObject;
@@ -124,13 +123,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     private List<TextField> tfClueText = new ArrayList<>();
 
-
     @FXML
     private TextField tfObjectName;
 
     @FXML
     private Label lbRiddleError;
-    
 
     @FXML
     private TextArea txtDescription;
@@ -183,7 +180,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 				e1.printStackTrace();
 			}
 		}
-		if(arg != null) {
+		
+		if(arg != "") {
 			if(arg.equals("hunt")) {
 				huntBean.setIdHunt((int) param);
 			} else {
@@ -236,7 +234,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
 	}
 
-    
     @FXML
     void handlerAddRiddle(ActionEvent event) {
     	
@@ -491,7 +488,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     }
     
-    
     @FXML
     void handleUplaodFile(ActionEvent event) {
     	var fileChooser = new FileChooser();
@@ -526,8 +522,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	}
     }
     
-    
-    
     private void cancelTextView() {
     	tfRiddleText.setText("");
     	
@@ -546,8 +540,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     public void setIdMap(int idMap) {
     	this.idMap = idMap;
     }
-    
-	
+   
 	private int save() {
 		
 		List<ObjectBean> objectBean = new ArrayList<>();
