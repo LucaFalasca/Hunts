@@ -60,9 +60,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     private ComboBox<String> cmbObject;
 
     @FXML
-    private Label lbErrorObjName;
-
-    @FXML
     private TextField tfRiddleSolution;
 
     @FXML
@@ -129,9 +126,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     private TextField tfObjectName;
-
-    @FXML
-    private Label lbRiddleError;
     
 
     @FXML
@@ -163,8 +157,16 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private static final String SEPARATOR = "; ";
 	private static final String ERRORSELECTED = "You must selected an item from the List";
 	private static final String EMPTY = "empty";
+	private static final String ERRORLOGIN = "Error with Login";
+	private static final String TRY = "Try again";
+	private static final String NEWRIDDLE = "Add new Riddle";
+	private static final String NOWROTE = "Riddle text or solution area's are empty";
+	private static final String NONAME = "Object name area's is empty";
+	private static final String HUNTNAME = "You must insert the name of the Hunt";
+	private static final String OBJECTNAME = "An object with this name already exist";
 	
 	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
+	
 	
 	@Override
 	void start(String arg, Object param) {
@@ -177,8 +179,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
-			alert.setContentText("Error with Login");
-			alert.showAndWait();
+			
+			errorAlert(ERRORLOGIN);
 			try {
 				changeScene(Pages.LOGIN, null, null);
 			} catch (PageNotFoundException e1) {
@@ -246,14 +248,12 @@ public class ManageHuntGController extends ControllerWithLogin{
 		}
 	}
     
+	
     @FXML
     void handlerAddRiddle(ActionEvent event) {
     	
     	
     	if(!(tfRiddleText.getText().equals("")) && !(tfRiddleSolution.getText().equals(""))){
-    		
-    		if(lbRiddleError.isVisible())
-    			lbRiddleError.setVisible(false);
     		
     		riddle = String.format("%s; %s;", tfRiddleText.getText(), tfRiddleSolution.getText());
     		
@@ -270,18 +270,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		lbRiddle.setText("Riddle " + (rdlList.size()));
     		
-    		btnAddRiddle.setText("Add new Riddle");
+    		btnAddRiddle.setText(NEWRIDDLE);
     		
     		cancelTextView();
     		
-    		if(lbRiddleError.isVisible()) {
-    			lbRiddleError.setVisible(false);
-    		}
     		
     	} else {
-    	
-    		lbRiddleError.setVisible(true);
-    		lbRiddleError.setText("There are the Textes of the already added Riddle");
+    		errorAlert(NOWROTE);
     		
     	}
     }
@@ -310,8 +305,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		if(index == -1) 
     			rdlList.remove(index);
     		else {
-    			lbRiddleError.setText(ERRORSELECTED);
-        		lbRiddleError.setVisible(true);
+    			errorAlert(ERRORSELECTED);
     		}
     			
 		} catch(Exception e) {
@@ -327,8 +321,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	if(index != -1) {
     		
     		riddle = lvRiddle.getItems().get(index);
-    		
-    		setLabel(lbRiddleError, "", false);
     		
     		var st = new StringTokenizer(riddle, SEPARATOR);
     		
@@ -346,12 +338,12 @@ public class ManageHuntGController extends ControllerWithLogin{
     			
     			lvRiddle.getItems().remove(index);
     		} else {
-        		setLabel(lbRiddleError, ERRORSELECTED, true);
+    			errorAlert(ERRORSELECTED);
     		}
  
     	} else {
     		
-    		setLabel(lbRiddleError, ERRORSELECTED, true);
+    		errorAlert(ERRORSELECTED);
     	}
     	
     }
@@ -383,8 +375,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        if(idMap != -1)
 	        	setMap();
 		} catch (IOException e) {
-    		alert.setContentText("Try again");
-    		alert.showAndWait();
+    		errorAlert(TRY);
 		}
         
     	
@@ -425,9 +416,9 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    		}
 
 	    		if(flag) {
-	    			setLabel(lbErrorObjName, "An object with this name already exist", true);
+	    			errorAlert(OBJECTNAME);
 	    		}else {
-	    			setLabel(lbErrorObjName, "", false);
+	    			
 	    			if(filePath != null) {
 	    				objectPath.put(objectName, filePath);
 	    				filePath = null;
@@ -439,34 +430,32 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    		
 	    		 
     		} else {
-				setLabel(lbErrorObjName, "Insert a valid Name", true);
+    			errorAlert(NONAME);
 	    	}
     	}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
     }
-    
-    private void setLabel(Label lb, String content, Boolean vis) {
-		lb.setText(content);
-		if(lb.isVisible() == vis)
-			lb.setVisible(vis);
-    }
-    
+
     @FXML
     void handleRemoveObject(ActionEvent event) {
     	
     	int index = lvObject.getSelectionModel().getSelectedIndex();
     	
-    	String tempName = lvObject.getSelectionModel().getSelectedItem();
-    	
-    	var st = new StringTokenizer(tempName, SEPARATOR);
-    	
-    	if(st.hasMoreElements()) {
-    		tempName = st.nextToken();
-			objectPath.remove(tempName);
+    	if(index == -1) {
+	    	String tempName = lvObject.getSelectionModel().getSelectedItem();
+	    	
+	    	var st = new StringTokenizer(tempName, SEPARATOR);
+	    	
+	    	if(st.hasMoreElements()) {
+	    		tempName = st.nextToken();
+				objectPath.remove(tempName);
+	    	}
+	    	objList.remove(index);
+    	} else {
+    		errorAlert(ERRORSELECTED);
     	}
-    	objList.remove(index);
     	
     	
     }
@@ -474,21 +463,25 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleModifyObject(ActionEvent event) {
     	
-    	String object = lvObject.getSelectionModel().getSelectedItem();
-    	
-    	objList.remove(lvObject.getSelectionModel().getSelectedIndex());
-    	
-    	var st = new StringTokenizer(object, SEPARATOR);
-    	
-    	if(st.hasMoreElements()) {
-    		tfObjectName.setText(st.nextToken());
-    		
-    		txtDescription.setText(isTokenEmpty(st.nextToken()));
-    		
-    		if(objectPath.containsKey(tfObjectName.getText())){
-    			objectPath.remove(tfObjectName.getText());
-    			btnUploadFile.setText("Change File");
-    		}
+    	var object = lvObject.getSelectionModel().getSelectedItem();
+    	var index = lvObject.getSelectionModel().getSelectedIndex();
+    	if(index != -1) {
+	    	objList.remove(index);
+	    	
+	    	var st = new StringTokenizer(object, SEPARATOR);
+	    	
+	    	if(st.hasMoreElements()) {
+	    		tfObjectName.setText(st.nextToken());
+	    		
+	    		txtDescription.setText(isTokenEmpty(st.nextToken()));
+	    		
+	    		if(objectPath.containsKey(tfObjectName.getText())){
+	    			objectPath.remove(tfObjectName.getText());
+	    			btnUploadFile.setText("Change File");
+	    		}
+	    	}
+    	} else {
+    		errorAlert(ERRORSELECTED);
     	}
     	
     	
@@ -506,12 +499,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     void handleUplaodFile(ActionEvent event) throws LoadFileFailed {
     	var fileChooser = new FileChooser();
     	var uploadFileControl = new UploadFileControl();
+    	
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(
     			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
     			);
     	
-    	var file = fileChooser.showOpenDialog(null);
+    	var file = fileChooser.showOpenDialog(imgMap.getScene().getWindow());
 		filePath = uploadFileControl.uploadFile(file);
 		
 		btnUploadFile.setText("Change File");
@@ -531,7 +525,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     	}
     	else {
-    		alert.setContentText("Inserisci il nome dell'Hunt");
+    		alert.setContentText(HUNTNAME);
     		alert.showAndWait();
     	}
     }
@@ -613,5 +607,10 @@ public class ManageHuntGController extends ControllerWithLogin{
 		return idHunt;
 		
 	}
-
+	
+	private void errorAlert(String cont) {
+		alert.setContentText(cont);
+		alert.showAndWait();
+	}
+	
 }

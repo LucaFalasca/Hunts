@@ -66,11 +66,6 @@
                               <Font size="15.0" />
                            </font>
                         </Button>
-                        <Label fx:id="lbErrorObjName" alignment="CENTER" prefHeight="32.0" prefWidth="277.0" textFill="#ff001e" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
                         <Button fx:id="btnModifyObject" mnemonicParsing="false" onAction="#handleModifyObject" prefHeight="22.0" prefWidth="70.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
@@ -244,11 +239,6 @@
                      </rowConstraints>
                      <children>
                         <Button fx:id="btnAddRiddle" mnemonicParsing="false" onAction="#handlerAddRiddle" prefHeight="32.0" prefWidth="102.0" text="Add new Riddle" />
-                        <Label fx:id="lbRiddleError" alignment="CENTER" prefHeight="32.0" prefWidth="244.0" text="Text or Solution boxes are empty" textFill="RED" visible="false" GridPane.columnIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
                         <Button fx:id="btnRemoveRiddle" mnemonicParsing="false" onAction="#handleRemoveRiddle" prefHeight="37.0" prefWidth="36.0" text="X" visible="false" GridPane.columnIndex="1" />
                         <Button fx:id="btnModifyRiddle" mnemonicParsing="false" onAction="#handleModifyRiddle" prefHeight="35.0" prefWidth="112.0" text="Modify Riddle" GridPane.columnIndex="3">
                            <font>
@@ -257,11 +247,6 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <Label text="There are the information about the already added Riddle">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
                   <ListView fx:id="lvRiddle" onMouseClicked="#handleRiddleSelected" prefHeight="438.0" prefWidth="494.0" />
                   <Button fx:id="bntFinish" mnemonicParsing="false" onAction="#handleFinish" prefHeight="32.0" prefWidth="83.0" text="Finish" />
                </children>
