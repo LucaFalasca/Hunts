@@ -1,8 +1,5 @@
 package logic.view.desktop.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,9 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -30,7 +25,6 @@ import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
-import logic.state.draw.states.State;
 
 public class ManageMapGController extends ControllerWithLogin{
 	
@@ -70,6 +64,10 @@ public class ManageMapGController extends ControllerWithLogin{
 	    		case "Oval":
 	    			drawMachine.setState(OvalState.getInstance());
 	    			break;
+	    		default:
+	    			drawMachine.setState(RectangleState.getInstance());
+	    			break;
+	    			
     		}
     	});
     	lvZones.setItems(zones);
@@ -172,12 +170,12 @@ public class ManageMapGController extends ControllerWithLogin{
     @FXML
     void handlePressedOnMap(MouseEvent event) {
     	switch(event.getButton()) {
-    	case PRIMARY:
-    		startX = event.getX();
-        	startY = event.getY();
-        	onDrawing = true;
-    		break;
-		default:
+	    	case PRIMARY:
+	    		startX = event.getX();
+	        	startY = event.getY();
+	        	onDrawing = true;
+	    		break;
+			default:
     	}
     	
     }
@@ -193,9 +191,9 @@ public class ManageMapGController extends ControllerWithLogin{
         	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
     	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
     	    	String nameDefault = "Zona " + (zones.size() + 1);
-    	    	for(int i = 0; i < zones.size(); i++) {
+    	    	for(var i = 0; i < zones.size(); i++) {
     	    		if(zones.get(i).getNameZone().equals(nameDefault)){
-    	    			nameDefault += "(1)";
+    	    			nameDefault = nameDefault.concat("(1)");
     	    			i = 0;
     	    		}
     	    	}
@@ -228,15 +226,18 @@ public class ManageMapGController extends ControllerWithLogin{
     }
     
     void clean(double x1, double y1, double x2, double y2, String shape) {
-        State oldState = drawMachine.getCurrentState();    
+        var oldState = drawMachine.getCurrentState();    
         
         switch(shape) {
-		case "Rectangular":
-			drawMachine.setState(RectangleState.getInstance());
-			break;
-		case "Oval":
-			drawMachine.setState(OvalState.getInstance());
-			break;
+			case "Rectangular":
+				drawMachine.setState(RectangleState.getInstance());
+				break;
+			case "Oval":
+				drawMachine.setState(OvalState.getInstance());
+				break;
+			default:
+				drawMachine.setState(RectangleState.getInstance());
+				break;
         }
         
         drawMachine.clean(gcDraw, x1, y1, x2, y2);
