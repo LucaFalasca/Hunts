@@ -1,5 +1,6 @@
 package logic.view.desktop.controller;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,6 +103,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     private Button btnAddToList;
+    
 
     @FXML
     private Button btnRemoveObject;
@@ -123,11 +125,13 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     private List<TextField> tfClueText = new ArrayList<>();
 
+
     @FXML
     private TextField tfObjectName;
 
     @FXML
     private Label lbRiddleError;
+    
 
     @FXML
     private TextArea txtDescription;
@@ -180,49 +184,25 @@ public class ManageHuntGController extends ControllerWithLogin{
 				e1.printStackTrace();
 			}
 		}
-		
-		if(arg != "") {
-			if(arg.equals("hunt")) {
+		switch(arg) {
+			case "hunt":
 				huntBean.setIdHunt((int) param);
-			} else {
+				huntBean = manageHuntControl.getHunt(huntBean);
+				
+				setHunt(huntBean);
+				break;
+				
+			case "map":
 				List<?> ids = (List<?>) param;
 				huntBean.setIdHunt((Integer) ids.get(0));
 				idMap = (Integer) ids.get(1);
 				setMap();
-			}
-			
-			List<ObjectBean> objectBean;
-			List<RiddleBean> riddleBean;
-			
-			huntBean = manageHuntControl.getHunt(huntBean);
-			
-			tfHuntName.setText(huntBean.getHuntName());
-			riddleBean = huntBean.getRiddle();
-			
-			for(var i = 0; i < riddleBean.size(); i++) {
-				var rb = riddleBean.get(i);
-				var s = String.format("%s; %s; ", rb.getRiddle(), rb.getSolution());
+				huntBean = manageHuntControl.getHunt(huntBean);
 				
-				for(var j = 0; j < tfClueText.size(); j++) {
-					s = s.concat(isEmpty(rb.getClueElement(j)) + SEPARATOR);
-				}
-				
-				s = s.concat(isEmpty(rb.getObjectName()) + SEPARATOR + isEmpty(rb.getZoneName()));
-				rdlList.add(s);
-			}
-			
-			objectBean = huntBean.getObject();
-			for(var i = 0; i < objectBean.size(); i++) {
-				var obj = objectBean.get(i);
-				
-				var s = String.format("%s; %s;", obj.getObject(), obj.getDescription());
-				objList.add(s);
-				if(!(obj.getPath().equals(""))) {
-					objectPath.put(obj.getObject(), obj.getPath());
-				}
-			}
-		} else {
-			huntBean.setIdHunt(-1);
+				setHunt(huntBean);
+				break;
+			default:
+				huntBean.setIdHunt(-1);
 		}
 		
 		lbRiddle.setText("Riddle " + rdlList.size());
@@ -233,7 +213,38 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	
 	}
-
+	
+	private void setHunt(HuntBean huntBean) {
+		
+		List<ObjectBean> objectBean;
+		List<RiddleBean> riddleBean;
+		tfHuntName.setText(huntBean.getHuntName());
+		riddleBean = huntBean.getRiddle();
+		
+		for(var i = 0; i < riddleBean.size(); i++) {
+			var rb = riddleBean.get(i);
+			var s = String.format("%s; %s; ", rb.getRiddle(), rb.getSolution());
+			
+			for(var j = 0; j < tfClueText.size(); j++) {
+				s = s.concat(isEmpty(rb.getClueElement(j)) + SEPARATOR);
+			}
+			
+			s = s.concat(isEmpty(rb.getObjectName()) + SEPARATOR + isEmpty(rb.getZoneName()));
+			rdlList.add(s);
+		}
+		
+		objectBean = huntBean.getObject();
+		for(var i = 0; i < objectBean.size(); i++) {
+			var obj = objectBean.get(i);
+			
+			var s = String.format("%s; %s;", obj.getObject(), obj.getDescription());
+			objList.add(s);
+			if(!(obj.getPath().equals(""))) {
+				objectPath.put(obj.getObject(), obj.getPath());
+			}
+		}
+	}
+    
     @FXML
     void handlerAddRiddle(ActionEvent event) {
     	
@@ -273,6 +284,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     	}
     }
+    
     
     private String isEmpty(String content) {
     	if(content != null && !(content.equals("")))
@@ -488,6 +500,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     }
     
+    
     @FXML
     void handleUplaodFile(ActionEvent event) {
     	var fileChooser = new FileChooser();
@@ -522,6 +535,8 @@ public class ManageHuntGController extends ControllerWithLogin{
     	}
     }
     
+    
+    
     private void cancelTextView() {
     	tfRiddleText.setText("");
     	
@@ -540,7 +555,8 @@ public class ManageHuntGController extends ControllerWithLogin{
     public void setIdMap(int idMap) {
     	this.idMap = idMap;
     }
-   
+    
+	
 	private int save() {
 		
 		List<ObjectBean> objectBean = new ArrayList<>();
