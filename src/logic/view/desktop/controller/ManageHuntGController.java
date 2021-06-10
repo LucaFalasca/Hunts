@@ -39,6 +39,7 @@ import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
 import logic.control.UploadFileControl;
 import logic.enumeration.Pages;
+import logic.exception.LoadFileFailed;
 import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 
@@ -502,7 +503,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     
     @FXML
-    void handleUplaodFile(ActionEvent event) {
+    void handleUplaodFile(ActionEvent event) throws LoadFileFailed {
     	var fileChooser = new FileChooser();
     	var uploadFileControl = new UploadFileControl();
     	fileChooser.setTitle("Choose Image");

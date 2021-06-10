@@ -10,7 +10,7 @@ import logic.model.Database;
 public class LoginDao {
 
 	public boolean login(String username, String password) {
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		CallableStatement stmt = null;
 		try {
 			stmt = conn.prepareCall("call login(?,?,?);");
@@ -28,12 +28,10 @@ public class LoginDao {
 			}
 			
 			//OutputParam
-			boolean log = stmt.getBoolean(3);
 			
-			return log;
+			return stmt.getBoolean(3);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {

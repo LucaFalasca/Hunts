@@ -24,6 +24,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import logic.bean.MapBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
+import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
@@ -129,7 +130,7 @@ public class ManageMapGController extends ControllerWithLogin{
     
     
     @FXML
-    void handleUploadFile(ActionEvent event) {
+    void handleUploadFile(ActionEvent event) throws LoadFileFailed {
     	var fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(

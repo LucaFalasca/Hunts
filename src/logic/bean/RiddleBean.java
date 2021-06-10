@@ -44,7 +44,7 @@ public class RiddleBean {
 	}
 	
 	public void setClueElement(int index, String clue) {
-		this.clue.add(index, clue);;
+		this.clue.add(index, clue);
 	}
 
 	public String getObjectName() {

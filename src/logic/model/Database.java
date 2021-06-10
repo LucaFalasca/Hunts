@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import logic.exception.NotConnectedException;
+import logic.exception.SQLError;
 
 public class Database {
 	
@@ -25,7 +26,7 @@ public class Database {
 		return conn;
 	}
 	
-	public static void changeDatabaseUser(Users user) throws NotConnectedException {
+	public static void changeDatabaseUser(Users user) throws NotConnectedException, SQLError {
 		if(conn == null) {
 			throw new NotConnectedException();
 		}
@@ -33,16 +34,15 @@ public class Database {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new SQLError();
 			}
 			conn = connect(user);
 		}
 	}
 	
 	private static Connection connect(Users user) {
-		File fileConfig = new File("db_conf.txt");
-		try (Scanner myReader = new Scanner(fileConfig)){
+		var fileConfig = new File("db_conf.txt");
+		try (var myReader = new Scanner(fileConfig)){
 			switch(user) {
 				case NOT_LOGGED:
 					Database.user = Users.NOT_LOGGED;
@@ -53,8 +53,8 @@ public class Database {
 				default:
 					Database.user = Users.NOT_LOGGED;
 			}
-			String[] conf = new String[4];
-			int i = 0;
+			var conf = new String[4];
+			var i = 0;
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
 				conf[i] = data;
@@ -62,13 +62,9 @@ public class Database {
 			}
 			Class.forName(conf[1]);
 			conn = DriverManager.getConnection(conf[0], conf[2], conf[3]);
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException | SQLException | FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		return conn;
 		
 	}

@@ -14,8 +14,8 @@ import logic.model.entity.Zone;
 public class MapDao {
 	
 	public Map getMapById(String username, int idMap) {
-		Connection conn = Database.getConnection();
-		Map map = new Map(idMap);
+		var conn = Database.getConnection();
+		var map = new Map(idMap);
 		try(CallableStatement stmt = conn.prepareCall("call get_map_by_id(?, ?);");) {
 			
 			//Input Param
@@ -23,32 +23,32 @@ public class MapDao {
 			stmt.setInt(2, idMap);
 			
 			boolean haveResult = stmt.execute();
-			int i = 0;
+			var i = 0;
 			
-			List<Zone> zones = new ArrayList<Zone>();
+			List<Zone> zones = new ArrayList<>();
 			while(haveResult) {
 				if(i == 0) {
-					ResultSet rs = stmt.getResultSet();
+					var rs = stmt.getResultSet();
 					
 					while (rs.next()) {
-						String name = rs.getString("Nome");
-				        String image = rs.getString("Immagine");
+						var name = rs.getString("Nome");
+						var image = rs.getString("Immagine");
 				        map.setName(name);
 				        map.setImagePath(image);
 				      }
 				}
 				else if (i == 1){
-					ResultSet rs = stmt.getResultSet();
+					var rs = stmt.getResultSet();
 					
 					while (rs.next()) {
-				        String name = rs.getString("Nome");
+				        var name = rs.getString("Nome");
 				        double startX = rs.getInt("StartX");
 				        double startY = rs.getInt("StartY");
 				        double endX = rs.getInt("EndX");
 				        double endY = rs.getInt("EndY");
-				        String shape = rs.getString("Shape");
+				        var shape = rs.getString("Shape");
 				        
-				        Zone zone = new Zone();
+				        var zone = new Zone();
 				        zone.setName(name);
 				        zone.setStartX(startX);
 				        zone.setStartY(startY);
@@ -70,7 +70,6 @@ public class MapDao {
 				i++;
 			}
 			map.setZones(zones);
-			stmt.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -79,8 +78,8 @@ public class MapDao {
 	}
 	
 	public int saveMap(String username, Map map) {
-		Connection conn = Database.getConnection();
-		int id = 0;
+		var conn = Database.getConnection();
+		var id = 0;
 		try(CallableStatement stmt = conn.prepareCall("call save_map(?, ?, ?, ?);");) {
 			
 			//Input Param
@@ -100,7 +99,6 @@ public class MapDao {
 			
 			//Output Param
 			id = stmt.getInt(1);
-			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -109,14 +107,14 @@ public class MapDao {
 			List<Zone> zones = map.getZones();
 			for(Zone zone : zones) {
 				zone.setName(zone.getName());
-				add_zone_to_map(zone, id);
+				addZoneToMap(zone, id);
 			}
 		}
 		return id;
 	}
 	
-	private void add_zone_to_map(Zone zone, int idMap) {
-		Connection conn = Database.getConnection();
+	private void addZoneToMap(Zone zone, int idMap) {
+		var conn = Database.getConnection();
 		try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?);");) {
 			
 			//Input Param
@@ -126,7 +124,7 @@ public class MapDao {
 			stmt.setInt(4, (int) zone.getStartY());
 			stmt.setInt(5, (int) zone.getEndX());
 			stmt.setInt(6, (int) zone.getEndY());
-			int shape = 0;
+			var shape = 0;
 			switch(zone.getType()) {
 				case RECTANGLE: shape = 1;
 					break;
@@ -142,7 +140,6 @@ public class MapDao {
 				haveResult = stmt.getMoreResults();
 			}
 			
-			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -150,10 +147,10 @@ public class MapDao {
 	}
 	
 	public List<Map> getMapList(String username){
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
-		List<Map> maps = new ArrayList<Map>();
-		try(CallableStatement stmt = conn.prepareCall("call get_maps(?);")) {
+		List<Map> maps = new ArrayList<>();
+		try(var stmt = conn.prepareCall("call get_maps(?);")) {
 			
 			//Input Param
 			stmt.setString(1, username);
@@ -162,14 +159,14 @@ public class MapDao {
 			
 			while(haveResult) {
 				
-				ResultSet rs = stmt.getResultSet();
+				var rs = stmt.getResultSet();
 				while (rs.next()) {
 					
-					int id = rs.getInt("IdMap");
-			        String nomeMappa = rs.getString("Nome");
-			        String pathImmagine = rs.getString("Immagine");
+					var id = rs.getInt("IdMap");
+			        var nomeMappa = rs.getString("Nome");
+			        var pathImmagine = rs.getString("Immagine");
 			        
-			        Map map = new Map(id);
+			        var map = new Map(id);
 			        map.setName(nomeMappa);
 			        map.setImagePath(pathImmagine);
 			        
@@ -177,7 +174,6 @@ public class MapDao {
 			      }
 				haveResult = stmt.getMoreResults();
 			}
-			stmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -187,9 +183,8 @@ public class MapDao {
 	}
 	
 	public void deleteMap(int id, String username) {
-		Connection conn = Database.getConnection();
+		var conn = Database.getConnection();
 		
-		List<Map> maps = new ArrayList<Map>();
 		try(CallableStatement stmt = conn.prepareCall("call delete_map_by_id(?, ?);")) {
 			
 			//Input Param

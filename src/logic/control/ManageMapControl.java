@@ -7,6 +7,7 @@ import java.util.List;
 import logic.bean.MapBean;
 import logic.bean.ZoneBean;
 import logic.enumeration.Type;
+import logic.exception.LoadFileFailed;
 import logic.model.dao.MapDao;
 import logic.model.entity.Map;
 import logic.model.entity.Zone;
@@ -94,7 +95,7 @@ public class ManageMapControl {
 	}
 
 	
-	public String uploadFile(File file) {
+	public String uploadFile(File file) throws LoadFileFailed {
 		var uploadFileControl = new UploadFileControl();
 		return uploadFileControl.uploadFile(file);
 	}
