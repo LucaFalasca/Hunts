@@ -1,153 +1,133 @@
 package logic.control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import logic.bean.HuntBean;
-import logic.model.dao.HuntDao;
-import logic.model.entity.Object;
+import logic.bean.MapBean;
 import logic.bean.ObjectBean;
-import logic.model.dao.ObjectDao;
+import logic.bean.RiddleBean;
+import logic.bean.ZoneBean;
+import logic.model.dao.HuntDao;
+import logic.model.entity.RealObject;
 import logic.model.entity.Riddle;
 import logic.model.entity.Zone;
-import logic.model.dao.RiddleDao;
-import logic.model.entity.Clue;
 import logic.model.entity.Hunt;
+import logic.model.entity.Map;
 
 public class ManageHuntControl {
 	
-	public void addRiddle(ObjectBean objectBean, HuntBean huntBean, String nameZone) {
-	
-		RiddleDao riddleDao = new RiddleDao();
+	public int saveHunt(HuntBean huntBean) {
+		var huntDao = new HuntDao();
 		
-		Object object = new Object();
+		var hunt = new Hunt();
 		
-		Hunt hunt = new Hunt();
+		var riddle = new ArrayList<Riddle>();
 		
-		Zone zone = new Zone();
+		var object = new ArrayList<Object>();
 		
-		Riddle riddle = new Riddle();
-		
-		Clue clue = new Clue();
-		
+		hunt.setHuntName(huntBean.getHuntName());
 		hunt.setIdHunt(huntBean.getIdHunt());
+		hunt.setCreatorName(huntBean.getUsername());
 		
+		for(var i = 0; i < huntBean.getRiddle().size(); i++) {
+			var rid = new Riddle();
+			rid.setnRiddle(i);
+			rid.setRiddleText(huntBean.getRiddle().get(i).getRiddle());
+			rid.setSolutionText(huntBean.getRiddle().get(i).getSolution());
+			for(var j = 0; j < huntBean.getRiddle().get(i).getClue().size(); j++)
+				rid.setClueListElement(j, huntBean.getRiddle().get(i).getClueElement(j));
+			rid.setReward(huntBean.getRiddle().get(i).getObjectName());
+			rid.setZone(huntBean.getRiddle().get(i).getZoneName());
 		
+			riddle.add(rid);
+		}
 		
-		riddle.setReward(objectBean.getObject());
+		for(var i = 0; i < huntBean.getObject().size(); i++) {
+			var obj = new RealObject();
+			
+			obj.setName(huntBean.getObject().get(i).getObject());
+			
+			obj.setDescription(huntBean.getObject().get(i).getDescription());
+			
+			obj.setPath(huntBean.getObject().get(i).getPath());
+			
+			object.add(obj);
+		}
 		
-		object.setName(objectBean.getObject());
+		var map = new Map();
 		
-		zone.setName(nameZone);
+		map.setId(huntBean.getMap().getId());
+		map.setName(huntBean.getMap().getName());
+		map.setImagePath(huntBean.getMap().getImage());
+			
 		
-		riddleDao.addRiddle(riddle, object, hunt, zone);
+		hunt.setMap(map);
+		
+		return huntDao.saveHunt(hunt);
 	}
-	
-	public HuntBean modifyRiddle(HuntBean huntBean) {
+
+	public HuntBean getHunt(HuntBean huntBean) {
+		var huntDao = new HuntDao();
 		
-		Hunt hunt = new Hunt();
+		List<Riddle> riddleList;
+		List<RealObject> objectList;
+		List<Zone> zoneList;
 		
-		RiddleDao riddleDao = new RiddleDao();
+		List<RiddleBean> riddleBean = new ArrayList<>();
+		List<ObjectBean> objectBean = new ArrayList<>();
+		List<ZoneBean> zoneBean = new ArrayList<>();
 		
-		hunt.setIdHunt(huntBean.getIdHunt());
+		var hunt = huntDao.getHuntById(huntBean.getIdHunt(), huntBean.getUsername());
 		
-		Riddle riddle = new Riddle();
+		huntBean.setIdHunt(hunt.getIdHunt());
+		huntBean.setHuntName(hunt.getHuntName());
 		
+		riddleList = hunt.getRiddleList();
+		for(var i = 0; i < riddleList.size(); i++) {
+			var rb = new RiddleBean();
+			rb.setRiddle(riddleList.get(i).getRiddleText());
+			rb.setSolution(riddleList.get(i).getSolutionText());
+			for(var j = 0; j < riddleList.get(i).getClueList().size(); j++ ) {
+				rb.setClueElement(j, riddleList.get(i).getClueListElement(j));
+			}
+			rb.setObjectName(riddleList.get(i).getReward());
+			rb.setZoneName(riddleList.get(i).getZone());
 		
+			riddleBean.add(rb);
+		}
+		
+		huntBean.setRiddle(riddleBean);
+		
+		objectList = hunt.getObjectList();
+		
+		for(var i = 0; i < objectList.size(); i++) {
+			var ob = new ObjectBean(objectList.get(i).getName(), objectList.get(i).getDescription(), objectList.get(i).getPath());
+			
+			
+			objectBean.add(ob);
+		}
+		
+		huntBean.setObject(objectBean);
+		
+		var map = new MapBean();
+		
+		map.setId(hunt.getMap().getId());
+		map.setName(hunt.getMap().getName());
+		map.setImage(hunt.getMap().getName());
+		
+		zoneList = hunt.getMap().getZones();
+		
+		for(var i = 0; i < zoneList.size(); i++) {
+			var zone = new ZoneBean(zoneList.get(i).getName(), zoneList.get(i).getStartX(), zoneList.get(i).getStartY(), 
+									zoneList.get(i).getEndX(), zoneList.get(i).getEndY(), zoneList.get(i).getType().toString());
+			
+			zoneBean.add(zone);
+		}
+		
+		huntBean.setMap(null);
 		
 		return huntBean;
-		
-	}
-	
-	public void deleteRiddle(HuntBean huntBean) {
-		
-		Hunt hunt = new Hunt();
-		
-		Riddle riddle = new Riddle();
-		
-		hunt.setIdHunt(huntBean.getIdHunt());
-		
-		RiddleDao riddleDao = new RiddleDao();
-		
-		riddleDao.deleteRiddleById(hunt, riddle);
-	}
-	
-	public void addObject(ObjectBean objectBean, HuntBean huntBean) {
-		
-		Object object = new Object();
-		
-		Hunt hunt = new Hunt();
-		
-		Zone zone = new Zone();
-		
-		hunt.setIdHunt(huntBean.getIdHunt());
-		
-		object.setName(objectBean.getObject());
-		
-		object.setDescription(objectBean.getDescription());
-		
-		object.setPath(objectBean.getPath());
-		
-		//zone.setName(huntBean.getNameZone());
-		
-		ObjectDao objectDao = new ObjectDao();
-		
-		objectDao.addObject(object, hunt, zone);
-	
-	}
-
-	public HuntBean removeObject(ObjectBean objectBean, HuntBean huntBean) {
-		
-		ObjectDao objectDao = new ObjectDao();
-		
-		Object object = new Object();
-		
-		Hunt hunt = new Hunt();
-		
-		object.setName(objectBean.getObject());
-		
-		hunt.setIdHunt(huntBean.getIdHunt());
-		
-		List<Integer> indexList = objectDao.getObjectInRiddle(object, hunt);
-		
-		//huntBean.setIndexList(indexList);
-		
-		return huntBean;
-	}
-	
-	public ObjectBean modifyObject(ObjectBean objectBean, HuntBean huntBean) {
-				
-		ObjectDao objectDao = new ObjectDao();
-		
-		Object object = new Object();
-		
-		object = objectDao.getObjectByName(object, huntBean.getIdHunt());
-		
-		objectBean.setDescription(object.getDescription());
-		
-		objectBean.setPath(object.getPath());
-		
-		return objectBean;
-
-	}
-
-	public boolean getHuntByName() {
-		return true;
-	}
-	
-	public boolean addHunt() {		
-		return true;
-	}
-	
-	public boolean removeHunt() {
-		return true;
-	}
-
-	public int saveHunt(Hunt hunt, String username) {
-		
-		HuntDao huntDao = new HuntDao();
-		
-		return huntDao.saveHunt(hunt, username);
-		
 	}
 	
 }
