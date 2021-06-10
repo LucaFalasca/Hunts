@@ -166,11 +166,17 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	@Override
 	void start(String arg, Object param) {
+		
+		tfClueText.add(tfClueText1);
+    	tfClueText.add(tfClueText2);
+    	tfClueText.add(tfClueText3);
 		var manageHuntControl = new ManageHuntControl();
+		
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
 			alert.setContentText("Error with Login");
+			alert.showAndWait();
 			try {
 				changeScene(Pages.LOGIN, null, null);
 			} catch (PageNotFoundException e1) {
@@ -186,7 +192,37 @@ public class ManageHuntGController extends ControllerWithLogin{
 				idMap = (Integer) ids.get(1);
 				setMap();
 			}
+			
+			List<ObjectBean> objectBean;
+			List<RiddleBean> riddleBean;
+			
 			huntBean = manageHuntControl.getHunt(huntBean);
+			
+			tfHuntName.setText(huntBean.getHuntName());
+			riddleBean = huntBean.getRiddle();
+			
+			for(var i = 0; i < riddleBean.size(); i++) {
+				var rb = riddleBean.get(i);
+				var s = String.format("%s; %s; ", rb.getRiddle(), rb.getSolution());
+				
+				for(var j = 0; j < tfClueText.size(); j++) {
+					s = s.concat(isEmpty(rb.getClueElement(j)) + SEPARATOR);
+				}
+				
+				s = s.concat(isEmpty(rb.getObjectName()) + SEPARATOR + isEmpty(rb.getZoneName()));
+				rdlList.add(s);
+			}
+			
+			objectBean = huntBean.getObject();
+			for(var i = 0; i < objectBean.size(); i++) {
+				var obj = objectBean.get(i);
+				
+				var s = String.format("%s; %s;", obj.getObject(), obj.getDescription());
+				objList.add(s);
+				if(!(obj.getPath().equals(""))) {
+					objectPath.put(obj.getObject(), obj.getPath());
+				}
+			}
 		} else {
 			huntBean.setIdHunt(-1);
 		}
@@ -196,9 +232,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	lvRiddle.setItems(rdlList);
     	cmbObject.setItems(objList);
     	cmbZone.setItems(zoneList);
-    	tfClueText.add(tfClueText1);
-    	tfClueText.add(tfClueText2);
-    	tfClueText.add(tfClueText3);
+    	
     	
 	}
 
