@@ -6,4 +6,5 @@ public interface State {
 
 	boolean draw(GraphicsContext gc, double startX, double startY, double endX, double endY);
 	
+	void clean(GraphicsContext gc, double startX, double startY, double endX, double endY);
 }

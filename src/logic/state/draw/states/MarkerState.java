@@ -19,6 +19,14 @@ private static MarkerState instance = new MarkerState();
 		gc.fillOval(endX - 5, endY - 5, 10, 10);
 		return false;
 	}
+	
+	@Override
+	public void clean(GraphicsContext gc, double startX, double startY, double endX, double endY) {
+		double width = endX - startX;
+    	double height = endY - startY;
+    	
+		gc.clearRect(startX, startY, width, height);
+	}
 
 	@Override
 	public String toString() {

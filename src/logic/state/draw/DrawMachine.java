@@ -18,8 +18,16 @@ private State state;
 		gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 	}
 	
+	public void clean(GraphicsContext gc, double startX, double startY, double endX, double endY) {
+		state.clean(gc, startX, startY, endX, endY);
+	}
+	
 	public void setState(State state) {
 		this.state = state;
+	}
+	
+	public State getCurrentState() {
+		return this.state;
 	}
 	
 	@Override

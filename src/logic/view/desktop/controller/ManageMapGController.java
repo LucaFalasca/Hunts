@@ -3,14 +3,21 @@ package logic.view.desktop.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -22,6 +29,7 @@ import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
+import logic.state.draw.states.State;
 
 public class ManageMapGController extends ControllerWithLogin{
 	
@@ -33,7 +41,12 @@ public class ManageMapGController extends ControllerWithLogin{
     private Canvas canvasDraw;
     @FXML
     private TextField tfMapName;
-    
+    @FXML
+    private ChoiceBox<String> cbShape;
+    private ObservableList<String> cbList = FXCollections.observableArrayList("Rectangular", "Oval");
+    @FXML
+    private ListView<ZoneBean> lvZones;
+    //private ObservableList<ZoneBean> zoneList = FXCollections.observableArrayList();
     private GraphicsContext gcDraw;
     private GraphicsContext gcTemp;
     private DrawMachine drawMachine;
@@ -41,11 +54,36 @@ public class ManageMapGController extends ControllerWithLogin{
     private double startX;
     private double startY;
     private int idMap = -1;
-    private List<ZoneBean> zones;
+    private ObservableList<ZoneBean> zones = FXCollections.observableArrayList();
     private String pathImage;
     
     @Override
 	void start(String arg, Object param) {
+    	cbShape.setValue("Rectangular");
+    	cbShape.setItems(cbList);
+    	cbShape.setOnAction(e -> {
+    		switch(cbShape.getValue()) {
+	    		case "Rectangular":
+	    			drawMachine.setState(RectangleState.getInstance());
+	    			break;
+	    		case "Oval":
+	    			drawMachine.setState(OvalState.getInstance());
+	    			break;
+    		}
+    	});
+    	lvZones.setItems(zones);
+    	lvZones.setCellFactory(p -> new ListCell<ZoneBean>(){
+    		@Override
+    	    protected void updateItem(ZoneBean item, boolean empty) {
+    	        super.updateItem(item, empty);
+
+    	        if (empty) {
+    	            setText(null);
+    	        } else {
+    	            setText(item.getNameZone() + " " + item.getShape());
+    	        }
+    	    }
+    	});
 		if(param != null) {
 			var par = (int) param;
 			var controller = new ManageMapControl();
@@ -57,7 +95,7 @@ public class ManageMapGController extends ControllerWithLogin{
 				}
 				tfMapName.setText(map.getName());
 				if(map.getZones() != null) {
-					zones = map.getZones();
+					zones.setAll(map.getZones());
 					for(ZoneBean zone : zones) {
 						switch(zone.getShape()) {
 							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
@@ -87,7 +125,6 @@ public class ManageMapGController extends ControllerWithLogin{
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
         gcTemp.setFill(Color.web("0x61823e", 0.5));
         onDrawing = false;
-        zones = new ArrayList<>();
     }
     
     
@@ -114,22 +151,34 @@ public class ManageMapGController extends ControllerWithLogin{
     
     @FXML
     void handleMovedOnMap(MouseEvent event) {
-    	drawMachine.clean(gcTemp);
-    	if(onDrawing) {
-    		double endX = event.getX();
-        	double endY = event.getY();
-        	
-        	drawMachine.draw(gcTemp, startX, startY, endX, endY);
-        	
+    	switch(event.getButton()) {
+    	case PRIMARY:
+    		drawMachine.clean(gcTemp);
+        	if(onDrawing) {
+        		double endX = event.getX();
+            	double endY = event.getY();
+            	
+            	drawMachine.draw(gcTemp, startX, startY, endX, endY);
+            	
+        	}
+    		break;
+		default:
     	}
+    	
     }
     
 
     @FXML
     void handlePressedOnMap(MouseEvent event) {
-    	startX = event.getX();
-    	startY = event.getY();
-    	onDrawing = true;
+    	switch(event.getButton()) {
+    	case PRIMARY:
+    		startX = event.getX();
+        	startY = event.getY();
+        	onDrawing = true;
+    		break;
+		default:
+    	}
+    	
     }
     
 
@@ -138,13 +187,36 @@ public class ManageMapGController extends ControllerWithLogin{
     	double endX = event.getX();
     	double endY = event.getY();
     	
-    	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
-	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
-	    	zones.add(new ZoneBean("TestNome", startX, startY, endX, endY, drawMachine.toString()));
+    	switch(event.getButton()) {
+    	case PRIMARY:
+        	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
+    	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
+    	    	String nameDefault = "Zona " + (zones.size() + 1);
+    	    	for(int i = 0; i < zones.size(); i++) {
+    	    		if(zones.get(i).getNameZone().equals(nameDefault)){
+    	    			nameDefault += "(1)";
+    	    			i = 0;
+    	    		}
+    	    	}
+    	    	zones.add(new ZoneBean(nameDefault, startX, startY, endX, endY, drawMachine.toString()));
+        	}
+        	
+        	drawMachine.clean(gcTemp);
+        	onDrawing = false;
+    		break;
+    	case SECONDARY:
+    		if(thereIsInAZoneRange(endX, endY, endX, endY)) {
+    			for(ZoneBean zone: zones) {
+    				if(isBetween(endX, zone.getX1(), zone.getX2()) && isBetween(endY, zone.getY1(), zone.getY2())) {
+    					zones.remove(zone);
+    					clean(zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2(), zone.getShape());
+    					break;
+    				}
+    			}
+    		}
+    		break;
+		default:
     	}
-    	
-    	drawMachine.clean(gcTemp);
-    	onDrawing = false;
     }
 
     
@@ -152,6 +224,23 @@ public class ManageMapGController extends ControllerWithLogin{
     void handleCleanAll(ActionEvent event) {
     	drawMachine.clean(gcDraw);
     	zones.clear();
+    }
+    
+    void clean(double x1, double y1, double x2, double y2, String shape) {
+        State oldState = drawMachine.getCurrentState();    
+        
+        switch(shape) {
+		case "Rectangular":
+			drawMachine.setState(RectangleState.getInstance());
+			break;
+		case "Oval":
+			drawMachine.setState(OvalState.getInstance());
+			break;
+        }
+        
+        drawMachine.clean(gcDraw, x1, y1, x2, y2);
+        
+        drawMachine.setState(oldState);
     }
     
     

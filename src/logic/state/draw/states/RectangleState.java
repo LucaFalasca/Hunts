@@ -22,6 +22,14 @@ public class RectangleState implements State{
 		gc.fillRect(startX, startY, width, height);
 		return false;
 	}
+	
+	@Override
+	public void clean(GraphicsContext gc, double startX, double startY, double endX, double endY) {
+		double width = endX - startX;
+    	double height = endY - startY;
+    	
+		gc.clearRect(startX, startY, width, height);
+	}
 
 	@Override
 	public String toString() {

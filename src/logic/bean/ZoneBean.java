@@ -66,5 +66,8 @@ public class ZoneBean {
 		this.shape = type;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return nameZone;
+	}
 }

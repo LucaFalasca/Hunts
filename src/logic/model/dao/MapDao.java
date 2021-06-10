@@ -107,9 +107,8 @@ public class MapDao {
 		}
 		if(map.getZones() != null) {
 			List<Zone> zones = map.getZones();
-			int i = 0;
 			for(Zone zone : zones) {
-				zone.setName(zone.getName() + i++);
+				zone.setName(zone.getName());
 				add_zone_to_map(zone, id);
 			}
 		}
