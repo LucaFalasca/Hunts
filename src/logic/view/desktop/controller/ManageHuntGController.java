@@ -1,11 +1,14 @@
 package logic.view.desktop.controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import javax.swing.JFileChooser;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -496,7 +499,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     
     @FXML
-    void handleUplaodFile(ActionEvent event) throws LoadFileFailed {
+    void handleUploadFile(ActionEvent event) throws LoadFileFailed {
     	var fileChooser = new FileChooser();
     	var uploadFileControl = new UploadFileControl();
     	
@@ -505,10 +508,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
     			);
     	
-    	var file = fileChooser.showOpenDialog(imgMap.getScene().getWindow());
+    	var file = fileChooser.showOpenDialog(btnUploadFile.getScene().getWindow());
 		filePath = uploadFileControl.uploadFile(file);
 		
 		btnUploadFile.setText("Change File");
+        
 		
     }
     
