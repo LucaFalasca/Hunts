@@ -12,11 +12,12 @@ import logic.exception.LoadFileFailed;
 public class UploadFileControl {
 
 	public String uploadFile(File file) throws LoadFileFailed {
-		String url = "uploads\\" + file.getName();
+		String url;
 		
 		try {
+			url = "uploads\\" + file.getName();
 			saveFile(url, Files.readAllBytes(file.toPath()));
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e ) {
 			throw new LoadFileFailed();
 		}
 		

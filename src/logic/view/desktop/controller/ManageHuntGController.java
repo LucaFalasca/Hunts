@@ -126,7 +126,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     private List<TextField> tfClueText = new ArrayList<>();
 
-
     @FXML
     private TextField tfObjectName;
     
@@ -161,13 +160,13 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private static final String ERRORSELECTED = "You must selected an item from the List";
 	private static final String EMPTY = "empty";
 	private static final String ERRORLOGIN = "Error with Login";
-	private static final String TRY = "Try again";
+	private static final String ERROR = "An error occurenct, Try again";
 	private static final String NEWRIDDLE = "Add new Riddle";
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
 	private static final String HUNTNAME = "You must insert the name of the Hunt";
 	private static final String OBJECTNAME = "An object with this name already exist";
-	
+	private static final String FILE = "Cannot create file"; 
 	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
 	
 	
@@ -187,7 +186,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			try {
 				changeScene(Pages.LOGIN, null, null);
 			} catch (PageNotFoundException e1) {
-				e1.printStackTrace();
+				errorAlert(ERROR);
 			}
 		}
 		switch(arg) {
@@ -359,14 +358,18 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleCreateMap(ActionEvent event) throws PageNotFoundException {
+    void handleCreateMap(ActionEvent event) {
     	huntBean.setIdHunt(save());
-    	changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
+    	try {
+			changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
+		} catch (PageNotFoundException e) {
+			errorAlert(ERROR);
+		}
     	
     }
 
     @FXML
-    void handleChooseMap(ActionEvent event) throws PageNotFoundException {
+    void handleChooseMap(ActionEvent event)  {
     	
     	Parent root;
         try {
@@ -377,8 +380,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        stage.showAndWait();
 	        if(idMap != -1)
 	        	setMap();
-		} catch (IOException e) {
-    		errorAlert(TRY);
+		} catch (IOException |PageNotFoundException e) {
+    		errorAlert(ERROR);
 		}
         
     	
@@ -499,7 +502,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     
     @FXML
-    void handleUploadFile(ActionEvent event) throws LoadFileFailed {
+    void handleUploadFile(ActionEvent event) {
     	var fileChooser = new FileChooser();
     	var uploadFileControl = new UploadFileControl();
     	
@@ -509,7 +512,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     			);
     	
     	var file = fileChooser.showOpenDialog(btnUploadFile.getScene().getWindow());
-		filePath = uploadFileControl.uploadFile(file);
+		try {
+			filePath = uploadFileControl.uploadFile(file);
+		} catch (LoadFileFailed e) {
+			errorAlert(FILE);
+		}
 		
 		btnUploadFile.setText("Change File");
         
@@ -522,10 +529,14 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleFinish(ActionEvent event) throws PageNotFoundException {
+    void handleFinish(ActionEvent event) {
     	if(tfHuntName.getText().equals("")) {
     		save();
-    		changeScene(Pages.MAIN_MENU);
+    		try {
+				changeScene(Pages.MAIN_MENU);
+			} catch (PageNotFoundException e) {
+				errorAlert(ERROR);
+			}
     		
     	}
     	else {
