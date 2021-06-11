@@ -1,14 +1,14 @@
 package logic.view.desktop.controller;
 
 
-import java.io.File;
+import java.awt.Component;
+import java.awt.TextComponent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.JFileChooser;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -124,7 +124,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     private TextField tfClueText3;
     
-    private List<TextField> tfClueText = new ArrayList<>();
+    private List<TextField> tfComponent = new ArrayList<>();
 
     @FXML
     private TextField tfObjectName;
@@ -151,20 +151,20 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private HuntBean huntBean = new HuntBean();
 	private MapBean mapBean = new MapBean();
 	
-	private String riddle;
 	private int idMap = -1;
 	private HashMap<String, String> objectPath = new HashMap<>();
+	private HashMap<Integer, String> object = new HashMap<>();
+	private HashMap<Integer, String> zone = new HashMap<>();
 	private String filePath = null;
 	
-	private static final String SEPARATOR = "; ";
+	private static final String SEPARATOR = "\n";
 	private static final String ERRORSELECTED = "You must selected an item from the List";
-	private static final String EMPTY = "empty";
 	private static final String ERRORLOGIN = "Error with Login";
 	private static final String ERROR = "An error occurenct, Try again";
 	private static final String NEWRIDDLE = "Add new Riddle";
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
-	private static final String HUNTNAME = "You must insert the name of the Hunt";
+	private static final String HUNTNAME = "You must insert the name of the Hunt or at least one riddle to Save";
 	private static final String OBJECTNAME = "An object with this name already exist";
 	private static final String FILE = "Cannot create file"; 
 	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
@@ -173,9 +173,11 @@ public class ManageHuntGController extends ControllerWithLogin{
 	@Override
 	void start(String arg, Object param) {
 		
-		tfClueText.add(tfClueText1);
-    	tfClueText.add(tfClueText2);
-    	tfClueText.add(tfClueText3);
+		tfComponent.add(tfRiddleText);
+		tfComponent.add(tfRiddleSolution);
+		tfComponent.add(tfClueText1);
+		tfComponent.add(tfClueText2);
+		tfComponent.add(tfClueText3);
 		var manageHuntControl = new ManageHuntControl();
 		
 		try {
@@ -228,21 +230,25 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
 		for(var i = 0; i < riddleBean.size(); i++) {
 			var rb = riddleBean.get(i);
-			var s = String.format("%s; %s; ", rb.getRiddle(), rb.getSolution());
+			var s = "";
+			s = s.concat(rb.getRiddle() + SEPARATOR);
+			s = s.concat(rb.getSolution()+ SEPARATOR);
 			
-			for(var j = 0; j < tfClueText.size(); j++) {
-				s = s.concat(isEmpty(rb.getClueElement(j)) + SEPARATOR);
+			for(var j = 0; j < rb.getClue().size(); j++) {
+				s = s.concat((rb.getClueElement(j)) + SEPARATOR);
 			}
 			
-			s = s.concat(isEmpty(rb.getObjectName()) + SEPARATOR + isEmpty(rb.getZoneName()));
+			object.put(i, rb.getObjectName());
+			zone.put(i, rb.getZoneName());
 			rdlList.add(s);
 		}
+		
 		
 		objectBean = huntBean.getObject();
 		for(var i = 0; i < objectBean.size(); i++) {
 			var obj = objectBean.get(i);
 			
-			var s = String.format("%s; %s;", obj.getObject(), obj.getDescription());
+			var s = String.format("%s%n%s", obj.getObject(), obj.getDescription());
 			objList.add(s);
 			if(!(obj.getPath().equals(""))) {
 				objectPath.put(obj.getObject(), obj.getPath());
@@ -257,18 +263,20 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	if(!(tfRiddleText.getText().equals("")) && !(tfRiddleSolution.getText().equals(""))){
     		
-    		riddle = String.format("%s; %s;", tfRiddleText.getText(), tfRiddleSolution.getText());
+    		var temp = "";
     		
-    		for(var i = 0; i < tfClueText.size(); i++) {
-    			riddle = riddle.concat(isEmpty(tfClueText.get(i).getText()));
+    		for(var i = 0; i < tfComponent.size(); i++) {
+    			if(!(tfComponent.get(i).getText().equals("")))
+    				temp = temp.concat(tfComponent.get(i).getText() + SEPARATOR);
     		}
+    		var it = cmbObject.getSelectionModel().getSelectedItem().lines().iterator();
+    		if(it.hasNext())
+    			object.put(rdlList.size(), it.next());
+    		else
+    			object.put(rdlList.size(), null);
+    		zone.put(rdlList.size(), cmbZone.getSelectionModel().getSelectedItem());
     		
-    		riddle = riddle.concat(isEmpty(cmbObject.getSelectionModel().getSelectedItem()));
-    		
-    		riddle = riddle.concat(isEmpty(cmbZone.getSelectionModel().getSelectedItem()));
-
-    			
-    		rdlList.add(riddle);
+    		rdlList.add(temp);
     		
     		lbRiddle.setText("Riddle " + (rdlList.size()));
     		
@@ -281,14 +289,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     		errorAlert(NOWROTE);
     		
     	}
-    }
-    
-    
-    private String isEmpty(String content) {
-    	if(content != null && !(content.equals("")))
-    		return content + SEPARATOR;
-    	else
-    		return EMPTY + SEPARATOR;
     }
     
     @FXML
@@ -304,9 +304,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		int index = lvRiddle.getSelectionModel().getSelectedIndex();
     		
-    		if(index == -1) 
+    		if(index != -1) {
     			rdlList.remove(index);
-    		else {
+    			object.remove(index);
+    			zone.remove(index);
+    		} else {
     			errorAlert(ERRORSELECTED);
     		}
     			
@@ -322,26 +324,21 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	if(index != -1) {
     		
-    		riddle = lvRiddle.getItems().get(index);
+    		var i = 0;
     		
-    		var st = new StringTokenizer(riddle, SEPARATOR);
+    		var riddle = lvRiddle.getItems().get(index);
     		
-    		if(st.hasMoreElements()) {
-    			tfRiddleText.setText(st.nextToken());
-    			
-    			tfRiddleSolution.setText(st.nextToken());
-    			
-    			for(var i = 0; i < tfClueText.size(); i++)
-    				tfClueText.get(i).setText(isTokenEmpty(st.nextToken()));
-    			
-    			cmbObject.setValue(isTokenEmpty(st.nextToken()));
-    			
-    			cmbZone.setValue(isTokenEmpty(st.nextToken()));
-    			
-    			lvRiddle.getItems().remove(index);
-    		} else {
-    			errorAlert(ERRORSELECTED);
+    		var rid = riddle.lines().iterator();
+    		
+    		while(rid.hasNext()) {
+    			tfComponent.get(i).setText(rid.next());
+    			i++;
     		}
+    		
+    		cmbObject.setValue(object.get(index));
+    		cmbZone.setValue(zone.get(index));
+    		
+    		rdlList.remove(index);
  
     	} else {
     		
@@ -350,12 +347,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     }
     
-    private String isTokenEmpty(String content) {
-    	if(content.equals(EMPTY))
-    		return "";
-    	else
-    		return content; 
-    }
+    
     
     @FXML
     void handleCreateMap(ActionEvent event) {
@@ -411,37 +403,34 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	String objectName = tfObjectName.getText();
     	var flag = false;
-   
-    	try {
     		
-    		if(!(objectName.equals(""))) {
-	    		for(var i = 0; i < lvObject.getItems().size(); i++){
-	    			if(objectName.equals(lvObject.getItems().get(i))) {
-	    				flag = true;
-	    			}
-	    		}
+		if(!(objectName.equals(""))) {
+    		for(var i = 0; i < lvObject.getItems().size(); i++){
+    			var it = lvObject.getItems().get(i).lines().iterator();
+    			if(it.hasNext() && objectName.equals(it.next())) {
+    				flag = true;
+    				break;
+    			}
+    		}
 
-	    		if(flag) {
-	    			errorAlert(OBJECTNAME);
-	    		}else {
-	    			
-	    			if(filePath != null) {
-	    				objectPath.put(objectName, filePath);
-	    				filePath = null;
-	    				btnUploadFile.setText("Upload File");
-	    			}
-	    			objectName = objectName.concat(SEPARATOR + txtDescription.getText());
-	    			objList.add(objectName);
-	    		}
-	    		
-	    		 
-    		} else {
-    			errorAlert(NONAME);
-	    	}
+    		if(flag) {
+    			errorAlert(OBJECTNAME);
+    		}else {
+    			
+    			if(filePath != null) {
+    				objectPath.put(objectName, filePath);
+    				filePath = null;
+    				btnUploadFile.setText("Upload File");
+    			}
+    			objectName = objectName.concat(SEPARATOR + txtDescription.getText());
+    			objList.add(objectName);
+    		}
+    		
+    		 tfObjectName.setText("");
+    		 txtDescription.setText("");
+		} else {
+			errorAlert(NONAME);
     	}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
     }
 
     @FXML
@@ -450,14 +439,12 @@ public class ManageHuntGController extends ControllerWithLogin{
     	int index = lvObject.getSelectionModel().getSelectedIndex();
     	
     	if(index == -1) {
-	    	String tempName = lvObject.getSelectionModel().getSelectedItem();
+	    	var it = lvObject.getSelectionModel().getSelectedItem().lines().iterator();
 	    	
-	    	var st = new StringTokenizer(tempName, SEPARATOR);
-	    	
-	    	if(st.hasMoreElements()) {
-	    		tempName = st.nextToken();
-				objectPath.remove(tempName);
+	    	if(it.hasNext()) {
+				objectPath.remove(it.next());
 	    	}
+	    	
 	    	objList.remove(index);
     	} else {
     		errorAlert(ERRORSELECTED);
@@ -469,23 +456,23 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleModifyObject(ActionEvent event) {
     	
-    	var object = lvObject.getSelectionModel().getSelectedItem();
+    	
     	var index = lvObject.getSelectionModel().getSelectedIndex();
     	if(index != -1) {
-	    	objList.remove(index);
 	    	
-	    	var st = new StringTokenizer(object, SEPARATOR);
+	    	var it = lvObject.getSelectionModel().getSelectedItem().lines().iterator();
 	    	
-	    	if(st.hasMoreElements()) {
-	    		tfObjectName.setText(st.nextToken());
+	    	if(it.hasNext()) {
+	    		tfObjectName.setText(it.next());
 	    		
-	    		txtDescription.setText(isTokenEmpty(st.nextToken()));
+	    		txtDescription.setText(it.next());
 	    		
 	    		if(objectPath.containsKey(tfObjectName.getText())){
 	    			objectPath.remove(tfObjectName.getText());
 	    			btnUploadFile.setText("Change File");
 	    		}
 	    	}
+	    	objList.remove(index);
     	} else {
     		errorAlert(ERRORSELECTED);
     	}
@@ -514,23 +501,28 @@ public class ManageHuntGController extends ControllerWithLogin{
     	var file = fileChooser.showOpenDialog(btnUploadFile.getScene().getWindow());
 		try {
 			filePath = uploadFileControl.uploadFile(file);
+			btnUploadFile.setText("Change File");
 		} catch (LoadFileFailed e) {
+			btnUploadFile.setText("Upload File");
 			errorAlert(FILE);
 		}
 		
-		btnUploadFile.setText("Change File");
+		
         
 		
     }
     
     @FXML
-    void handleSave(MouseEvent event) {
-    	save();
+    void handleSave(ActionEvent event) {
+    	if(rdlList.isEmpty())
+    		huntBean.setIdHunt(save());
+    	else
+    		errorAlert(HUNTNAME);
     }
     
     @FXML
     void handleFinish(ActionEvent event) {
-    	if(tfHuntName.getText().equals("")) {
+    	if(tfHuntName.getText().equals("") && rdlList.isEmpty()) {
     		save();
     		try {
 				changeScene(Pages.MAIN_MENU);
@@ -548,12 +540,8 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     
     private void cancelTextView() {
-    	tfRiddleText.setText("");
-    	
-    	tfRiddleSolution.setText("");
-    	
-    	for(var i = 0; i < tfClueText.size(); i++)
-    		tfClueText.get(i).setText("");
+    	for(var i = 0; i < tfComponent.size(); i++)
+    		tfComponent.get(i).setText("");
 
     }
     
@@ -568,58 +556,54 @@ public class ManageHuntGController extends ControllerWithLogin{
     
 	
 	private int save() {
-		
 		List<ObjectBean> objectBean = new ArrayList<>();
 		List<RiddleBean> riddleBean = new ArrayList<>();
 		
 		var manageHuntControl = new ManageHuntControl();
-		int idHunt = -1;
 		for(var i = 0; i < rdlList.size(); i++) {
-			var st = new StringTokenizer(rdlList.get(i), SEPARATOR);
+			
+			var it = rdlList.get(i).lines().iterator();
     		
-    		if(st.hasMoreElements()) {
+    		if(it.hasNext()) {
     			var rb = new RiddleBean();
     			
-    			rb.setRiddle(st.nextToken());
+    			rb.setRiddle(it.next());
     			
-    			rb.setSolution(st.nextToken());
+    			rb.setSolution(it.next());
+    		
+    			var j = 0;
+    			while(it.hasNext()) {
+    				rb.setClueElement(j, (it.next()));
+    				j++;
+    			}
     			
-    			for(var j = 0; j < tfClueText.size(); j++) 
-    				rb.setClueElement(j, isTokenEmpty(st.nextToken()));
-    			
-    			rb.setObjectName(isTokenEmpty(st.nextToken()));
-    			
-    			rb.setZoneName(isTokenEmpty(st.nextToken()));
+    			rb.setObjectName(object.get(i));
+    			rb.setZoneName(zone.get(i));
     			
     			riddleBean.add(rb);
     		}
     		
 		}
 		for(var i = 0; i < objList.size(); i++) {
-			var st = new StringTokenizer(objList.get(i),SEPARATOR);
-			if(st.hasMoreElements()) {
-				var name = st.nextToken();
+			var it = objList.get(i).lines().iterator();
+			if(it.hasNext()) {
+				var name = it.next();
 				
-				var desc = st.nextToken();
+				var desc = it.next();
 				
 				var path = objectPath.get(name);
 				
 				var or = new ObjectBean(name, desc, path);
-				
-				
 				objectBean.add(or);
 			}
 			
 		}
-		
 		huntBean.setHuntName(tfHuntName.getText());
 		huntBean.setMap(mapBean);
 		huntBean.setRiddle(riddleBean);
 		huntBean.setObject(objectBean);
 		
-		idHunt = manageHuntControl.saveHunt(huntBean);
-		
-		return idHunt;
+		return manageHuntControl.saveHunt(huntBean);
 		
 	}
 	

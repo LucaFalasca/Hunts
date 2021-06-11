@@ -18,8 +18,10 @@ public class HuntDao {
 		int idHunt  = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
 		
 		List<RealObject> objects = hunt.getObjectList();
-		for(RealObject object : objects) {
-			addObjectToHunt(object.getName(), idHunt, null, object.getDescription(), null, -1);
+		if(objects != null) {
+			for(RealObject object : objects) {
+				addObjectToHunt(object.getName(), idHunt, null, object.getDescription(), null, -1);
+			}
 		}
 		
 		List<Riddle> riddles = hunt.getRiddleList();

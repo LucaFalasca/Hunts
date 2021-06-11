@@ -60,17 +60,18 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfObjectName" GridPane.columnIndex="1" />
-                        <Button fx:id="btnUploadFile" alignment="CENTER" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="31.0" prefWidth="76.0" text="Upload File" GridPane.columnIndex="2" GridPane.valignment="CENTER" />
-                        <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="btnUploadFile" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="31.0" prefWidth="76.0" text="Upload File" GridPane.columnIndex="2" GridPane.valignment="CENTER" />
+                        <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnModifyObject" mnemonicParsing="false" onAction="#handleModifyObject" prefHeight="22.0" prefWidth="70.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Button fx:id="btnModifyObject" mnemonicParsing="false" onAction="#handleModifyObject" prefHeight="22.0" prefWidth="70.0" text="Modify" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
+                        <Button fx:id="btnRemoveObject" alignment="CENTER" mnemonicParsing="false" onAction="#handleRemoveObject" text="X" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <Label prefHeight="21.0" prefWidth="225.0" text="Insert the description" GridPane.rowIndex="1">
                            <font>
                               <Font size="15.0" />
@@ -80,7 +81,6 @@
                      </children>
                   </GridPane>
                   <ListView fx:id="lvObject" editable="true" onMouseClicked="#handleObjectSelected" prefHeight="202.0" prefWidth="537.0" />
-                  <Button fx:id="btnRemoveObject" mnemonicParsing="false" onAction="#handleRemoveObject" text="X" visible="false" />
                   <VBox prefHeight="370.0" prefWidth="682.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="25.0" prefWidth="515.0">
