@@ -5,6 +5,8 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundException;
@@ -13,13 +15,44 @@ import logic.state.login.LogMachine;
 import logic.state.login.states.LoggedState;
 import logic.state.login.states.NotLoggedState;
 
-public abstract class ControllerWithLogin {
+public abstract class ControllerWithLogin{
 	
 	private Stage stage;
 	
 	private LogMachine logMachine;
 	
+	private Parent toolbar;
+	private ToolBarController toolBarController;
+	
 	abstract void start(String arg, Object param);
+	
+	public void setToolbar(Parent toolbar, ToolBarController controller) throws IOException {
+		this.toolbar = toolbar;
+		this.toolBarController = controller;
+		
+		BorderPane borderPane = (BorderPane) stage.getScene().getRoot();
+		borderPane.setTop(toolbar);
+		
+		Button login = (Button) stage.getScene().lookup("#btnLogin");
+		login.setOnAction(e -> {
+			try {
+				changeScene(Pages.LOGIN);
+			} catch (PageNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		Button b = (Button) stage.getScene().lookup("#btnHunt");
+		b.setOnAction(e -> {
+			try {
+				changeScene(Pages.MAIN_MENU);
+			} catch (PageNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+	}
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -29,6 +62,8 @@ public abstract class ControllerWithLogin {
 	protected void setAsLogged(String username) {
 		logMachine.setState(LoggedState.getIstance());
 		logMachine.setUsername(username);
+		
+		toolBarController.setAsLogged(username);
 	}
 	
 	protected ControllerWithLogin() {
@@ -41,6 +76,8 @@ public abstract class ControllerWithLogin {
 	
 	protected void logout() {
 		logMachine.setState(NotLoggedState.getIstance());
+		
+		toolBarController.logout();
 	}
 	
 	protected boolean isLogged() {
@@ -57,13 +94,15 @@ public abstract class ControllerWithLogin {
 		}
 		else {
 			try {
+				BorderPane borderPane = (BorderPane) stage.getScene().getRoot();
 				var loader = new FXMLLoader(getClass().getResource(page.getPath()));
 				Parent root = (Parent)loader.load();
 				ControllerWithLogin controller = loader.<ControllerWithLogin>getController();
 				controller.setLogMachine(logMachine);
 				controller.setStage(stage);
+				controller.setToolbar(toolbar, toolBarController);
 				controller.start(arg, param);
-				stage.setScene(new Scene(root));
+				borderPane.setCenter(root);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

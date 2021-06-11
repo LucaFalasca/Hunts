@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="33.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ToolBarController">
+   <children>
+      <Label fx:id="lbUsername" layoutX="47.0" layoutY="4.0" text="Username" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="btnHunt" mnemonicParsing="false" prefHeight="32.0" prefWidth="64.0" text="Hunt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <effect>
+            <Bloom threshold="1.0" />
+         </effect>
+      </Button>
+      <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="471.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="64.0" text="Login" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
