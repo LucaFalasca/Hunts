@@ -1,5 +1,8 @@
 package logic.view.desktop.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +22,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import logic.bean.MapBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
+import logic.enumeration.Pages;
 import logic.exception.LoadFileFailed;
+import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
@@ -51,6 +56,7 @@ public class ManageMapGController extends ControllerWithLogin{
     private int idMap = -1;
     private ObservableList<ZoneBean> zones = FXCollections.observableArrayList();
     private String pathImage;
+    private int idHuntComeback = -1;
     
     @Override
 	void start(String arg, Object param) {
@@ -83,36 +89,45 @@ public class ManageMapGController extends ControllerWithLogin{
     	        }
     	    }
     	});
-		if(param != null) {
-			var par = (int) param;
-			var controller = new ManageMapControl();
-			try {
-				var map = controller.getMapById(getUsername(), par);
-				idMap = map.getId();
-				if(map.getImage() != null) {
-					setImageByPath(map.getImage());
-				}
-				tfMapName.setText(map.getName());
-				if(map.getZones() != null) {
-					zones.setAll(map.getZones());
-					for(ZoneBean zone : zones) {
-						switch(zone.getShape()) {
-							case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
-								break;
-							case "OVAL" : drawMachine.setState(OvalState.getInstance());
-								break;
-							default:
-								drawMachine.setState(RectangleState.getInstance());
-						}
-						
-						drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
-					}
-				}
-				
-			} catch (UsernameNotLoggedException e) {
-				e.printStackTrace();
-			}
-		}
+    	switch(arg) {
+    		case "map":
+    			if(param != null) {
+    				var par = (int) param;
+    				var controller = new ManageMapControl();
+    				try {
+    					var map = controller.getMapById(getUsername(), par);
+    					idMap = map.getId();
+    					if(map.getImage() != null) {
+    						setImageByPath(map.getImage());
+    					}
+    					tfMapName.setText(map.getName());
+    					if(map.getZones() != null) {
+    						zones.setAll(map.getZones());
+    						for(ZoneBean zone : zones) {
+    							switch(zone.getShape()) {
+    								case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
+    									break;
+    								case "OVAL" : drawMachine.setState(OvalState.getInstance());
+    									break;
+    								default:
+    									drawMachine.setState(RectangleState.getInstance());
+    							}
+    							
+    							drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+    						}
+    					}
+    					
+    				} catch (UsernameNotLoggedException e) {
+    					e.printStackTrace();
+    				}
+    			}
+    			break;
+	    	case "hunt":
+	    		var par = (int) param;
+	    		idHuntComeback = par;
+	    		break;
+    	}
+		
 		
 	}
     
@@ -261,6 +276,23 @@ public class ManageMapGController extends ControllerWithLogin{
 		}
     }
     
+    @FXML
+    void handleSaveExit(ActionEvent event) {
+    	handleSave(event);
+    	
+    	List<Integer> l = new ArrayList<>();
+    	l.add(idHuntComeback);
+    	l.add(idMap);
+    	
+    	if(idHuntComeback != -1) {
+    		try {
+				changeScene(Pages.MANAGE_HUNT, "MAP", l);
+			} catch (PageNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
     
     //New Zone in Rectangle mode
     @FXML
