@@ -1,13 +1,10 @@
 package logic.view.desktop.controller;
 
 
-import java.awt.Component;
-import java.awt.TextComponent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
 
 
 import javafx.collections.FXCollections;
@@ -42,6 +39,7 @@ import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
 import logic.control.UploadFileControl;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
@@ -159,14 +157,11 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	private static final String SEPARATOR = "\n";
 	private static final String ERRORSELECTED = "You must selected an item from the List";
-	private static final String ERRORLOGIN = "Error with Login";
-	private static final String ERROR = "An error occurenct, Try again";
 	private static final String NEWRIDDLE = "Add new Riddle";
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
 	private static final String HUNTNAME = "You must insert the name of the Hunt or at least one riddle to Save";
 	private static final String OBJECTNAME = "An object with this name already exist";
-	private static final String FILE = "Cannot create file"; 
 	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
 	
 	
@@ -184,11 +179,11 @@ public class ManageHuntGController extends ControllerWithLogin{
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
 			
-			errorAlert(ERRORLOGIN);
+			errorAlert(StringHardCode.ERRORLOGIN.returnString());
 			try {
 				changeScene(Pages.LOGIN, null, null);
 			} catch (PageNotFoundException e1) {
-				errorAlert(ERROR);
+				errorAlert(StringHardCode.ERROR.returnString());
 			}
 		}
 		switch(arg) {
@@ -355,7 +350,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	try {
 			changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
 		} catch (PageNotFoundException e) {
-			errorAlert(ERROR);
+			errorAlert(StringHardCode.ERROR.returnString());
 		}
     	
     }
@@ -373,7 +368,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        if(idMap != -1)
 	        	setMap();
 		} catch (IOException |PageNotFoundException e) {
-    		errorAlert(ERROR);
+    		errorAlert(StringHardCode.ERROR.returnString());
 		}
         
     	
@@ -504,7 +499,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			btnUploadFile.setText("Change File");
 		} catch (LoadFileFailed e) {
 			btnUploadFile.setText("Upload File");
-			errorAlert(FILE);
+			errorAlert(StringHardCode.FILE.returnString());
 		}
 		
 		
@@ -527,7 +522,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		try {
 				changeScene(Pages.MAIN_MENU);
 			} catch (PageNotFoundException e) {
-				errorAlert(ERROR);
+				errorAlert(StringHardCode.ERROR.returnString());
 			}
     		
     	}
