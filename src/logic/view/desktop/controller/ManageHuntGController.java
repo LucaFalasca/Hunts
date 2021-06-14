@@ -41,7 +41,6 @@ import logic.control.UploadFileControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
-import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 
 public class ManageHuntGController extends ControllerWithLogin{
@@ -178,13 +177,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
-			
 			errorAlert(StringHardCode.ERRORLOGIN.returnString());
-			try {
-				changeScene(Pages.LOGIN, null, null);
-			} catch (PageNotFoundException e1) {
-				errorAlert(StringHardCode.ERROR.returnString());
-			}
+			changeScene(Pages.LOGIN, null, null);
 		}
 		switch(arg) {
 			case "hunt":
@@ -347,11 +341,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	huntBean.setIdHunt(save());
-    	try {
-			changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
-		} catch (PageNotFoundException e) {
-			errorAlert(StringHardCode.ERROR.returnString());
-		}
+		changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
     	
     }
 
@@ -519,12 +509,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     void handleFinish(ActionEvent event) {
     	if(tfHuntName.getText().equals("") && rdlList.isEmpty()) {
     		save();
-    		try {
-				changeScene(Pages.MAIN_MENU);
-			} catch (PageNotFoundException e) {
-				errorAlert(StringHardCode.ERROR.returnString());
-			}
-    		
+			changeScene(Pages.MAIN_MENU);
     	}
     	else {
     		alert.setContentText(HUNTNAME);

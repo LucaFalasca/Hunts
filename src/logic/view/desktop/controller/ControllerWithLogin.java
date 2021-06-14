@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
-import logic.exception.PageNotFoundException;
+import logic.exception.PageNotFoundError;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.login.LogMachine;
 import logic.state.login.states.LoggedState;
@@ -37,7 +37,7 @@ public abstract class ControllerWithLogin{
 		login.setOnAction(e -> {
 			try {
 				changeScene(Pages.LOGIN);
-			} catch (PageNotFoundException e1) {
+			} catch (PageNotFoundError e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -47,7 +47,7 @@ public abstract class ControllerWithLogin{
 		b.setOnAction(e -> {
 			try {
 				changeScene(Pages.MAIN_MENU);
-			} catch (PageNotFoundException e1) {
+			} catch (PageNotFoundError e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -88,7 +88,7 @@ public abstract class ControllerWithLogin{
 		return logMachine.getUsername();
 	}
 	
-	protected void changeScene(Pages page, String arg, Object param) throws PageNotFoundException {
+	protected void changeScene(Pages page, String arg, Object param) throws PageNotFoundError {
 		if(page.needLogin() && !logMachine.isLogged()) {
 			changeScene(Pages.LOGIN, "NEXT_PAGE", page.name());
 		}
@@ -106,12 +106,12 @@ public abstract class ControllerWithLogin{
 				
 			} catch (IOException e) {
 				e.printStackTrace();
-				throw new PageNotFoundException();
+				throw new PageNotFoundError();
 			}
 		}
 	}
 	
-	protected void changeScene(Pages page) throws PageNotFoundException {
+	protected void changeScene(Pages page) throws PageNotFoundError {
 		changeScene(page, "", null);
 	}
 

@@ -24,7 +24,6 @@ import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.exception.LoadFileFailed;
-import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
@@ -285,12 +284,7 @@ public class ManageMapGController extends ControllerWithLogin{
     	l.add(idMap);
     	
     	if(idHuntComeback != -1) {
-    		try {
-				changeScene(Pages.MANAGE_HUNT, "MAP", l);
-			} catch (PageNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			changeScene(Pages.MANAGE_HUNT, "MAP", l);
     	}
     }
     

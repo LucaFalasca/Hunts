@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -18,7 +17,6 @@ import javafx.scene.layout.Pane;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
-import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 
 public class MainMenuGController extends ControllerWithLogin{
@@ -88,12 +86,8 @@ public class MainMenuGController extends ControllerWithLogin{
 	}
     
     private void editMapButton(int id) {
-    	try {
-			changeScene(Pages.MANAGE_MAP, "map", id);
-		} catch (PageNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	changeScene(Pages.MANAGE_MAP, "map", id);
+		
     }
     
     private void deleteMapButton(int id) {
@@ -101,9 +95,6 @@ public class MainMenuGController extends ControllerWithLogin{
     	try {
 	    	controllerMaps.deleteMap(id, getUsername());
 			changeScene(Pages.MAIN_MENU);
-    	}
-    	catch(PageNotFoundException e) {
-    		e.printStackTrace();
     	} catch (UsernameNotLoggedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,30 +104,19 @@ public class MainMenuGController extends ControllerWithLogin{
     
     @FXML
     void handleManageHunt(ActionEvent event) {
-    	try {
-			changeScene(Pages.MANAGE_HUNT);
-		} catch (PageNotFoundException e) {
-			e.printStackTrace();
-		}
+		changeScene(Pages.MANAGE_HUNT);
     }
     
 
     @FXML
     void handleCreateMap(ActionEvent event) {
-    	try {
-			changeScene(Pages.MANAGE_MAP);
-		} catch (PageNotFoundException e) {
-			e.printStackTrace();
-		}
+		changeScene(Pages.MANAGE_MAP);
     }
     
     @FXML
     void handleLogin(ActionEvent event) {
-    	try {
-			changeScene(Pages.LOGIN);
-		} catch (PageNotFoundException e) {
-			e.printStackTrace();
-		}
+    	changeScene(Pages.LOGIN);
+		
     }
     
 

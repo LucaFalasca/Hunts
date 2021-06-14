@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
-import logic.exception.PageNotFoundException;
 import logic.exception.UsernameNotLoggedException;
 
 public class ChooseMapGController extends ControllerWithLogin{
@@ -45,11 +44,8 @@ public class ChooseMapGController extends ControllerWithLogin{
 		} catch (UsernameNotLoggedException e) {
 			alert.setContentText("You had problem with login");
 			alert.showAndWait();
-			try {
-				changeScene(Pages.LOGIN);
-			} catch (PageNotFoundException e1) {
-				alert.setContentText("Try again");
-			}
+			changeScene(Pages.LOGIN);
+			
 		}
     	
     	

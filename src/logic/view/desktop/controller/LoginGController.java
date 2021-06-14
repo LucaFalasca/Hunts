@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
 import logic.control.LoginControl;
 import logic.enumeration.Pages;
-import logic.exception.PageNotFoundException;
 
 public class LoginGController extends ControllerWithLogin{
 
@@ -58,12 +57,7 @@ public class LoginGController extends ControllerWithLogin{
     		boolean result = loginController.verifyAccount(loginBean);
     		if(result) {
     			setAsLogged(username);
-    			try {
-					changeScene(pageAfterLogin);
-				} catch (PageNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				changeScene(pageAfterLogin);
     		}
     		else {
 				lblError.setText("Username or password not correct");
@@ -73,11 +67,7 @@ public class LoginGController extends ControllerWithLogin{
     
     @FXML
     void handleLoginMenu(ActionEvent event) {
-    	try {
-			changeScene(Pages.LOGIN);
-		} catch (PageNotFoundException e) {
-			e.printStackTrace();
-		}
+		changeScene(Pages.LOGIN);
     }
 
     @FXML
