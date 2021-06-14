@@ -245,6 +245,8 @@ public class HuntDao {
 			stmt.setBoolean(4, indoor);
 			if(idMap != -1)
 				stmt.setInt(5, idMap);
+			else
+				stmt.setNull(5, java.sql.Types.INTEGER);
 			
 			boolean haveResult = stmt.execute();
 			
@@ -275,6 +277,10 @@ public class HuntDao {
 				stmt.setString(5, nomeZona);
 				stmt.setInt(6, mappaZona);
 			}
+			else {
+				stmt.setNull(5, java.sql.Types.VARCHAR);
+				stmt.setNull(6, java.sql.Types.INTEGER);
+			}
 			
 			boolean haveResult = stmt.execute();
 			
@@ -303,6 +309,10 @@ public class HuntDao {
 			if(!(nomeZona == null || mappaZona == -1)) {
 				stmt.setString(6, nomeZona);
 				stmt.setInt(7, mappaZona);
+			}
+			else {
+				stmt.setNull(6, java.sql.Types.VARCHAR);
+				stmt.setNull(7, java.sql.Types.INTEGER);
 			}
 			
 			boolean haveResult = stmt.execute();
