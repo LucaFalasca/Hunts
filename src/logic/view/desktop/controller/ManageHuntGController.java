@@ -367,7 +367,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        stage.showAndWait();
 	        if(idMap != -1)
 	        	setMap();
-		} catch (IOException |PageNotFoundException e) {
+		} catch (IOException e) {
     		errorAlert(StringHardCode.ERROR.returnString());
 		}
         
