@@ -20,7 +20,7 @@ public class Main extends Application {
 			primaryStage.setMinWidth(1280);
 			primaryStage.setMinHeight(720);
 			
-			BorderPane borderPane = new BorderPane();
+			var borderPane = new BorderPane();
 			
 			var loader2 = new FXMLLoader(getClass().getResource("/logic/view/desktop/layout/ToolBar.fxml"));
 			Parent toolBar = (Parent)loader2.load();
