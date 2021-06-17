@@ -351,4 +351,25 @@ public class HuntDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public void removeHunt(Hunt hunt) {
+		var conn = Database.getConnection();
+		
+		try (CallableStatement stmt = conn.prepareCall("call delete_hunt(?, ?)")){
+			
+			//Input param
+			stmt.setInt(1, hunt.getIdHunt());
+			stmt.setString(2, hunt.getCreatorName());
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				haveResult = stmt.getMoreResults();
+			}
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

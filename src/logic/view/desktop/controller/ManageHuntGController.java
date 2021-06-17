@@ -42,6 +42,7 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.enumeration.StringHardCode;
 
 public class ManageHuntGController extends ControllerWithLogin{
 	@FXML
@@ -177,18 +178,16 @@ public class ManageHuntGController extends ControllerWithLogin{
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
-			errorAlert(StringHardCode.ERRORLOGIN.returnString());
+			errorAlert(StringHardCode.ERRORLOGIN.getString());
 			changeScene(Pages.LOGIN, null, null);
 		}
-		switch(arg) {
-			case "hunt":
-				huntBean.setIdHunt((int) param);
-				huntBean = manageHuntControl.getHunt(huntBean);
-				
-				setHunt(huntBean);
-				break;
-				
-			case "map":
+		if(arg.equals(StringHardCode.HUNT.getString())) {
+			huntBean.setIdHunt((int) param);
+			huntBean = manageHuntControl.getHunt(huntBean);
+			
+			setHunt(huntBean);
+		} else {
+			if(arg.equals(StringHardCode.MAP.getString())) {
 				List<?> ids = (List<?>) param;
 				huntBean.setIdHunt((Integer) ids.get(0));
 				idMap = (Integer) ids.get(1);
@@ -196,9 +195,9 @@ public class ManageHuntGController extends ControllerWithLogin{
 				huntBean = manageHuntControl.getHunt(huntBean);
 				
 				setHunt(huntBean);
-				break;
-			default:
+			} else {
 				huntBean.setIdHunt(-1);
+			}
 		}
 		
 		lbRiddle.setText("Riddle " + rdlList.size());
@@ -358,7 +357,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        if(idMap != -1)
 	        	setMap();
 		} catch (IOException e) {
-    		errorAlert(StringHardCode.ERROR.returnString());
+    		errorAlert(StringHardCode.ERROR.getString());
 		}
         
     	
@@ -489,7 +488,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			btnUploadFile.setText("Change File");
 		} catch (LoadFileFailed e) {
 			btnUploadFile.setText("Upload File");
-			errorAlert(StringHardCode.FILE.returnString());
+			errorAlert(StringHardCode.FILE.getString());
 		}
 		
 		

@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
@@ -23,6 +24,8 @@ public abstract class ControllerWithLogin{
 	
 	private Parent toolbar;
 	private ToolBarController toolBarController;
+	
+	private Alert alert = new Alert(AlertType.ERROR);
 	
 	abstract void start(String arg, Object param);
 	
@@ -105,7 +108,6 @@ public abstract class ControllerWithLogin{
 				controller.start(arg, param);
 				
 			} catch (IOException e) {
-				e.printStackTrace();
 				throw new PageNotFoundError();
 			}
 		}
@@ -113,6 +115,12 @@ public abstract class ControllerWithLogin{
 	
 	protected void changeScene(Pages page) throws PageNotFoundError {
 		changeScene(page, "", null);
+	}
+	
+	protected void showAlert(String message) {
+		alert.setHeaderText("System Error");
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }

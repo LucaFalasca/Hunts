@@ -129,5 +129,38 @@ public class ManageHuntControl {
 		
 		return huntBean;
 	}
+
+	public List<HuntBean> getAllHunts(String username) {
+		List<HuntBean> huntBeans = new ArrayList<>();
+		var huntDao = new HuntDao();
+		List<Hunt> hunts;
+		
+		if(username == null)
+			hunts = huntDao.getHuntList();
+		else {
+			hunts = huntDao.getHuntList(username);
+		}
+		
+		for(var i = 0; i < hunts.size(); i++) {
+			var hunt = hunts.get(i);
+			var huntBean = new HuntBean();
+			
+			huntBean.setHuntName(hunt.getHuntName());
+			huntBean.setIdHunt(hunt.getIdHunt());
+			huntBean.setUsername(hunt.getCreatorName());
+			
+			huntBeans.add(huntBean);
+			
+		}
+		return huntBeans;
+	}
+	
+	public void deleteHunt(HuntBean huntBean) {
+		var huntDao = new HuntDao();
+		var hunt = new Hunt();
+		hunt.setCreatorName(huntBean.getHuntName());
+		hunt.setIdHunt(huntBean.getIdHunt());
+		huntDao.removeHunt(hunt);
+	}
 	
 }

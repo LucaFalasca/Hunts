@@ -1,11 +1,11 @@
 package logic.bean;
 
 import java.util.List;
-import javafx.scene.image.Image;
 
 public class MapBean {
 
 	private int id;
+	private String CreatorName;
 	private String name;
 	private String image;
 	private List<ZoneBean> zones;
@@ -41,6 +41,12 @@ public class MapBean {
 	}
 	public void setZones(List<ZoneBean> zones) {
 		this.zones = zones;
+	}
+	public String getCreatorName() {
+		return CreatorName;
+	}
+	public void setCreatorName(String creatorName) {
+		CreatorName = creatorName;
 	}
 	
 	

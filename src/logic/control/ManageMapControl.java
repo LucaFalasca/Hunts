@@ -87,6 +87,7 @@ public class ManageMapControl {
 			var bean = new MapBean();
 			bean.setId(map.getId());
 			bean.setName(map.getName());
+			bean.setCreatorName(username);
 			bean.setImage(map.getImagePath());
 			beans.add(bean);
 		}

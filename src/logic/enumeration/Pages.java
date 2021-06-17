@@ -5,7 +5,11 @@ public enum Pages {
 	LOGIN,
 	MANAGE_HUNT,
 	MANAGE_MAP,
-	CHOOSE_MAP;
+	CHOOSE_MAP,
+	ITEM_HUNT,
+	ITEM_HUNTS,
+	ITEM_MAP,
+	HUNT;
 	
 	public String getPath() {
 		switch(this) {
@@ -14,6 +18,10 @@ public enum Pages {
 			case MANAGE_HUNT: 	return "/logic/view/desktop/layout/ManageHunt.fxml";
 			case MANAGE_MAP: 	return "/logic/view/desktop/layout/ManageMapLayout.fxml";
 			case CHOOSE_MAP:    return "/logic/view/desktop/layout/ChooseMap.fxml";
+			case ITEM_HUNT:		return "/logic/view/desktop/layout/ItemHunt.fxml";
+			case ITEM_HUNTS:	return "/logic/view/desktop/layout/ItemHunts.fxml";
+			case ITEM_MAP:      return "/logic/view/desktop/layout/ItemMap.fxml";
+			case HUNT: 			return "/logic/view/desktop/layout/Hunt.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}
