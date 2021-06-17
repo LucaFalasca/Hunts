@@ -101,8 +101,8 @@ public abstract class ControllerWithLogin{
 				controller.setLogMachine(logMachine);
 				controller.setStage(stage);
 				controller.setToolbar(toolbar, toolBarController);
-				controller.start(arg, param);
 				borderPane.setCenter(root);
+				controller.start(arg, param);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

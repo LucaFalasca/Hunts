@@ -50,10 +50,6 @@ public class MainMenuGController extends ControllerWithLogin{
 	void start(String arg, Object param) {
 		if(isLogged()) {
 			try {
-				lbUsername.setText(getUsername());
-				lbUsername.setVisible(true);
-				btnLogin.setVisible(false);
-				
 				apMaps.setDisable(false);
 				lvMaps.setItems(mapsList);
 				
