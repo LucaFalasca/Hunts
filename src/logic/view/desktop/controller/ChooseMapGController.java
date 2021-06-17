@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
 
 public class ChooseMapGController extends ControllerWithLogin{
@@ -42,8 +43,7 @@ public class ChooseMapGController extends ControllerWithLogin{
 	    		this.mapList.add(mapsList.get(i).getName());
 	    	}
 		} catch (UsernameNotLoggedException e) {
-			alert.setContentText("You had problem with login");
-			alert.showAndWait();
+			showAlert(StringHardCode.ERRORLOGIN.getString());
 			changeScene(Pages.LOGIN);
 			
 		}
@@ -64,10 +64,7 @@ public class ChooseMapGController extends ControllerWithLogin{
     		var stage = (Stage) btnChooseAMap.getScene().getWindow();
     		stage.close();
     	} else {
-    		
-    		alert.setContentText("You didn't select anything");
-    		alert.showAndWait();
-
+    		showAlert(StringHardCode.ERRORSELECTED.getString());
     	}
 
     }

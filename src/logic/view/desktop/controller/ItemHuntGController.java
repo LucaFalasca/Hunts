@@ -75,14 +75,9 @@ public class ItemHuntGController extends ControllerWithLogin{
     	return ancHunt;
     }
 
-	public void setInfo(HuntBean itemBean) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	void start(String arg, Object param) {
-		// TODO Auto-generated method stub
+		//need to choose what to do with this method
 		
 	}
 

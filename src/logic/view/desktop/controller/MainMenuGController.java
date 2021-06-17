@@ -99,7 +99,7 @@ public class MainMenuGController extends ControllerWithLogin{
 						super.updateItem(itemBean, empty);
 						if(itemBean != null) {
 							var newItem = new ItemHuntGController();
-							newItem.setInfo(itemBean);
+							newItem.setItem(itemBean);
 							setGraphic(newItem.getBox());
 							
 						}
@@ -127,8 +127,6 @@ public class MainMenuGController extends ControllerWithLogin{
 		}
 		
 	}
-    
-    
     
     @FXML
     void handleManageHunt(ActionEvent event) {

@@ -156,7 +156,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private String filePath = null;
 	
 	private static final String SEPARATOR = "\n";
-	private static final String ERRORSELECTED = "You must selected an item from the List";
 	private static final String NEWRIDDLE = "Add new Riddle";
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
@@ -297,7 +296,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			object.remove(index);
     			zone.remove(index);
     		} else {
-    			errorAlert(ERRORSELECTED);
+    			errorAlert(StringHardCode.ERRORSELECTED.getString());
     		}
     			
 		} catch(Exception e) {
@@ -330,7 +329,7 @@ public class ManageHuntGController extends ControllerWithLogin{
  
     	} else {
     		
-    		errorAlert(ERRORSELECTED);
+    		errorAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     }
@@ -431,7 +430,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    	
 	    	objList.remove(index);
     	} else {
-    		errorAlert(ERRORSELECTED);
+    		errorAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     	
@@ -458,7 +457,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    	}
 	    	objList.remove(index);
     	} else {
-    		errorAlert(ERRORSELECTED);
+    		errorAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     	

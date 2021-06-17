@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.exception.PageNotFoundError;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.login.LogMachine;
@@ -33,7 +34,7 @@ public abstract class ControllerWithLogin{
 		this.toolbar = toolbar;
 		this.toolBarController = controller;
 		
-		BorderPane borderPane = (BorderPane) stage.getScene().getRoot();
+		var borderPane = (BorderPane) stage.getScene().getRoot();
 		borderPane.setTop(toolbar);
 		
 		Button login = (Button) stage.getScene().lookup("#btnLogin");
@@ -41,8 +42,7 @@ public abstract class ControllerWithLogin{
 			try {
 				changeScene(Pages.LOGIN);
 			} catch (PageNotFoundError e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				showAlert(StringHardCode.ERROR.getString());
 			}
 		});
 		
@@ -51,8 +51,7 @@ public abstract class ControllerWithLogin{
 			try {
 				changeScene(Pages.MAIN_MENU);
 			} catch (PageNotFoundError e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				showAlert(StringHardCode.ERROR.getString());
 			}
 		});
 	}
@@ -97,7 +96,7 @@ public abstract class ControllerWithLogin{
 		}
 		else {
 			try {
-				BorderPane borderPane = (BorderPane) stage.getScene().getRoot();
+				var borderPane = (BorderPane) stage.getScene().getRoot();
 				var loader = new FXMLLoader(getClass().getResource(page.getPath()));
 				Parent root = (Parent)loader.load();
 				ControllerWithLogin controller = loader.<ControllerWithLogin>getController();

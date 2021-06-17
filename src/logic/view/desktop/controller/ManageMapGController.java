@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -23,6 +24,7 @@ import logic.bean.MapBean;
 import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.DrawMachine;
@@ -42,10 +44,15 @@ public class ManageMapGController extends ControllerWithLogin{
     private TextField tfMapName;
     @FXML
     private ChoiceBox<String> cbShape;
-    private ObservableList<String> cbList = FXCollections.observableArrayList("Rectangular", "Oval");
+    
+    private static final String RECTANGLE = "Rectangular";
+    private static final String OVAL = "Oval";
+    
+    private ObservableList<String> cbList = FXCollections.observableArrayList(RECTANGLE, OVAL);
     @FXML
     private ListView<ZoneBean> lvZones;
     //private ObservableList<ZoneBean> zoneList = FXCollections.observableArrayList();
+    
     private GraphicsContext gcDraw;
     private GraphicsContext gcTemp;
     private DrawMachine drawMachine;
@@ -57,22 +64,16 @@ public class ManageMapGController extends ControllerWithLogin{
     private String pathImage;
     private int idHuntComeback = -1;
     
+    
     @Override
 	void start(String arg, Object param) {
-    	cbShape.setValue("Rectangular");
+    	cbShape.setValue(RECTANGLE);
     	cbShape.setItems(cbList);
     	cbShape.setOnAction(e -> {
-    		switch(cbShape.getValue()) {
-	    		case "Rectangular":
+    		if(cbShape.getValue().equals(OVAL)) {
+    			drawMachine.setState(OvalState.getInstance());
+    		} else {
 	    			drawMachine.setState(RectangleState.getInstance());
-	    			break;
-	    		case "Oval":
-	    			drawMachine.setState(OvalState.getInstance());
-	    			break;
-	    		default:
-	    			drawMachine.setState(RectangleState.getInstance());
-	    			break;
-	    			
     		}
     	});
     	lvZones.setItems(zones);
@@ -88,47 +89,42 @@ public class ManageMapGController extends ControllerWithLogin{
     	        }
     	    }
     	});
-    	switch(arg) {
-    		case "map":
-    			if(param != null) {
-    				var par = (int) param;
-    				var controller = new ManageMapControl();
-    				try {
-    					var map = controller.getMapById(getUsername(), par);
-    					idMap = map.getId();
-    					if(map.getImage() != null) {
-    						setImageByPath(map.getImage());
-    					}
-    					tfMapName.setText(map.getName());
-    					if(map.getZones() != null) {
-    						zones.setAll(map.getZones());
-    						for(ZoneBean zone : zones) {
-    							switch(zone.getShape()) {
-    								case "RECTANGLE": drawMachine.setState(RectangleState.getInstance());
-    									break;
-    								case "OVAL" : drawMachine.setState(OvalState.getInstance());
-    									break;
-    								default:
-    									drawMachine.setState(RectangleState.getInstance());
-    							}
-    							
-    							drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
-    						}
-    					}
-    					
-    				} catch (UsernameNotLoggedException e) {
-    					e.printStackTrace();
-    				}
-    			}
-    			break;
-	    	case "hunt":
-	    		var par = (int) param;
-	    		idHuntComeback = par;
-	    		break;
-    	}
-		
-		
+    	if(arg.equals(StringHardCode.MAP.toString())) {
+			if(param != null) {
+				var par = (int) param;
+				setMap(par);
+				
+    		} 
+    	} else {
+    		idHuntComeback = (int) param;
+		}
 	}
+    
+    private void setMap(int par) {
+    	var controller = new ManageMapControl();
+		try {
+			var map = controller.getMapById(getUsername(), par);
+			idMap = map.getId();
+			if(map.getImage() != null) {
+				setImageByPath(map.getImage());
+			}
+			tfMapName.setText(map.getName());
+			if(map.getZones() != null) {
+				zones.setAll(map.getZones());
+				for(ZoneBean zone : zones) {
+					if(zone.getShape().equals(OVAL)) {
+						drawMachine.setState(OvalState.getInstance());
+					} else {
+						drawMachine.setState(RectangleState.getInstance());
+					}
+					drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+				}
+			}
+			
+		} catch (UsernameNotLoggedException e) {
+			e.printStackTrace();
+		} 
+    }
     
     @FXML
     void initialize() {
@@ -164,18 +160,14 @@ public class ManageMapGController extends ControllerWithLogin{
     
     @FXML
     void handleMovedOnMap(MouseEvent event) {
-    	switch(event.getButton()) {
-    	case PRIMARY:
+		if(event.getButton() == MouseButton.PRIMARY) {
     		drawMachine.clean(gcTemp);
         	if(onDrawing) {
         		double endX = event.getX();
             	double endY = event.getY();
             	
-            	drawMachine.draw(gcTemp, startX, startY, endX, endY);
-            	
+            	drawMachine.draw(gcTemp, startX, startY, endX, endY);   	
         	}
-    		break;
-		default:
     	}
     	
     }
@@ -183,13 +175,10 @@ public class ManageMapGController extends ControllerWithLogin{
 
     @FXML
     void handlePressedOnMap(MouseEvent event) {
-    	switch(event.getButton()) {
-	    	case PRIMARY:
-	    		startX = event.getX();
-	        	startY = event.getY();
-	        	onDrawing = true;
-	    		break;
-			default:
+    	if(event.getButton() == MouseButton.PRIMARY) {
+    		startX = event.getX();
+        	startY = event.getY();
+        	onDrawing = true;
     	}
     	
     }
@@ -242,16 +231,10 @@ public class ManageMapGController extends ControllerWithLogin{
     void clean(double x1, double y1, double x2, double y2, String shape) {
         var oldState = drawMachine.getCurrentState();    
         
-        switch(shape) {
-			case "Rectangular":
-				drawMachine.setState(RectangleState.getInstance());
-				break;
-			case "Oval":
-				drawMachine.setState(OvalState.getInstance());
-				break;
-			default:
-				drawMachine.setState(RectangleState.getInstance());
-				break;
+        if(shape.equals(OVAL)) {
+			drawMachine.setState(OvalState.getInstance());
+		} else {
+			drawMachine.setState(RectangleState.getInstance());
         }
         
         drawMachine.clean(gcDraw, x1, y1, x2, y2);

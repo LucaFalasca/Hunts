@@ -55,7 +55,7 @@ public class ItemHuntsGController extends ControllerWithLogin{
 
 	@Override
 	void start(String arg, Object param) {
-		// TODO Auto-generated method stub
+		// need to choose what to do with this method
 		
 	}
     

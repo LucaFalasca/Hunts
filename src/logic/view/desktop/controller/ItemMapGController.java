@@ -66,7 +66,7 @@ public class ItemMapGController extends ControllerWithLogin{
 
 	@Override
 	void start(String arg, Object param) {
-		
+		//need to choose what to do with this method
 	}
 	
 }

@@ -27,15 +27,14 @@ public class LoginGController extends ControllerWithLogin{
     @FXML
     private Label lblError;
     
-    private Pages pageAfterLogin = Pages.MAIN_MENU;
+    private Pages pageAfterLogin;
 
     @Override
 	void start(String arg, Object param) {
-    	switch(arg) {
-    		case "NEXT_PAGE": 
-    			pageAfterLogin = Pages.valueOf((String) param);
-    			break;
-			default:
+    	if(arg.equals("NEXT_PAGE")) {
+    		pageAfterLogin = Pages.valueOf((String) param);	
+    	}else {
+    		pageAfterLogin = Pages.MAIN_MENU;
     	}
     	
 		lblError.setVisible(false);
