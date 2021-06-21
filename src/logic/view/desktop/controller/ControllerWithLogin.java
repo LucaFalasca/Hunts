@@ -60,6 +60,10 @@ public abstract class ControllerWithLogin{
 		this.stage = stage;
 	}
 	
+	public ControllerWithLogin getIstance() {
+		return this;
+	}
+	
 	//Only Use after check the credential
 	protected void setAsLogged(String username) {
 		logMachine.setState(LoggedState.getIstance());

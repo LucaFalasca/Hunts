@@ -81,7 +81,7 @@ public class MainMenuGController extends ControllerWithLogin{
 						super.updateItem(itemBean, empty);
 						if(itemBean != null) {
 							var newItem = new ItemMapGController();
-							newItem.setInfo(itemBean);
+							newItem.setInfo(itemBean, getIstance());
 							setGraphic(newItem.getBox());
 							
 						}

@@ -16,7 +16,7 @@ import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 
-public class ItemMapGController extends ControllerWithLogin{
+public class ItemMapGController{
 	
     @FXML
     private AnchorPane ancMapPane;
@@ -32,6 +32,8 @@ public class ItemMapGController extends ControllerWithLogin{
     
     private int idMap;
     private String creatorName;
+    
+    private ControllerWithLogin mainController;
 
     public ItemMapGController(){
     	var fxmlLoader = new FXMLLoader(getClass().getResource(Pages.ITEM_MAP.getPath()));
@@ -54,22 +56,18 @@ public class ItemMapGController extends ControllerWithLogin{
 
     @FXML
     void handleModifyMap(ActionEvent event) {
-    	changeScene(Pages.MANAGE_MAP, "map", idMap);
+    	mainController.changeScene(Pages.MANAGE_MAP, "map", idMap);
     }
 
-	public void setInfo(MapBean itemBean) {
+	public void setInfo(MapBean itemBean, ControllerWithLogin mainController) {
 		lbMapName.setText(itemBean.getName());
 		idMap = itemBean.getId();	
 		creatorName = itemBean.getCreatorName();
+		this.mainController = mainController;
 	}
 
 	public AnchorPane getBox() {
 		return ancMapPane;
-	}
-
-	@Override
-	void start(String arg, Object param) {
-		//need to choose what to do with this method
 	}
 	
 }
