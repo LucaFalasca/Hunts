@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ancMapPane" minWidth="150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="ancMapPane" minWidth="150.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
    <children>
       <Label fx:id="lbMapName" text="Label" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
       <Button fx:id="bntModifyMap" mnemonicParsing="false" onAction="#handleModifyMap" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
