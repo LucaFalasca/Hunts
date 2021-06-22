@@ -80,8 +80,8 @@ public class MainMenuGController extends ControllerWithLogin{
 					public void updateItem(MapBean itemBean, boolean empty) {
 						super.updateItem(itemBean, empty);
 						if(itemBean != null) {
-							var newItem = new ItemMapGController();
-							newItem.setInfo(itemBean, getIstance());
+							var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
+							newItem.setInfo(itemBean);
 							setGraphic(newItem.getBox());
 							
 						}
@@ -98,8 +98,8 @@ public class MainMenuGController extends ControllerWithLogin{
 					public void updateItem(HuntBean itemBean, boolean empty) {
 						super.updateItem(itemBean, empty);
 						if(itemBean != null) {
-							var newItem = new ItemHuntGController();
-							newItem.setItem(itemBean);
+							var newItem = new ItemHuntGController(Pages.ITEM_HUNT, getIstance());
+							newItem.setInfo(itemBean);
 							setGraphic(newItem.getBox());
 							
 						}
@@ -116,7 +116,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					public void updateItem(HuntBean itemBean, boolean empty) {
 						super.updateItem(itemBean, empty);
 						if(itemBean != null) {
-							var newItem = new ItemHuntsGController();
+							var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
 							newItem.setInfo(itemBean);
 							setGraphic(newItem.getBox());
 							

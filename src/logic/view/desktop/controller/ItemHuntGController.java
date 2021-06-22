@@ -13,7 +13,7 @@ import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 
-public class ItemHuntGController extends ControllerWithLogin{
+public class ItemHuntGController extends ItemController{
 	
     @FXML
     private AnchorPane ancHunt;
@@ -35,15 +35,8 @@ public class ItemHuntGController extends ControllerWithLogin{
     
     private int idHunt;
     
-    public ItemHuntGController() {
-    	var fxmlLoader = new FXMLLoader(getClass().getResource(Pages.ITEM_MAP.getPath()));
-        fxmlLoader.setController(this);
-        
-        try {
-			fxmlLoader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    public ItemHuntGController(Pages page, ControllerWithLogin mainController) {
+    	super(page, mainController);
     }
     
     @FXML
@@ -66,20 +59,15 @@ public class ItemHuntGController extends ControllerWithLogin{
 
     }
     
-    public void setItem(HuntBean huntBean) {
-    	lbHuntName.setText(huntBean.getHuntName());
-    	idHunt = huntBean.getIdHunt();
+    @Override
+    public void setInfo(Object item) {
+    	HuntBean itemBean = (HuntBean) item;
+    	lbHuntName.setText(itemBean.getHuntName());
+    	idHunt = itemBean.getIdHunt();
     }
     
     public AnchorPane getBox() {
     	return ancHunt;
     }
-
-	@Override
-	void start(String arg, Object param) {
-		//need to choose what to do with this method
-		
-	}
-
 
 }

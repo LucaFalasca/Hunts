@@ -1,14 +1,7 @@
 package logic.view.desktop.controller;
 
-
-
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +9,7 @@ import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 
-public class ItemMapGController{
+public class ItemMapGController extends ItemController{
 	
     @FXML
     private AnchorPane ancMapPane;
@@ -33,19 +26,9 @@ public class ItemMapGController{
     private int idMap;
     private String creatorName;
     
-    private ControllerWithLogin mainController;
 
-    public ItemMapGController(){
-    	var fxmlLoader = new FXMLLoader(getClass().getResource(Pages.ITEM_MAP.getPath()));
-        fxmlLoader.setController(this);
-        
-        
-        try {
-			fxmlLoader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
+    public ItemMapGController(Pages page, ControllerWithLogin mainController){
+    	super(page, mainController);
     }
     
     @FXML
@@ -56,16 +39,18 @@ public class ItemMapGController{
 
     @FXML
     void handleModifyMap(ActionEvent event) {
-    	mainController.changeScene(Pages.MANAGE_MAP, "map", idMap);
+    	changeScene(Pages.MANAGE_MAP, "map", idMap);
     }
 
-	public void setInfo(MapBean itemBean, ControllerWithLogin mainController) {
+    @Override
+	public void setInfo(Object item) {
+    	MapBean itemBean = (MapBean)item;
 		lbMapName.setText(itemBean.getName());
 		idMap = itemBean.getId();	
 		creatorName = itemBean.getCreatorName();
-		this.mainController = mainController;
 	}
 
+    @Override
 	public AnchorPane getBox() {
 		return ancMapPane;
 	}

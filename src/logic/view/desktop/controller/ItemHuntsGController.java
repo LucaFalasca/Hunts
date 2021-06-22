@@ -1,18 +1,14 @@
 package logic.view.desktop.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import logic.bean.HuntBean;
 import logic.enumeration.Pages;
 
-public class ItemHuntsGController extends ControllerWithLogin{
+public class ItemHuntsGController extends ItemController{
     @FXML
     private AnchorPane ancHunt;
 
@@ -27,15 +23,8 @@ public class ItemHuntsGController extends ControllerWithLogin{
 
     private int idHunt;
     
-    public ItemHuntsGController() {
-    	var fxmlLoader = new FXMLLoader(getClass().getResource(Pages.ITEM_HUNTS.getPath()));
-        fxmlLoader.setController(this);
-        
-        try {
-			fxmlLoader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    public ItemHuntsGController(Pages page, ControllerWithLogin mainController) {
+    	super(page, mainController);
     }
     
     @FXML
@@ -43,7 +32,10 @@ public class ItemHuntsGController extends ControllerWithLogin{
     	changeScene(Pages.HUNT, null, idHunt);
     }
 
-	public void setInfo(HuntBean itemBean) {
+    @Override
+	public void setInfo(Object item) {
+		
+		HuntBean itemBean = (HuntBean) item;
 		lbHuntName.setText(itemBean.getHuntName());
 		lbHuntCreator.setText(itemBean.getUsername());
 		idHunt = itemBean.getIdHunt();
@@ -51,12 +43,6 @@ public class ItemHuntsGController extends ControllerWithLogin{
 
 	public AnchorPane getBox() {
 		return ancHunt;
-	}
-
-	@Override
-	void start(String arg, Object param) {
-		// need to choose what to do with this method
-		
 	}
     
 }
