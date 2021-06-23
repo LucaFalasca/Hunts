@@ -46,7 +46,7 @@ public class ItemMapGController extends ItemController{
 	public void setInfo(Object item) {
     	MapBean itemBean = (MapBean)item;
 		lbMapName.setText(itemBean.getName());
-		idMap = itemBean.getId();	
+		idMap = itemBean.getId();
 		creatorName = itemBean.getCreatorName();
 	}
 
