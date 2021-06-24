@@ -355,7 +355,7 @@ public class HuntDao {
 	public void removeHunt(Hunt hunt) {
 		var conn = Database.getConnection();
 		
-		try (CallableStatement stmt = conn.prepareCall("call delete_hunt(?, ?)")){
+		try (CallableStatement stmt = conn.prepareCall("call delete_hunt_by_id(?, ?)")){
 			
 			//Input param
 			stmt.setInt(1, hunt.getIdHunt());

@@ -65,7 +65,7 @@ public class MainMenuGController extends ControllerWithLogin{
 			var controllerHunts = new ManageHuntControl();
     		try {
 				mapBeans = controllerMaps.getAllMaps(getUsername());
-				huntBeans = controllerHunts.getAllHunts(getUsername());	
+				huntBeans = controllerHunts.getAllHunts(getUsername());
 			} catch (UsernameNotLoggedException e) {
 				showAlert(StringHardCode.ERRORLOGIN.getString());
 				changeScene(Pages.LOGIN);
