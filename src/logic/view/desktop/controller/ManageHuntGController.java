@@ -256,14 +256,21 @@ public class ManageHuntGController extends ControllerWithLogin{
     			if(!(tfComponent.get(i).getText().equals("")))
     				temp = temp.concat(tfComponent.get(i).getText() + SEPARATOR);
     		}
-    		var it = cmbObject.getSelectionModel().getSelectedItem().lines().iterator();
-    		if(it.hasNext())
-    			object.put(rdlList.size(), it.next());
-    		else
-    			object.put(rdlList.size(), null);
-    		zone.put(rdlList.size(), cmbZone.getSelectionModel().getSelectedItem());
     		
     		rdlList.add(temp);
+    		
+    		temp = cmbObject.getSelectionModel().getSelectedItem(); 
+    		if(temp != null) {
+    			var it = temp.lines().iterator();
+	    		if(it.hasNext())
+	    			object.put(rdlList.size(), it.next());
+    		} else {
+    			object.put(rdlList.size(), null);
+    		}
+    		
+    		zone.put(rdlList.size(), cmbZone.getSelectionModel().getSelectedItem());
+    		
+    		
     		
     		lbRiddle.setText("Riddle " + (rdlList.size()));
     		
@@ -498,20 +505,19 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleSave(ActionEvent event) {
     	if(rdlList.isEmpty())
-    		huntBean.setIdHunt(save());
-    	else
     		errorAlert(HUNTNAME);
+    	else
+    		huntBean.setIdHunt(save());
     }
     
     @FXML
     void handleFinish(ActionEvent event) {
     	if(tfHuntName.getText().equals("") && rdlList.isEmpty()) {
-    		save();
-			changeScene(Pages.MAIN_MENU);
+    		errorAlert(HUNTNAME);
     	}
     	else {
-    		alert.setContentText(HUNTNAME);
-    		alert.showAndWait();
+    		save();
+			changeScene(Pages.MAIN_MENU);
     	}
     }
     
