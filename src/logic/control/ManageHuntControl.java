@@ -24,7 +24,7 @@ public class ManageHuntControl {
 		
 		var riddle = new ArrayList<Riddle>();
 		
-		var object = new ArrayList<Object>();
+		var object = new ArrayList<RealObject>();
 		
 		hunt.setHuntName(huntBean.getHuntName());
 		hunt.setIdHunt(huntBean.getIdHunt());
@@ -43,6 +43,8 @@ public class ManageHuntControl {
 			riddle.add(rid);
 		}
 		
+		hunt.setRiddleList(riddle);
+		
 		for(var i = 0; i < huntBean.getObject().size(); i++) {
 			var obj = new RealObject();
 			
@@ -54,6 +56,8 @@ public class ManageHuntControl {
 			
 			object.add(obj);
 		}
+		
+		hunt.setObjectList(object);
 		
 		var map = new Map();
 		

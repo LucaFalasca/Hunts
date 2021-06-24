@@ -15,7 +15,7 @@ import logic.model.entity.Riddle;
 public class HuntDao {
 	
 	public int saveHunt(Hunt hunt) {
-		int idHunt  = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
+		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
 		
 		List<RealObject> objects = hunt.getObjectList();
 		if(objects != null) {
@@ -315,8 +315,12 @@ public class HuntDao {
 				stmt.setNull(7, java.sql.Types.INTEGER);
 			}
 			
+			stmt.setNull(8, java.sql.Types.INTEGER);
+			
 			boolean haveResult = stmt.execute();
 			
+			
+			System.out.println("ciao");
 			while(haveResult) {
 				haveResult = stmt.getMoreResults();
 			}

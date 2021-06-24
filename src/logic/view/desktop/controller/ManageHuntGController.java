@@ -42,7 +42,6 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
-import logic.enumeration.StringHardCode;
 
 public class ManageHuntGController extends ControllerWithLogin{
 	@FXML
@@ -177,7 +176,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
-			errorAlert(StringHardCode.ERRORLOGIN.getString());
+			showAlert(StringHardCode.ERRORLOGIN.getString());
 			changeScene(Pages.LOGIN, null, null);
 		}
 		if(arg.equals(StringHardCode.HUNT.getString())) {
@@ -280,7 +279,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		
     	} else {
-    		errorAlert(NOWROTE);
+    		showAlert(NOWROTE);
     		
     	}
     }
@@ -303,7 +302,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			object.remove(index);
     			zone.remove(index);
     		} else {
-    			errorAlert(StringHardCode.ERRORSELECTED.getString());
+    			showAlert(StringHardCode.ERRORSELECTED.getString());
     		}
     			
 		} catch(Exception e) {
@@ -336,7 +335,7 @@ public class ManageHuntGController extends ControllerWithLogin{
  
     	} else {
     		
-    		errorAlert(StringHardCode.ERRORSELECTED.getString());
+    		showAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     }
@@ -363,7 +362,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	        if(idMap != -1)
 	        	setMap();
 		} catch (IOException e) {
-    		errorAlert(StringHardCode.ERROR.getString());
+			showAlert(StringHardCode.ERROR.getString());
 		}
         
     	
@@ -404,7 +403,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		}
 
     		if(flag) {
-    			errorAlert(OBJECTNAME);
+    			showAlert(OBJECTNAME);
     		}else {
     			
     			if(filePath != null) {
@@ -419,7 +418,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		 tfObjectName.setText("");
     		 txtDescription.setText("");
 		} else {
-			errorAlert(NONAME);
+			showAlert(NONAME);
     	}
     }
 
@@ -437,7 +436,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    	
 	    	objList.remove(index);
     	} else {
-    		errorAlert(StringHardCode.ERRORSELECTED.getString());
+    		showAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     	
@@ -464,7 +463,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	    	}
 	    	objList.remove(index);
     	} else {
-    		errorAlert(StringHardCode.ERRORSELECTED.getString());
+    		showAlert(StringHardCode.ERRORSELECTED.getString());
     	}
     	
     	
@@ -494,7 +493,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			btnUploadFile.setText("Change File");
 		} catch (LoadFileFailed e) {
 			btnUploadFile.setText("Upload File");
-			errorAlert(StringHardCode.FILE.getString());
+			showAlert(StringHardCode.FILE.getString());
 		}
 		
 		
@@ -505,17 +504,17 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleSave(ActionEvent event) {
     	if(rdlList.isEmpty())
-    		errorAlert(HUNTNAME);
-    	else
+    		showAlert(HUNTNAME);
+    	else {
     		huntBean.setIdHunt(save());
+    	}
     }
     
     @FXML
     void handleFinish(ActionEvent event) {
     	if(tfHuntName.getText().equals("") && rdlList.isEmpty()) {
-    		errorAlert(HUNTNAME);
-    	}
-    	else {
+    		showAlert(HUNTNAME);
+    	} else {
     		save();
 			changeScene(Pages.MAIN_MENU);
     	}
@@ -589,11 +588,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
 		return manageHuntControl.saveHunt(huntBean);
 		
-	}
-	
-	private void errorAlert(String cont) {
-		alert.setContentText(cont);
-		alert.showAndWait();
 	}
 	
 }
