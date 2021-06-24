@@ -46,6 +46,7 @@ public class ItemHuntGController extends ItemController{
     	huntBean.setIdHunt(idHunt);
     	huntBean.setHuntName(lbHuntName.getText());
     	controller.deleteHunt(huntBean);
+    	changeScene(Pages.LOGIN);
     }
 
     @FXML

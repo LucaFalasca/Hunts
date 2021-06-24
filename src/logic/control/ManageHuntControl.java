@@ -71,9 +71,9 @@ public class ManageHuntControl {
 		return huntDao.saveHunt(hunt);
 	}
 
-	public HuntBean getHunt(HuntBean huntBean) {
+	public HuntBean getHunt(int idHunt, String username) {
 		var huntDao = new HuntDao();
-		
+		var huntBean = new HuntBean();
 		List<Riddle> riddleList;
 		List<RealObject> objectList;
 		List<Zone> zoneList;
@@ -82,7 +82,7 @@ public class ManageHuntControl {
 		List<ObjectBean> objectBean = new ArrayList<>();
 		List<ZoneBean> zoneBean = new ArrayList<>();
 		
-		var hunt = huntDao.getHuntById(huntBean.getIdHunt(), huntBean.getUsername());
+		var hunt = huntDao.getHuntById(idHunt, username);
 		
 		huntBean.setIdHunt(hunt.getIdHunt());
 		huntBean.setHuntName(hunt.getHuntName());

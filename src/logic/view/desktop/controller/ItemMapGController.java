@@ -35,6 +35,7 @@ public class ItemMapGController extends ItemController{
     void handleDeleteMap(ActionEvent event) {
     	var controllerMap = new ManageMapControl();
     	controllerMap.deleteMap(idMap, creatorName);
+    	changeScene(Pages.LOGIN);
     }
 
     @FXML

@@ -172,30 +172,38 @@ public class ManageHuntGController extends ControllerWithLogin{
 		tfComponent.add(tfClueText2);
 		tfComponent.add(tfClueText3);
 		var manageHuntControl = new ManageHuntControl();
-		
+		var id = -1;
 		try {
 			huntBean.setUsername(getUsername());
 		} catch (UsernameNotLoggedException e) {
 			showAlert(StringHardCode.ERRORLOGIN.getString());
 			changeScene(Pages.LOGIN, null, null);
 		}
-		if(arg.equals(StringHardCode.HUNT.getString())) {
-			huntBean.setIdHunt((int) param);
-			huntBean = manageHuntControl.getHunt(huntBean);
-			
-			setHunt(huntBean);
-		} else {
-			if(arg.equals(StringHardCode.MAP.getString())) {
-				List<?> ids = (List<?>) param;
-				huntBean.setIdHunt((Integer) ids.get(0));
-				idMap = (Integer) ids.get(1);
-				setMap();
-				huntBean = manageHuntControl.getHunt(huntBean);
+		try {
+			if(arg.equals(StringHardCode.HUNT.getString())) {
+				id = (int) param;
+				huntBean.setIdHunt(id);
+				
+				huntBean = manageHuntControl.getHunt(id, getUsername());
+				
 				
 				setHunt(huntBean);
 			} else {
-				huntBean.setIdHunt(-1);
+				if(arg.equals(StringHardCode.MAP.getString())) {
+					List<?> ids = (List<?>) param;
+					id = (Integer) ids.get(0);
+					huntBean.setIdHunt(id);
+					idMap = (Integer) ids.get(1);
+					setMap();
+					huntBean = manageHuntControl.getHunt(id, getUsername());
+					setHunt(huntBean);
+				} else {
+					huntBean.setIdHunt(id);
+				}
 			}
+		} catch (UsernameNotLoggedException e) {
+			showAlert(StringHardCode.ERRORLOGIN.getString());
+			changeScene(Pages.LOGIN, null, null);
 		}
 		
 		lbRiddle.setText("Riddle " + rdlList.size());
