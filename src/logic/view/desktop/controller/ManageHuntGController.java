@@ -1,7 +1,6 @@
 package logic.view.desktop.controller;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,20 +10,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -142,8 +139,27 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     private Label lbMapName;
     
+    @FXML
+    private CheckBox cbPrivate;
+    
     private ObservableList<String> zoneList = FXCollections.observableArrayList();
 	
+    @FXML
+    private TableView<String> tbTry;
+    @FXML
+    private TableColumn<String, String> cmRiddle;
+    @FXML
+    private TableColumn<String, String> cmSolution;
+    @FXML
+    private TableColumn<String, String> cmClue1;
+    @FXML
+    private TableColumn<String, String> cmClue2;
+    @FXML
+    private TableColumn<String, String> cmClue3;
+    @FXML
+    private TableColumn<String, String> cmObject;
+    @FXML
+    private TableColumn<String, String> cmZone;
 	
 	private HuntBean huntBean = new HuntBean();
 	private MapBean mapBean = new MapBean();
@@ -160,7 +176,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private static final String NONAME = "Object name area's is empty";
 	private static final String HUNTNAME = "You must insert the name of the Hunt or at least one riddle to Save";
 	private static final String OBJECTNAME = "An object with this name already exist";
-	Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
 	
 	
 	@Override
@@ -208,7 +223,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
 		lbRiddle.setText("Riddle " + rdlList.size());
     	lvObject.setItems(objList);
-    	lvRiddle.setItems(rdlList);
+    	//lvRiddle.setItems(rdlList);
     	cmbObject.setItems(objList);
     	cmbZone.setItems(zoneList);
     	
@@ -360,20 +375,26 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleChooseMap(ActionEvent event)  {
     	
-    	Parent root;
-        try {
-			root = FXMLLoader.load(getClass().getResource(Pages.CHOOSE_MAP.getPath()));
-			var stage = new Stage();
-	        stage.setTitle("Choose a map");
-	        stage.setScene(new Scene(root, stage.getHeight(), stage.getWidth()));
-	        stage.showAndWait();
-	        if(idMap != -1)
-	        	setMap();
-		} catch (IOException e) {
-			showAlert(StringHardCode.ERROR.getString());
-		}
-        
+    	var mpc = new ManageMapControl();
+		var controllerChoose = new ChooseMapGController(Pages.CHOOSE_MAP, this);
+		List<MapBean> mapsList = null;
     	
+    	try {
+			mapsList = mpc.getAllMaps(getUsername());
+			controllerChoose.setInfo(mapsList);
+		} catch (UsernameNotLoggedException e) {
+			showAlert(StringHardCode.ERRORLOGIN.getString());
+			changeScene(Pages.LOGIN);
+		}
+    	
+		var stage = new Stage();
+        stage.setTitle("Choose a map");
+        var scene = new Scene(controllerChoose.getBox());
+        stage.setScene(scene);
+        stage.showAndWait();
+        if(idMap != -1)
+        	setMap();
+		
     }
     
     private void setMap() {

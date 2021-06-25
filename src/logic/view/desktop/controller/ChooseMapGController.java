@@ -6,21 +6,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logic.bean.MapBean;
-import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
-import logic.exception.UsernameNotLoggedException;
 
-public class ChooseMapGController extends ControllerWithLogin{
+public class ChooseMapGController extends ItemController{
 	
-	private ObservableList<String> mapList = FXCollections.observableArrayList();
+    @FXML
+    private AnchorPane ancChooseMap;
+    private ObservableList<String> mapList = FXCollections.observableArrayList();
     
     @FXML
     private ListView<String> lvMap;
@@ -28,29 +29,8 @@ public class ChooseMapGController extends ControllerWithLogin{
     @FXML
     private Button btnChooseAMap;
     
-    Alert alert = new Alert(AlertType.ERROR, "Error", ButtonType.CLOSE);
-    
-
-	@Override
-	void start(String arg, Object param) {
-		List<MapBean> mapsList = null;
-    	
-    	var mpc = new ManageMapControl();
-    	
-    	try {
-			mapsList = mpc.getAllMaps(getUsername());
-			for(var i = 0; i < mapList.size(); i++) {
-	    		this.mapList.add(mapsList.get(i).getName());
-	    	}
-		} catch (UsernameNotLoggedException e) {
-			showAlert(StringHardCode.ERRORLOGIN.getString());
-			changeScene(Pages.LOGIN);
-			
-		}
-    	
-    	
-    	lvMap.setItems(this.mapList);
-		
+    protected ChooseMapGController(Pages page, ControllerWithLogin mainController) {
+		super(page, mainController);
 	}
 	
     @FXML
@@ -64,10 +44,27 @@ public class ChooseMapGController extends ControllerWithLogin{
     		var stage = (Stage) btnChooseAMap.getScene().getWindow();
     		stage.close();
     	} else {
-    		showAlert(StringHardCode.ERRORSELECTED.getString());
+    		var alert = new Alert(AlertType.ERROR);
+    		alert.setContentText(StringHardCode.ERRORSELECTED.getString());
+    		alert.showAndWait();
     	}
 
     }
+
+	@Override
+	public void setInfo(Object itemBean) {
+		List<?> maps = (List<?>)itemBean;
+		for(Object map : maps) {
+    		this.mapList.add(((MapBean)map).getName());
+    	}
+		
+		lvMap.setItems(this.mapList);
+	}
+
+	@Override
+	public Parent getBox() {
+		return ancChooseMap;
+	}
 
 
     
