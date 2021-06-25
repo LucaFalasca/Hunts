@@ -60,6 +60,7 @@ public class MainMenuGController extends ControllerWithLogin{
     		List<MapBean> mapBeans = null;
     		List<HuntBean> huntBeans = null;
     		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
+    		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
     		ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
 			var controllerMaps = new ManageMapControl();
 			var controllerHunts = new ManageHuntControl();
@@ -91,8 +92,8 @@ public class MainMenuGController extends ControllerWithLogin{
 			
 			if(huntBeans != null) {
 				apHunts.setDisable(false);
-				huntsList.addAll(huntBeans);
-				lvMyHunts.setItems(huntsList);
+				huntList.addAll(huntBeans);
+				lvMyHunts.setItems(huntList);
 				lvMyHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
 					@Override
 					public void updateItem(HuntBean itemBean, boolean empty) {
@@ -106,6 +107,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					}
 				});
 			}
+			
 			
 			huntBeans = controllerHunts.getAllHunts(null);
 			if(huntBeans != null) {
