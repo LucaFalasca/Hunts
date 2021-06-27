@@ -14,6 +14,19 @@ public class RiddleBean {
 	private String objectName;
 	
 	private String zoneName;
+	
+	public RiddleBean(String riddle, String solution, String clue1, String clue2, String clue3, String objectName, String zoneName) {
+		this.riddle = riddle;
+		this.solution = solution;
+		clue.add(clue1);
+		clue.add(clue2);
+		clue.add(clue3);
+		this.objectName = objectName;
+		this.zoneName = zoneName;
+	}
+
+	public RiddleBean() {
+	}
 
 	public String getRiddle() {
 		return riddle;
