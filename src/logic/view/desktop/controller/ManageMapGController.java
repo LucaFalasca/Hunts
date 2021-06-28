@@ -95,7 +95,7 @@ public class ManageMapGController extends ControllerWithLogin{
 				setMap(par);
 				
     		} 
-    	} else {
+    	} else if(arg.equals(StringHardCode.HUNT.toString()) && param != null){
     		idHuntComeback = (int) param;
 		}
 	}
