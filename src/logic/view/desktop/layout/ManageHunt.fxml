@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -24,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageHuntGController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageHuntGController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -89,7 +83,7 @@
          <center>
             <AnchorPane prefHeight="655.0" prefWidth="1132.0" BorderPane.alignment="CENTER">
                <children>
-                  <ListView fx:id="lvObject" editable="true" layoutX="-3.0" onMouseClicked="#handleObjectSelected" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0" />
+                  <ListView fx:id="lvObject" editable="true" layoutX="-3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </center>
@@ -190,15 +184,15 @@
                            <children>
                               <TableView fx:id="tbRiddle" layoutX="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn fx:id="cmText" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="110.0" text="Text" />
-                                    <TableColumn fx:id="cmSolution" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="110.0" text="Solution" />
-                                    <TableColumn fx:id="cmClue1" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="110.0" text="Clue 1" />
-                                    <TableColumn fx:id="cmClue2" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="Clue2" />
-                                    <TableColumn fx:id="cmClue3" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="Clue 3" />
-                                    <TableColumn fx:id="cmObject" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Obejct" />
-                                    <TableColumn fx:id="cmZone" maxWidth="1.7976931348623157E308" prefWidth="105.0" text="Zone" />
-                                 </columns>
-                              </TableView>
+                                    <TableColumn fx:id="cmText" prefWidth="125.0" text="Text" />
+                                    <TableColumn fx:id="cmSolution" prefWidth="100.0" text="Solution" />
+                                    <TableColumn fx:id="cmClue1" prefWidth="100.0" text="Clue 1" />
+                                    <TableColumn fx:id="cmClue2" prefWidth="100.0" text="Clue 2" />
+                                    <TableColumn fx:id="cmClue3" prefWidth="100.0" text="Clue 3" />
+                                    <TableColumn fx:id="cmObject" prefWidth="100.0" text="Object" />
+                                    <TableColumn fx:id="cmZone" prefWidth="100.0" text="Zone" />
+                                    <TableColumn fx:id="cmButtons" prefWidth="75.0" />
+                                 </columns></TableView>
                            </children>
                            <BorderPane.margin>
                               <Insets left="10.0" right="5.0" />

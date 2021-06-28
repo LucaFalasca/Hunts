@@ -9,7 +9,8 @@ public enum Pages {
 	ITEM_HUNT,
 	ITEM_HUNTS,
 	ITEM_MAP,
-	HUNT;
+	HUNT,
+	MODIFYREMOVE;
 	
 	public String getPath() {
 		switch(this) {
@@ -22,6 +23,7 @@ public enum Pages {
 			case ITEM_HUNTS:	return "/logic/view/desktop/layout/ItemHunts.fxml";
 			case ITEM_MAP:      return "/logic/view/desktop/layout/ItemMap.fxml";
 			case HUNT: 			return "/logic/view/desktop/layout/Hunt.fxml";
+			case MODIFYREMOVE:  return "/logic/view/desktop/layout/ItemModifyRemove.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}

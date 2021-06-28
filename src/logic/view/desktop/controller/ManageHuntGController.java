@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.security.auth.callback.Callback;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +17,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -134,6 +142,8 @@ public class ManageHuntGController extends ControllerWithLogin{
     private TableColumn<RiddleBean, String> cmObject;
     @FXML
     private TableColumn<RiddleBean, String> cmZone;
+    @FXML
+    private TableColumn<RiddleBean, RiddleBean> cmButtons;
 	
 	private HuntBean huntBean = new HuntBean();
 	private MapBean mapBean = new MapBean();
@@ -150,16 +160,17 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private static final String NONAME = "Object name area's is empty";
 	private static final String HUNTNAME = "You must insert the name of the Hunt or at least one riddle to Save";
 	private static final String OBJECTNAME = "An object with this name already exist";
-	
+	private static final String RIDDLE = "Riddle ";
 	
 	@Override
 	void start(String arg, Object param) {
-		
+
 		tfComponent.add(tfRiddleText);
 		tfComponent.add(tfRiddleSolution);
 		tfComponent.add(tfClueText1);
 		tfComponent.add(tfClueText2);
 		tfComponent.add(tfClueText3);
+		
 		var manageHuntControl = new ManageHuntControl();
 		var id = -1;
 		try {
@@ -189,20 +200,28 @@ public class ManageHuntGController extends ControllerWithLogin{
 			changeScene(Pages.LOGIN);
 		}
 		
-		lbRiddle.setText("Riddle " + rdlList.size());
+		setTable();
+		
+		lbRiddle.setText(RIDDLE + rdlList.size());
     	lvObject.setItems(objList);
-    	//lvRiddle.setItems(rdlList);
     	cmbObject.setItems(objList);
-    	cmbZone.setItems(zoneList);
-    	tbRiddle.getColumns().add(cmText);
-    	tbRiddle.getColumns().add(cmSolution);
-    	tbRiddle.getColumns().add(cmClue1);
-    	tbRiddle.getColumns().add(cmClue2);
-    	tbRiddle.getColumns().add(cmClue3);
-    	tbRiddle.getColumns().add(cmObject);
-    	tbRiddle.getColumns().add(cmZone);
+    	cmbZone.setItems(zoneList);   	
     	tbRiddle.setItems(rdlList);
     	
+	}
+	
+	private void setTable() {
+		for(var i = 0; i < tbRiddle.getColumns().size(); i++) {
+			tbRiddle.getColumns().get(i).prefWidthProperty().bind(tbRiddle.widthProperty().multiply(0.125));
+		}
+		
+		cmText.setCellValueFactory(new PropertyValueFactory<>("riddle"));
+		cmSolution.setCellValueFactory(new PropertyValueFactory<>("solution"));
+		cmClue1.setCellValueFactory(new PropertyValueFactory<>("clue1"));
+		cmClue2.setCellValueFactory(new PropertyValueFactory<>("clue2"));
+		cmClue3.setCellValueFactory(new PropertyValueFactory<>("clue3"));
+		cmObject.setCellValueFactory(new PropertyValueFactory<>("objectName"));
+		cmZone.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
 	}
 	
 	private void setHunt(HuntBean huntBean) {
@@ -240,12 +259,22 @@ public class ManageHuntGController extends ControllerWithLogin{
 		}
 	}
     
-	
     @FXML
-    void handlerAddRiddle(ActionEvent event) {
+    void handleAddRiddle(ActionEvent event) {
     	
     	
     	if(!(tfRiddleText.getText().equals("")) && !(tfRiddleSolution.getText().equals(""))){
+    		
+    		var nome = tfRiddleText.getText();
+    		
+    		var solution = tfRiddleSolution.getText();
+    		
+    		var clue1 = tfClueText1.getText();
+    		
+    		var clue2 = tfClueText2.getText();
+    		
+    		var clue3 = tfClueText3.getText();
+    		
     		var objName = cmbObject.getSelectionModel().getSelectedItem();
     		
     		if(objName != null) {
@@ -256,22 +285,29 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		var zoneName = cmbZone.getSelectionModel().getSelectedItem();
     		
-    		var temp = new RiddleBean(tfRiddleText.getText(), 
-    								  tfRiddleSolution.getText(),
-    								  tfClueText1.getText(),
-    								  tfClueText2.getText(),
-    								  tfClueText3.getText(),
+    		var temp = new RiddleBean(rdlList.size(),
+    								  nome, solution, clue1, clue2, clue3,
     								  objName, zoneName);
+    		
+    		
+    		cmButtons.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+    		cmButtons.setCellFactory(param -> new TableCell<RiddleBean, RiddleBean>(){
+    			@Override
+    			protected void updateItem(RiddleBean riddleBean, boolean empty) {
+    				super.updateItem(riddleBean, empty);
+    				if(riddleBean != null) {
+    					var gController = new ItemModifyRemoveG(Pages.MODIFYREMOVE, getIstance());
+    			    	gController.setInfo(riddleBean);
+    			    	setGraphic(gController.getBox());
+    				} else {
+    					setGraphic(null);
+    				}
+    			}
+    		});
     		
     		rdlList.add(temp);
     		
-    		
-    		
-    		
-    		
-    		
-    		
-    		lbRiddle.setText("Riddle " + (rdlList.size()));
+    		lbRiddle.setText(RIDDLE + (rdlList.size()));
     		
     		btnAddRiddle.setText(NEWRIDDLE);
     		
@@ -280,57 +316,35 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     	} else {
     		showAlert(NOWROTE);
-    		
     	}
     }
     
-    @FXML
-    void handleRemoveRiddle(ActionEvent event) {
-    	try {
-    		
-    		int index = -1;//lvRiddle.getSelectionModel().getSelectedIndex();
-    		
-    		if(index != -1) {
-    			rdlList.remove(index);
-    			object.remove(index);
-    			zone.remove(index);
-    		} else {
-    			showAlert(StringHardCode.ERRORSELECTED.getString());
-    		}
-    			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+    public void removeRiddle(int index) {
+    	rdlList.remove(index);
     }
     
-    @FXML
-    void handleModifyRiddle(ActionEvent event) {
+    public void modifyRiddle(int index) {
+    	var rb = rdlList.get(index);
     	
-    	/*int index = lvRiddle.getSelectionModel().getSelectedIndex();
+    	lbRiddle.setText(RIDDLE + rb.getNumRiddle());
+    	tfRiddleText.setText(rb.getRiddle());
+    	tfRiddleSolution.setText(rb.getSolution());
+    	tfClueText1.setText(rb.getClue1());
+    	tfClueText2.setText(rb.getClue2());
+    	tfClueText3.setText(rb.getClue3());
     	
-    	if(index != -1) {
-    		
-    		var i = 0;
-    		
-    		var riddle = lvRiddle.getItems().get(index);
-    		
-    		var rid = riddle.lines().iterator();
-    		
-    		while(rid.hasNext()) {
-    			tfComponent.get(i).setText(rid.next());
-    			i++;
-    		}
-    		
-    		cmbObject.setValue(object.get(index));
-    		cmbZone.setValue(zone.get(index));
-    		
-    		rdlList.remove(index);
- 
-    	} else {
-    		
-    		showAlert(StringHardCode.ERRORSELECTED.getString());
-    	}*/
+    	var objName = rb.getObjectName();
+    	if(objName != null) {
+    		cmbObject.setValue(objName);
+    	}
     	
+    	var zoneName = rb.getZoneName();
+    	
+    	if(zoneName != null) {
+    		cmbZone.setValue(zoneName);
+    	}
+    	
+    	rdlList.remove(index);
     }
     
     
@@ -516,11 +530,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     private void cancelTextView() {
     	for(var i = 0; i < tfComponent.size(); i++)
     		tfComponent.get(i).setText("");
+    	
+    	cmbObject.setValue("");
+    	cmbZone.setValue("");
 
-    }
-    
-    private boolean setVisible(MouseEvent e, String riddleSelected) {
-    	return (e.getEventType() == MouseEvent.MOUSE_CLICKED) && riddleSelected != null;
     }
     
     public void setIdMap(int idMap) {
