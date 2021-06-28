@@ -30,7 +30,7 @@ public abstract class ControllerWithLogin{
 	
 	abstract void start(String arg, Object param);
 	
-	public void setToolbar(Parent toolbar, ToolBarController controller) throws IOException {
+	public void setToolbar(Parent toolbar, ToolBarController controller) {
 		this.toolbar = toolbar;
 		this.toolBarController = controller;
 		
@@ -111,7 +111,8 @@ public abstract class ControllerWithLogin{
 				controller.start(arg, param);
 				
 			} catch (IOException e) {
-				throw new PageNotFoundError();
+				//throw new PageNotFoundError();
+				e.printStackTrace();
 			}
 		}
 	}

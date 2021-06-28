@@ -8,13 +8,13 @@ import javafx.scene.layout.AnchorPane;
 import logic.bean.RiddleBean;
 import logic.enumeration.Pages;
 
-public class ItemModifyRemoveG  extends ItemController{
+public class ItemRiddleG  extends ItemController{
 	
 	private int idRiddle;
 	
 	private ManageHuntGController controller;
 	
-    protected ItemModifyRemoveG(Pages page, ControllerWithLogin mainController) {
+    protected ItemRiddleG(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
 		controller = (ManageHuntGController) mainController;
 		

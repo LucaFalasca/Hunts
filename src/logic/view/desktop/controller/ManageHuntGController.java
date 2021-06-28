@@ -296,7 +296,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			protected void updateItem(RiddleBean riddleBean, boolean empty) {
     				super.updateItem(riddleBean, empty);
     				if(riddleBean != null) {
-    					var gController = new ItemModifyRemoveG(Pages.MODIFYREMOVE, getIstance());
+    					var gController = new ItemRiddleG(Pages.RIDDLE, getIstance());
     			    	gController.setInfo(riddleBean);
     			    	setGraphic(gController.getBox());
     				} else {
