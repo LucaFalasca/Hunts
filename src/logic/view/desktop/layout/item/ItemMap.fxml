@@ -6,14 +6,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ancMapPane" minWidth="150.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane fx:id="ancMapPane" minWidth="150.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="lbMapName" text="Label" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
       <Button fx:id="bntModifyMap" mnemonicParsing="false" onAction="#handleModifyMap" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../resources/edit.png" />
+                  <Image url="@../../../../../../resources/edit.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -21,7 +21,7 @@
          <graphic>
             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../resources/delete.png" />
+                  <Image url="@../../../../../../resources/delete.png" />
                </image>
             </ImageView>
          </graphic>

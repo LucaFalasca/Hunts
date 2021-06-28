@@ -18,6 +18,9 @@ import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
+import logic.view.desktop.controller.item.ItemHuntGController;
+import logic.view.desktop.controller.item.ItemHuntsGController;
+import logic.view.desktop.controller.item.ItemMapGController;
 
 public class MainMenuGController extends ControllerWithLogin{
 
@@ -45,7 +48,6 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     private ListView<HuntBean> lvHunts;
     
-    
     @FXML
     private AnchorPane apHunts;
     
@@ -55,8 +57,6 @@ public class MainMenuGController extends ControllerWithLogin{
     @Override
 	void start(String arg, Object param) {
 		if(isLogged()) {
-    		
-			
     		List<MapBean> mapBeans = null;
     		List<HuntBean> huntBeans = null;
     		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();

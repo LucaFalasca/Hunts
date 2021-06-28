@@ -1,4 +1,4 @@
-package logic.view.desktop.controller;
+package logic.view.desktop.controller.item;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
+import logic.view.desktop.controller.ControllerWithLogin;
+import logic.view.desktop.controller.ItemController;
 
 public class ItemMapGController extends ItemController{
 	

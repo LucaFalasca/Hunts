@@ -1,4 +1,4 @@
-package logic.view.desktop.controller;
+package logic.view.desktop.controller.item;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import logic.bean.RiddleBean;
 import logic.enumeration.Pages;
+import logic.view.desktop.controller.ControllerWithLogin;
+import logic.view.desktop.controller.ItemController;
+import logic.view.desktop.controller.ManageHuntGController;
 
 public class ItemRiddleG  extends ItemController{
 	
@@ -14,7 +17,7 @@ public class ItemRiddleG  extends ItemController{
 	
 	private ManageHuntGController controller;
 	
-    protected ItemRiddleG(Pages page, ControllerWithLogin mainController) {
+    public ItemRiddleG(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
 		controller = (ManageHuntGController) mainController;
 		

@@ -47,6 +47,7 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.view.desktop.controller.item.ItemRiddleG;
 
 public class ManageHuntGController extends ControllerWithLogin{
 	@FXML

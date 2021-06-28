@@ -1,4 +1,4 @@
-package logic.view.desktop.controller;
+package logic.view.desktop.controller.item;
 
 import java.io.IOException;
 
@@ -12,6 +12,8 @@ import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.view.desktop.controller.ControllerWithLogin;
+import logic.view.desktop.controller.ItemController;
 
 public class ItemHuntGController extends ItemController{
 	
