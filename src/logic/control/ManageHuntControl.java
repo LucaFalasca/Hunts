@@ -90,6 +90,7 @@ public class ManageHuntControl {
 		riddleList = hunt.getRiddleList();
 		for(var i = 0; i < riddleList.size(); i++) {
 			var rb = new RiddleBean();
+			rb.setNumRiddle(i);
 			rb.setRiddle(riddleList.get(i).getRiddleText());
 			rb.setSolution(riddleList.get(i).getSolutionText());
 			for(var j = 0; j < riddleList.get(i).getClueList().size(); j++ ) {
@@ -106,7 +107,7 @@ public class ManageHuntControl {
 		objectList = hunt.getObjectList();
 		
 		for(var i = 0; i < objectList.size(); i++) {
-			var ob = new ObjectBean(objectList.get(i).getName(), objectList.get(i).getDescription(), objectList.get(i).getPath());
+			var ob = new ObjectBean(i, objectList.get(i).getName(), objectList.get(i).getDescription(), objectList.get(i).getPath());
 			
 			
 			objectBean.add(ob);

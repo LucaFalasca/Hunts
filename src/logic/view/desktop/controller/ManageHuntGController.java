@@ -47,6 +47,8 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.view.desktop.controller.item.ItemHuntGController;
+import logic.view.desktop.controller.item.ItemObjectGController;
 import logic.view.desktop.controller.item.ItemRiddleG;
 
 public class ManageHuntGController extends ControllerWithLogin{
@@ -72,9 +74,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     private Button btnUploadFile;
 
     @FXML
-    private ListView<String> lvObject;
+    private ListView<ObjectBean> lvObject;
 
-    private ObservableList<String> objList = FXCollections.observableArrayList();
+    private ObservableList<ObjectBean> objList = FXCollections.observableArrayList();
+    
+    private ObservableList<String> cmbObjList = FXCollections.observableArrayList();
     
     private ObservableList<RiddleBean> rdlList = FXCollections.observableArrayList();
     
@@ -154,6 +158,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private HashMap<Integer, String> object = new HashMap<>();
 	private HashMap<Integer, String> zone = new HashMap<>();
 	private String filePath = null;
+	private int deletedObject = 0;
+	private int deletedRiddle = 0;
 	
 	private static final String SEPARATOR = "\n";
 	private static final String NEWRIDDLE = "Add new Riddle";
@@ -205,7 +211,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
 		lbRiddle.setText(RIDDLE + rdlList.size());
     	lvObject.setItems(objList);
-    	cmbObject.setItems(objList);
+    	cmbObject.setItems(cmbObjList);
     	cmbZone.setItems(zoneList);   	
     	tbRiddle.setItems(rdlList);
     	
@@ -252,8 +258,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 		for(var i = 0; i < objectBean.size(); i++) {
 			var obj = objectBean.get(i);
 			
-			var s = String.format("%s%n%s", obj.getObject(), obj.getDescription());
-			objList.add(s);
+			//var s = String.format("%s%n%s", obj.getObject(), obj.getDescription());
+			//objList.add(s);
 			if(!(obj.getPath().equals(""))) {
 				objectPath.put(obj.getObject(), obj.getPath());
 			}
@@ -286,7 +292,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		
     		var zoneName = cmbZone.getSelectionModel().getSelectedItem();
     		
-    		var temp = new RiddleBean(rdlList.size(),
+    		var temp = new RiddleBean(rdlList.size() + deletedRiddle,
     								  nome, solution, clue1, clue2, clue3,
     								  objName, zoneName);
     		
@@ -297,7 +303,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     			protected void updateItem(RiddleBean riddleBean, boolean empty) {
     				super.updateItem(riddleBean, empty);
     				if(riddleBean != null) {
-    					var gController = new ItemRiddleG(Pages.RIDDLE, getIstance());
+    					var gController = new ItemRiddleG(Pages.ITEM_RIDDLE, getIstance());
     			    	gController.setInfo(riddleBean);
     			    	setGraphic(gController.getBox());
     				} else {
@@ -322,6 +328,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     public void removeRiddle(int index) {
     	rdlList.remove(index);
+    	deletedRiddle++;
     }
     
     public void modifyRiddle(int index) {
@@ -346,6 +353,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	}
     	
     	rdlList.remove(index);
+    	deletedRiddle++;
     }
     
     
@@ -353,7 +361,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	huntBean.setIdHunt(save());
-		changeScene(Pages.MANAGE_MAP, "hunt", huntBean.getIdHunt());
+		changeScene(Pages.MANAGE_MAP, StringHardCode.HUNT.getString(), huntBean.getIdHunt());
     	
     }
 
@@ -404,15 +412,14 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleAddObject(ActionEvent event) {
     	
-    	String objectName = tfObjectName.getText();
+    	var objName = tfObjectName.getText();
     	var flag = false;
     		
-		if(!(objectName.equals(""))) {
-    		for(var i = 0; i < lvObject.getItems().size(); i++){
-    			var it = lvObject.getItems().get(i).lines().iterator();
-    			if(it.hasNext() && objectName.equals(it.next())) {
+		if(!(objName.equals(""))) {
+			var objectList = lvObject.getItems();
+    		for(var i = 0; i < objectList.size(); i++){
+    			if(objName.equals(objectList.get(i).getObject())) {
     				flag = true;
-    				break;
     			}
     		}
 
@@ -420,67 +427,52 @@ public class ManageHuntGController extends ControllerWithLogin{
     			showAlert(OBJECTNAME);
     		}else {
     			
+    			var objDescription = txtDescription.getText();
+    			var ob = new ObjectBean(objList.size() + deletedObject, objName, objDescription, filePath);
+    			objList.add(ob);
+    			
+    			lvObject.setCellFactory(obj -> new ListCell<ObjectBean>() {
+					@Override
+					public void updateItem(ObjectBean itemBean, boolean empty) {
+						super.updateItem(itemBean, empty);
+						if(itemBean != null) {
+							var newItem = new ItemObjectGController(Pages.ITEM_OBJECT, getIstance());
+							newItem.setInfo(itemBean);
+							setGraphic(newItem.getBox());
+							
+						}
+					}
+				});
+    			
     			if(filePath != null) {
-    				objectPath.put(objectName, filePath);
     				filePath = null;
     				btnUploadFile.setText("Upload File");
     			}
-    			objectName = objectName.concat(SEPARATOR + txtDescription.getText());
-    			objList.add(objectName);
     		}
-    		
-    		 tfObjectName.setText("");
-    		 txtDescription.setText("");
+    		flag = false;
+    		tfObjectName.setText("");
+    		txtDescription.setText("");
 		} else {
 			showAlert(NONAME);
     	}
     }
 
-    @FXML
-    void handleRemoveObject(ActionEvent event) {
-    	
-    	int index = lvObject.getSelectionModel().getSelectedIndex();
-    	
-    	if(index == -1) {
-	    	var it = lvObject.getSelectionModel().getSelectedItem().lines().iterator();
-	    	
-	    	if(it.hasNext()) {
-				objectPath.remove(it.next());
-	    	}
-	    	
-	    	objList.remove(index);
-    	} else {
-    		showAlert(StringHardCode.ERRORSELECTED.getString());
-    	}
-    	
-    	
+    public void removeObject(int index) {
+    	rdlList.remove(index);
+    	deletedObject++;
     }
     
-    @FXML
-    void handleModifyObject(ActionEvent event) {
+    public void modifyObject(int index) {
+    	var obj = objList.get(index);
     	
-    	
-    	var index = lvObject.getSelectionModel().getSelectedIndex();
-    	if(index != -1) {
-	    	
-	    	var it = lvObject.getSelectionModel().getSelectedItem().lines().iterator();
-	    	
-	    	if(it.hasNext()) {
-	    		tfObjectName.setText(it.next());
-	    		
-	    		txtDescription.setText(it.next());
-	    		
-	    		if(objectPath.containsKey(tfObjectName.getText())){
-	    			objectPath.remove(tfObjectName.getText());
-	    			btnUploadFile.setText("Change File");
-	    		}
-	    	}
-	    	objList.remove(index);
-    	} else {
-    		showAlert(StringHardCode.ERRORSELECTED.getString());
+    	tfObjectName.setText(obj.getObject());
+    	txtDescription.setText(obj.getDescription());
+    	if(obj.getPath() != null) {
+    		btnUploadFile.setText("Change File");
     	}
     	
-    	
+    	objList.remove(index);
+    	deletedObject++;
     }
     
     @FXML
