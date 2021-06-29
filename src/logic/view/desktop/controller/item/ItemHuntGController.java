@@ -11,7 +11,6 @@ import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
-import logic.view.desktop.controller.ItemController;
 
 public class ItemHuntGController extends ItemController{
 	

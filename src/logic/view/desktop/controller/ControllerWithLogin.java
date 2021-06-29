@@ -94,7 +94,7 @@ public abstract class ControllerWithLogin{
 		return logMachine.getUsername();
 	}
 	
-	protected void changeScene(Pages page, String arg, Object param) throws PageNotFoundError {
+	public void changeScene(Pages page, String arg, Object param) throws PageNotFoundError {
 		if(page.needLogin() && !logMachine.isLogged()) {
 			changeScene(Pages.LOGIN, "NEXT_PAGE", page.name());
 		}
@@ -117,7 +117,7 @@ public abstract class ControllerWithLogin{
 		}
 	}
 	
-	protected void changeScene(Pages page) throws PageNotFoundError {
+	public void changeScene(Pages page) throws PageNotFoundError {
 		changeScene(page, "", null);
 	}
 	

@@ -1,10 +1,11 @@
-package logic.view.desktop.controller;
+package logic.view.desktop.controller.item;
 
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import logic.enumeration.Pages;
+import logic.view.desktop.controller.ControllerWithLogin;
 
 public abstract class ItemController {
 	

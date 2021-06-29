@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import logic.bean.MapBean;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.view.desktop.controller.item.ItemController;
 
 public class ChooseMapGController extends ItemController{
 	

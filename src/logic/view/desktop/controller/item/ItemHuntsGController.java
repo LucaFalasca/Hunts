@@ -12,7 +12,6 @@ import logic.bean.HuntBean;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
-import logic.view.desktop.controller.ItemController;
 
 public class ItemHuntsGController extends ItemController{
     @FXML

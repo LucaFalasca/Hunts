@@ -28,6 +28,7 @@ import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
+import logic.view.desktop.controller.item.ItemRiddleShortController;
 
 public class PlayHuntGController extends ControllerWithLogin{
 

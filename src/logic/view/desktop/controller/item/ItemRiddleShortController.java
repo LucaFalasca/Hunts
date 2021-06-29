@@ -1,4 +1,4 @@
-package logic.view.desktop.controller;
+package logic.view.desktop.controller.item;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -7,10 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import logic.bean.RiddleBean;
 import logic.enumeration.Pages;
+import logic.view.desktop.controller.ControllerWithLogin;
 
 public class ItemRiddleShortController extends ItemController{
 	
-	protected ItemRiddleShortController(Pages page, ControllerWithLogin mainController) {
+	public ItemRiddleShortController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
 		// TODO Auto-generated constructor stub
 	}

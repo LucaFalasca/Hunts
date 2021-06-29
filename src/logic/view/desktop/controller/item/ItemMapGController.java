@@ -9,7 +9,6 @@ import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
-import logic.view.desktop.controller.ItemController;
 
 public class ItemMapGController extends ItemController{
 	

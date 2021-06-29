@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import logic.bean.RiddleBean;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
-import logic.view.desktop.controller.ItemController;
 import logic.view.desktop.controller.ManageHuntGController;
 
 public class ItemRiddleG  extends ItemController{

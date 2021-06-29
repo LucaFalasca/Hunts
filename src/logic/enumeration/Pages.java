@@ -27,7 +27,7 @@ public enum Pages {
 			case HUNT: 			return "/logic/view/desktop/layout/Hunt.fxml";
 			case PLAY_HUNT: 	return "/logic/view/desktop/layout/PlayHunt.fxml";
 			case 
-			ITEM_RIDDLE_SHORT: 	return "/logic/view/desktop/layout/ItemRiddleShort.fxml";
+			ITEM_RIDDLE_SHORT: 	return "/logic/view/desktop/layout/item/ItemRiddleShort.fxml";
 			case RIDDLE:  		return "/logic/view/desktop/layout/item/ItemRiddle.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
