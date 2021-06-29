@@ -33,6 +33,6 @@ public abstract class ItemController {
 	protected void changeScene(Pages page) {
 		mainController.changeScene(page);
 	}
-
+	
 	public abstract Parent getBox();
 }
