@@ -3,6 +3,7 @@ package logic.enumeration;
 public enum Pages {
 	MAIN_MENU,
 	LOGIN,
+	REGISTER,
 	MANAGE_HUNT,
 	MANAGE_MAP,
 	CHOOSE_MAP,
@@ -31,6 +32,7 @@ public enum Pages {
 			ITEM_RIDDLE_SHORT: 	return "/logic/view/desktop/layout/item/ItemRiddleShort.fxml";
 			case ITEM_RIDDLE:  	return "/logic/view/desktop/layout/item/ItemRiddle.fxml";
 			case ITEM_OBJECT:   return "/logic/view/desktop/layout/item/ItemObject.fxml";
+			case REGISTER:		return "/logic/view/desktop/layout/RegisterLayout.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}

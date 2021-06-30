@@ -10,7 +10,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
-import logic.enumeration.StringHardCode;
 import logic.exception.PageNotFoundError;
 import logic.exception.UsernameNotLoggedException;
 import logic.state.login.LogMachine;
@@ -38,21 +37,18 @@ public abstract class ControllerWithLogin{
 		borderPane.setTop(toolbar);
 		
 		Button login = (Button) stage.getScene().lookup("#btnLogin");
-		login.setOnAction(e -> {
-			try {
-				changeScene(Pages.LOGIN);
-			} catch (PageNotFoundError e1) {
-				showAlert(StringHardCode.ERROR.getString());
-			}
-		});
+		login.setOnAction(e -> changeScene(Pages.LOGIN));
 		
-		Button b = (Button) stage.getScene().lookup("#btnHunt");
-		b.setOnAction(e -> {
-			try {
-				changeScene(Pages.MAIN_MENU);
-			} catch (PageNotFoundError e1) {
-				showAlert(StringHardCode.ERROR.getString());
-			}
+		Button register = (Button) stage.getScene().lookup("#btnRegister");
+		register.setOnAction(e -> changeScene(Pages.REGISTER));
+		
+		Button mainMenu = (Button) stage.getScene().lookup("#btnHunt");
+		mainMenu.setOnAction(e -> changeScene(Pages.MAIN_MENU));
+		
+		Button logout = (Button) stage.getScene().lookup("#btnLogout");
+		logout.setOnAction(e -> {
+			logout();
+			changeScene(Pages.MAIN_MENU);
 		});
 	}
 	

@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 
 import logic.model.Database;
-import logic.model.entity.User;
 
 public class UserDao {
 	
@@ -42,5 +41,35 @@ public class UserDao {
 			}
 		}
 		return false;
+	}
+	
+	public void register(String username, String password) {
+		var conn = Database.getConnection();
+		CallableStatement stmt = null;
+		try {
+			stmt = conn.prepareCall("call add_user(?,?);");
+			
+			//Input Param
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			
+			boolean haveResult = stmt.execute();
+			
+			
+			while(haveResult) {
+				haveResult = stmt.getMoreResults();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null)
+					stmt.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

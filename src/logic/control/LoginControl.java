@@ -12,4 +12,12 @@ public class LoginControl {
 		var dao = new UserDao();
 		return dao.login(username, password);
 	}
+	
+	public void registerAccount(LoginBean bean) {
+		String username = bean.getUsername();
+		String password = bean.getPassword();
+		
+		var dao = new UserDao();
+		dao.register(username, password);
+	}
 }
