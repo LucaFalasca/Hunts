@@ -1,7 +1,7 @@
 package logic.control;
 
 import logic.bean.LoginBean;
-import logic.model.dao.LoginDao;
+import logic.model.dao.UserDao;
 
 public class LoginControl {
 
@@ -9,7 +9,7 @@ public class LoginControl {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
 		
-		var dao = new LoginDao();
+		var dao = new UserDao();
 		return dao.login(username, password);
 	}
 }
