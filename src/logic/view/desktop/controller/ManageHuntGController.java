@@ -2,11 +2,7 @@ package logic.view.desktop.controller;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.security.auth.callback.Callback;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,18 +17,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -47,7 +37,6 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
-import logic.view.desktop.controller.item.ItemHuntGController;
 import logic.view.desktop.controller.item.ItemObjectGController;
 import logic.view.desktop.controller.item.ItemRiddleG;
 
@@ -154,14 +143,10 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private MapBean mapBean = new MapBean();
 	
 	private int idMap = -1;
-	private HashMap<String, String> objectPath = new HashMap<>();
-	private HashMap<Integer, String> object = new HashMap<>();
-	private HashMap<Integer, String> zone = new HashMap<>();
 	private String filePath = null;
 	private int deletedObject = 0;
 	private int deletedRiddle = 0;
-	
-	private static final String SEPARATOR = "\n";
+
 	private static final String NEWRIDDLE = "Add new Riddle";
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
@@ -237,33 +222,10 @@ public class ManageHuntGController extends ControllerWithLogin{
 		List<RiddleBean> riddleBean;
 		tfHuntName.setText(huntBean.getHuntName());
 		riddleBean = huntBean.getRiddle();
-		
-		for(var i = 0; i < riddleBean.size(); i++) {
-			var rb = riddleBean.get(i);
-			var s = "";
-			s = s.concat(rb.getRiddle() + SEPARATOR);
-			s = s.concat(rb.getSolution()+ SEPARATOR);
-			
-			for(var j = 0; j < rb.getClue().size(); j++) {
-				s = s.concat((rb.getClueElement(j)) + SEPARATOR);
-			}
-			
-			object.put(i, rb.getObjectName());
-			zone.put(i, rb.getZoneName());
-			//rdlList.add(s);
-		}
-		
-		
+		rdlList.setAll(riddleBean);
 		objectBean = huntBean.getObject();
-		for(var i = 0; i < objectBean.size(); i++) {
-			var obj = objectBean.get(i);
-			
-			//var s = String.format("%s%n%s", obj.getObject(), obj.getDescription());
-			//objList.add(s);
-			if(!(obj.getPath().equals(""))) {
-				objectPath.put(obj.getObject(), obj.getPath());
-			}
-		}
+		objList.setAll(objectBean);
+		
 	}
     
     @FXML
@@ -413,17 +375,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     void handleAddObject(ActionEvent event) {
     	
     	var objName = tfObjectName.getText();
-    	var flag = false;
     		
 		if(!(objName.equals(""))) {
-			var objectList = lvObject.getItems();
-    		for(var i = 0; i < objectList.size(); i++){
-    			if(objName.equals(objectList.get(i).getObject())) {
-    				flag = true;
-    			}
-    		}
+			
 
-    		if(flag) {
+    		if(isThere(lvObject.getItems(), objName)) {
     			showAlert(OBJECTNAME);
     		}else {
     			
@@ -449,12 +405,21 @@ public class ManageHuntGController extends ControllerWithLogin{
     				btnUploadFile.setText("Upload File");
     			}
     		}
-    		flag = false;
     		tfObjectName.setText("");
     		txtDescription.setText("");
 		} else {
 			showAlert(NONAME);
     	}
+    }
+    
+    private boolean isThere(List<ObjectBean> objectList, String objName) {
+    	var flag = false;
+		for(var i = 0; i < objectList.size(); i++){
+			if(objName.equals(objectList.get(i).getObject())) {
+				flag = true;
+			}
+		}
+		return flag;
     }
 
     public void removeObject(int index) {
@@ -525,7 +490,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		tfComponent.get(i).setText("");
     	
     	cmbObject.setValue("");
-    	cmbZone.setValue("");
+       	cmbZone.setValue("");
 
     }
     
