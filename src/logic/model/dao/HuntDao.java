@@ -57,7 +57,6 @@ public class HuntDao {
 			
 			while(haveResult) {
 				var rs = stmt.getResultSet();
-				
 				switch(i) {
 				case 1:
 					while(rs.next()) {
@@ -142,13 +141,14 @@ public class HuntDao {
 			boolean haveResult = stmt.execute();
 			
 			while(haveResult) {
-				haveResult = stmt.getMoreResults();
+				
 				var rs = stmt.getResultSet();
 				while(rs.next()) {
 					var testo = rs.getString(2);
 					
 					clues.add(testo);
 				}
+				haveResult = stmt.getMoreResults();
 			}
 		}
 		catch(SQLException e) {
@@ -320,7 +320,6 @@ public class HuntDao {
 			boolean haveResult = stmt.execute();
 			
 			
-			System.out.println("ciao");
 			while(haveResult) {
 				haveResult = stmt.getMoreResults();
 			}
