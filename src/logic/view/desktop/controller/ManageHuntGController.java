@@ -169,7 +169,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 			huntBean.setUsername(getUsername());
 			if(arg.equals(StringHardCode.HUNT.getString())) {
 				id = (int) param;
-				huntBean.setIdHunt(id);
 				
 				huntBean = manageHuntControl.getHunt(id, getUsername());
 				
@@ -178,19 +177,17 @@ public class ManageHuntGController extends ControllerWithLogin{
 				if(arg.equals(StringHardCode.MAP.getString())) {
 					List<?> ids = (List<?>) param;
 					id = (Integer) ids.get(0);
-					huntBean.setIdHunt(id);
 					idMap = (Integer) ids.get(1);
 					setMap();
 					huntBean = manageHuntControl.getHunt(id, getUsername());
 					setHunt(huntBean);
-				} else {
-					huntBean.setIdHunt(id);
 				}
 			}
 		} catch (UsernameNotLoggedException e) {
 			showAlert(StringHardCode.ERRORLOGIN.getString());
 			changeScene(Pages.LOGIN);
 		}
+		huntBean.setIdHunt(id);
 		
 		setTable();
 		
