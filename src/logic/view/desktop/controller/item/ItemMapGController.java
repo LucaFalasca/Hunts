@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
 
 public class ItemMapGController extends ItemController{
@@ -36,12 +37,12 @@ public class ItemMapGController extends ItemController{
     void handleDeleteMap(ActionEvent event) {
     	var controllerMap = new ManageMapControl();
     	controllerMap.deleteMap(idMap, creatorName);
-    	changeScene(Pages.LOGIN);
+    	changeScene(Pages.MAIN_MENU);
     }
 
     @FXML
     void handleModifyMap(ActionEvent event) {
-    	changeScene(Pages.MANAGE_MAP, "map", idMap);
+    	changeScene(Pages.MANAGE_MAP, StringHardCode.MAP.getString(), idMap);
     }
 
     @Override

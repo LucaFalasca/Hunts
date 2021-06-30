@@ -89,13 +89,13 @@ public class ManageMapGController extends ControllerWithLogin{
     	        }
     	    }
     	});
-    	if(arg.equals(StringHardCode.MAP.toString())) {
+    	if(arg.equals(StringHardCode.MAP.getString())) {
 			if(param != null) {
 				var par = (int) param;
 				setMap(par);
 				
     		} 
-    	} else if(arg.equals(StringHardCode.HUNT.toString()) && param != null){
+    	} else if(arg.equals(StringHardCode.HUNT.getString()) && param != null){
     		idHuntComeback = (int) param;
 		}
 	}

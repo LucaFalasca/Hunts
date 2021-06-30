@@ -42,7 +42,7 @@ public class ChooseMapGController extends ItemController{
     	
     	if(index != -1) {
     		manageHunt.setIdMap(index);
-    		var stage = (Stage) btnChooseAMap.getScene().getWindow();
+    		var stage = (Stage) ancChooseMap.getScene().getWindow();
     		stage.close();
     	} else {
     		var alert = new Alert(AlertType.ERROR);
