@@ -86,6 +86,7 @@ public class ManageHuntControl {
 		
 		huntBean.setIdHunt(hunt.getIdHunt());
 		huntBean.setHuntName(hunt.getHuntName());
+		huntBean.setUsername(username);
 		
 		riddleList = hunt.getRiddleList();
 		for(var i = 0; i < riddleList.size(); i++) {
