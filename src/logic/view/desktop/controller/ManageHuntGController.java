@@ -539,48 +539,13 @@ public class ManageHuntGController extends ControllerWithLogin{
 		List<RiddleBean> riddleBean = new ArrayList<>();
 		
 		var manageHuntControl = new ManageHuntControl();
-		for(var i = 0; i < rdlList.size(); i++) {
-			
-			/*var it = rdlList.get(i).lines().iterator();
-    		
-    		if(it.hasNext()) {
-    			var rb = new RiddleBean();
-    			
-    			rb.setRiddle(it.next());
-    			
-    			rb.setSolution(it.next());
-    		
-    			var j = 0;
-    			while(it.hasNext()) {
-    				rb.setClueElement(j, (it.next()));
-    				j++;
-    			}
-    			
-    			rb.setObjectName(object.get(i));
-    			rb.setZoneName(zone.get(i));
-    			
-    			riddleBean.add(rb);
-    		}
-    		
-		}
-		for(var i = 0; i < objList.size(); i++) {
-			var it = objList.get(i).lines().iterator();
-			if(it.hasNext()) {
-				var name = it.next();
-				
-				var desc = it.next();
-				
-				var path = objectPath.get(name);
-				
-				var or = new ObjectBean(name, desc, path);
-				objectBean.add(or);
-			}
-			*/
-		}
+		
 		huntBean.setHuntName(tfHuntName.getText());
+		for(var i = 0; i < rdlList.size(); i++)
+			riddleBean.add(rdlList.get(i));
+		for(var i = 0; i < objList.size(); i++)
+			objectBean.add(objList.get(i));
 		huntBean.setMap(mapBean);
-		huntBean.setRiddle(riddleBean);
-		huntBean.setObject(objectBean);
 		
 		return manageHuntControl.saveHunt(huntBean);
 		
