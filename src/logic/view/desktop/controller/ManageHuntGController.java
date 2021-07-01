@@ -379,7 +379,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 				setMap(mpc.getMapById(getUsername(), idMap));
 
 			} catch (UsernameNotLoggedException e) {
-				// TODO Auto-generated catch block
+				//TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     }
@@ -417,6 +417,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		}else {
     			
     			var objDescription = txtDescription.getText();
+    			cmbObjList.add(objName);
     			var ob = new ObjectBean(idObject, objName, objDescription, filePath);
     			idObject++;
     			objList.add(ob);
@@ -457,19 +458,30 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
 
     public void removeObject(int index) {
+    	String objName = null;
     	for(var i = 0; i < objList.size(); i++) {
     		if(objList.get(i).getIdObject() == index) {
+    			objName = objList.get(i).getObject();
     			objList.remove(i);
     			break;
     		}
+    	}
+    	if(objName != null) {
+			for(var i = 0; i < cmbObjList.size(); i++) {
+				if(objName.equals(cmbObjList.get(i))) {
+					cmbObjList.remove(i);
+				}
+			}
     	}
     }
     
     public void modifyObject(int index) {
     	ObjectBean obj = null;
+    	String objName = null;
     	for(var i = 0; i < objList.size(); i++) {
    
     		if(objList.get(i).getIdObject() == index) {
+    			objName = objList.get(i).getObject();
     			obj = objList.get(i);
 		    	tfObjectName.setText(obj.getObject());
 		    	txtDescription.setText(obj.getDescription());
@@ -481,7 +493,15 @@ public class ManageHuntGController extends ControllerWithLogin{
 		    	break;
     		}
     	}
+    	if(objName != null) {
+			for(var i = 0; i < cmbObjList.size(); i++) {
+				if(objName.equals(cmbObjList.get(i))) {
+					cmbObjList.remove(i);
+				}
+			}
+    	}
     }
+    
     
     @FXML
     void handleUploadFile(ActionEvent event) {
@@ -550,10 +570,17 @@ public class ManageHuntGController extends ControllerWithLogin{
 		var manageHuntControl = new ManageHuntControl();
 		
 		huntBean.setHuntName(tfHuntName.getText());
-		for(var i = 0; i < rdlList.size(); i++)
+		for(var i = 0; i < rdlList.size(); i++) 
 			riddleBean.add(rdlList.get(i));
+			
+			
 		for(var i = 0; i < objList.size(); i++)
 			objectBean.add(objList.get(i));
+		
+		huntBean.setRiddle(riddleBean);
+		huntBean.setObject(objectBean);
+		huntBean.setMap(mapBean);
+		
 		
 		return manageHuntControl.saveHunt(huntBean);
 		

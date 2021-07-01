@@ -300,7 +300,8 @@ public class HuntDao {
 		var idRiddle = 0;
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_riddle_to_hunt(?, ?, ?, ?, ?, ?, ?, ?)")){
-			
+
+	
 			//Input param
 			stmt.setInt(1, hunt);
 			stmt.setString(2, domanda);
