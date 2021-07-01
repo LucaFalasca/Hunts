@@ -15,7 +15,8 @@ import logic.model.entity.Riddle;
 public class HuntDao {
 	
 	public int saveHunt(Hunt hunt) {
-		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, -1);
+		int mapId = hunt.getMap().getId();
+		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, mapId);
 		
 		List<RealObject> objects = hunt.getObjectList();
 		if(objects != null) {
@@ -26,7 +27,7 @@ public class HuntDao {
 		
 		List<Riddle> riddles = hunt.getRiddleList();
 		for(Riddle riddle: riddles) {
-			int numeroRiddle = addRiddleToHunt(idHunt, riddle.getRiddleText(), riddle.getSolutionText(), riddle.getReward(), null, null, -1);
+			int numeroRiddle = addRiddleToHunt(idHunt, riddle.getRiddleText(), riddle.getSolutionText(), riddle.getReward(), null, riddle.getZone(), mapId);
 			List<String> clues = riddle.getClueList();
 			for(String clue : clues) {
 				addClueToRiddle(numeroRiddle, idHunt, clue);

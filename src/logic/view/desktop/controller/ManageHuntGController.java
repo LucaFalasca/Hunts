@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -23,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -30,6 +33,7 @@ import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.ObjectBean;
 import logic.bean.RiddleBean;
+import logic.bean.ZoneBean;
 import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
 import logic.control.UploadFileControl;
@@ -37,6 +41,9 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.state.draw.DrawMachine;
+import logic.state.draw.states.OvalState;
+import logic.state.draw.states.RectangleState;
 import logic.view.desktop.controller.item.ItemObjectGController;
 import logic.view.desktop.controller.item.ItemRiddleG;
 
@@ -138,7 +145,14 @@ public class ManageHuntGController extends ControllerWithLogin{
     private TableColumn<RiddleBean, String> cmZone;
     @FXML
     private TableColumn<RiddleBean, RiddleBean> cmButtons;
+    
+    @FXML
+    private Canvas canvas;
+
+    private GraphicsContext gcDraw;
+    private DrawMachine drawMachine;
 	
+    
 	private HuntBean huntBean = new HuntBean();
 	private MapBean mapBean = new MapBean();
 	
@@ -151,12 +165,16 @@ public class ManageHuntGController extends ControllerWithLogin{
 	private static final String NOWROTE = "Riddle text or solution area's are empty";
 	private static final String NONAME = "Object name area's is empty";
 	private static final String HUNTNAME = "You must insert the name of the Hunt or at least one riddle to Save";
-	private static final String OBJECTNAME = "An object with this name already exist";
-	private static final String RIDDLE = "Riddle ";
+	private static final String OBJECTNAME = "An object with this name already exist";	private static final String RIDDLE = "Riddle ";
+	
+	
 	
 	@Override
 	void start(String arg, Object param) {
-
+		drawMachine = new DrawMachine();
+		gcDraw = canvas.getGraphicsContext2D();
+        gcDraw.setFill(Color.web("0xeaed91", 0.5));
+		
 		tfComponent.add(tfRiddleText);
 		tfComponent.add(tfRiddleSolution);
 		tfComponent.add(tfClueText1);
@@ -173,13 +191,16 @@ public class ManageHuntGController extends ControllerWithLogin{
 				huntBean = manageHuntControl.getHunt(id, getUsername());
 				
 				setHunt(huntBean);
+				setMap(huntBean.getMap());
 			} else {
 				if(arg.equals(StringHardCode.MAP.getString())) {
 					List<?> ids = (List<?>) param;
 					id = (Integer) ids.get(0);
 					idMap = (Integer) ids.get(1);
-					setMap();
+					MapBean mapBean = new ManageMapControl().getMapById(getUsername(), idMap);
 					huntBean = manageHuntControl.getHunt(id, getUsername());
+					huntBean.setMap(mapBean);
+					setMap(mapBean);
 					setHunt(huntBean);
 				}
 			}
@@ -354,27 +375,33 @@ public class ManageHuntGController extends ControllerWithLogin{
         stage.setScene(scene);
         stage.showAndWait();
         if(idMap != -1)
-        	setMap();
-		
+			try {
+				setMap(mpc.getMapById(getUsername(), idMap));
+
+			} catch (UsernameNotLoggedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
+
     
-    private void setMap() {
-    		
-		var mpc = new ManageMapControl();
-		
-		mapBean = mpc.getMapById(huntBean.getUsername(), idMap);
-		
-		
-		var img = new Image("file:" + mapBean.getImage(), imgMap.getFitWidth(), imgMap.getFitHeight(), false, false);
-    	imgMap.setImage(img);
-    	btnCreateMap.setVisible(false);
-    	btnChooseMap.setText("Choose Another Map");
-    	lbMapName.setVisible(true);
-		lbMapName.setText(mapBean.getName());
-		for(var i = 0; i < mapBean.getZones().size(); i++)
-			zoneList.add(mapBean.getZones().get(i).getNameZone());
-		
-	
+    
+    private void setMap(MapBean map) {
+    	huntBean.setMap(map);
+		if(map.getImage() != null) {
+			var img = new Image("file:" + map.getImage(), imgMap.getFitWidth(), imgMap.getFitHeight(), false, false);
+			imgMap.setImage(img);
+		}
+		if(map.getZones() != null) {
+			for(ZoneBean zone : map.getZones()) {
+				if(zone.getShape().equals("Oval")) {
+					drawMachine.setState(OvalState.getInstance());
+				} else {
+					drawMachine.setState(RectangleState.getInstance());
+				}
+				drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+			}
+		}
     }
 
     @FXML
@@ -498,6 +525,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			changeScene(Pages.MAIN_MENU);
     	}
     }
+
     
     
     
@@ -526,7 +554,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 			riddleBean.add(rdlList.get(i));
 		for(var i = 0; i < objList.size(); i++)
 			objectBean.add(objList.get(i));
-		huntBean.setMap(mapBean);
 		
 		return manageHuntControl.saveHunt(huntBean);
 		

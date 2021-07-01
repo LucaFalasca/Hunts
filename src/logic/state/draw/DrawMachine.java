@@ -1,11 +1,16 @@
 package logic.state.draw;
 
 import javafx.scene.canvas.GraphicsContext;
+import logic.state.draw.states.RectangleState;
 import logic.state.draw.states.State;
 
 public class DrawMachine {
 private State state;
-	
+
+	public DrawMachine() {
+		this.state = RectangleState.getInstance();
+	}
+
 	public DrawMachine(State state) {
 		this.state = state;
 	}

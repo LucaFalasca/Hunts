@@ -58,6 +58,7 @@ public class ManageMapControl {
 		
 		var bean = new MapBean();
 		bean.setId(id);
+		bean.setCreatorName(username);
 		bean.setName(map.getName());
 		if(map.getImagePath() != null) {
 			bean.setImage(map.getImagePath());

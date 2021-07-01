@@ -1,5 +1,6 @@
 package logic.view.desktop.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -23,6 +24,8 @@ public class ChooseMapGController extends ItemController{
     @FXML
     private AnchorPane ancChooseMap;
     private ObservableList<String> mapList = FXCollections.observableArrayList();
+    private List<MapBean> maps = new ArrayList<>();
+    private ManageHuntGController controller;
     
     @FXML
     private ListView<String> lvMap;
@@ -32,16 +35,15 @@ public class ChooseMapGController extends ItemController{
     
     protected ChooseMapGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
+		controller = (ManageHuntGController) mainController;
 	}
 	
     @FXML
     void handleReturnName(ActionEvent event) {
-    	var manageHunt = new ManageHuntGController();
-    	
     	int index = lvMap.getSelectionModel().getSelectedIndex();
     	
     	if(index != -1) {
-    		manageHunt.setIdMap(index);
+    		controller.setIdMap(maps.get(index).getId());
     		var stage = (Stage) ancChooseMap.getScene().getWindow();
     		stage.close();
     	} else {
@@ -57,8 +59,8 @@ public class ChooseMapGController extends ItemController{
 		List<?> maps = (List<?>)itemBean;
 		for(Object map : maps) {
     		this.mapList.add(((MapBean)map).getName());
+    		this.maps.add((MapBean)map);
     	}
-		
 		lvMap.setItems(this.mapList);
 	}
 

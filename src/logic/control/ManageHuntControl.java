@@ -120,7 +120,7 @@ public class ManageHuntControl {
 		
 		map.setId(hunt.getMap().getId());
 		map.setName(hunt.getMap().getName());
-		map.setImage(hunt.getMap().getName());
+		map.setImage(hunt.getMap().getImagePath());
 		
 		zoneList = hunt.getMap().getZones();
 		
@@ -130,8 +130,8 @@ public class ManageHuntControl {
 			
 			zoneBean.add(zone);
 		}
-		
-		huntBean.setMap(null);
+		map.setZones(zoneBean);
+		huntBean.setMap(map);
 		
 		return huntBean;
 	}

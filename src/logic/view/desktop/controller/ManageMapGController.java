@@ -73,7 +73,7 @@ public class ManageMapGController extends ControllerWithLogin{
     		if(cbShape.getValue().equals(OVAL)) {
     			drawMachine.setState(OvalState.getInstance());
     		} else {
-	    			drawMachine.setState(RectangleState.getInstance());
+    			drawMachine.setState(RectangleState.getInstance());
     		}
     	});
     	lvZones.setItems(zones);
@@ -106,7 +106,8 @@ public class ManageMapGController extends ControllerWithLogin{
 			var map = controller.getMapById(getUsername(), par);
 			idMap = map.getId();
 			if(map.getImage() != null) {
-				setImageByPath(map.getImage());
+				pathImage = map.getImage();
+				setImageByPath(pathImage);
 			}
 			tfMapName.setText(map.getName());
 			if(map.getZones() != null) {
