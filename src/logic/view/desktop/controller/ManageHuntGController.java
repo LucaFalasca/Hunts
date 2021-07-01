@@ -209,6 +209,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			changeScene(Pages.LOGIN);
 		}
 		huntBean.setIdHunt(id);
+		setIdMap(id);
 		
 		setTable();
 		
@@ -560,6 +561,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     
     public void setIdMap(int idMap) {
     	this.idMap = idMap;
+    	mapBean.setId(idMap);
     }
     
 	
