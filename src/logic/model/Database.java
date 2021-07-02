@@ -2,10 +2,13 @@ package logic.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 
 import logic.exception.NotConnectedException;
 import logic.exception.SQLError;
@@ -41,7 +44,10 @@ public class Database {
 	}
 	
 	private static Connection connect(Users user) {
-		var fileConfig = new File("db_conf.txt");
+		//var fileConfig = new File("db_conf.txt");
+		URL url = Database.class.getResource("/db_conf.txt");
+		
+		File fileConfig = new File(url.getPath());
 		try (var myReader = new Scanner(fileConfig)){
 			switch(user) {
 				case NOT_LOGGED:
