@@ -36,7 +36,7 @@ public class RegisterGController extends ControllerWithLogin{
     	if(controller.registerAccount(bean)) {
     		changeScene(Pages.MAIN_MENU, null, null);
     	} else {
-    		showAlert("Error system, try again");
+    		showAlert("This username already exist");
     	}
     }
 
