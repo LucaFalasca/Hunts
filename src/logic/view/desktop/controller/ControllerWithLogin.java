@@ -107,8 +107,7 @@ public abstract class ControllerWithLogin{
 				controller.start(arg, param);
 				
 			} catch (IOException e) {
-				//throw new PageNotFoundError();
-				e.printStackTrace();
+				throw new PageNotFoundError();
 			}
 		}
 	}
