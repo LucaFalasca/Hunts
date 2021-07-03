@@ -48,7 +48,7 @@ public class ManageHuntControl {
 		for(var i = 0; i < huntBean.getObject().size(); i++) {
 			var obj = new RealObject();
 			
-			obj.setName(huntBean.getObject().get(i).getObject());
+			obj.setName(huntBean.getObject().get(i).getName());
 			
 			obj.setDescription(huntBean.getObject().get(i).getDescription());
 			
@@ -60,11 +60,14 @@ public class ManageHuntControl {
 		hunt.setObjectList(object);
 		
 		var map = new Map();
-		
-		map.setId(huntBean.getMap().getId());
-		map.setName(huntBean.getMap().getName());
-		map.setImagePath(huntBean.getMap().getImage());
+		if(huntBean.getMap() != null) {
+			map.setId(huntBean.getMap().getId());
+			map.setName(huntBean.getMap().getName());
+			map.setImagePath(huntBean.getMap().getImage());
 			
+		} else {
+			map.setId(-1);
+		}
 		
 		hunt.setMap(map);
 		
@@ -117,20 +120,22 @@ public class ManageHuntControl {
 		huntBean.setObject(objectBean);
 		
 		var map = new MapBean();
-		
-		map.setId(hunt.getMap().getId());
-		map.setName(hunt.getMap().getName());
-		map.setImage(hunt.getMap().getImagePath());
-		
-		zoneList = hunt.getMap().getZones();
-		
-		for(var i = 0; i < zoneList.size(); i++) {
-			var zone = new ZoneBean(zoneList.get(i).getName(), zoneList.get(i).getStartX(), zoneList.get(i).getStartY(), 
-									zoneList.get(i).getEndX(), zoneList.get(i).getEndY(), zoneList.get(i).getType().toString());
-			
-			zoneBean.add(zone);
+		if(huntBean.getMap() != null) {
+			map.setId(hunt.getMap().getId());
+			map.setName(hunt.getMap().getName());
+			map.setImage(hunt.getMap().getImagePath());
+			zoneList = hunt.getMap().getZones();
+			for(var i = 0; i < zoneList.size(); i++) {
+				var zone = new ZoneBean(zoneList.get(i).getName(), zoneList.get(i).getStartX(), zoneList.get(i).getStartY(), 
+										zoneList.get(i).getEndX(), zoneList.get(i).getEndY(), zoneList.get(i).getType().toString());
+				
+				zoneBean.add(zone);
+			}
+			map.setZones(zoneBean);
+		} else {
+			map.setId(-1);
 		}
-		map.setZones(zoneBean);
+
 		huntBean.setMap(map);
 		
 		return huntBean;

@@ -55,14 +55,6 @@ public class ItemObjectGController extends ItemController{
 	public void setInfo(Object itemBean) {
 		var objectBean = (ObjectBean) itemBean;
 		idObject = objectBean.getIdObject();
-		lbObjectName.setText(objectBean.getObject());
-		lbObjDesc.setText(objectBean.getDescription());
-		if(objectBean.getPath() != null) {
-			var img = new Image("file:" + objectBean.getPath(), imgObject.getFitWidth(), imgObject.getFitHeight(), false, false);
-			imgObject.setImage(img);
-		} else {
-			imgObject.setVisible(false);
-		}
 		
 	}
 

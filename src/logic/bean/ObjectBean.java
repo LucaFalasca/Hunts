@@ -17,7 +17,7 @@ public class ObjectBean {
 		this.path = path;
 	}
 
-	public String getObject() {
+	public String getName() {
 		return name;
 	}
 
@@ -49,5 +49,9 @@ public class ObjectBean {
 		this.idObject = idObject;
 	}
 	
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }

@@ -70,4 +70,5 @@ public class ZoneBean {
 	public String toString() {
 		return nameZone;
 	}
+	
 }

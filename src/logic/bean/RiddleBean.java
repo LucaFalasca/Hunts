@@ -21,7 +21,7 @@ public class RiddleBean {
 	
 	private String zoneName;
 	
-	public RiddleBean(int numRiddle, String riddle, String solution, String clue1, String clue2, String clue3, String objectName, String zoneName) {
+	public RiddleBean(int numRiddle, String riddle, String solution, String clue1, String clue2, String clue3, String zoneName) {
 		
 		this.numRiddle = numRiddle;
 		this.riddle = riddle;
@@ -34,7 +34,6 @@ public class RiddleBean {
 		clue.add(this.clue2);
 		clue.add(this.clue3);
 		
-		this.objectName = objectName;
 		this.zoneName = zoneName;
 	}
 

@@ -56,8 +56,8 @@ public class ChooseMapGController extends ItemController{
 
 	@Override
 	public void setInfo(Object itemBean) {
-		List<?> maps = (List<?>)itemBean;
-		for(Object map : maps) {
+		List<?> mapsList = (List<?>)itemBean;
+		for(Object map : mapsList) {
     		this.mapList.add(((MapBean)map).getName());
     		this.maps.add((MapBean)map);
     	}

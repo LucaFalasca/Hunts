@@ -1,8 +1,6 @@
 package logic.model.dao;
 
 import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +15,10 @@ public class HuntDao {
 	public int saveHunt(Hunt hunt) {
 		int mapId = hunt.getMap().getId();
 		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, mapId);
-		
 		List<RealObject> objects = hunt.getObjectList();
 		if(objects != null) {
 			for(RealObject object : objects) {
-				addObjectToHunt(object.getName(), idHunt, null, object.getDescription(), null, -1);
+				addObjectToHunt(object.getName(), idHunt, object.getPath(), object.getDescription(), null, -1);
 			}
 		}
 		
@@ -112,13 +109,12 @@ public class HuntDao {
 		for(var i = 0; i < riddleNumbers.size(); i++) {
 			riddles.get(i).setClueList(getClueByRiddle(riddleNumbers.get(i), hunt.getIdHunt(), username));
 		}
-		
-		if(mapId != -1) {
+		if(mapId != 0) {
 			var mapDao = new MapDao();
 			var map = mapDao.getMapById(username, mapId);
 			hunt.setMap(map);
 		}
-		
+		hunt.setIdHunt(id);
 		hunt.setObjectList(objects);
 		hunt.setRiddleList(riddles);
 		
@@ -300,8 +296,6 @@ public class HuntDao {
 		var idRiddle = 0;
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_riddle_to_hunt(?, ?, ?, ?, ?, ?, ?, ?)")){
-
-	
 			//Input param
 			stmt.setInt(1, hunt);
 			stmt.setString(2, domanda);
