@@ -6,11 +6,11 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -22,11 +22,11 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.ManageHuntGController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <AnchorPane BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" layoutX="267.0" prefHeight="30.0" prefWidth="600.0" text="Hunt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" layoutX="267.0" prefHeight="30.0" prefWidth="1280.0" text="Hunt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -35,124 +35,149 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane prefHeight="617.0" prefWidth="488.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="346.0" prefWidth="940.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Hunt Name:" AnchorPane.leftAnchor="5.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfHuntName" layoutX="90.0" layoutY="2.0" prefHeight="25.0" prefWidth="398.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="0.0" />
-                  <Label layoutY="31.0" text="Add an Object for your Hunt. That can be a reward for getting a Riddle" wrapText="true" AnchorPane.leftAnchor="5.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutY="62.0" text="Insert the name:" AnchorPane.leftAnchor="5.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfObjectName" layoutX="116.0" layoutY="60.0" prefHeight="25.0" prefWidth="372.0" AnchorPane.leftAnchor="116.0" />
-                  <Label layoutY="98.0" text="Insert the description:" AnchorPane.leftAnchor="5.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="txtDescription" layoutX="149.0" layoutY="98.0" prefHeight="82.0" prefWidth="340.0" AnchorPane.leftAnchor="148.0" />
-                  <Button fx:id="btnUploadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="412.0" layoutY="180.0" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="31.0" prefWidth="76.0" text="Upload File" AnchorPane.rightAnchor="0.0" />
-                  <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" layoutX="429.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" AnchorPane.rightAnchor="0.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <CheckBox fx:id="cbPrivate" layoutX="4.0" layoutY="289.0" mnemonicParsing="false" text="Private" AnchorPane.leftAnchor="5.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </CheckBox>
+                  <AnchorPane layoutY="6.0" prefHeight="44.0" prefWidth="940.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Hunt Name:" AnchorPane.leftAnchor="14.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfHuntName" layoutX="106.0" layoutY="12.0" prefHeight="25.0" prefWidth="329.0" />
+                        <CheckBox fx:id="cbPrivate" layoutX="459.0" layoutY="14.0" mnemonicParsing="false" text="Private">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutY="68.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <AnchorPane prefHeight="295.0" prefWidth="459.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="83.0" text="Object" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="65.0" text="Name:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="65.0">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfObjectName" layoutX="110.0" layoutY="63.0" prefHeight="25.0" prefWidth="328.0" AnchorPane.rightAnchor="20.0" />
+                              <Label layoutX="14.0" layoutY="117.0" text="Description:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="117.0">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="txtDescription" layoutX="109.0" layoutY="117.0" prefHeight="82.0" prefWidth="330.0" AnchorPane.rightAnchor="20.0" />
+                              <Button fx:id="btnUploadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="15.0" prefWidth="15.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="20.0">
+                                 <graphic>
+                                    <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../resources/upload.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="20.0">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="460.0" layoutY="22.0" prefHeight="272.0" prefWidth="481.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <TableView fx:id="tbObject" layoutY="14.0" prefHeight="295.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn fx:id="cmName" prefWidth="75.0" text="Name" />
+                                    <TableColumn fx:id="cmDescription" prefWidth="75.0" text="Description" />
+                                    <TableColumn fx:id="cmObjButtons" prefWidth="75.0" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </AnchorPane>
                </children>
-               <BorderPane.margin>
-                  <Insets right="10.0" />
-               </BorderPane.margin>
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="655.0" prefWidth="1132.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="379.0" prefWidth="327.0" BorderPane.alignment="CENTER">
                <children>
-                  <ListView fx:id="lvObject" editable="true" layoutX="-3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane prefHeight="360.0" prefWidth="340.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="btnCreateMap" layoutX="13.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="33.0" />
+                        <Button fx:id="btnChooseMap" layoutX="244.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleChooseMap" text="Choose map" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="33.0" />
+                        <StackPane layoutX="13.0" layoutY="65.0" prefHeight="300.0" prefWidth="315.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="65.0">
+                           <children>
+                              <ImageView fx:id="imgMap" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                              <Canvas fx:id="canvas" height="300.0" width="300.0" />
+                           </children>
+                        </StackPane>
+                        <Label fx:id="lbMap" alignment="CENTER" contentDisplay="CENTER" layoutX="133.0" layoutY="3.0" prefHeight="23.0" prefWidth="76.0" text="Map Name" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </center>
-         <right>
-            <AnchorPane prefHeight="347.0" prefWidth="341.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnCreateMap" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="btnChooseMap" layoutX="602.0" mnemonicParsing="false" onAction="#handleChooseMap" text="Choose map" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <StackPane layoutY="29.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
-                     <children>
-                        <ImageView fx:id="imgMap" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                        <Canvas fx:id="canvas" height="300.0" width="300.0" />
-                     </children>
-                  </StackPane>
-               </children>
-               <BorderPane.margin>
-                  <Insets left="10.0" right="5.0" />
-               </BorderPane.margin>
-            </AnchorPane>
-         </right>
          <bottom>
-            <AnchorPane prefHeight="343.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="324.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane layoutX="2.0" layoutY="9.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="9.0">
+                  <BorderPane layoutY="-93.0" prefHeight="293.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <left>
-                        <AnchorPane prefHeight="334.0" prefWidth="542.0" BorderPane.alignment="CENTER">
+                        <AnchorPane prefHeight="298.0" prefWidth="542.0" BorderPane.alignment="CENTER">
                            <children>
-                              <GridPane fx:id="riddleConteiner" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="554.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <GridPane fx:id="riddleConteiner" alignment="CENTER_LEFT" layoutY="33.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="247.0" prefWidth="542.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
                                  <children>
-                                    <Label text="Text" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <Label text="Text" GridPane.halignment="LEFT">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Solution" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <Label text="Solution" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="tfRiddleText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField fx:id="tfRiddleSolution" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="lbRiddle" text="Riddle " GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Reward" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                    <TextField fx:id="tfRiddleText" GridPane.columnIndex="1" />
+                                    <TextField fx:id="tfRiddleSolution" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Reward" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="cmbObject" prefHeight="25.0" prefWidth="205.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                    <TextField fx:id="tfClueText3" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Label text="Choose the Zone" GridPane.rowIndex="7">
+                                    <ComboBox fx:id="cmbObject" prefHeight="25.0" prefWidth="229.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+                                    <TextField fx:id="tfClueText3" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Zone" GridPane.rowIndex="6">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox id="cmbZone" fx:id="cmbZone" prefHeight="25.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Label text="Clue 1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                    <ComboBox id="cmbZone" fx:id="cmbZone" prefHeight="25.0" prefWidth="229.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+                                    <Label text="Clue 1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="tfClueText1" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    <Label text="Clue 2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                    <TextField fx:id="tfClueText1" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Label text="Clue 2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="tfClueText2" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <Label text="Clue 3" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                    <TextField fx:id="tfClueText2" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <Label text="Clue 3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -160,14 +185,13 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
-                                    <Button fx:id="btnAddRiddle" mnemonicParsing="false" onAction="#handleAddRiddle" text="Add new Riddle" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <Button fx:id="btnAddRiddle" mnemonicParsing="false" onAction="#handleAddRiddle" text="Add new Riddle" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                                  </children>
                                  <columnConstraints>
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="120.0" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="422.0" />
+                                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="95.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="427.0" />
                                  </columnConstraints>
                                  <rowConstraints>
-                                    <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="70.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
@@ -175,16 +199,23 @@
                                     <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" valignment="CENTER" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="234.0" minHeight="10.0" prefHeight="45.0" valignment="CENTER" vgrow="SOMETIMES" />
                                  </rowConstraints>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
                               </GridPane>
+                              <Label fx:id="lbRiddle" layoutX="6.0" layoutY="-3.0" text="Riddle ">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </left>
                      <center>
-                        <AnchorPane prefHeight="508.0" prefWidth="1122.0" BorderPane.alignment="CENTER">
+                        <AnchorPane prefHeight="284.0" prefWidth="723.0" BorderPane.alignment="CENTER">
                            <children>
-                              <TableView fx:id="tbRiddle" layoutX="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="tbRiddle" layoutX="60.0" prefHeight="288.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
                                     <TableColumn fx:id="cmText" prefWidth="125.0" text="Text" />
                                     <TableColumn fx:id="cmSolution" prefWidth="100.0" text="Solution" />
@@ -194,7 +225,8 @@
                                     <TableColumn fx:id="cmObject" prefWidth="100.0" text="Object" />
                                     <TableColumn fx:id="cmZone" prefWidth="100.0" text="Zone" />
                                     <TableColumn fx:id="cmButtons" prefWidth="75.0" />
-                                 </columns></TableView>
+                                 </columns>
+                              </TableView>
                            </children>
                            <BorderPane.margin>
                               <Insets left="10.0" right="5.0" />
@@ -204,11 +236,22 @@
                      <bottom>
                         <AnchorPane prefHeight="30.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="btnSave" layoutX="240.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleSave" text="Save" />
-                              <Button fx:id="btnFinish" layoutX="832.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleFinish" text="Finish" />
+                              <Button fx:id="btnSave" layoutX="240.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleSave" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnFinish" layoutX="890.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleFinish" text="Finish" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </bottom>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                   </BorderPane>
                </children>
             </AnchorPane>
