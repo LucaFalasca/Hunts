@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
 import logic.control.LoginControl;
+import logic.enumeration.Pages;
 
 public class RegisterGController extends ControllerWithLogin{
 
@@ -32,7 +33,11 @@ public class RegisterGController extends ControllerWithLogin{
     	bean.setUsername(tfUserName.getText());
     	bean.setPassword(tfPassword.getText());
     	
-    	controller.registerAccount(bean);
+    	if(controller.registerAccount(bean)) {
+    		changeScene(Pages.MAIN_MENU, null, null);
+    	} else {
+    		showAlert("Error system, try again");
+    	}
     }
 
 	

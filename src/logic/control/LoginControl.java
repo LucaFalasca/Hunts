@@ -1,5 +1,7 @@
 package logic.control;
 
+import java.util.List;
+
 import logic.bean.LoginBean;
 import logic.model.dao.UserDao;
 
@@ -13,11 +15,24 @@ public class LoginControl {
 		return dao.login(username, password);
 	}
 	
-	public void registerAccount(LoginBean bean) {
+	public boolean registerAccount(LoginBean bean) {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
+		var failed = true;
 		
 		var dao = new UserDao();
-		dao.register(username, password);
+		
+		List<String> allUsers = dao.getAllUser();
+		
+		for(String name : allUsers) {
+			if(name.equals(username)) 
+				failed = false;
+		}
+		
+		if(failed) {
+			dao.register(username, password);
+		}
+		
+		return failed;
 	}
 }
