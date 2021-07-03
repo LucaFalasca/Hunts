@@ -20,12 +20,13 @@ public class LoginGController extends ControllerWithLogin{
 
     @FXML
     private PasswordField tfPassword;
+    
+    @FXML
+    private Label lbError;
 
     @FXML
     private Button btnLoginGoogle;
     
-    @FXML
-    private Label lblError;
     
     private Pages pageAfterLogin;
 
@@ -37,7 +38,7 @@ public class LoginGController extends ControllerWithLogin{
     		pageAfterLogin = Pages.MAIN_MENU;
     	}
     	
-		lblError.setVisible(false);
+		lbError.setVisible(false);
 		
 	}
     
@@ -59,8 +60,8 @@ public class LoginGController extends ControllerWithLogin{
 				changeScene(pageAfterLogin);
     		}
     		else {
-				lblError.setText("Username or password not correct");
-				lblError.setVisible(true);
+				lbError.setText("Username or Password are not correct");
+				lbError.setVisible(true);
     		}
     }
     
