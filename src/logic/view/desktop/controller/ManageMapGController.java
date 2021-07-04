@@ -275,6 +275,9 @@ public class ManageMapGController extends ControllerWithLogin{
     	if(idHuntComeback != -1) {
 			changeScene(Pages.MANAGE_HUNT, "MAP", l);
     	}
+    	else {
+    		changeScene(Pages.MAIN_MENU);
+    	}
     }
     
     //New Zone in Rectangle mode
