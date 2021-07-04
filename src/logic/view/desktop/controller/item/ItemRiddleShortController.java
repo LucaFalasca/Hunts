@@ -36,6 +36,8 @@ public class ItemRiddleShortController extends ItemController{
 			lbZone.setText(bean.getZoneName());
 		else
 			lbZone.setVisible(false);
+		
+		cbDone.setSelected(bean.isCompleted());
 	}
 
 	@Override

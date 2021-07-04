@@ -14,7 +14,27 @@ public class RiddleBean {
 	private String clue1;
 	private String clue2;
 	private String clue3;
-		
+	
+	private boolean completed = false;
+	
+	private int clueUsed;
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+	
+	public void setCompleted() {
+		completed = true;
+	}
+	
+	public int getClueUsed() {
+		return clueUsed;
+	}
+
+	public void setClueUsed(int clueUsed) {
+		this.clueUsed = clueUsed;
+	}
+
 	private List<String> clue = new ArrayList<>();
 	
 	private String objectName;

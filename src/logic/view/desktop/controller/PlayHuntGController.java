@@ -1,5 +1,6 @@
 package logic.view.desktop.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -17,17 +18,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import logic.bean.AnswerBean;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.RiddleBean;
-import logic.bean.ZoneBean;
 import logic.control.ManageHuntControl;
-import logic.control.ManageMapControl;
+import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
-import logic.exception.UsernameNotLoggedException;
-import logic.state.draw.states.OvalState;
-import logic.state.draw.states.RectangleState;
 import logic.view.desktop.controller.item.ItemRiddleShortController;
 
 public class PlayHuntGController extends ControllerWithLogin{
@@ -59,10 +57,18 @@ public class PlayHuntGController extends ControllerWithLogin{
     @FXML
     private Label lbClue3;
 
+    private List<Label> lbClues = new ArrayList<>();
+	
     private ObservableList<RiddleBean> riddleList = FXCollections.observableArrayList();
+    
+    RiddleBean currentRiddle;
     
 	@Override
 	void start(String arg, Object param) {
+		lbClues.add(lbClue1);
+		lbClues.add(lbClue2);
+		lbClues.add(lbClue3);
+		
 		if(arg != null) {
 			if(arg.equals(StringHardCode.HUNT.getString())) {
 				List<?> par = (List<?>) param;
@@ -84,10 +90,13 @@ public class PlayHuntGController extends ControllerWithLogin{
 			public void changed(ObservableValue<? extends RiddleBean> arg0, RiddleBean arg1, RiddleBean arg2) {
 				boxAnswer.setVisible(true);
 				lbDomanda.setText(arg2.getRiddle());
+				currentRiddle = arg2;
 				if(arg2.getClue() != null) {
-					lbClue1.setText(arg2.getClue1());
-					lbClue2.setText(arg2.getClue2());
-					lbClue3.setText(arg2.getClue3());
+					for(int i = 0; i < arg2.getClue().size(); i++)
+						lbClues.get(i).setText(arg2.getClueElement(i));
+					for(int i = 0; i < arg2.getClueUsed(); i++){
+						lbClues.get(i).setVisible(true);
+					}
 				}
 			}
           });
@@ -102,6 +111,8 @@ public class PlayHuntGController extends ControllerWithLogin{
 					setGraphic(newItem.getBox());
 				}
 			}
+			
+			
 		});
 	}
 	
@@ -119,14 +130,37 @@ public class PlayHuntGController extends ControllerWithLogin{
 
 	@FXML
     void handleHelp(ActionEvent event) {
-
+		int used = currentRiddle.getClueUsed();
+		if(used < 3) {
+			lbClues.get(used).setVisible(true);
+			currentRiddle.setClueUsed(++used);
+		}
     }
 
     @FXML
     void handleAnswer(ActionEvent event) {
+    	PlayHuntControl controller = new PlayHuntControl();
+    	AnswerBean bean = new AnswerBean();
+    	bean.setRiddleAnswer(currentRiddle.getSolution());
+    	bean.setUserAnswer(tfRisposta.getText());
+    	if(controller.answer(bean)) {
+    		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
+    		lvRiddle.refresh();
+    		if(huntIsCompleted()) {
+    			//Partita finita
+    		}
+		}else {
+    		//sbagliato
+    	}
+	}
 
+    private boolean huntIsCompleted() {
+    	for(RiddleBean riddle: riddleList) {
+    		if(!riddle.isCompleted())	return false;
+    	}
+    	return true;
     }
-
+    
     @FXML
     void handleMovedOnMap(MouseEvent event) {
 
