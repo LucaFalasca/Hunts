@@ -51,6 +51,12 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	@FXML
 	private Label lbMap;
+
+	@FXML
+	private Label lbObjectImg;
+	
+    @FXML
+    private ImageView ivObject;
 	
 	@FXML
 	private Label lbObjectPath; 
@@ -212,7 +218,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			}
 			
 		} catch (UsernameNotLoggedException e) {
-			showAlert(StringHardCode.ERRORLOGIN.getString());
+			showAlert(e.getMessage());
 			changeScene(Pages.LOGIN);
 		}
 
@@ -412,7 +418,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 			mapsList = mpc.getAllMaps(getUsername());
 			controllerChoose.setInfo(mapsList);
 		} catch (UsernameNotLoggedException e) {
-			showAlert(StringHardCode.ERRORLOGIN.getString());
+			showAlert(e.getMessage());
 			changeScene(Pages.LOGIN);
 		}
     	
@@ -429,8 +435,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     private void setMap(MapBean map) {
     	imgMap.setImage(null);
     	huntBean.setMap(map);
-    	for(ZoneBean zb : map.getZones())
-    		zoneList.add(zb.getNameZone());
+    	if(map.getZones() != null) {
+	    	for(ZoneBean zb : map.getZones())
+	    		zoneList.add(zb.getNameZone());
+    	}
     	lbMap.setVisible(true);
     	lbMap.setText(map.getName());
 		if(map.getImage() != null) {
@@ -460,7 +468,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 					setMap(mapBean);
 				}
 			} catch (UsernameNotLoggedException e) {
-				showAlert(StringHardCode.ERRORLOGIN.getString());
+				showAlert(e.getMessage());
 				changeScene(Pages.LOGIN);
 			}
 			
@@ -500,8 +508,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     			
     			if(filePath != null) {
     				filePath = null;
-    				btnUploadFile.setText("Upload File");
     			}
+    			lbObjectImg.setVisible(false);
+    			ivObject.setImage(null);
+    			ivObject.setVisible(false);
     		}
     		tfObjectName.setText("");
     		txtDescription.setText("");
@@ -536,12 +546,17 @@ public class ManageHuntGController extends ControllerWithLogin{
     public void modifyObject(int index) {
     	String objName = null;
     	for(ObjectBean ob : objList) {
-   
     		if(ob.getIdObject() == index) {
 		    	tfObjectName.setText(ob.getName());
 		    	txtDescription.setText(ob.getDescription());
 		    	objName = ob.getName();
 		    	objList.remove(ob);
+		    	if(ob.getPath() != null) {
+		    		filePath = ob.getPath();
+		    		lbObjectImg.setVisible(true);
+					ivObject.setVisible(true);
+					ivObject.setImage(new Image("File:" + filePath, ivObject.getFitWidth(), ivObject.getFitHeight(), false, false));
+		    	}
 		    	break;
     		}
     	}
@@ -570,8 +585,11 @@ public class ManageHuntGController extends ControllerWithLogin{
     	var file = fileChooser.showOpenDialog(btnUploadFile.getScene().getWindow());
 		try {
 			filePath = uploadFileControl.uploadFile(file);
+			lbObjectImg.setVisible(true);
+			ivObject.setVisible(true);
+			ivObject.setImage(new Image("File:" + filePath, ivObject.getFitWidth(), ivObject.getFitHeight(), false, false));
 		} catch (LoadFileFailed e) {
-			showAlert(StringHardCode.FILE.getString());
+			showAlert(e.getMessage());
 		}
 		
     }
