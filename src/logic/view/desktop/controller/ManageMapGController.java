@@ -123,7 +123,8 @@ public class ManageMapGController extends ControllerWithLogin{
 			}
 			
 		} catch (UsernameNotLoggedException e) {
-			e.printStackTrace();
+			showAlert(e.getMessage());
+			changeScene(Pages.LOGIN);
 		} 
     }
     
@@ -139,7 +140,7 @@ public class ManageMapGController extends ControllerWithLogin{
     
     
     @FXML
-    void handleUploadFile(ActionEvent event) throws LoadFileFailed {
+    void handleUploadFile(ActionEvent event){
     	var fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(
@@ -148,7 +149,11 @@ public class ManageMapGController extends ControllerWithLogin{
     			);
     	var selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
     	var controller = new ManageMapControl();
-    	pathImage = controller.uploadFile(selectedFile);
+    	try {
+			pathImage = controller.uploadFile(selectedFile);
+		} catch (LoadFileFailed e) {
+			showAlert(e.getMessage());
+		}
     	
     	setImageByPath(pathImage);
     }

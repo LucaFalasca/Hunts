@@ -16,7 +16,6 @@ import logic.bean.MapBean;
 import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
-import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemHuntGController;
 import logic.view.desktop.controller.item.ItemHuntsGController;
@@ -68,7 +67,7 @@ public class MainMenuGController extends ControllerWithLogin{
 				mapBeans = controllerMaps.getAllMaps(getUsername());
 				huntBeans = controllerHunts.getAllHunts(getUsername());
 			} catch (UsernameNotLoggedException e) {
-				showAlert(StringHardCode.ERRORLOGIN.getString());
+				showAlert(e.getMessage());
 				changeScene(Pages.LOGIN);
 			}
     		
