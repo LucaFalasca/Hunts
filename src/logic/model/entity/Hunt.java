@@ -17,6 +17,8 @@ public class Hunt {
 	
 	private boolean indoor;
 	
+	private boolean visible;
+	
 	public int getIdHunt() {
 		return idHunt;
 	}
@@ -72,6 +74,15 @@ public class Hunt {
 	public void setIndoor(boolean indoor) {
 		this.indoor = indoor;
 	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
 
 	
 	

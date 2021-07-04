@@ -600,6 +600,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     		showAlert(HUNTNAME);
     	else {
     		huntBean.setIdHunt(save());
+    		huntBean.setPrivate(false);
     	}
     }
     
@@ -608,8 +609,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     	if(tfHuntName.getText().equals("") || rdlList.isEmpty()) {
     		showAlert(HUNTNAME);
     	} else {
+    		huntBean.setPrivate(cbPrivate.isAllowIndeterminate());
     		save();
 			changeScene(Pages.MAIN_MENU, null, null);
+			
     	}
     }
 

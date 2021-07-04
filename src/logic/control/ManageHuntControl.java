@@ -71,6 +71,8 @@ public class ManageHuntControl {
 		
 		hunt.setMap(map);
 		
+		hunt.setVisible(huntBean.getPrivate());
+		
 		return huntDao.saveHunt(hunt);
 	}
 
@@ -137,6 +139,7 @@ public class ManageHuntControl {
 		}
 
 		huntBean.setMap(map);
+		huntBean.setPrivate(hunt.isVisible());
 		
 		return huntBean;
 	}
@@ -159,11 +162,16 @@ public class ManageHuntControl {
 			huntBean.setHuntName(hunt.getHuntName());
 			huntBean.setIdHunt(hunt.getIdHunt());
 			huntBean.setUsername(hunt.getCreatorName());
+			huntBean.setPrivate(hunt.isVisible());
 			
 			huntBeans.add(huntBean);
 			
 		}
 		return huntBeans;
+	}
+	
+	public List<HuntBean> getAllHunts(){
+		return getAllHunts(null);
 	}
 	
 	public void deleteHunt(HuntBean huntBean) {

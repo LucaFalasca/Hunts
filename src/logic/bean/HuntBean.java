@@ -17,6 +17,8 @@ public class HuntBean {
 	
 	private MapBean map;
 	
+	private boolean isPrivate;
+	
 	public int getIdHunt() {
 		return idHunt;
 	}
@@ -65,7 +67,15 @@ public class HuntBean {
 		this.username = username;
 	}
 
+	public boolean isPrivate() {
+		return isPrivate;
+	}
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
 	
-	
-	
+	public boolean getPrivate() {
+		return isPrivate;
+	}
 }
