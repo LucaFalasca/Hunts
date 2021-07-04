@@ -3,6 +3,7 @@ package logic;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
+import logic.view.desktop.controller.MainMenuGController;
 import logic.view.desktop.controller.ToolBarController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,8 +40,8 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			
 			controller.setToolbar(toolBar, controller2);
-			
 			primaryStage.show();
+			controller.changeScene(Pages.MAIN_MENU,null,null);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
