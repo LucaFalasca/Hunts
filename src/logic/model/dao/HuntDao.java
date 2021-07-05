@@ -7,6 +7,7 @@ import java.util.List;
 
 import logic.model.Database;
 import logic.model.entity.Hunt;
+import logic.model.entity.Map;
 import logic.model.entity.RealObject;
 import logic.model.entity.Riddle;
 
@@ -378,5 +379,55 @@ public class HuntDao {
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public List<Hunt> searchHunt(boolean choose, String name) throws SQLException {
+		var conn = Database.getConnection();
+		CallableStatement stmt = null;
+		List<Hunt> hunts = new ArrayList<>();
+		if(choose) {
+			stmt = conn.prepareCall("call search_hunt_by_user(?)");
+		} else {
+			stmt = conn.prepareCall("call search_hunt_by_name(?)");
+		}
+		
+		stmt.setString(1, name);
+		
+		boolean haveResult = stmt.execute();
+		
+		while(haveResult) {
+			
+			var rs = stmt.getResultSet();
+			while (rs.next()) {
+				
+				var id = rs.getInt(1);
+		        var huntName = rs.getString(2);
+		        var idMap = rs.getInt(4);
+		        
+		        var hunt = new Hunt();
+		        hunt.setIdHunt(id);
+		        hunt.setHuntName(huntName);
+		        
+		        var map = new Map();
+		        map.setId(idMap);
+		        
+		        hunt.setMap(map);
+		        
+		        hunts.add(hunt);
+		      }
+			haveResult = stmt.getMoreResults();
+		}
+		
+		
+		
+		
+		return hunts;
+	}
+
+	public List<Hunt> searchByName(String searchName) {
+		List<Hunt> hunts = new ArrayList<>();
+		
+		return hunts;
 	}
 }
