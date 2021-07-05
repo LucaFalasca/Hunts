@@ -232,13 +232,12 @@ public class ManageMapGController extends ControllerWithLogin{
     	td.setHeaderText("Zone name");
     	td.showAndWait();
     	name = td.getEditor().getText();
-    	if(name.equals("")) {
+    	if(name.equals("")) 
     		name = "Zona " + (zones.size() + 1);
-	    	for(ZoneBean zone : zones) {
-	    		if(zone.getNameZone().equals(name)){
-	    			name = name.concat("(1)");
-	    		}
-	    	}
+    	for(ZoneBean zone : zones) {
+    		if(zone.getNameZone().equals(name)){
+    			name = name.concat("(1)");
+    		}
     	}
     	return name;
     }
