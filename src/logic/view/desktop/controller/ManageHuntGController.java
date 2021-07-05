@@ -136,9 +136,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     private Label lbMapName;
     
-    @FXML
-    private CheckBox cbPrivate;
-    
     private ObservableList<String> zoneList = FXCollections.observableArrayList();
 	
     @FXML
@@ -600,19 +597,28 @@ public class ManageHuntGController extends ControllerWithLogin{
     		showAlert(HUNTNAME);
     	else {
     		huntBean.setIdHunt(save());
-    		huntBean.setPrivate(false);
+    		huntBean.setPrivate(true);
     	}
     }
-    
+
     @FXML
-    void handleFinish(ActionEvent event) {
+    void handleSaveExit(ActionEvent event) {
+    	saveAndExit(true);
+    		
+    }
+
+    @FXML
+    void handleSavePublish(ActionEvent event) {
+    	saveAndExit(false);
+    }
+    
+    private void saveAndExit(boolean visible) {
     	if(tfHuntName.getText().equals("") || rdlList.isEmpty()) {
     		showAlert(HUNTNAME);
     	} else {
-    		huntBean.setPrivate(cbPrivate.isAllowIndeterminate());
+    		huntBean.setPrivate(visible);
     		save();
 			changeScene(Pages.MAIN_MENU, null, null);
-			
     	}
     }
 
