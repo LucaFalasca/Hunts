@@ -5,7 +5,7 @@ import java.util.List;
 public class MapBean {
 
 	private int id;
-	private String CreatorName;
+	private String creatorName;
 	private String name;
 	private String image;
 	private List<ZoneBean> zones;
@@ -43,10 +43,10 @@ public class MapBean {
 		this.zones = zones;
 	}
 	public String getCreatorName() {
-		return CreatorName;
+		return creatorName;
 	}
 	public void setCreatorName(String creatorName) {
-		CreatorName = creatorName;
+		this.creatorName = creatorName;
 	}
 	
 	

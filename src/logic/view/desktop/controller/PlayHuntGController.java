@@ -69,18 +69,17 @@ public class PlayHuntGController extends ControllerWithLogin{
 		lbClues.add(lbClue2);
 		lbClues.add(lbClue3);
 		
-		if(arg != null) {
-			if(arg.equals(StringHardCode.HUNT.getString())) {
+		if(arg != null && arg.equals(StringHardCode.HUNT.getString())) {
 				List<?> par = (List<?>) param;
-				ManageHuntControl controller = new ManageHuntControl();
-				int id = Integer.valueOf((String) par.get(0));
+				var controller = new ManageHuntControl();
+				var id = Integer.valueOf((String) par.get(0));
 				String username = (String) par.get(1);
 				
 				HuntBean hunt = controller.getHunt(id, username);
 				MapBean map = hunt.getMap();
 				setMap(map);
 				riddleList.setAll(hunt.getRiddle());
-			}
+			
 		}
 		lvRiddle.setItems(riddleList);
 		lvRiddle.getSelectionModel().selectedItemProperty()
@@ -92,9 +91,9 @@ public class PlayHuntGController extends ControllerWithLogin{
 				lbDomanda.setText(arg2.getRiddle());
 				currentRiddle = arg2;
 				if(arg2.getClue() != null) {
-					for(int i = 0; i < arg2.getClue().size(); i++)
+					for(var i = 0; i < arg2.getClue().size(); i++)
 						lbClues.get(i).setText(arg2.getClueElement(i));
-					for(int i = 0; i < arg2.getClueUsed(); i++){
+					for(var i = 0; i < arg2.getClueUsed(); i++){
 						lbClues.get(i).setVisible(true);
 					}
 				}
@@ -139,8 +138,8 @@ public class PlayHuntGController extends ControllerWithLogin{
 
     @FXML
     void handleAnswer(ActionEvent event) {
-    	PlayHuntControl controller = new PlayHuntControl();
-    	AnswerBean bean = new AnswerBean();
+    	var controller = new PlayHuntControl();
+    	var bean = new AnswerBean();
     	bean.setRiddleAnswer(currentRiddle.getSolution());
     	bean.setUserAnswer(tfRisposta.getText());
     	if(controller.answer(bean)) {

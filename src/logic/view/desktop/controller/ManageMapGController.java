@@ -204,16 +204,7 @@ public class ManageMapGController extends ControllerWithLogin{
     	case PRIMARY:
         	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
     	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
-    	    	var zoneName = showEditor();
-    	    	if(zoneName.equals("")) {
-	    	    	zoneName = "Zona " + (zones.size() + 1);
-	    	    	for(var i = 0; i < zones.size(); i++) {
-	    	    		if(zones.get(i).getNameZone().equals(zoneName)){
-	    	    			zoneName = zoneName.concat("(1)");
-	    	    			i = 0;
-	    	    		}
-	    	    	}
-    	    	}
+    	    	var zoneName = chooseZoneName();
     	    	zones.add(new ZoneBean(zoneName, startX, startY, endX, endY, drawMachine.toString()));
         	}
         	
@@ -224,8 +215,7 @@ public class ManageMapGController extends ControllerWithLogin{
     		if(thereIsInAZoneRange(endX, endY, endX, endY)) {
     			for(ZoneBean zone: zones) {
     				if(isBetween(endX, zone.getX1(), zone.getX2()) && isBetween(endY, zone.getY1(), zone.getY2())) {
-    					clean(zone);
-    					zones.remove(zone);
+    					remove(zone);
     					break;
     				}
     			}
@@ -235,13 +225,21 @@ public class ManageMapGController extends ControllerWithLogin{
     	}
     }
     
-    private String showEditor() {
+    private String chooseZoneName() {
     	String name = null;
     	var td = new TextInputDialog();
     	td.setContentText("Insert zone name");
     	td.setHeaderText("Zone name");
     	td.showAndWait();
     	name = td.getEditor().getText();
+    	if(name.equals("")) {
+    		name = "Zona " + (zones.size() + 1);
+	    	for(ZoneBean zone : zones) {
+	    		if(zone.getNameZone().equals(name)){
+	    			name = name.concat("(1)");
+	    		}
+	    	}
+    	}
     	return name;
     }
     

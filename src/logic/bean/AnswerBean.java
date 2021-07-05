@@ -2,21 +2,22 @@ package logic.bean;
 
 public class AnswerBean {
 	
-	private String UserAnswer;
-	private String RiddleAnswer;
+	private String userAnswer;
+	private String riddleAnswer;
 	
 	public String getUserAnswer() {
-		return UserAnswer;
+		return userAnswer;
 	}
 	public void setUserAnswer(String userAnswer) {
-		UserAnswer = userAnswer;
+		this.userAnswer = userAnswer;
 	}
 	public String getRiddleAnswer() {
-		return RiddleAnswer;
+		return riddleAnswer;
 	}
 	public void setRiddleAnswer(String riddleAnswer) {
-		RiddleAnswer = riddleAnswer;
+		this.riddleAnswer = riddleAnswer;
 	}
 	
+
 	
 }

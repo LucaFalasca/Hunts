@@ -65,8 +65,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     private ComboBox<ObjectBean> cmbObject;
-
-    private ObservableList<String> cmbObjList = FXCollections.observableArrayList();
     
     @FXML
     private TextField tfRiddleSolution;
@@ -251,15 +249,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
 		cmName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		cmDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-	}
-	
-	private void setHunt(HuntBean huntBean) {
-		
-		List<ObjectBean> objectBean;
-		List<RiddleBean> riddleBean;
-		tfHuntName.setText(huntBean.getHuntName());
-		riddleBean = huntBean.getRiddle();
-		rdlList.setAll(riddleBean);
 		cmButtons.setCellValueFactory(paramRiddle -> new ReadOnlyObjectWrapper<>(paramRiddle.getValue()));
 		cmButtons.setCellFactory(paramRiddle -> new TableCell<RiddleBean, RiddleBean>(){
 			@Override
@@ -271,15 +260,11 @@ public class ManageHuntGController extends ControllerWithLogin{
 			    	setGraphic(gController.getBox());
 				} else {
 					setGraphic(null);
+					setText(null);
 				}
 			}
 		});
 		
-		objectBean = huntBean.getObject();
-		objList.setAll(objectBean);
-		for(ObjectBean objBean : objectBean) {
-			cmbObjList.add(objBean.getName());
-		}
 		cmObjButtons.setCellValueFactory(paramObject -> new ReadOnlyObjectWrapper<>(paramObject.getValue()));
 		cmObjButtons.setCellFactory(paramObject -> new TableCell<ObjectBean, ObjectBean>(){
 			@Override
@@ -291,9 +276,27 @@ public class ManageHuntGController extends ControllerWithLogin{
 			    	setGraphic(gController.getBox());
 				} else {
 					setGraphic(null);
+					setText(null);
 				}
 			}
 		});
+		
+		
+	}
+	
+	private void setHunt(HuntBean huntBean) {
+		
+		List<ObjectBean> objectBean;
+		List<RiddleBean> riddleBean;
+		tfHuntName.setText(huntBean.getHuntName());
+		riddleBean = huntBean.getRiddle();
+		rdlList.setAll(riddleBean);
+		
+		
+		objectBean = huntBean.getObject();
+		objList.setAll(objectBean);
+		
+		
 		if(huntBean.getMap() != null)
 			setMap(huntBean.getMap());
 		
@@ -330,21 +333,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     		idRiddle++;
     		
     		rdlList.add(temp);
-    		
-    		cmButtons.setCellValueFactory(paramRiddle -> new ReadOnlyObjectWrapper<>(paramRiddle.getValue()));
-    		cmButtons.setCellFactory(paramRiddle -> new TableCell<RiddleBean, RiddleBean>(){
-    			@Override
-    			protected void updateItem(RiddleBean riddleBean, boolean empty) {
-    				super.updateItem(riddleBean, empty);
-    				if(riddleBean != null) {
-    					var gController = new ItemRiddleG(Pages.ITEM_RIDDLE, getIstance());
-    			    	gController.setInfo(riddleBean);
-    			    	setGraphic(gController.getBox());
-    				} else {
-    					setGraphic(null);
-    				}
-    			}
-    		});
     		
     		lbRiddle.setText(RIDDLE + (rdlList.size()));
     		
@@ -391,6 +379,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     	    	}
     	    	
     	    	rdlList.remove(rb);
+    	    	break;
     		}
     	}
     }
@@ -483,25 +472,9 @@ public class ManageHuntGController extends ControllerWithLogin{
     		}else {
     			
     			var objDescription = txtDescription.getText();
-    			cmbObjList.add(objName);
     			var ob = new ObjectBean(idObject, objName, objDescription, filePath);
     			idObject++;
     			objList.add(ob);
-    			
-    			cmObjButtons.setCellValueFactory(paramObject -> new ReadOnlyObjectWrapper<>(paramObject.getValue()));
-    			cmObjButtons.setCellFactory(paramObject -> new TableCell<ObjectBean, ObjectBean>(){
-    				@Override
-    				protected void updateItem(ObjectBean objectBean, boolean empty) {
-    					super.updateItem(objectBean, empty);
-    					if(objectBean != null) {
-    						var gController = new ItemObjectGController(Pages.ITEM_OBJECT, getIstance());
-    				    	gController.setInfo(objectBean);
-    				    	setGraphic(gController.getBox());
-    					} else {
-    						setGraphic(null);
-    					}
-    				}
-    			});
     			
     			if(filePath != null) {
     				filePath = null;
@@ -536,7 +509,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     			break;
     		}
     	}
-    	cmbObjList.remove(objName);
     	findObjectInRiddle(objName);
     }
     
@@ -557,14 +529,15 @@ public class ManageHuntGController extends ControllerWithLogin{
 		    	break;
     		}
     	}
-    	cmbObjList.remove(objName);
     	findObjectInRiddle(objName);
     }
     
     private void findObjectInRiddle(String objName) {
     	for(RiddleBean rb : rdlList) {
-    		if(rb.getObjectName().equals(objName))
+    		if(rb.getObjectName().equals(objName)) {
     			rdlList.remove(rb);
+    			break;
+    		}
     	}
     }
     
