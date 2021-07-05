@@ -9,12 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
+import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemHuntGController;
@@ -22,7 +24,10 @@ import logic.view.desktop.controller.item.ItemHuntsGController;
 import logic.view.desktop.controller.item.ItemMapGController;
 
 public class MainMenuGController extends ControllerWithLogin{
-
+	
+    @FXML
+    private TextField tfSearchName;
+    
     @FXML
     private Button btnHuntCreate;
 
@@ -53,16 +58,38 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     private AnchorPane apMaps;
     
+    @FXML
+    private Button btnSearch;
+    
+    private List<HuntBean> huntBeans = null;
+	ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
+
     @Override
 	void start(String arg, Object param) {
+    	
+		var controllerHunts = new ManageHuntControl();
+    	huntBeans = controllerHunts.getAllHunts();
+		if(huntBeans != null) {
+			huntsList.addAll(huntBeans);
+			lvHunts.setItems(huntsList);
+			lvHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
+				@Override
+				public void updateItem(HuntBean itemBean, boolean empty) {
+					super.updateItem(itemBean, empty);
+					if(itemBean != null) {
+						var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
+						newItem.setInfo(itemBean);
+						setGraphic(newItem.getBox());
+						
+					}
+				}
+			});
+		}
 		if(isLogged()) {
     		List<MapBean> mapBeans = null;
-    		List<HuntBean> huntBeans = null;
     		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
     		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
-    		ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
 			var controllerMaps = new ManageMapControl();
-			var controllerHunts = new ManageHuntControl();
     		try {
 				mapBeans = controllerMaps.getAllMaps(getUsername());
 				huntBeans = controllerHunts.getAllHunts(getUsername());
@@ -107,24 +134,6 @@ public class MainMenuGController extends ControllerWithLogin{
 				});
 			}
 			
-			
-			huntBeans = controllerHunts.getAllHunts(null);
-			if(huntBeans != null) {
-				huntsList.addAll(huntBeans);
-				lvHunts.setItems(huntsList);
-				lvHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
-					@Override
-					public void updateItem(HuntBean itemBean, boolean empty) {
-						super.updateItem(itemBean, empty);
-						if(itemBean != null) {
-							var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
-							newItem.setInfo(itemBean);
-							setGraphic(newItem.getBox());
-							
-						}
-					}
-				});
-			}
 		}
 		
 	}
@@ -144,6 +153,17 @@ public class MainMenuGController extends ControllerWithLogin{
     void handleLogin(ActionEvent event) {
     	changeScene(Pages.LOGIN);
 		
+    }
+    
+    @FXML
+    void handleSearch(ActionEvent event) {
+    	var controller = new PlayHuntControl();
+    	var searchName = tfSearchName.getText();
+    	
+    	huntBeans = controller.getHuntsBySearch(searchName);
+    	
+    	huntsList.setAll(huntBeans);
+    	
     }
     
 

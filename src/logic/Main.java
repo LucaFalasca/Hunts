@@ -42,6 +42,7 @@ public class Main extends Application {
 			controller.setToolbar(toolBar, controller2);
 			primaryStage.show();
 			controller.changeScene(Pages.MAIN_MENU,null,null);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
