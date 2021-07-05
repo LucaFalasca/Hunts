@@ -19,6 +19,8 @@ public class HuntBean {
 	
 	private boolean isPrivate;
 	
+	private boolean avgRating;
+	
 	public int getIdHunt() {
 		return idHunt;
 	}
@@ -78,4 +80,14 @@ public class HuntBean {
 	public boolean getPrivate() {
 		return isPrivate;
 	}
+
+	public boolean isAvgRating() {
+		return avgRating;
+	}
+
+	public void setAvgRating(boolean avgRating) {
+		this.avgRating = avgRating;
+	}
+	
+	
 }

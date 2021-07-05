@@ -19,6 +19,8 @@ public class Hunt {
 	
 	private boolean visible;
 	
+	private double avgRatingHunt;
+	
 	public int getIdHunt() {
 		return idHunt;
 	}
@@ -81,6 +83,14 @@ public class Hunt {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public double getAvgRatingHunt() {
+		return avgRatingHunt;
+	}
+
+	public void setAvgRatingHunt(double avgRatingHunt) {
+		this.avgRatingHunt = avgRatingHunt;
 	}
 	
 
