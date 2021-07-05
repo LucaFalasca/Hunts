@@ -39,5 +39,14 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="btnHuntInformation" layoutX="81.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleMoreInformation" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="8.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../resources/information.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
