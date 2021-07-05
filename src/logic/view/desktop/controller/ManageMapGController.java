@@ -53,7 +53,8 @@ public class ManageMapGController extends ControllerWithLogin{
     private ObservableList<String> cbList = FXCollections.observableArrayList(RECTANGLE, OVAL);
     @FXML
     private ListView<ZoneBean> lvZones;
-    //private ObservableList<ZoneBean> zoneList = FXCollections.observableArrayList();
+    
+    
     
     private GraphicsContext gcDraw;
     private GraphicsContext gcTemp;
@@ -149,8 +150,7 @@ public class ManageMapGController extends ControllerWithLogin{
     	var fileChooser = new FileChooser();
     	fileChooser.setTitle("Choose Image");
     	fileChooser.getExtensionFilters().addAll(
-    			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")/*,
-    			new ExtensionFilter("All", "*.*")*/
+    			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
     			);
     	var selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
     	var controller = new ManageMapControl();
