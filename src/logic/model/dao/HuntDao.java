@@ -205,6 +205,47 @@ public class HuntDao {
 		return hunts;
 	}
 	
+	public List<Hunt> searchHunt(String param){
+		var conn = Database.getConnection();
+		List<Hunt> hunts = new ArrayList<>();
+		
+		
+		try (CallableStatement stmt = conn.prepareCall("call search_hunts(?);")){
+			
+			//Input param
+			stmt.setString(1, param);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				
+				var rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+					var id = rs.getInt(1);
+					var creatorName = rs.getString(2);
+					var nameHunt = rs.getString(3);
+					var indoor = rs.getBoolean(4);
+					var idMap = rs.getInt(5);
+			        
+					var hunt = new Hunt();
+					
+			        hunt.setIdHunt(id);
+			        hunt.setCreatorName(creatorName);
+			        hunt.setHuntName(nameHunt);
+			        hunt.setIndoor(indoor);
+			        
+			        hunts.add(hunt);
+			      }
+				haveResult = stmt.getMoreResults();
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return hunts;
+	}
+
 	private List<String> getClueByRiddle(int riddle, int hunt, String username){
 		var conn = Database.getConnection();
 		List<String> clues = new ArrayList<>();
