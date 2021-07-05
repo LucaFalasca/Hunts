@@ -14,7 +14,7 @@ public class HuntDao {
 	
 	public int saveHunt(Hunt hunt) {
 		int mapId = hunt.getMap().getId();
-		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, mapId);
+		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, hunt.isVisible(), mapId);
 		List<RealObject> objects = hunt.getObjectList();
 		if(objects != null) {
 			for(RealObject object : objects) {
@@ -33,7 +33,6 @@ public class HuntDao {
 		
 		return idHunt;
 	}
-	
 	
 	public Hunt getHuntById(int id, String username) {
 		var conn = Database.getConnection();
@@ -59,7 +58,9 @@ public class HuntDao {
 				case 1:
 					while(rs.next()) {
 						var name = rs.getString(1);
-						mapId = rs.getInt(3);
+						hunt.setIndoor(rs.getBoolean(2));
+						hunt.setVisible(rs.getBoolean(3));
+						mapId = rs.getInt(4);
 						hunt.setHuntName(name);
 					}
 					break;
@@ -122,6 +123,86 @@ public class HuntDao {
 		return hunt;
 	}
 	
+	public List<Hunt> getHuntList(String username){
+		var conn = Database.getConnection();
+		
+		List<Hunt> hunts = new ArrayList<>();
+		try(CallableStatement stmt = conn.prepareCall("call get_hunts(?);")) {
+			
+			//Input Param
+			stmt.setString(1, username);
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				
+				var rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+					var id = rs.getInt(1);
+			        var huntName = rs.getString(2);
+			        var indoor = rs.getBoolean(3);
+			        var visible = rs.getBoolean(4);
+			        var idMap = rs.getInt(5);
+			        
+			        var hunt = new Hunt();
+			        hunt.setIdHunt(id);
+			        hunt.setHuntName(huntName);
+			        hunt.setIndoor(indoor);
+			        hunt.setVisible(visible);
+			        
+			        hunts.add(hunt);
+			      }
+				haveResult = stmt.getMoreResults();
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return hunts;
+	}
+	
+	public List<Hunt> getHuntList(){
+
+		var conn = Database.getConnection();
+		
+		List<Hunt> hunts = new ArrayList<>();
+		try(CallableStatement stmt = conn.prepareCall("call get_all_hunts();")) {
+			
+			//Input Param
+			
+			boolean haveResult = stmt.execute();
+			
+			while(haveResult) {
+				
+				var rs = stmt.getResultSet();
+				while (rs.next()) {
+					
+					var id = rs.getInt(1);
+					var creatorName = rs.getString(2);
+					var nameHunt = rs.getString(3);
+					var indoor = rs.getBoolean(4);
+					var idMap = rs.getInt(5);
+			        
+					var hunt = new Hunt();
+					
+			        hunt.setIdHunt(id);
+			        hunt.setCreatorName(creatorName);
+			        hunt.setHuntName(nameHunt);
+			        hunt.setIndoor(indoor);
+			        
+			        hunts.add(hunt);
+			      }
+				haveResult = stmt.getMoreResults();
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return hunts;
+	}
 	
 	private List<String> getClueByRiddle(int riddle, int hunt, String username){
 		var conn = Database.getConnection();
@@ -154,85 +235,11 @@ public class HuntDao {
 		return clues;
 	}
 	
-	public List<Hunt> getHuntList(String username){
-		var conn = Database.getConnection();
-		
-		List<Hunt> hunts = new ArrayList<>();
-		try(CallableStatement stmt = conn.prepareCall("call get_hunts(?);")) {
-			
-			//Input Param
-			stmt.setString(1, username);
-			
-			boolean haveResult = stmt.execute();
-			
-			while(haveResult) {
-				
-				var rs = stmt.getResultSet();
-				while (rs.next()) {
-					
-					var id = rs.getInt(1);
-			        var huntName = rs.getString(2);
-			        var idMap = rs.getInt(4);
-			        
-			        var hunt = new Hunt();
-			        hunt.setIdHunt(id);
-			        hunt.setHuntName(huntName);
-			        
-			        hunts.add(hunt);
-			      }
-				haveResult = stmt.getMoreResults();
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return hunts;
-	}
-	
-	public List<Hunt> getHuntList(){
-		var conn = Database.getConnection();
-		
-		List<Hunt> hunts = new ArrayList<>();
-		try(CallableStatement stmt = conn.prepareCall("call get_all_hunts();")) {
-			
-			//Input Param
-			
-			boolean haveResult = stmt.execute();
-			
-			while(haveResult) {
-				
-				var rs = stmt.getResultSet();
-				while (rs.next()) {
-					
-					var id = rs.getInt(1);
-					var creatorName = rs.getString(2);
-					var nameHunt = rs.getString(3);
-					var idMap = rs.getInt(5);
-			        
-					var hunt = new Hunt();
-					
-			        hunt.setIdHunt(id);
-			        hunt.setCreatorName(creatorName);
-			        hunt.setHuntName(nameHunt);
-			        
-			        hunts.add(hunt);
-			      }
-				haveResult = stmt.getMoreResults();
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return hunts;
-	}
-	
-	private int addHunt(int codice, String nome, String username, boolean indoor, int idMap) {
+	private int addHunt(int codice, String nome, String username, boolean indoor, boolean isPrivate, int idMap) {
 		var conn = Database.getConnection();
 		var id = 0;
 		
-		try (CallableStatement stmt = conn.prepareCall("call save_hunt(?, ?, ?, ?, ?)")){
+		try (CallableStatement stmt = conn.prepareCall("call save_hunt(?, ?, ?, ?, ?, ?)")){
 			
 			//Input param
 			if(codice != -1)
@@ -240,10 +247,11 @@ public class HuntDao {
 			stmt.setString(2, nome);
 			stmt.setString(3, username);
 			stmt.setBoolean(4, indoor);
+			stmt.setBoolean(5, isPrivate);
 			if(idMap != -1)
-				stmt.setInt(5, idMap);
+				stmt.setInt(6, idMap);
 			else
-				stmt.setNull(5, java.sql.Types.INTEGER);
+				stmt.setNull(6, java.sql.Types.INTEGER);
 			
 			boolean haveResult = stmt.execute();
 			
