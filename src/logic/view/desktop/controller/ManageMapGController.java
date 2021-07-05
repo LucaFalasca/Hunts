@@ -13,6 +13,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -31,6 +32,7 @@ import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
+import logic.view.desktop.controller.item.ItemZoneGController;
 
 public class ManageMapGController extends ControllerWithLogin{
 	
@@ -82,10 +84,13 @@ public class ManageMapGController extends ControllerWithLogin{
     	    protected void updateItem(ZoneBean item, boolean empty) {
     	        super.updateItem(item, empty);
 
-    	        if (empty) {
-    	            setText(null);
+    	        if (empty || item == null) {
+    	           setText(null);
+    	           setGraphic(null);
     	        } else {
-    	            setText(item.getNameZone() + " " + item.getShape());
+    	        	var newItem = new ItemZoneGController(Pages.ITEM_ZONE, getIstance());
+					newItem.setInfo(item);
+					setGraphic(newItem.getBox());
     	        }
     	    }
     	});
@@ -199,14 +204,17 @@ public class ManageMapGController extends ControllerWithLogin{
     	case PRIMARY:
         	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
     	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
-    	    	String nameDefault = "Zona " + (zones.size() + 1);
-    	    	for(var i = 0; i < zones.size(); i++) {
-    	    		if(zones.get(i).getNameZone().equals(nameDefault)){
-    	    			nameDefault = nameDefault.concat("(1)");
-    	    			i = 0;
-    	    		}
+    	    	var zoneName = showEditor();
+    	    	if(zoneName.equals("")) {
+	    	    	zoneName = "Zona " + (zones.size() + 1);
+	    	    	for(var i = 0; i < zones.size(); i++) {
+	    	    		if(zones.get(i).getNameZone().equals(zoneName)){
+	    	    			zoneName = zoneName.concat("(1)");
+	    	    			i = 0;
+	    	    		}
+	    	    	}
     	    	}
-    	    	zones.add(new ZoneBean(nameDefault, startX, startY, endX, endY, drawMachine.toString()));
+    	    	zones.add(new ZoneBean(zoneName, startX, startY, endX, endY, drawMachine.toString()));
         	}
         	
         	drawMachine.clean(gcTemp);
@@ -216,8 +224,8 @@ public class ManageMapGController extends ControllerWithLogin{
     		if(thereIsInAZoneRange(endX, endY, endX, endY)) {
     			for(ZoneBean zone: zones) {
     				if(isBetween(endX, zone.getX1(), zone.getX2()) && isBetween(endY, zone.getY1(), zone.getY2())) {
+    					clean(zone);
     					zones.remove(zone);
-    					clean(zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2(), zone.getShape());
     					break;
     				}
     			}
@@ -226,7 +234,16 @@ public class ManageMapGController extends ControllerWithLogin{
 		default:
     	}
     }
-
+    
+    private String showEditor() {
+    	String name = null;
+    	var td = new TextInputDialog();
+    	td.setContentText("Insert zone name");
+    	td.setHeaderText("Zone name");
+    	td.showAndWait();
+    	name = td.getEditor().getText();
+    	return name;
+    }
     
     @FXML
     void handleCleanAll(ActionEvent event) {
@@ -234,16 +251,16 @@ public class ManageMapGController extends ControllerWithLogin{
     	zones.clear();
     }
     
-    void clean(double x1, double y1, double x2, double y2, String shape) {
+    void clean(ZoneBean zone) {
         var oldState = drawMachine.getCurrentState();    
         
-        if(shape.equals(OVAL)) {
+        if(zone.getShape().equals(OVAL)) {
 			drawMachine.setState(OvalState.getInstance());
 		} else {
 			drawMachine.setState(RectangleState.getInstance());
         }
         
-        drawMachine.clean(gcDraw, x1, y1, x2, y2);
+        drawMachine.clean(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
         
         drawMachine.setState(oldState);
     }
@@ -266,17 +283,21 @@ public class ManageMapGController extends ControllerWithLogin{
     
     @FXML
     void handleSaveExit(ActionEvent event) {
-    	handleSave(event);
-    	
-    	List<Integer> l = new ArrayList<>();
-    	l.add(idHuntComeback);
-    	l.add(idMap);
-    	
-    	if(idHuntComeback != -1) {
-			changeScene(Pages.MANAGE_HUNT, "MAP", l);
-    	}
-    	else {
-    		changeScene(Pages.MAIN_MENU);
+    	if(tfMapName.getText().equals("")) {
+    		showAlert("Insert Map Name");
+    	} else {
+	    	handleSave(event);
+	    	
+	    	List<Integer> l = new ArrayList<>();
+	    	l.add(idHuntComeback);
+	    	l.add(idMap);
+	    	
+	    	if(idHuntComeback != -1) {
+				changeScene(Pages.MANAGE_HUNT, StringHardCode.MAP.getString(), l);
+	    	}
+	    	else {
+	    		changeScene(Pages.MAIN_MENU);
+	    	}
     	}
     }
     
@@ -335,6 +356,12 @@ public class ManageMapGController extends ControllerWithLogin{
     	if(y2 > y1)	return x < y2 && x > y1;
     	else return x < y1 && x > y2;
     }
+
+	public void remove(ZoneBean zone) {
+		clean(zone);
+		zones.remove(zone);
+		
+	}
 
 
 	

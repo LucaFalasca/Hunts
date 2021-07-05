@@ -14,7 +14,8 @@ public enum Pages {
 	PLAY_HUNT,
 	ITEM_RIDDLE_SHORT,
 	ITEM_RIDDLE, 
-	ITEM_OBJECT;
+	ITEM_OBJECT,
+	ITEM_ZONE;
 	
 	public String getPath() {
 		switch(this) {
@@ -33,6 +34,7 @@ public enum Pages {
 			case ITEM_RIDDLE:  	return "/logic/view/desktop/layout/item/ItemRiddle.fxml";
 			case ITEM_OBJECT:   return "/logic/view/desktop/layout/item/ItemObject.fxml";
 			case REGISTER:		return "/logic/view/desktop/layout/RegisterLayout.fxml";
+			case ITEM_ZONE: 	return "/logic/view/desktop/layout/item/ItemZone.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}
