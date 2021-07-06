@@ -19,7 +19,7 @@ public class HuntBean {
 	
 	private boolean isPrivate;
 	
-	private boolean avgRating;
+	private int avgRating;
 	
 	public int getIdHunt() {
 		return idHunt;
@@ -77,11 +77,11 @@ public class HuntBean {
 		return isPrivate;
 	}
 
-	public boolean isAvgRating() {
+	public int isAvgRating() {
 		return avgRating;
 	}
 
-	public void setAvgRating(boolean avgRating) {
+	public void setAvgRating(int avgRating) {
 		this.avgRating = avgRating;
 	}
 	
