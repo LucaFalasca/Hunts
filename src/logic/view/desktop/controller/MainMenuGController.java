@@ -60,15 +60,18 @@ public class MainMenuGController extends ControllerWithLogin{
     
     @FXML
     private Button btnSearch;
+
+    @FXML
+    private Button btnDeleteSearch;
     
     private List<HuntBean> huntBeans = null;
 	ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
-
+	
+	ManageHuntControl controller = new ManageHuntControl();
     @Override
 	void start(String arg, Object param) {
     	
-		var controllerHunts = new ManageHuntControl();
-    	huntBeans = controllerHunts.getAllHunts();
+    	huntBeans = controller.getAllHunts();
 		if(huntBeans != null) {
 			huntsList.addAll(huntBeans);
 			lvHunts.setItems(huntsList);
@@ -87,7 +90,7 @@ public class MainMenuGController extends ControllerWithLogin{
 					lvMaps.setItems(mapsList);
 	    		}
 				
-				huntBeans = controllerHunts.getAllHunts(getUsername());
+				huntBeans = controller.getAllHunts(getUsername());
 				if(huntBeans != null) {
 					apHunts.setDisable(false);
 					huntList.addAll(huntBeans);
@@ -179,14 +182,22 @@ public class MainMenuGController extends ControllerWithLogin{
     
     @FXML
     void handleSearch(ActionEvent event) {
-    	var controller = new PlayHuntControl();
     	var searchName = tfSearchName.getText();
     	
-    	huntBeans = controller.getHuntsBySearch(searchName);
-    	
+    	if(searchName.equals("")) {
+    		handleDeleteSearch(event);
+    	}
+    	else {
+    		var controllerPlay = new PlayHuntControl();
+			huntBeans = controllerPlay.getHuntsBySearch(searchName);
+    	}
+	    		
     	huntsList.setAll(huntBeans);
     }
     
-
+    @FXML
+    void handleDeleteSearch(ActionEvent event) {
+		huntBeans = controller.getAllHunts();
+    }
 }
 
