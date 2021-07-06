@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -389,7 +388,7 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     void handleCreateMap(ActionEvent event) {
     	huntBean.setIdHunt(save());
-		changeScene(Pages.MANAGE_MAP, StringHardCode.HUNT.getString(), huntBean.getIdHunt());
+		changeScene(Pages.MANAGE_MAP, StringHardCode.HUNT.toString(), huntBean.getIdHunt());
     	
     }
 

@@ -69,7 +69,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 		lbClues.add(lbClue2);
 		lbClues.add(lbClue3);
 		
-		if(arg != null && arg.equals(StringHardCode.HUNT.getString())) {
+		if(arg != null && arg.equals(StringHardCode.HUNT.toString())) {
 				List<?> par = (List<?>) param;
 				var controller = new ManageHuntControl();
 				var id = Integer.valueOf((String) par.get(0));

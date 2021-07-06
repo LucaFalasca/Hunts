@@ -51,7 +51,7 @@ public class ItemHuntsGController extends ItemController{
     	List<String> list = new ArrayList<>();
     	list.add(String.valueOf(idHunt));
     	list.add(lbHuntCreator.getText());
-    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.getString(), list);
+    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), list);
     }
     
     @FXML

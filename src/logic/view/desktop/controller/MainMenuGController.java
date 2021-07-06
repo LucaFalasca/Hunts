@@ -167,7 +167,7 @@ public class MainMenuGController extends ControllerWithLogin{
     	huntBeans = controller.getHuntsBySearch(searchName);
     	
     	huntsList.setAll(huntBeans);
-    	
+    	lvHunts.setItems(huntsList);
     }
     
 

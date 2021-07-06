@@ -50,7 +50,7 @@ public class ItemHuntGController extends ItemController{
 
     @FXML
     void handleModifyHunt(ActionEvent event) {
-    	changeScene(Pages.MANAGE_HUNT, StringHardCode.HUNT.getString(), idHunt);
+    	changeScene(Pages.MANAGE_HUNT, StringHardCode.HUNT.toString(), idHunt);
     }
 
     @FXML
@@ -61,7 +61,7 @@ public class ItemHuntGController extends ItemController{
     
     @FXML
     void handleMoreInformation(ActionEvent event) {
-    	changeScene(Pages.HUNT_INFORMATION, StringHardCode.HUNT.getString(), idHunt);
+    	changeScene(Pages.HUNT_INFORMATION, StringHardCode.HUNT.toString(), idHunt);
     }
     
     @Override

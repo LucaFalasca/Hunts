@@ -6,7 +6,8 @@ public enum StringHardCode {
 	HUNT,
 	MAP; 
 	
-	public String getString() {
+	@Override
+	public String toString() {
 		switch(this) {
 			case HUNT: 			return "hunt";
 			case MAP:			return "map";

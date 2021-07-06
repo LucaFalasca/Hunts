@@ -42,7 +42,7 @@ public class ItemMapGController extends ItemController{
 
     @FXML
     void handleModifyMap(ActionEvent event) {
-    	changeScene(Pages.MANAGE_MAP, StringHardCode.MAP.getString(), idMap);
+    	changeScene(Pages.MANAGE_MAP, StringHardCode.MAP.toString(), idMap);
     }
 
     @Override

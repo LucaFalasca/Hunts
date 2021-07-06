@@ -95,13 +95,13 @@ public class ManageMapGController extends ControllerWithLogin{
     	        }
     	    }
     	});
-    	if(arg.equals(StringHardCode.MAP.getString())) {
+    	if(arg.equals(StringHardCode.MAP.toString())) {
 			if(param != null) {
 				var par = (int) param;
 				setMap(par);
 				
     		} 
-    	} else if(arg.equals(StringHardCode.HUNT.getString()) && param != null){
+    	} else if(arg.equals(StringHardCode.HUNT.toString()) && param != null){
     		idHuntComeback = (int) param;
 		}
 	}
@@ -290,7 +290,7 @@ public class ManageMapGController extends ControllerWithLogin{
 	    	l.add(idMap);
 	    	
 	    	if(idHuntComeback != -1) {
-				changeScene(Pages.MANAGE_HUNT, StringHardCode.MAP.getString(), l);
+				changeScene(Pages.MANAGE_HUNT, StringHardCode.MAP.toString(), l);
 	    	}
 	    	else {
 	    		changeScene(Pages.MAIN_MENU);

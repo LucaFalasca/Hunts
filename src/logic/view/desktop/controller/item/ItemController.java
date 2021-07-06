@@ -15,7 +15,6 @@ public abstract class ItemController {
     	var fxmlLoader = new FXMLLoader(getClass().getResource(page.getPath()));
         fxmlLoader.setController(this);
         
-        
         try {
 			fxmlLoader.load();
 		} catch (IOException e) {
@@ -34,6 +33,8 @@ public abstract class ItemController {
 	protected void changeScene(Pages page) {
 		mainController.changeScene(page);
 	}
+	
+	
 	
 	public abstract Parent getBox();
 }

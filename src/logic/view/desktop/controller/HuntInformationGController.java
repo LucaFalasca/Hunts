@@ -57,7 +57,7 @@ public class HuntInformationGController extends ItemController{
 
     @FXML
     void handleStart(ActionEvent event) {
-    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.getString(), itemList);
+    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), itemList);
     	var stage = (Stage) ancPane.getScene().getWindow();
 		stage.close();
     }

@@ -48,7 +48,7 @@ public class ChooseMapGController extends ItemController{
     		stage.close();
     	} else {
     		var alert = new Alert(AlertType.ERROR);
-    		alert.setContentText(StringHardCode.ERRORSELECTED.getString());
+    		alert.setContentText(StringHardCode.ERRORSELECTED.toString());
     		alert.showAndWait();
     	}
 
