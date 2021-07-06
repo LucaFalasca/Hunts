@@ -15,7 +15,8 @@ public enum Pages {
 	ITEM_RIDDLE_SHORT,
 	ITEM_RIDDLE, 
 	ITEM_OBJECT,
-	ITEM_ZONE;
+	ITEM_ZONE, 
+	HUNT_INFORMATION;
 	
 	public String getPath() {
 		switch(this) {
@@ -35,6 +36,8 @@ public enum Pages {
 			case ITEM_OBJECT:   return "/logic/view/desktop/layout/item/ItemObject.fxml";
 			case REGISTER:		return "/logic/view/desktop/layout/RegisterLayout.fxml";
 			case ITEM_ZONE: 	return "/logic/view/desktop/layout/item/ItemZone.fxml";
+			case 
+			HUNT_INFORMATION:   return "/logic/view/desktop/layout/HuntInformation.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}
@@ -56,6 +59,8 @@ public enum Pages {
 			case LOGIN: 		return false;
 			case MANAGE_HUNT: 	return true;
 			case MANAGE_MAP: 	return true;
+			case 
+			HUNT_INFORMATION: 	return false;
 			default:			return false;
 		}
 	}
