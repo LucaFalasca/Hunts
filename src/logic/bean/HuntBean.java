@@ -77,7 +77,7 @@ public class HuntBean {
 		return isPrivate;
 	}
 
-	public int isAvgRating() {
+	public int getAvgRating() {
 		return avgRating;
 	}
 
