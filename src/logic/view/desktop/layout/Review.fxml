@@ -8,10 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-
-<AnchorPane prefHeight="269.0" prefWidth="275.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16">
+<AnchorPane prefHeight="269.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane prefHeight="269.0" prefWidth="275.0">
+      <BorderPane prefHeight="269.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <AnchorPane prefHeight="205.0" prefWidth="216.0" BorderPane.alignment="CENTER">
                <children>
