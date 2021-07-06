@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-<AnchorPane prefHeight="396.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.HuntInformationGController">
+<AnchorPane fx:id="ancPane" prefHeight="396.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="396.0" prefWidth="596.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -30,7 +30,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Rating fx:id="rtHunt" layoutX="181.0" layoutY="11.0" AnchorPane.rightAnchor="62.0" />
+                  <Rating fx:id="rtHunt" layoutX="109.0" layoutY="11.0" AnchorPane.leftAnchor="110.0" />
                   <Label fx:id="lbIndoor" layoutX="14.0" layoutY="54.0" text="Indoor" AnchorPane.leftAnchor="16.0">
                      <font>
                         <Font size="14.0" />
@@ -42,7 +42,7 @@
                         <Canvas fx:id="canvas" height="300.0" width="300.0" />
                      </children>
                   </StackPane>
-                  <Label fx:id="lbCreatorName" layoutX="92.0" layoutY="372.0" text="Label" AnchorPane.bottomAnchor="8.0">
+                  <Label fx:id="lbCreatorName" layoutX="92.0" layoutY="372.0" text="Username" AnchorPane.bottomAnchor="8.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -59,7 +59,7 @@
                </children></AnchorPane>
          </left>
       </BorderPane>
-      <Label layoutX="22.0" layoutY="353.0" text="Creator by:" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="16.0">
+      <Label layoutX="22.0" layoutY="353.0" text="Created by:" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="16.0">
          <font>
             <Font size="14.0" />
          </font>
