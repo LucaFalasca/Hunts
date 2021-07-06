@@ -62,6 +62,7 @@ public class HuntDao {
 						hunt.setIndoor(rs.getBoolean(2));
 						hunt.setVisible(rs.getBoolean(3));
 						mapId = rs.getInt(4);
+						hunt.setAvgRatingHunt(rs.getDouble(5));
 						hunt.setHuntName(name);
 					}
 					break;
@@ -145,12 +146,14 @@ public class HuntDao {
 			        var indoor = rs.getBoolean(3);
 			        var visible = rs.getBoolean(4);
 			        var idMap = rs.getInt(5);
+			        var avgRating = rs.getDouble(6);
 			        
 			        var hunt = new Hunt();
 			        hunt.setIdHunt(id);
 			        hunt.setHuntName(huntName);
 			        hunt.setIndoor(indoor);
 			        hunt.setVisible(visible);
+			        hunt.setAvgRatingHunt(avgRating);
 			        
 			        hunts.add(hunt);
 			      }
@@ -185,13 +188,15 @@ public class HuntDao {
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
 					var idMap = rs.getInt(5);
-			        
+					var avgRating = rs.getDouble(6);
+					
 					var hunt = new Hunt();
 					
 			        hunt.setIdHunt(id);
 			        hunt.setCreatorName(creatorName);
 			        hunt.setHuntName(nameHunt);
 			        hunt.setIndoor(indoor);
+			        hunt.setAvgRatingHunt(avgRating);
 			        
 			        hunts.add(hunt);
 			      }
@@ -226,7 +231,9 @@ public class HuntDao {
 					var creatorName = rs.getString(2);
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
-					var idMap = rs.getInt(5);
+					var isPrivate = rs.getBoolean(5);
+					var idMap = rs.getInt(6);
+					var avgRating = rs.getDouble(7);
 			        
 					var hunt = new Hunt();
 					
@@ -234,6 +241,8 @@ public class HuntDao {
 			        hunt.setCreatorName(creatorName);
 			        hunt.setHuntName(nameHunt);
 			        hunt.setIndoor(indoor);
+			        hunt.setVisible(isPrivate);
+			        hunt.setAvgRatingHunt(avgRating);
 			        
 			        hunts.add(hunt);
 			      }
@@ -422,53 +431,4 @@ public class HuntDao {
 		}
 	}
 
-
-	public List<Hunt> searchHunt(boolean choose, String name) throws SQLException {
-		var conn = Database.getConnection();
-		CallableStatement stmt = null;
-		List<Hunt> hunts = new ArrayList<>();
-		if(choose) {
-			stmt = conn.prepareCall("call search_hunt_by_user(?)");
-		} else {
-			stmt = conn.prepareCall("call search_hunt_by_name(?)");
-		}
-		
-		stmt.setString(1, name);
-		
-		boolean haveResult = stmt.execute();
-		
-		while(haveResult) {
-			
-			var rs = stmt.getResultSet();
-			while (rs.next()) {
-				
-				var id = rs.getInt(1);
-		        var huntName = rs.getString(2);
-		        var idMap = rs.getInt(4);
-		        
-		        var hunt = new Hunt();
-		        hunt.setIdHunt(id);
-		        hunt.setHuntName(huntName);
-		        
-		        var map = new Map();
-		        map.setId(idMap);
-		        
-		        hunt.setMap(map);
-		        
-		        hunts.add(hunt);
-		      }
-			haveResult = stmt.getMoreResults();
-		}
-		
-		
-		
-		
-		return hunts;
-	}
-
-	public List<Hunt> searchByName(String searchName) {
-		List<Hunt> hunts = new ArrayList<>();
-		
-		return hunts;
-	}
 }

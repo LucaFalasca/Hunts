@@ -24,7 +24,7 @@ public class PlayHuntControl {
 		var huntDao = new HuntDao();
 		List<HuntBean> huntsBean = new ArrayList<>();
 		
-		var hunts = huntDao.searchByName(searchName);
+		var hunts = huntDao.searchHunt(searchName);
 		
 		for(Hunt hunt: hunts) {
 			var hb = new HuntBean();
