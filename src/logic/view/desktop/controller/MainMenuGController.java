@@ -1,8 +1,5 @@
 package logic.view.desktop.controller;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,18 +72,6 @@ public class MainMenuGController extends ControllerWithLogin{
 		if(huntBeans != null) {
 			huntsList.addAll(huntBeans);
 			lvHunts.setItems(huntsList);
-			lvHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
-				@Override
-				public void updateItem(HuntBean itemBean, boolean empty) {
-					super.updateItem(itemBean, empty);
-					if(itemBean != null) {
-						var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
-						newItem.setInfo(itemBean);
-						setGraphic(newItem.getBox());
-						
-					}
-				}
-			});
 		}
 		if(isLogged()) {
     		List<MapBean> mapBeans = null;
@@ -95,51 +80,84 @@ public class MainMenuGController extends ControllerWithLogin{
 			var controllerMaps = new ManageMapControl();
     		try {
 				mapBeans = controllerMaps.getAllMaps(getUsername());
+				
+				if(mapBeans != null) {
+	    			apMaps.setDisable(false);
+					mapsList.addAll(mapBeans);
+					lvMaps.setItems(mapsList);
+	    		}
+				
 				huntBeans = controllerHunts.getAllHunts(getUsername());
+				if(huntBeans != null) {
+					apHunts.setDisable(false);
+					huntList.addAll(huntBeans);
+					lvMyHunts.setItems(huntList);
+					
+				} 
 			} catch (UsernameNotLoggedException e) {
 				showAlert(e.getMessage());
 				changeScene(Pages.LOGIN);
 			}
     		
-    		if(mapBeans != null) {
-    			apMaps.setDisable(false);
-				mapsList.addAll(mapBeans);
-				lvMaps.setItems(mapsList);
-				lvMaps.setCellFactory(map -> new ListCell<MapBean>() {
-					@Override
-					public void updateItem(MapBean itemBean, boolean empty) {
-						super.updateItem(itemBean, empty);
-						if(itemBean != null) {
-							var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
-							newItem.setInfo(itemBean);
-							setGraphic(newItem.getBox());
-							
-						}
-					}
-				});
-    		}
+    		
 			
-			if(huntBeans != null) {
-				apHunts.setDisable(false);
-				huntList.addAll(huntBeans);
-				lvMyHunts.setItems(huntList);
-				lvMyHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
-					@Override
-					public void updateItem(HuntBean itemBean, boolean empty) {
-						super.updateItem(itemBean, empty);
-						if(itemBean != null) {
-							var newItem = new ItemHuntGController(Pages.ITEM_HUNT, getIstance());
-							newItem.setInfo(itemBean);
-							setGraphic(newItem.getBox());
-							
-						}
-					}
-				});
-			}
+			
 			
 		}
 		
+		setCells();
+		
 	}
+    
+    private void setCells() {
+    	lvHunts.setCellFactory(hunt -> new ListCell<HuntBean>() {
+			@Override
+			public void updateItem(HuntBean itemBean, boolean empty) {
+				super.updateItem(itemBean, empty);
+				if(itemBean != null) {
+					var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
+					newItem.setInfo(itemBean);
+					setGraphic(newItem.getBox());
+					
+				} else {
+					setGraphic(null);
+					setText(null);
+				}
+			}
+		});
+    	
+    	lvMaps.setCellFactory(map -> new ListCell<MapBean>() {
+			@Override
+			public void updateItem(MapBean itemBean, boolean empty) {
+				super.updateItem(itemBean, empty);
+				if(itemBean != null) {
+					var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
+					newItem.setInfo(itemBean);
+					setGraphic(newItem.getBox());
+					
+				} else {
+					setGraphic(null);
+					setText(null);
+				}
+			}
+		});
+    	
+    	lvMyHunts.setCellFactory(hunts -> new ListCell<HuntBean>() {
+			@Override
+			public void updateItem(HuntBean itemBean, boolean empty) {
+				super.updateItem(itemBean, empty);
+				if(itemBean != null) {
+					var newItem = new ItemHuntGController(Pages.ITEM_HUNT, getIstance());
+					newItem.setInfo(itemBean);
+					setGraphic(newItem.getBox());
+					
+				}  else {
+					setGraphic(null);
+					setText(null);
+				}
+			}
+		});
+    }
     
    
     @FXML
@@ -167,7 +185,6 @@ public class MainMenuGController extends ControllerWithLogin{
     	huntBeans = controller.getHuntsBySearch(searchName);
     	
     	huntsList.setAll(huntBeans);
-    	lvHunts.setItems(huntsList);
     }
     
 
