@@ -1,5 +1,8 @@
 package logic.view.desktop.controller;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -138,6 +141,7 @@ public class MainMenuGController extends ControllerWithLogin{
 		
 	}
     
+   
     @FXML
     void handleManageHunt(ActionEvent event) {
 		changeScene(Pages.MANAGE_HUNT);

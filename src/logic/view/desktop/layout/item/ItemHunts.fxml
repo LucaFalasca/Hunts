@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,6 +51,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Rating fx:id="rtHunt" layoutX="187.0" layoutY="6.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="8.0" />
+      <Rating fx:id="rtHunt" layoutX="187.0" layoutY="6.0" rating="0.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="8.0">
+         <effect>
+            <Bloom />
+         </effect></Rating>
    </children>
 </AnchorPane>
