@@ -59,12 +59,18 @@ public class ItemHuntGController extends ItemController{
 
     }
     
+    @FXML
+    void handleMoreInformation(ActionEvent event) {
+    	changeScene(Pages.HUNT_INFORMATION, StringHardCode.HUNT.getString(), idHunt);
+    }
+    
     @Override
     public void setInfo(Object item) {
     	HuntBean itemBean = (HuntBean) item;
     	lbHuntName.setText(itemBean.getHuntName());
     	idHunt = itemBean.getIdHunt();
     }
+    
     
     public AnchorPane getBox() {
     	return ancHunt;
