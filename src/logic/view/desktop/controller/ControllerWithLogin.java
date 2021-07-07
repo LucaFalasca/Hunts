@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -42,8 +43,11 @@ public abstract class ControllerWithLogin{
 		Button register = (Button) stage.getScene().lookup("#btnRegister");
 		register.setOnAction(e -> changeScene(Pages.REGISTER));
 		
-		Button mainMenu = (Button) stage.getScene().lookup("#btnHunt");
-		mainMenu.setOnAction(e -> changeScene(Pages.MAIN_MENU));
+		ImageView mainMenu = (ImageView) stage.getScene().lookup("#imgHome");
+		mainMenu.setOnMouseClicked(e -> changeScene(Pages.MAIN_MENU));
+		
+		Button profile = (Button) stage.getScene().lookup("#btnProfile");
+		profile.setOnAction(e -> changeScene(Pages.PROFILE));
 		
 		Button logout = (Button) stage.getScene().lookup("#btnLogout");
 		logout.setOnAction(e -> {

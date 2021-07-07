@@ -21,13 +21,16 @@ public class ToolBarController{
     @FXML
     private Button btnLogout;
 
-    
+    @FXML
+    private Button btnProfile;
+
     public void setAsLogged(String username) {
     	lbUsername.setText(username);
 		lbUsername.setVisible(true);
 		btnRegister.setVisible(false);
 		btnLogin.setVisible(false);
 		btnLogout.setVisible(true);
+		btnProfile.setVisible(true);
     }
 
     public void logout() {
@@ -36,5 +39,6 @@ public class ToolBarController{
 		btnRegister.setVisible(true);
 		btnLogin.setVisible(true);
 		btnLogout.setVisible(false);
+		btnProfile.setVisible(false);
     }
 }
