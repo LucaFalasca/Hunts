@@ -6,8 +6,11 @@ import java.util.List;
 import logic.bean.AnswerBean;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
+import logic.bean.PlayedHuntBean;
 import logic.model.dao.HuntDao;
+import logic.model.dao.PlayHuntDao;
 import logic.model.entity.Hunt;
+import logic.model.entity.PlayedHunt;
 
 public class PlayHuntControl {
 
@@ -41,6 +44,23 @@ public class PlayHuntControl {
 		}
 		return huntsBean;
 		
+	}
+	
+	public List<PlayedHuntBean> getPlayedHunt(String username) {
+		var playedDao = new PlayHuntDao();
+		
+		List<PlayedHuntBean> playedHuntBean = new ArrayList<>();
+		
+		var playedHunts  = playedDao.getPlayedHunt(username);
+		
+		for(PlayedHunt playedHunt : playedHunts) {
+			var playedBean = new PlayedHuntBean();
+			playedBean.setPlayedHunt(playedHunt.getHunt());
+			playedBean.setReviewRating(playedHunt.getRating());
+			playedBean.setFinished(playedHunt.isFinished());
+			playedHuntBean.add(playedBean);
+		}
+		return playedHuntBean;
 	}
 
 	
