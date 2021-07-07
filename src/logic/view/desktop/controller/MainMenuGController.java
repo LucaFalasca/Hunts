@@ -11,6 +11,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
@@ -63,6 +65,9 @@ public class MainMenuGController extends ControllerWithLogin{
 
     @FXML
     private Button btnDeleteSearch;
+    
+    @FXML
+    private ImageView imgCancel;
     
 	ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
 	
@@ -184,7 +189,7 @@ public class MainMenuGController extends ControllerWithLogin{
     	var searchName = tfSearchName.getText();
     	
     	if(searchName.equals("")) {
-    		handleDeleteSearch(event);
+    		remove();
     	}
     	else {
     		var controllerPlay = new PlayHuntControl();
@@ -193,8 +198,13 @@ public class MainMenuGController extends ControllerWithLogin{
     }
     
     @FXML
-    void handleDeleteSearch(ActionEvent event) {
+    void handleRemoveSearch(MouseEvent event) {
+    	remove();
+    }
+    
+    private void remove() {
     	huntsList.setAll(controller.getAllHunts());
+    	tfSearchName.setText("");
     }
 }
 

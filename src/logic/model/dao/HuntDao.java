@@ -252,6 +252,7 @@ public class HuntDao {
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return hunts;
 	}
 

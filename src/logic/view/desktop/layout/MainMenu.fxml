@@ -66,7 +66,7 @@
                                     <TextField fx:id="tfSearchName" layoutX="13.0" prefHeight="30.0" prefWidth="362.0" promptText="Search" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <AnchorPane layoutX="310.0" prefHeight="38.0" prefWidth="52.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="19.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                          <ImageView fx:id="imgCancel" fitHeight="15.0" fitWidth="15.0" layoutX="19.0" layoutY="12.0" onMouseClicked="#handleRemoveSearch" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
                                              <image>
                                                 <Image url="@../../../../../resources/RemoveSearch.png" />
                                              </image>
