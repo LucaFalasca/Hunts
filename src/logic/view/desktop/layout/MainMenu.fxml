@@ -13,7 +13,7 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <AnchorPane>
+            <AnchorPane prefHeight="709.0" prefWidth="174.0">
                <children>
                   <AnchorPane prefHeight="434.0" prefWidth="174.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" BorderPane.alignment="CENTER">
                      <children>
@@ -46,11 +46,11 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="658.0" prefWidth="566.0" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane prefWidth="254.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
                      <children>
-                        <HBox layoutX="4.0" layoutY="-2.0" prefHeight="38.0" prefWidth="530.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox layoutX="4.0" layoutY="-2.0" prefWidth="530.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane>
                                  <children>
@@ -61,9 +61,18 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="38.0" prefWidth="362.0">
+                              <AnchorPane prefHeight="38.0" prefWidth="415.0">
                                  <children>
                                     <TextField fx:id="tfSearchName" layoutX="13.0" prefHeight="30.0" prefWidth="362.0" promptText="Search" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <AnchorPane layoutX="310.0" prefHeight="38.0" prefWidth="52.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="19.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                             <image>
+                                                <Image url="@../../../../../resources/RemoveSearch.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
                                  </children></AnchorPane>
                               <AnchorPane>
                                  <children>
@@ -71,21 +80,9 @@
                                        <graphic>
                                           <ImageView fitHeight="18.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../resources/ricerca.png" />
+                                                <Image url="@../../../../../resources/Search.png" />
                                              </image>
                                           </ImageView>
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="38.0" prefWidth="52.0">
-                                 <children>
-                                    <Button fx:id="btnDeleteSearch" layoutX="32.0" mnemonicParsing="false" onAction="#handleDeleteSearch" prefHeight="30.0" prefWidth="32.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                                       <graphic>
-                                          <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../resources/delete_search.png" />
-                                             </image></ImageView>
                                        </graphic>
                                     </Button>
                                  </children>
