@@ -64,14 +64,13 @@ public class MainMenuGController extends ControllerWithLogin{
     @FXML
     private Button btnDeleteSearch;
     
-    private List<HuntBean> huntBeans = null;
 	ObservableList<HuntBean> huntsList = FXCollections.observableArrayList();
 	
 	ManageHuntControl controller = new ManageHuntControl();
     @Override
 	void start(String arg, Object param) {
     	
-    	huntBeans = controller.getAllHunts();
+    	List<HuntBean> huntBeans = controller.getAllHunts();
 		if(huntBeans != null) {
 			huntsList.addAll(huntBeans);
 			lvHunts.setItems(huntsList);
@@ -189,15 +188,13 @@ public class MainMenuGController extends ControllerWithLogin{
     	}
     	else {
     		var controllerPlay = new PlayHuntControl();
-			huntBeans = controllerPlay.getHuntsBySearch(searchName);
+			huntsList.setAll(controllerPlay.getHuntsBySearch(searchName));
     	}
-	    		
-    	huntsList.setAll(huntBeans);
     }
     
     @FXML
     void handleDeleteSearch(ActionEvent event) {
-		huntBeans = controller.getAllHunts();
+    	huntsList.setAll(controller.getAllHunts());
     }
 }
 
