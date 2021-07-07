@@ -24,7 +24,7 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                      <graphic>
-                        <HBox prefHeight="33.0" prefWidth="62.0">
+                        <HBox>
                            <children>
                               <AnchorPane>
                                  <children>
@@ -37,20 +37,20 @@
                               </AnchorPane>
                               <AnchorPane>
                                  <children>
-                                    <Label text="Sign in" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label text="Sign in" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </HBox>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnProfile" mnemonicParsing="false" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+                  <Button fx:id="btnProfile" mnemonicParsing="false" visible="false" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <HBox>
                            <children>
                               <AnchorPane>
                                  <children>
-                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="9.0">
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="9.0">
                                        <image>
                                           <Image url="@../../../../../resources/Profilo.png" />
                                        </image>
@@ -59,7 +59,7 @@
                               </AnchorPane>
                               <AnchorPane>
                                  <children>
-                                    <Label fx:id="lbUsername" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label fx:id="lbUsername" alignment="CENTER" text="Username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -70,9 +70,9 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <Button fx:id="btnLogout" mnemonicParsing="false" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <Button fx:id="btnLogout" mnemonicParsing="false" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <graphic>
-                        <HBox prefHeight="33.0" prefWidth="62.0">
+                        <HBox>
                            <children>
                               <AnchorPane>
                                  <children>
@@ -85,16 +85,16 @@
                               </AnchorPane>
                               <AnchorPane>
                                  <children>
-                                    <Label fx:id="lbUsername2" text="Logout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Label fx:id="lbUsername2" text="Logout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </HBox>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnRegister" mnemonicParsing="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <Button fx:id="btnRegister" mnemonicParsing="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                      <graphic>
-                        <HBox prefHeight="33.0" prefWidth="62.0">
+                        <HBox>
                            <children>
                               <AnchorPane>
                                  <children>
