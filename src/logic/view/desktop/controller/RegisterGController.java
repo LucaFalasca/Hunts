@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
-import logic.control.LoginControl;
+import logic.control.UserControl;
 import logic.enumeration.Pages;
 
 public class RegisterGController extends ControllerWithLogin{
@@ -28,7 +28,7 @@ public class RegisterGController extends ControllerWithLogin{
     
     @FXML
     void handleRegister(ActionEvent event) {
-    	LoginControl controller = new LoginControl();
+    	UserControl controller = new UserControl();
     	LoginBean bean = new LoginBean();
     	bean.setUsername(tfUserName.getText());
     	bean.setPassword(tfPassword.getText());

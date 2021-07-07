@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
-import logic.control.LoginControl;
+import logic.control.UserControl;
 import logic.enumeration.Pages;
 
 public class LoginGController extends ControllerWithLogin{
@@ -44,7 +44,7 @@ public class LoginGController extends ControllerWithLogin{
     
     @FXML
     void handleLogin(ActionEvent event) {
-    		var loginController = new LoginControl();
+    		var loginController = new UserControl();
     		
     		var loginBean = new LoginBean();
     		

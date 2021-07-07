@@ -5,13 +5,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import logic.bean.LoginBean;
-import logic.control.LoginControl;
+import logic.control.UserControl;
 
 public class TestController {
 
 	@Test
 	public void testLoginController() {
-		LoginControl controller = new LoginControl();
+		UserControl controller = new UserControl();
 		LoginBean bean = new LoginBean();
 		bean.setUsername("pippo");
 		bean.setPassword("pippopass");

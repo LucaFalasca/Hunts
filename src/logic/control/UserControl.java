@@ -2,10 +2,11 @@ package logic.control;
 
 import java.util.List;
 
+import logic.bean.HuntBean;
 import logic.bean.LoginBean;
 import logic.model.dao.UserDao;
 
-public class LoginControl {
+public class UserControl {
 
 	public boolean verifyAccount(LoginBean bean) {
 		String username = bean.getUsername();
@@ -34,5 +35,21 @@ public class LoginControl {
 		}
 		
 		return failed;
+	}
+	
+	public double calculateAvgRate(List<HuntBean> huntBeans) {
+		var cont = 0;
+		var somma = 0;
+		
+		for(HuntBean hb : huntBeans) {
+			somma = hb.getAvgRating();
+			cont++;
+		}
+		
+		if(cont == 0) {
+			return 0;
+		} else {
+			return somma/cont;
+		}
 	}
 }
