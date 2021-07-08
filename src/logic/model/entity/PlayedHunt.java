@@ -15,8 +15,8 @@ public class PlayedHunt {
 	public double getRating() {
 		return rating;
 	}
-	public void setRating(double rating2) {
-		this.rating = rating2;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 	public boolean isFinished() {
 		return finished;
