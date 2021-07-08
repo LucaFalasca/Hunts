@@ -6,7 +6,7 @@ public class ReviewBean {
 	
 	private int numReview;
 	private String username;
-	private int vote;
+	private double vote;
 	private String reviewText;
 	private LocalDate reviewDate;
 	
@@ -24,10 +24,10 @@ public class ReviewBean {
 		this.username = username;
 	}
 	
-	public int getVote() {
+	public double getVote() {
 		return vote;
 	}
-	public void setVote(int vote) {
+	public void setVote(double vote) {
 		this.vote = vote;
 	}
 	
