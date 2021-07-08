@@ -7,10 +7,12 @@ import logic.bean.AnswerBean;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.PlayedHuntBean;
+import logic.bean.ZoneBean;
 import logic.model.dao.HuntDao;
 import logic.model.dao.PlayHuntDao;
 import logic.model.entity.Hunt;
 import logic.model.entity.PlayedHunt;
+import logic.model.entity.Zone;
 
 public class PlayHuntControl {
 
@@ -55,7 +57,19 @@ public class PlayHuntControl {
 		
 		for(PlayedHunt playedHunt : playedHunts) {
 			var playedBean = new PlayedHuntBean();
-			playedBean.setPlayedHunt(playedHunt.getHunt());
+			var hunt = playedHunt.getHunt();
+			var hb = new HuntBean();
+			hb.setIdHunt(hunt.getIdHunt());
+			hb.setHuntName(hunt.getHuntName());
+			hb.setUsername(hunt.getCreatorName());
+			hb.setAvgRating(hunt.getAvgRatingHunt());
+			if(hunt.getMap() != null) {
+				var map = new MapBean();
+				map.setId(hunt.getMap().getId());
+				hb.setMap(map);
+			}
+			
+			playedBean.setPlayedHunt(hb);
 			playedBean.setReviewRating(playedHunt.getRating());
 			playedBean.setFinished(playedHunt.isFinished());
 			playedHuntBean.add(playedBean);
