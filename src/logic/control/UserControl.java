@@ -39,7 +39,7 @@ public class UserControl {
 	
 	public double calculateAvgRate(List<HuntBean> huntBeans) {
 		var cont = 0;
-		var somma = 0;
+		var somma = 0.00;
 		
 		for(HuntBean hb : huntBeans) {
 			somma = hb.getAvgRating();
