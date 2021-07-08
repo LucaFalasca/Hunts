@@ -14,7 +14,6 @@ import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
-import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemController;
 import javafx.scene.image.Image;
 

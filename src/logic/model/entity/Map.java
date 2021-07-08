@@ -2,8 +2,6 @@ package logic.model.entity;
 
 import java.util.List;
 
-import javafx.scene.image.Image;
-
 public class Map {
 
 	private int id;

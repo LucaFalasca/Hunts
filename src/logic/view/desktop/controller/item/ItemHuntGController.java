@@ -1,16 +1,22 @@
 package logic.view.desktop.controller.item;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
+import logic.view.desktop.controller.HuntInformationGController;
 
 public class ItemHuntGController extends ItemController{
 	
@@ -34,8 +40,11 @@ public class ItemHuntGController extends ItemController{
     
     private int idHunt;
     
+    private ControllerWithLogin istance;
+    
     public ItemHuntGController(Pages page, ControllerWithLogin mainController) {
     	super(page, mainController);
+    	istance = mainController;
     }
     
     @FXML
@@ -61,7 +70,16 @@ public class ItemHuntGController extends ItemController{
     
     @FXML
     void handleMoreInformation(ActionEvent event) {
-    	changeScene(Pages.HUNT_INFORMATION, StringHardCode.HUNT.toString(), idHunt);
+    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, istance);
+    	List <String> item = new ArrayList<>();
+    	item.add(String.valueOf(idHunt));
+    	item.add(lbHuntCreator.getText());
+    	controller.setInfo(item);
+    	var stage = new Stage();
+        stage.setTitle("Hunt information");
+        var scene = new Scene(controller.getBox());
+        stage.setScene(scene);
+        stage.showAndWait();
     }
     
     @Override

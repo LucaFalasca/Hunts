@@ -3,7 +3,6 @@ package logic;
 import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
-import logic.view.desktop.controller.MainMenuGController;
 import logic.view.desktop.controller.ToolBarController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

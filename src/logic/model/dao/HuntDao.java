@@ -7,7 +7,6 @@ import java.util.List;
 
 import logic.model.Database;
 import logic.model.entity.Hunt;
-import logic.model.entity.Map;
 import logic.model.entity.RealObject;
 import logic.model.entity.Riddle;
 

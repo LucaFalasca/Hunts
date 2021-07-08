@@ -71,14 +71,8 @@ public class PlayHuntDao {
 			stmt.setBoolean(3, false);
 			stmt.setDate(4, Date.valueOf(date));
 			
-			boolean haveResult = stmt.execute();
+			stmt.execute();
 			
-			while(haveResult) {
-				var rs = stmt.getResultSet();
-				while (rs.next()) {
-			      }
-				haveResult = stmt.getMoreResults();
-			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -96,14 +90,9 @@ public class PlayHuntDao {
 			stmt.setBoolean(3, true);
 			stmt.setNull(4, java.sql.Types.DATE);
 			
-			boolean haveResult = stmt.execute();
+			stmt.execute();
 			
-			while(haveResult) {
-				var rs = stmt.getResultSet();
-				while (rs.next()) {
-			      }
-				haveResult = stmt.getMoreResults();
-			}
+			
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

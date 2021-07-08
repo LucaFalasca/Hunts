@@ -8,24 +8,21 @@ import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.PlayedHuntBean;
 import logic.bean.ReviewBean;
-import logic.bean.ZoneBean;
 import logic.model.dao.HuntDao;
 import logic.model.dao.PlayHuntDao;
 import logic.model.dao.ReviewDao;
 import logic.model.entity.Hunt;
 import logic.model.entity.PlayedHunt;
 import logic.model.entity.Review;
-import logic.model.entity.Zone;
 
 public class PlayHuntControl {
 
 	public boolean answer(AnswerBean bean) {
-		String trueAnswer = bean.getRiddleAnswer();
-		String userAnswer = bean.getUserAnswer();
+		String trueAnswer = bean.getRiddleAnswer().toLowerCase();
+		String userAnswer = bean.getUserAnswer().toLowerCase();
 		
-		if(trueAnswer.toLowerCase().equals(userAnswer.toLowerCase())) return true;
+		return trueAnswer.equals(userAnswer);
 		
-		return false;
 	}
 
 	public List<HuntBean> getHuntsBySearch(String searchName) {
