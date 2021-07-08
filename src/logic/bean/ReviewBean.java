@@ -9,6 +9,7 @@ public class ReviewBean {
 	private double vote;
 	private String reviewText;
 	private LocalDate reviewDate;
+	private int idHunt;
 	
 	public int getNumReview() {
 		return numReview;
@@ -43,6 +44,13 @@ public class ReviewBean {
 	}
 	public void setReviewDate(LocalDate reviewDate) {
 		this.reviewDate = reviewDate;
+	}
+	
+	public int getIdHunt() {
+		return idHunt;
+	}
+	public void setIdHunt(int idHunt) {
+		this.idHunt = idHunt;
 	}
 	
 	
