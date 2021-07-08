@@ -7,11 +7,14 @@ import logic.bean.AnswerBean;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.PlayedHuntBean;
+import logic.bean.ReviewBean;
 import logic.bean.ZoneBean;
 import logic.model.dao.HuntDao;
 import logic.model.dao.PlayHuntDao;
+import logic.model.dao.ReviewDao;
 import logic.model.entity.Hunt;
 import logic.model.entity.PlayedHunt;
+import logic.model.entity.Review;
 import logic.model.entity.Zone;
 
 public class PlayHuntControl {
@@ -75,6 +78,20 @@ public class PlayHuntControl {
 			playedHuntBean.add(playedBean);
 		}
 		return playedHuntBean;
+	}
+	
+	public void addReview(ReviewBean reviewBean) {
+		var reviewDao = new ReviewDao();
+		var review = new Review();
+		var idHunt = reviewBean.getIdHunt();
+		
+		review.setId(-1);
+		review.setRating(reviewBean.getVote());
+		review.setDate(reviewBean.getReviewDate());
+		review.setReviewer(reviewBean.getUsername());
+		review.setText(reviewBean.getReviewText());
+		
+		reviewDao.saveReview(review.getId(), review.getReviewer(), idHunt, review.getRating(), review.getText(), review.getDate());
 	}
 
 	

@@ -6,9 +6,10 @@ public class Review {
 	
 	private int id;
 	private String reviewer;
-	private int rating;
+	private double rating;
 	private String text;
 	private LocalDate date;
+	
 	public int getId() {
 		return id;
 	}
@@ -21,10 +22,10 @@ public class Review {
 	public void setReviewer(String reviewer) {
 		this.reviewer = reviewer;
 	}
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 	public String getText() {
