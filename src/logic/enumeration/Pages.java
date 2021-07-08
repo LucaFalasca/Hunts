@@ -17,7 +17,9 @@ public enum Pages {
 	ITEM_OBJECT,
 	ITEM_ZONE, 
 	HUNT_INFORMATION, 
-	PROFILE;
+	PROFILE, 
+	ITEM_HUNT_RATING, 
+	ITEM_GAME_HISTORY;
 	
 	public String getPath() {
 		switch(this) {
@@ -40,6 +42,10 @@ public enum Pages {
 			case 
 			HUNT_INFORMATION:   return "/logic/view/desktop/layout/HuntInformation.fxml";
 			case PROFILE: 		return "/logic/view/desktop/layout/Profile.fxml";
+			case 
+			ITEM_HUNT_RATING:   return "/logic/view/desktop/layout/item/ItemHuntRating.fxml";
+			case 
+			ITEM_GAME_HISTORY:  return "/logic/view/desktop/layout/item/ItemGameHistory.fxml";
 			default: 			return MAIN_MENU.getPath();
 		}
 	}
