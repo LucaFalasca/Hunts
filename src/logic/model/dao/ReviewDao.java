@@ -69,7 +69,7 @@ public class ReviewDao {
 		return reviews;
 	}
 	
-	private int saveReview(int idReview, String user, int idHunt, int rating, String text, LocalDate date) {
+	private int saveReview(int idReview, String user, int idHunt, double rating, String text, LocalDate date) {
 		var conn = Database.getConnection();
 		var id = -1;
 		
@@ -80,7 +80,7 @@ public class ReviewDao {
 				stmt.setInt(1, idReview);
 			stmt.setString(2, user);
 			stmt.setInt(3, idHunt);
-			stmt.setInt(4, rating);
+			stmt.setDouble(4, rating);
 			if(text != null)
 				stmt.setString(5, text);
 			else
