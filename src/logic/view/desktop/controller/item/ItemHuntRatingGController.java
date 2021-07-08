@@ -26,19 +26,19 @@ public class ItemHuntRatingGController extends ItemController{
     private AnchorPane ancHunt;
 
     @FXML
-    private Label lbHuntName;
+    private Label lbNameHunt;
 
     @FXML
-    private Button btnModifyHunt;
+    private Button btnModify;
 
     @FXML
-    private Button bntStart;
+    private Button bntStartHunt;
 
     @FXML
-    private Button btnDeleteHunt;
+    private Button btnDelete;
 
     @FXML
-    private Button btnHuntInformation;
+    private Button btnInformation;
     
     @FXML
     private Rating rtHunt;
@@ -63,7 +63,7 @@ public class ItemHuntRatingGController extends ItemController{
     	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, istance);
     	List <String> item = new ArrayList<>();
     	item.add(String.valueOf(idHunt));
-    	item.add(lbHuntName.getText());
+    	item.add(lbNameHunt.getText());
     	controller.setInfo(item);
     	var stage = new Stage();
         stage.setTitle("Hunt information");
@@ -82,7 +82,7 @@ public class ItemHuntRatingGController extends ItemController{
     	var controller = new ManageHuntControl();
     	var huntBean = new HuntBean();
     	huntBean.setIdHunt(idHunt);
-    	huntBean.setHuntName(lbHuntName.getText());
+    	huntBean.setHuntName(lbNameHunt.getText());
     	controller.deleteHunt(huntBean);
     	changeScene(Pages.PROFILE);
     }
@@ -90,7 +90,7 @@ public class ItemHuntRatingGController extends ItemController{
 	@Override
 	public void setInfo(Object itemBean) {
 		var huntBean = (HuntBean) itemBean;
-		lbHuntName.setText(huntBean.getHuntName());
+		lbNameHunt.setText(huntBean.getHuntName());
 		idHunt = huntBean.getIdHunt();
 		rtHunt.setRating(huntBean.getAvgRating());
 		
