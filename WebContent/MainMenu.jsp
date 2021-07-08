@@ -10,53 +10,61 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%	
+	
+	if(request.getParameter("play") != null){
+		String idHunt = request.getParameter("play").toString();
+		session.setAttribute("hunt", idHunt);
+		response.sendRedirect("PlayHunt.jsp");
+	}
+%>
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Home</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		<link href="Style.css" rel="stylesheet" type="text/css">
+		<jsp:include page="NavBar.jsp"></jsp:include>
 	</head>
 	<body>
+	
 		<div class="container-fluid text-center">    
 		  	<div class="row content">
-		    	<div class="col-sm-3 sidenav">
-	      			<p><a href="#">Create Hunt</a></p>
-		      		<p><a href="#">Create Map</a></p>
-	    		</div>
     			<%
 		     		ManageHuntControl controllerHunts = new ManageHuntControl();
-					List<HuntBean> listHunts = controllerHunts.getAllHunts(null);
-					List<HuntBean> listHunt = controllerHunts.getAllHunts("a");
+					List<HuntBean> listHunts = controllerHunts.getAllHunts();
 				%>
-		    	<div class="col-sm-3 text-center"> 
+		    	<div class="col-sm-6 text-center"> 
 			     	<h2>Hunts</h2>
-			    	<ul class="list-group">
-				     	<%
-				     		
-							for(HuntBean huntBean : listHunts) {
-						%>
-						<li class="list-group-item">
-						<%
-								out.print(huntBean.getHuntName());
-							
-				     	%>
-				     		
-				     		<div class="btn-group" role="group" aria-label="Basic example">
-							  <button type="button" class="btn btn-secondary">Play</button>
-							</div>
-						</li>
+			     	
+				    	<ul class="list-group">
+				    		
 					     	<%
-								}
+					     		
+								for(HuntBean huntBean : listHunts) {
+							%>
+							<li class="list-group-item">
+								<form action = "MainMenu.jsp" name = "hunt<%out.print(huntBean.getIdHunt()); %>" method = "POST">
+							<%
+									out.print(huntBean.getHuntName());
+								
 					     	%>
-			    	</ul>
+					     		
+						     		<div class="btn-group" role="group" aria-label="Basic example">
+									  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary">Play</button>
+									</div>
+								</form>
+							</li>
+						     	<%
+									}
+						     	%>
+				    	</ul>
+			    	
 				</div>
+				<%if(session.getAttribute("username") != null) {
+					List<HuntBean> listHunt = controllerHunts.getAllHunts(session.getAttribute("username").toString());
+				%>
+					
 				<div class="col-sm-3 text-center"> 
-			     	<h2>Hunt</h2>
+			     	<h2>My Hunts</h2>
 			    	<ul class="list-group">
 				     	<%
 				     		
@@ -80,11 +88,11 @@
 			    	</ul>
 				</div>
 				<div class="col-sm-3 text-center"> 
-			     	<h2>Maps</h2>
+			     	<h2>My Maps</h2>
 			     	<ul class="list-group">
 				     	<%
 				     		ManageMapControl controllerMaps = new ManageMapControl();
-							List<MapBean> mapBeans = controllerMaps.getAllMaps("a");
+							List<MapBean> mapBeans = controllerMaps.getAllMaps(session.getAttribute("username").toString());
 							for(MapBean mapBean : mapBeans) {
 						%>
 						<li class="list-group-item">
@@ -103,6 +111,7 @@
 					     	%>
 			    	</ul>
 				</div>
+				<%} %>
 			</div>
 		</div>
 	</body>
