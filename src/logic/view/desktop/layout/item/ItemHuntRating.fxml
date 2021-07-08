@@ -51,6 +51,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Rating layoutX="76.0" layoutY="6.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="8.0" />
+      <Rating fx:id="rtHunt" layoutX="76.0" layoutY="6.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="8.0" />
    </children>
 </AnchorPane>
