@@ -19,6 +19,7 @@ import logic.bean.PlayedHuntBean;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.HuntInformationGController;
+import logic.view.desktop.controller.LeaveReviewGController;
 
 public class ItemGameHistoryGController extends ItemController{
 	
@@ -42,6 +43,8 @@ public class ItemGameHistoryGController extends ItemController{
     
     private HuntBean huntBean;
     
+    private PlayedHuntBean playedHunt;
+    
     private ControllerWithLogin istance;
     
 	public ItemGameHistoryGController(Pages page, ControllerWithLogin mainController) {
@@ -51,7 +54,13 @@ public class ItemGameHistoryGController extends ItemController{
 
     @FXML
     void handleLeaveReview(ActionEvent event) {
-    	
+    	var controller = new LeaveReviewGController(Pages.REVIEW, istance);
+    	controller.setInfo(playedHunt);
+    	var stage = new Stage();
+        stage.setTitle("LeaveReview");
+        var scene = new Scene(controller.getBox());
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     @FXML
@@ -70,7 +79,7 @@ public class ItemGameHistoryGController extends ItemController{
 
 	@Override
 	public void setInfo(Object itemBean) {
-		var playedHunt = (PlayedHuntBean) itemBean;
+		playedHunt = (PlayedHuntBean) itemBean;
 		huntBean = playedHunt.getPlayedHunt();
 		lbHuntName.setText(huntBean.getHuntName());
 		rtHunts.setRating(huntBean.getAvgRating());
