@@ -20,7 +20,7 @@
  		<div class="container-fluid">
  			<div class="navbar-header">
 		 		<a class="navbar-brand" href="MainMenu.jsp">
-		   			<img src="img/logo+scritta.png"  height="80" alt="">
+		   			<img src="img/logo_scritta.png"  height="80" alt="">
 	  			</a>
 	   		</div>
 	   		
