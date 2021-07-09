@@ -69,7 +69,7 @@ public class ManageMapGController extends ControllerWithLogin{
     
     
     @Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
     	cbShape.setValue(RECTANGLE);
     	cbShape.setItems(cbList);
     	cbShape.setOnAction(e -> {
@@ -90,7 +90,7 @@ public class ManageMapGController extends ControllerWithLogin{
     	           setGraphic(null);
     	        } else {
     	        	var newItem = new ItemZoneGController(Pages.ITEM_ZONE, getIstance());
-					newItem.setInfo(item);
+					newItem.start(StringHardCode.MAP.toString(),item);
 					setGraphic(newItem.getBox());
     	        }
     	    }

@@ -32,7 +32,6 @@ public enum Pages {
 			case ITEM_HUNT:		return "/logic/view/desktop/layout/item/ItemHunt.fxml";
 			case ITEM_HUNTS:	return "/logic/view/desktop/layout/item/ItemHunts.fxml";
 			case ITEM_MAP:      return "/logic/view/desktop/layout/item/ItemMap.fxml";
-			case HUNT: 			return "/logic/view/desktop/layout/Hunt.fxml";
 			case PLAY_HUNT: 	return "/logic/view/desktop/layout/PlayHunt.fxml";
 			case 
 			ITEM_RIDDLE_SHORT: 	return "/logic/view/desktop/layout/item/ItemRiddleShort.fxml";

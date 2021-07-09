@@ -39,16 +39,16 @@ public class ItemZoneGController extends ItemController{
     	manageMap.remove(zoneBean);
     }
 
-    @Override
-	public void setInfo(Object itemBean) {
-		zoneBean = (ZoneBean) itemBean;
-		lbZoneName.setText(zoneBean.getNameZone());
-		
-	}
-
 	@Override
 	public Parent getBox() {
 		return ancZonePane;
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		zoneBean = (ZoneBean) param;
+		lbZoneName.setText(zoneBean.getNameZone());
+		
 	}
 
 }

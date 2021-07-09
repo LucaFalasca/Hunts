@@ -1,9 +1,11 @@
 package logic.view.desktop.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert;
@@ -16,6 +18,7 @@ import logic.exception.UsernameNotLoggedException;
 import logic.state.login.LogMachine;
 import logic.state.login.states.LoggedState;
 import logic.state.login.states.NotLoggedState;
+import logic.view.desktop.controller.item.ItemController;
 
 public abstract class ControllerWithLogin{
 	
@@ -28,7 +31,7 @@ public abstract class ControllerWithLogin{
 	
 	private Alert alert = new Alert(AlertType.ERROR);
 	
-	abstract void start(String arg, Object param);
+	protected abstract void start(String arg, Object param);
 	
 	public void setToolbar(Parent toolbar, ToolBarController controller) {
 		this.toolbar = toolbar;
@@ -94,6 +97,15 @@ public abstract class ControllerWithLogin{
 		return logMachine.getUsername();
 	}
 	
+	protected void createStage(ItemController controller, List<?> item, String title) {
+		controller.start(title, item);
+    	var popUpStage = new Stage();
+    	popUpStage.setTitle(title);
+        var scene = new Scene(controller.getBox());
+        popUpStage.setScene(scene);
+        popUpStage.showAndWait();
+	}
+	
 	public void changeScene(Pages page, String arg, Object param) throws PageNotFoundError {
 		if(page.needLogin() && !logMachine.isLogged()) {
 			changeScene(Pages.LOGIN, "NEXT_PAGE", page.name());
@@ -109,7 +121,6 @@ public abstract class ControllerWithLogin{
 				controller.setToolbar(toolbar, toolBarController);
 				borderPane.setCenter(root);
 				controller.start(arg, param);
-				
 			} catch (IOException e) {
 				throw new PageNotFoundError();
 			}

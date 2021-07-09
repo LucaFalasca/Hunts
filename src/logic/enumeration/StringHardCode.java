@@ -4,7 +4,11 @@ package logic.enumeration;
 public enum StringHardCode {
 	ERRORSELECTED,
 	HUNT,
-	MAP; 
+	MAP, 
+	PLAYEDHUNT, 
+	RIDDLE, 
+	OBJECT,
+	HUNT_INFORMATION; 
 	
 	@Override
 	public String toString() {
@@ -12,6 +16,11 @@ public enum StringHardCode {
 			case HUNT: 			return "hunt";
 			case MAP:			return "map";
 			case ERRORSELECTED: return "You must selected an item from the List";
+			case PLAYEDHUNT:    return "playedhunt";
+			case RIDDLE: 		return "riddle";
+			case OBJECT: 		return "object";
+			case 
+			HUNT_INFORMATION:   return "Hunt information";
 			default:
 				return "Error";
 		}

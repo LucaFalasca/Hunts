@@ -50,29 +50,29 @@ public class HuntInformationGController extends ItemController{
     @FXML
     private Button btnStart;
     
-    ControllerWithLogin mainController;
-    
     List<?> itemList;
 
     @FXML
     void handleStart(ActionEvent event) {
-    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), itemList);
+    	mainController.changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), itemList);
     	var stage = (Stage) ancPane.getScene().getWindow();
 		stage.close();
     }
     
     public HuntInformationGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
-		this.mainController = mainController;
 	}
 
 	@Override
-	public void setInfo(Object item) {
-		itemList = (List<?>) item; 
+	public Parent getBox() {
+		return ancPane;
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		itemList = (List<?>) param; 
 		
-		var temp = (String) itemList.get(0);
-		
-		var idHunt = Integer.valueOf(temp);
+		var idHunt = Integer.valueOf((String) itemList.get(0));
 		
 		var username = (String) itemList.get(1);
 		
@@ -86,12 +86,6 @@ public class HuntInformationGController extends ItemController{
 		rtHunt.setRating(hb.getAvgRating());
 		rtHunt.setDisable(true);
 		
-		
-	}
-
-	@Override
-	public Parent getBox() {
-		return ancPane;
 	}
 
 }

@@ -55,18 +55,19 @@ public class ChooseMapGController extends ItemController{
     }
 
 	@Override
-	public void setInfo(Object itemBean) {
-		List<?> mapsList = (List<?>)itemBean;
+	public Parent getBox() {
+		return ancChooseMap;
+	}
+
+	@Override
+	protected void start(String arg, Object param) {
+		List<?> mapsList = (List<?>)param;
 		for(Object map : mapsList) {
     		this.mapList.add(((MapBean)map).getName());
     		this.maps.add((MapBean)map);
     	}
 		lvMap.setItems(this.mapList);
-	}
-
-	@Override
-	public Parent getBox() {
-		return ancChooseMap;
+		
 	}
 
 

@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.ToolBarController;
+import logic.view.desktop.controller.item.ItemController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,7 @@ public class Main extends Application {
 			var loader = new FXMLLoader(getClass().getResource(Pages.MAIN_MENU.getPath()));
 			Parent root = (Parent)loader.load();
 			ControllerWithLogin controller = loader.getController();
-			
+						
 			borderPane.setTop(toolBar);
 			borderPane.setCenter(root);
 			

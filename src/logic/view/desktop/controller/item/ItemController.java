@@ -5,11 +5,12 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import logic.enumeration.Pages;
+import logic.exception.PageNotFoundError;
 import logic.view.desktop.controller.ControllerWithLogin;
 
-public abstract class ItemController {
+public abstract class ItemController extends ControllerWithLogin{
 	
-	private ControllerWithLogin mainController;
+	protected ControllerWithLogin mainController;
 	
 	protected ItemController(Pages page, ControllerWithLogin mainController){
     	var fxmlLoader = new FXMLLoader(getClass().getResource(page.getPath()));
@@ -20,21 +21,22 @@ public abstract class ItemController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		this.mainController = mainController;
+        
+        this.mainController = mainController;
     }
+	
+	public abstract Parent getBox();
 
-	public abstract void setInfo(Object itemBean);
-	
-	protected void changeScene(Pages page, String arg, Object obj) {
-		mainController.changeScene(page, arg, obj);
+	@Override
+	public void changeScene(Pages page, String arg, Object param) throws PageNotFoundError {
+		mainController.changeScene(page, arg, param);
 	}
-	
-	protected void changeScene(Pages page) {
+
+	@Override
+	public void changeScene(Pages page) throws PageNotFoundError {
 		mainController.changeScene(page);
 	}
 	
 	
 	
-	public abstract Parent getBox();
 }

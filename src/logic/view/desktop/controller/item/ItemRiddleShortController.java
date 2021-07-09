@@ -10,11 +10,6 @@ import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
 
 public class ItemRiddleShortController extends ItemController{
-	
-	public ItemRiddleShortController(Pages page, ControllerWithLogin mainController) {
-		super(page, mainController);
-		// TODO Auto-generated constructor stub
-	}
 
     @FXML
     private AnchorPane root;
@@ -29,8 +24,17 @@ public class ItemRiddleShortController extends ItemController{
     private Label lbZone;
 
 	@Override
-	public void setInfo(Object itemBean) {
-		RiddleBean bean = (RiddleBean) itemBean;
+	public Parent getBox() {
+		return root;
+	}
+	
+	public ItemRiddleShortController(Pages page, ControllerWithLogin mainController) {
+		super(page, mainController);
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		RiddleBean bean = (RiddleBean) param;
 		lbRiddle.setText(bean.getRiddle());
 		if(bean.getZoneName() != null)
 			lbZone.setText(bean.getZoneName());
@@ -38,10 +42,6 @@ public class ItemRiddleShortController extends ItemController{
 			lbZone.setVisible(false);
 		
 		cbDone.setSelected(bean.isCompleted());
-	}
-
-	@Override
-	public Parent getBox() {
-		return root;
+		
 	}
 }

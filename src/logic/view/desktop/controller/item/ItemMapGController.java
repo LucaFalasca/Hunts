@@ -46,16 +46,17 @@ public class ItemMapGController extends ItemController{
     }
 
     @Override
-	public void setInfo(Object item) {
-    	MapBean itemBean = (MapBean)item;
+	public AnchorPane getBox() {
+		return ancMapPane;
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		MapBean itemBean = (MapBean) param;
 		lbMapName.setText(itemBean.getName());
 		idMap = itemBean.getId();
 		creatorName = itemBean.getCreatorName();
-	}
-
-    @Override
-	public AnchorPane getBox() {
-		return ancMapPane;
+		
 	}
 	
 }

@@ -21,7 +21,7 @@ public class RegisterGController extends ControllerWithLogin{
     private Label lblError;
 
     @Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
 		// TODO Auto-generated method stub
 		
 	}

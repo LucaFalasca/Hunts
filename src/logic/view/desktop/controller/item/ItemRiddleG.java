@@ -19,7 +19,6 @@ public class ItemRiddleG  extends ItemController{
     public ItemRiddleG(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
 		controller = (ManageHuntGController) mainController;
-		
 	}
 
 	@FXML
@@ -31,13 +30,6 @@ public class ItemRiddleG  extends ItemController{
     @FXML
     private Button btnDelete;
     
-	@Override
-	public void setInfo(Object itemBean) {
-		var riddle = (RiddleBean) itemBean;
-		idRiddle = riddle.getNumRiddle();
-		
-	}
-
 	@Override
 	public Parent getBox() {
 		return ancPane;
@@ -52,4 +44,11 @@ public class ItemRiddleG  extends ItemController{
     void handleModifyHunt(ActionEvent event) {
     	controller.modifyRiddle(idRiddle);
     }
+
+	@Override
+	public void start(String arg, Object param) {
+		var riddle = (RiddleBean) param;
+		idRiddle = riddle.getNumRiddle();
+		
+	}
 }

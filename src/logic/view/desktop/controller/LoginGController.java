@@ -31,7 +31,7 @@ public class LoginGController extends ControllerWithLogin{
     private Pages pageAfterLogin;
 
     @Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
     	if(arg.equals("NEXT_PAGE")) {
     		pageAfterLogin = Pages.valueOf((String) param);	
     	}else {

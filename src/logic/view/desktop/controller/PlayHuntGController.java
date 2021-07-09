@@ -64,7 +64,7 @@ public class PlayHuntGController extends ControllerWithLogin{
     RiddleBean currentRiddle;
     
 	@Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
 		lbClues.add(lbClue1);
 		lbClues.add(lbClue2);
 		lbClues.add(lbClue3);
@@ -106,7 +106,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
 					var newItem = new ItemRiddleShortController(Pages.ITEM_RIDDLE_SHORT, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.RIDDLE.toString(),itemBean);
 					setGraphic(newItem.getBox());
 				}
 			}

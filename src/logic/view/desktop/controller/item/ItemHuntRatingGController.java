@@ -8,11 +8,9 @@ import org.controlsfx.control.Rating;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
@@ -45,11 +43,8 @@ public class ItemHuntRatingGController extends ItemController{
     
     private int idHunt;
 
-    private ControllerWithLogin istance;
-    
 	public ItemHuntRatingGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
-		istance = mainController;
 	}
 	
 
@@ -60,16 +55,11 @@ public class ItemHuntRatingGController extends ItemController{
 
     @FXML
     void handleMoreInformation(ActionEvent event) {
-    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, istance);
+    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, mainController);
     	List <String> item = new ArrayList<>();
     	item.add(String.valueOf(idHunt));
     	item.add(lbNameHunt.getText());
-    	controller.setInfo(item);
-    	var stage = new Stage();
-        stage.setTitle("Hunt information");
-        var scene = new Scene(controller.getBox());
-        stage.setScene(scene);
-        stage.showAndWait();
+    	createStage(controller, item, StringHardCode.HUNT_INFORMATION.toString());
     }
 
     @FXML
@@ -88,17 +78,18 @@ public class ItemHuntRatingGController extends ItemController{
     }
 
 	@Override
-	public void setInfo(Object itemBean) {
-		var huntBean = (HuntBean) itemBean;
+	public Parent getBox() {
+		return ancHunt;
+	}
+
+
+	@Override
+	protected void start(String arg, Object param) {
+		var huntBean = (HuntBean) param;
 		lbNameHunt.setText(huntBean.getHuntName());
 		idHunt = huntBean.getIdHunt();
 		rtHunt.setRating(huntBean.getAvgRating());
 		
-	}
-
-	@Override
-	public Parent getBox() {
-		return ancHunt;
 	}
 
 }

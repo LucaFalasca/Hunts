@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -24,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
@@ -179,7 +177,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	
 	@Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
 		drawMachine = new DrawMachine();
 		gcDraw = canvas.getGraphicsContext2D();
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
@@ -255,7 +253,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 				super.updateItem(riddleBean, empty);
 				if(riddleBean != null) {
 					var gController = new ItemRiddleG(Pages.ITEM_RIDDLE, getIstance());
-			    	gController.setInfo(riddleBean);
+			    	gController.start(StringHardCode.RIDDLE.toString(),riddleBean);
 			    	setGraphic(gController.getBox());
 				} else {
 					setGraphic(null);
@@ -271,7 +269,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 				super.updateItem(objectBean, empty);
 				if(objectBean != null) {
 					var gController = new ItemObjectGController(Pages.ITEM_OBJECT, getIstance());
-			    	gController.setInfo(objectBean);
+			    	gController.start(StringHardCode.OBJECT.toString(), objectBean);
 			    	setGraphic(gController.getBox());
 				} else {
 					setGraphic(null);
@@ -396,22 +394,18 @@ public class ManageHuntGController extends ControllerWithLogin{
     void handleChooseMap(ActionEvent event)  {
     	
     	var mpc = new ManageMapControl();
-		var controllerChoose = new ChooseMapGController(Pages.CHOOSE_MAP, this);
+		var controller = new ChooseMapGController(Pages.CHOOSE_MAP, getIstance());
 		List<MapBean> mapsList = null;
     	
     	try {
 			mapsList = mpc.getAllMaps(getUsername());
-			controllerChoose.setInfo(mapsList);
+			controller.start(StringHardCode.MAP.toString(),mapsList);
 		} catch (UsernameNotLoggedException e) {
 			showAlert(e.getMessage());
 			changeScene(Pages.LOGIN);
 		}
     	
-		var stage = new Stage();
-        stage.setTitle("Choose a map");
-        var scene = new Scene(controllerChoose.getBox());
-        stage.setScene(scene);
-        stage.showAndWait();
+    	createStage(controller, mapsList, "Choose a map");
         
     }
 

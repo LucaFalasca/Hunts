@@ -20,6 +20,7 @@ import logic.control.ManageHuntControl;
 import logic.control.ManageMapControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemHuntGController;
 import logic.view.desktop.controller.item.ItemHuntsGController;
@@ -73,7 +74,7 @@ public class MainMenuGController extends ControllerWithLogin{
 	
 	ManageHuntControl controller = new ManageHuntControl();
     @Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
     	
     	List<HuntBean> huntBeans = controller.getAllHunts();
 		if(huntBeans != null) {
@@ -123,7 +124,7 @@ public class MainMenuGController extends ControllerWithLogin{
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
 					var newItem = new ItemHuntsGController(Pages.ITEM_HUNTS, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.HUNT.toString(),itemBean);
 					setGraphic(newItem.getBox());
 					
 				} else {
@@ -139,7 +140,7 @@ public class MainMenuGController extends ControllerWithLogin{
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
 					var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.MAP.toString(),itemBean);
 					setGraphic(newItem.getBox());
 					
 				} else {
@@ -155,7 +156,7 @@ public class MainMenuGController extends ControllerWithLogin{
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
 					var newItem = new ItemHuntGController(Pages.ITEM_HUNT, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.HUNT.toString(), itemBean);
 					setGraphic(newItem.getBox());
 					
 				}  else {

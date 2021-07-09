@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import logic.bean.HuntBean;
 import logic.bean.PlayedHuntBean;
 import logic.enumeration.Pages;
+import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.HuntInformationGController;
 import logic.view.desktop.controller.LeaveReviewGController;
@@ -45,17 +46,14 @@ public class ItemGameHistoryGController extends ItemController{
     
     private PlayedHuntBean playedHunt;
     
-    private ControllerWithLogin istance;
-    
 	public ItemGameHistoryGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
-		istance = mainController;
 	}
 
     @FXML
     void handleLeaveReview(ActionEvent event) {
-    	var controller = new LeaveReviewGController(Pages.REVIEW, istance);
-    	controller.setInfo(playedHunt);
+    	var controller = new LeaveReviewGController(Pages.REVIEW, mainController);
+    	controller.start(StringHardCode.PLAYEDHUNT.toString(), playedHunt);
     	var stage = new Stage();
         stage.setTitle("LeaveReview");
         var scene = new Scene(controller.getBox());
@@ -65,31 +63,27 @@ public class ItemGameHistoryGController extends ItemController{
 
     @FXML
     void handleMoreInformation(ActionEvent event) {
-    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, istance);
+    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, mainController);
     	List <String> item = new ArrayList<>();
     	item.add(String.valueOf(huntBean.getIdHunt()));
     	item.add(huntBean.getHuntName());
-    	controller.setInfo(item);
-    	var stage = new Stage();
-        stage.setTitle("Hunt information");
-        var scene = new Scene(controller.getBox());
-        stage.setScene(scene);
-        stage.showAndWait();
+    	createStage(controller, item, StringHardCode.HUNT_INFORMATION.toString());
     }
 
 	@Override
-	public void setInfo(Object itemBean) {
-		playedHunt = (PlayedHuntBean) itemBean;
+	public Parent getBox() {
+		return ancPane;
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		playedHunt = (PlayedHuntBean) param;
 		huntBean = playedHunt.getPlayedHunt();
 		lbHuntName.setText(huntBean.getHuntName());
 		rtHunts.setRating(huntBean.getAvgRating());
 		cbFinish.setAllowIndeterminate(playedHunt.isFinished());
 		cbFinish.setDisable(true);
-	}
-
-	@Override
-	public Parent getBox() {
-		return ancPane;
+		
 	}
 
 }

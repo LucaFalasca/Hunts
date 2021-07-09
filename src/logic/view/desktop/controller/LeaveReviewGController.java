@@ -37,12 +37,9 @@ public class LeaveReviewGController extends ItemController{
     private AnchorPane ancReview;
     
     private PlayedHuntBean playedHuntBean;
-    
-    private ControllerWithLogin mainController;
 
 	public LeaveReviewGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
-		this.mainController = mainController;
 	}
 	
 
@@ -57,9 +54,10 @@ public class LeaveReviewGController extends ItemController{
 			review.setReviewText(txtReview.getText());
 			review.setVote(rtHunt.getRating());
 			review.setReviewDate(LocalDate.now());
+			System.out.println(LocalDate.now());
 			review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
 		} catch (UsernameNotLoggedException e) {
-			mainController.showAlert(e.getMessage());
+			showAlert(e.getMessage());
 			changeScene(Pages.MAIN_MENU);
 		}
     	
@@ -69,17 +67,18 @@ public class LeaveReviewGController extends ItemController{
     	stage.close();
     	
     }
-
     
-	@Override
-	public void setInfo(Object itemBean) {
-		playedHuntBean = (PlayedHuntBean) itemBean;
-		lbHuntName.setText(playedHuntBean.getPlayedHunt().getHuntName());
-	}
-
 	@Override
 	public Parent getBox() {
 		return ancReview;
+	}
+
+
+	@Override
+	public void start(String arg, Object param) {
+		playedHuntBean = (PlayedHuntBean) param;
+		lbHuntName.setText(playedHuntBean.getPlayedHunt().getHuntName());
+		
 	}
 
 }

@@ -44,7 +44,7 @@ public class CreateGroupGcontroller extends ControllerWithLogin{
     }
 
 	@Override
-	void start(String arg, Object param) {
+	protected void start(String arg, Object param) {
 		// TODO Auto-generated method stub
 		
 	}

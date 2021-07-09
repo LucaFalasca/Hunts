@@ -34,8 +34,8 @@ public class ItemObjectGController extends ItemController{
     
     int idObject;
     
-    ManageHuntGController controller;
-	    
+    private ManageHuntGController controller;
+    
 	public ItemObjectGController(Pages page, ControllerWithLogin mainController) {
 		super(page, mainController);
 		controller = (ManageHuntGController) mainController;
@@ -50,16 +50,17 @@ public class ItemObjectGController extends ItemController{
     void handleModifyHunt(ActionEvent event) {
     	controller.modifyObject(idObject);
     }
-	@Override
-	public void setInfo(Object itemBean) {
-		var objectBean = (ObjectBean) itemBean;
-		idObject = objectBean.getIdObject();
-		
-	}
 
 	@Override
 	public Parent getBox() {
 		return ancPane;
+	}
+
+	@Override
+	public void start(String arg, Object param) {
+		var objectBean = (ObjectBean) param;
+		idObject = objectBean.getIdObject();
+		
 	}
 	
 

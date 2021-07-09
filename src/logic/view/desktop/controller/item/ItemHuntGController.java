@@ -34,17 +34,13 @@ public class ItemHuntGController extends ItemController{
 
     @FXML
     private Button btnDeleteHunt;
-
-    @FXML
-    private Label lbHuntCreator;
     
     private int idHunt;
     
-    private ControllerWithLogin istance;
+    private String username;
     
     public ItemHuntGController(Pages page, ControllerWithLogin mainController) {
     	super(page, mainController);
-    	istance = mainController;
     }
     
     @FXML
@@ -64,34 +60,39 @@ public class ItemHuntGController extends ItemController{
 
     @FXML
     void handleStartGame(ActionEvent event) {
-    	changeScene(Pages.HUNT, null, null);
+    	List<String> param = new ArrayList<>();
+    	param.add(String.valueOf(idHunt));
+    	param.add(username);
+    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), param);
 
     }
     
     @FXML
     void handleMoreInformation(ActionEvent event) {
-    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, istance);
+    	var controller = new HuntInformationGController(Pages.HUNT_INFORMATION, mainController);
     	List <String> item = new ArrayList<>();
     	item.add(String.valueOf(idHunt));
-    	item.add(lbHuntCreator.getText());
-    	controller.setInfo(item);
+    	item.add(username);
+    	controller.start(StringHardCode.HUNT.toString(), item);
     	var stage = new Stage();
         stage.setTitle("Hunt information");
         var scene = new Scene(controller.getBox());
         stage.setScene(scene);
         stage.showAndWait();
     }
-    
-    @Override
-    public void setInfo(Object item) {
-    	HuntBean itemBean = (HuntBean) item;
-    	lbHuntName.setText(itemBean.getHuntName());
-    	idHunt = itemBean.getIdHunt();
-    }
-    
+
     
     public AnchorPane getBox() {
     	return ancHunt;
     }
+
+	@Override
+	public void start(String arg, Object param) {
+		HuntBean itemBean = (HuntBean) param;
+    	lbHuntName.setText(itemBean.getHuntName());
+    	idHunt = itemBean.getIdHunt();
+    	username = itemBean.getUsername();
+		
+	}
 
 }
