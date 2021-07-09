@@ -42,10 +42,10 @@ public class MapDao {
 					
 					while (rs.next()) {
 				        var name = rs.getString("Nome");
-				        double startX = rs.getInt("StartX");
-				        double startY = rs.getInt("StartY");
-				        double endX = rs.getInt("EndX");
-				        double endY = rs.getInt("EndY");
+				        double startX = rs.getFloat("StartX");
+				        double startY = rs.getFloat("StartY");
+				        double endX = rs.getFloat("EndX");
+				        double endY = rs.getFloat("EndY");
 				        var shape = rs.getString("Shape");
 				        
 				        var zone = new Zone();
@@ -120,10 +120,10 @@ public class MapDao {
 			//Input Param
 			stmt.setString(1, zone.getName());
 			stmt.setInt(2, idMap);
-			stmt.setInt(3, (int) zone.getStartX());
-			stmt.setInt(4, (int) zone.getStartY());
-			stmt.setInt(5, (int) zone.getEndX());
-			stmt.setInt(6, (int) zone.getEndY());
+			stmt.setFloat(3, (float) zone.getStartX());
+			stmt.setFloat(4, (float) zone.getStartY());
+			stmt.setFloat(5, (float) zone.getEndX());
+			stmt.setFloat(6, (float) zone.getEndY());
 			var shape = 0;
 			switch(zone.getType()) {
 				case RECTANGLE: shape = 1;
