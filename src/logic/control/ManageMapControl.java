@@ -42,7 +42,7 @@ public class ManageMapControl {
 						zb.getX1(),
 						zb.getY1(),
 						zb.getX2(),
-						zb.getX2(),
+						zb.getY2(),
 						type));
 			}
 			
