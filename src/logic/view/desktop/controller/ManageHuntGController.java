@@ -36,6 +36,7 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.OvalState;
 import logic.state.draw.states.RectangleState;
@@ -431,7 +432,11 @@ public class ManageHuntGController extends ControllerWithLogin{
 				} else {
 					drawMachine.setState(RectangleState.getInstance());
 				}
-				drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+				double x1 = Parser.parseFromPercent(zone.getX1(), canvas.getWidth());
+				double x2 = Parser.parseFromPercent(zone.getX2(), canvas.getWidth());
+				double y1 = Parser.parseFromPercent(zone.getY1(), canvas.getHeight());
+				double y2 = Parser.parseFromPercent(zone.getY2(), canvas.getHeight());
+				drawMachine.draw(gcDraw, x1, y1, x2, y2);
 			}
 		}
     }

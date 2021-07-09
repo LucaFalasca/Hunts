@@ -28,6 +28,7 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
+import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.MarkerState;
 import logic.state.draw.states.OvalState;
@@ -66,6 +67,8 @@ public class ManageMapGController extends ControllerWithLogin{
     private ObservableList<ZoneBean> zones = FXCollections.observableArrayList();
     private String pathImage;
     private int idHuntComeback = -1;
+	private double canvasWidth;
+	private double canvasHeight;
     
     
     @Override
@@ -124,7 +127,11 @@ public class ManageMapGController extends ControllerWithLogin{
 					} else {
 						drawMachine.setState(RectangleState.getInstance());
 					}
-					drawMachine.draw(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+					double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+					double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+					double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+					double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
+					drawMachine.draw(gcDraw, x1, y1, x2, y2);
 				}
 			}
 			
@@ -142,6 +149,9 @@ public class ManageMapGController extends ControllerWithLogin{
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
         gcTemp.setFill(Color.web("0x61823e", 0.5));
         onDrawing = false;
+        
+        canvasHeight = canvasDraw.getHeight();
+        canvasWidth = canvasDraw.getWidth();
     }
     
     
@@ -203,9 +213,14 @@ public class ManageMapGController extends ControllerWithLogin{
     	switch(event.getButton()) {
     	case PRIMARY:
         	if(!thereIsInAZoneRange(startX, startY, endX, endY)) {
+        		var zoneName = chooseZoneName();
+        		double x1 = Parser.parseToPercent(startX, canvasWidth);
+				double y1 = Parser.parseToPercent(startY, canvasHeight);
+				double x2 = Parser.parseToPercent(endX, canvasWidth);
+				double y2 = Parser.parseToPercent(endY, canvasHeight);
+        		var zone = new ZoneBean(zoneName, x1, y1, x2, y2, drawMachine.toString());
+    	    	zones.add(zone);
     	    	drawMachine.draw(gcDraw, startX, startY, endX, endY);
-    	    	var zoneName = chooseZoneName();
-    	    	zones.add(new ZoneBean(zoneName, startX, startY, endX, endY, drawMachine.toString()));
         	}
         	
         	drawMachine.clean(gcTemp);
@@ -214,7 +229,11 @@ public class ManageMapGController extends ControllerWithLogin{
     	case SECONDARY:
     		if(thereIsInAZoneRange(endX, endY, endX, endY)) {
     			for(ZoneBean zone: zones) {
-    				if(isBetween(endX, zone.getX1(), zone.getX2()) && isBetween(endY, zone.getY1(), zone.getY2())) {
+    				double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+    				double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+    				double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+    				double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
+    				if(isBetween(endX, x1, x2) && isBetween(endY, y1, y2)) {
     					remove(zone);
     					break;
     				}
@@ -257,7 +276,11 @@ public class ManageMapGController extends ControllerWithLogin{
 			drawMachine.setState(RectangleState.getInstance());
         }
         
-        drawMachine.clean(gcDraw, zone.getX1(), zone.getY1(), zone.getX2(), zone.getY2());
+        double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+		double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+		double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+		double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
+        drawMachine.clean(gcDraw, x1, y1, x2, y2);
         
         drawMachine.setState(oldState);
     }
@@ -333,10 +356,10 @@ public class ManageMapGController extends ControllerWithLogin{
     		double yz1;
     		double yz2;
     		
-    		xz1 = zone.getX1();
-    		xz2 = zone.getX2();
-    		yz1 = zone.getY1();
-    		yz2 = zone.getY2();
+    		xz1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+    		xz2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+    		yz1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+    		yz2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
     		if(		isBetween(x1, xz1, xz2) && isBetween(y1, yz1, yz2)  || 
     				isBetween(x1, xz1, xz2) && isBetween(y1 + rangeY, yz1, yz2) ||
     				isBetween(x1 + rangeX, xz1, xz2) && isBetween(y1, yz1, yz2) ||
