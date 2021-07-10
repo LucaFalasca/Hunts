@@ -18,10 +18,10 @@
          <left>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane layoutX="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Rating fx:id="rtAvgHunts" layoutX="12.0" layoutY="226.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" />
-                        <Label fx:id="lbUserName" alignment="CENTER" layoutY="136.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <Rating fx:id="rtAvgHunts" disable="true" layoutX="8.0" layoutY="219.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" />
+                        <Label fx:id="lbUserName" alignment="CENTER" layoutY="136.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -51,48 +51,40 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <ListView fx:id="lvGameHistory" layoutX="17.0" layoutY="32.0" prefHeight="200.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="32.0" />
+                        <ListView fx:id="lvGameHistory" layoutX="17.0" layoutY="32.0" prefHeight="200.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
                      </children>
                   </AnchorPane>
                </children>
             </AnchorPane>
          </center>
          <right>
-            <AnchorPane prefWidth="300.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="760.0" prefWidth="426.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane prefHeight="528.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <top>
-                        <AnchorPane prefHeight="320.0" BorderPane.alignment="CENTER">
+                  <BorderPane layoutX="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                     <left>
+                        <AnchorPane fx:id="apHunts" prefWidth="254.0" BorderPane.alignment="CENTER">
                            <children>
-                              <AnchorPane fx:id="apHunts" disable="true" prefWidth="254.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Hunts" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                    <ListView fx:id="lvMyHunts" editable="true" prefHeight="202.0" prefWidth="184.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
-                                 </children>
-                              </AnchorPane>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Hunts" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="lvMyHunts" editable="true" prefHeight="281.0" prefWidth="410.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="32.0" />
                            </children>
                         </AnchorPane>
-                     </top>
-                     <bottom>
-                        <AnchorPane BorderPane.alignment="CENTER">
+                     </left>
+                     <right>
+                        <AnchorPane fx:id="apMaps" BorderPane.alignment="CENTER">
                            <children>
-                              <AnchorPane fx:id="apMaps" disable="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0">
-                                 <children>
-                                    <ListView fx:id="lvMaps" editable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Maps" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="System Bold" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
+                              <ListView fx:id="lvMaps" editable="true" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="32.0" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" text="My Maps" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                     </bottom>
+                     </right>
                   </BorderPane>
                </children>
                <BorderPane.margin>

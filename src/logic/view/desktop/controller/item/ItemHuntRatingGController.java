@@ -84,7 +84,7 @@ public class ItemHuntRatingGController extends ItemController{
 
 
 	@Override
-	protected void start(String arg, Object param) {
+	public void start(String arg, Object param) {
 		var huntBean = (HuntBean) param;
 		lbNameHunt.setText(huntBean.getHuntName());
 		idHunt = huntBean.getIdHunt();

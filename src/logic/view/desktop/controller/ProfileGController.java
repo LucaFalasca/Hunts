@@ -22,6 +22,8 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemGameHistoryGController;
+import logic.view.desktop.controller.item.ItemHuntRatingGController;
+import logic.view.desktop.controller.item.ItemMapGController;
 
 public class ProfileGController extends ControllerWithLogin{
     @FXML
@@ -77,14 +79,14 @@ public class ProfileGController extends ControllerWithLogin{
 	}
 	
 	private void setListView() {
-		/*lvMaps.setItems(mapsList);
+		lvMaps.setItems(mapsList);
 		lvMaps.setCellFactory(map -> new ListCell<MapBean>() {
 			@Override
 			public void updateItem(MapBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
 					var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.MAP.toString(), itemBean);
 					setGraphic(newItem.getBox());
 					
 				} else {
@@ -92,16 +94,16 @@ public class ProfileGController extends ControllerWithLogin{
 					setText(null);
 				}
 			}
-		});*/
+		});
 		
-		/*lvMyHunts.setItems(huntsList);
+		lvMyHunts.setItems(huntsList);
 		lvMyHunts.setCellFactory(hunts -> new ListCell<HuntBean>(){
 			@Override
 			public void updateItem(HuntBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
-				if(itemBean != null || empty) {
+				if(itemBean != null) {
 					var newItem = new ItemHuntRatingGController(Pages.ITEM_HUNT_RATING, getIstance());
-					newItem.setInfo(itemBean);
+					newItem.start(StringHardCode.HUNT.toString(), itemBean);
 					setGraphic(newItem.getBox());
 					
 				} else {
@@ -109,14 +111,14 @@ public class ProfileGController extends ControllerWithLogin{
 					setText(null);
 				}
 			}
-		});*/
+		});
 		
 		lvGameHistory.setItems(historyHunt);
 		lvGameHistory.setCellFactory(hunts -> new ListCell<PlayedHuntBean>(){
 			@Override
 			public void updateItem(PlayedHuntBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
-				if(itemBean != null || !empty) {
+				if(itemBean != null) {
 					var newItem = new ItemGameHistoryGController(Pages.ITEM_GAME_HISTORY, getIstance());
 					newItem.start(StringHardCode.PLAYEDHUNT.toString(),itemBean);
 					setGraphic(newItem.getBox());
