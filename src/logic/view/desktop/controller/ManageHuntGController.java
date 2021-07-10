@@ -400,7 +400,6 @@ public class ManageHuntGController extends ControllerWithLogin{
     	
     	try {
 			mapsList = mpc.getAllMaps(getUsername());
-			controller.start(StringHardCode.MAP.toString(),mapsList);
 		} catch (UsernameNotLoggedException e) {
 			showAlert(e.getMessage());
 			changeScene(Pages.LOGIN);
