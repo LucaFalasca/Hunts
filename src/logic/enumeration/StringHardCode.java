@@ -8,7 +8,8 @@ public enum StringHardCode {
 	PLAYEDHUNT, 
 	RIDDLE, 
 	OBJECT,
-	HUNT_INFORMATION; 
+	HUNT_INFORMATION,
+	REVIEW; 
 	
 	@Override
 	public String toString() {
@@ -19,6 +20,7 @@ public enum StringHardCode {
 			case PLAYEDHUNT:    return "playedhunt";
 			case RIDDLE: 		return "riddle";
 			case OBJECT: 		return "object";
+			case REVIEW: 		return "review";
 			case 
 			HUNT_INFORMATION:   return "Hunt information";
 			default:
