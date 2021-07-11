@@ -73,12 +73,7 @@ public class ItemHuntGController extends ItemController{
     	List <String> item = new ArrayList<>();
     	item.add(String.valueOf(idHunt));
     	item.add(username);
-    	controller.start(StringHardCode.HUNT.toString(), item);
-    	var stage = new Stage();
-        stage.setTitle("Hunt information");
-        var scene = new Scene(controller.getBox());
-        stage.setScene(scene);
-        stage.showAndWait();
+    	createStage(controller, item, StringHardCode.HUNT.toString());
     }
 
     
