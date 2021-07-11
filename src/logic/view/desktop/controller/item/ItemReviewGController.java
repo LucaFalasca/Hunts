@@ -50,7 +50,7 @@ public class ItemReviewGController extends ItemController{
 		
 		rtHunt.setRating(review.getVote());
 		lbUsername.setText(review.getUsername());
-		lbReviewText.setText(arg);
+		lbReviewText.setText(review.getReviewText());
 		lbDate.setText(review.getReviewDate().toString());
 		
 	}

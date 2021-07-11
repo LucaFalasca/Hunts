@@ -54,7 +54,6 @@ public class LeaveReviewGController extends ItemController{
 			review.setReviewText(txtReview.getText());
 			review.setVote(rtHunt.getRating());
 			review.setReviewDate(LocalDate.now());
-			System.out.println(LocalDate.now());
 			review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
 		} catch (UsernameNotLoggedException e) {
 			showAlert(e.getMessage());

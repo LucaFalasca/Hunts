@@ -81,11 +81,24 @@ public class PlayHuntControl {
 		var reviewDao = new ReviewDao();
 		var review = new Review();
 		var idHunt = reviewBean.getIdHunt();
+		var flag = true;
 		
-		review.setId(-1);
+		review.setReviewer(reviewBean.getUsername());
+		
+		var addedReview = reviewDao.getReviewsByHunt(idHunt);
+		
+		for(Review rev : addedReview) {
+			if(review.getReviewer().equals(rev.getReviewer()) && idHunt == rev.getId()) {
+				review = rev;
+				flag = false;
+			}
+		}
+		
+		if(flag)
+			review.setId(-1);
+		
 		review.setRating(reviewBean.getVote());
 		review.setDate(reviewBean.getReviewDate());
-		review.setReviewer(reviewBean.getUsername());
 		review.setText(reviewBean.getReviewText());
 		
 		reviewDao.saveReview(review.getId(), review.getReviewer(), idHunt, review.getRating(), review.getText(), review.getDate());
