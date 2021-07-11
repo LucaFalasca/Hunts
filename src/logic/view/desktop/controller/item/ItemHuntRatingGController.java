@@ -50,7 +50,7 @@ public class ItemHuntRatingGController extends ItemController{
 
     @FXML
     void handleModifyHunt(ActionEvent event) {
-    	changeScene(Pages.PLAY_HUNT, StringHardCode.HUNT.toString(), idHunt);
+    	changeScene(Pages.MANAGE_HUNT, StringHardCode.HUNT.toString(), idHunt);
     }
 
     @FXML
