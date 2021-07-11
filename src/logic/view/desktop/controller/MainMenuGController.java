@@ -75,33 +75,24 @@ public class MainMenuGController extends ControllerWithLogin{
 	ManageHuntControl controller = new ManageHuntControl();
     @Override
 	protected void start(String arg, Object param) {
-    	
-    	List<HuntBean> huntBeans = controller.getAllHunts();
-		if(huntBeans != null) {
-			huntsList.addAll(huntBeans);
-			lvHunts.setItems(huntsList);
-		}
+    	huntsList.addAll(controller.getAllHunts());
+		lvHunts.setItems(huntsList);
+		
 		if(isLogged()) {
-    		List<MapBean> mapBeans = null;
     		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
     		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
 			var controllerMaps = new ManageMapControl();
     		try {
-				mapBeans = controllerMaps.getAllMaps(getUsername());
+    			
+    			apMaps.setDisable(false);
+    			mapsList.addAll(controllerMaps.getAllMaps(getUsername()));
+    			lvMaps.setItems(mapsList);
+    			
+
+				apHunts.setDisable(false);
+				huntList.addAll(controller.getAllHunts(getUsername()));
+    			lvMyHunts.setItems(huntList);
 				
-				if(mapBeans != null) {
-	    			apMaps.setDisable(false);
-					mapsList.addAll(mapBeans);
-					lvMaps.setItems(mapsList);
-	    		}
-				
-				huntBeans = controller.getAllHunts(getUsername());
-				if(huntBeans != null) {
-					apHunts.setDisable(false);
-					huntList.addAll(huntBeans);
-					lvMyHunts.setItems(huntList);
-					
-				} 
 			} catch (UsernameNotLoggedException e) {
 				showAlert(e.getMessage());
 				changeScene(Pages.LOGIN);
