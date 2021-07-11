@@ -73,7 +73,7 @@ public class ProfileGController extends ControllerWithLogin{
 		}
 		
 		rtAvgHunts.setRating(userController.calculateAvgRate(huntsList));
-		rtAvgHunts.setDisable(false);
+		rtAvgHunts.setDisable(true);
 		setListView();
 		
 	}
