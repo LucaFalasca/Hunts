@@ -6,51 +6,47 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-<AnchorPane fx:id="ancPane" prefHeight="50.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="ancPane" prefHeight="50.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="386.0" layoutY="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="48.0" prefWidth="111.0">
-               <children>
-                  <CheckBox fx:id="cbFinish" layoutX="-2.0" layoutY="16.0" mnemonicParsing="false" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="16.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="lbHuntName" alignment="CENTER" layoutX="-16.0" text="Hunt Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Rating fx:id="rtHunts" layoutX="8.0" layoutY="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane>
-               <children>
-                  <Button fx:id="btnHuntInformation" mnemonicParsing="false" onAction="#handleMoreInformation" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../resources/information.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="btnLeaveReview" mnemonicParsing="false" onAction="#handleLeaveReview" text="Leave review" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
-               </children>
-            </AnchorPane>
+            <Button fx:id="btnLeaveReview" mnemonicParsing="false" onAction="#handleLeaveReview" text="Review" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
          </children>
-      </HBox>
+      </AnchorPane>
+      <AnchorPane layoutX="334.0" layoutY="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btnHuntInformation" mnemonicParsing="false" onAction="#handleMoreInformation" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../resources/information.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="140.0" layoutY="9.0">
+         <children>
+            <Rating fx:id="rtHunts" layoutX="12.0" layoutY="-2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="27.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lbHuntName" alignment="CENTER" layoutX="-16.0" text="Hunt Name" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <CheckBox fx:id="cbFinish" layoutX="-2.0" layoutY="16.0" mnemonicParsing="false" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="16.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
