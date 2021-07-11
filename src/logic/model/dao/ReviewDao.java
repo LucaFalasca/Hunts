@@ -33,6 +33,7 @@ public class ReviewDao {
 		List<Review> reviews = new ArrayList<>();
 		try(CallableStatement stmt = conn.prepareCall("call get_reviews_by_hunt(?);")) {
 			
+			
 			//Input Param
 			stmt.setInt(1, idHunt);
 			
@@ -51,6 +52,7 @@ public class ReviewDao {
 			        var date = rs.getDate(6);
 			        
 			        var review = new Review();
+			        
 			        review.setId(id);
 			        review.setReviewer(user);
 			        review.setRating(rating);

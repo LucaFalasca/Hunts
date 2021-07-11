@@ -71,7 +71,6 @@ public class ItemHuntsGController extends ItemController{
 		rtHunt.setRating(itemBean.getAvgRating());
 		rtHunt.setDisable(true);
 		idHunt = itemBean.getIdHunt();
-		
 	}
     
 }

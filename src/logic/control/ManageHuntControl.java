@@ -140,6 +140,7 @@ public class ManageHuntControl {
 
 		huntBean.setMap(map);
 		huntBean.setPrivate(hunt.isVisible());
+		huntBean.setAvgRating(hunt.getAvgRatingHunt());
 		
 		return huntBean;
 	}
@@ -163,7 +164,7 @@ public class ManageHuntControl {
 			huntBean.setIdHunt(hunt.getIdHunt());
 			huntBean.setUsername(hunt.getCreatorName());
 			huntBean.setPrivate(hunt.isVisible());
-			
+			huntBean.setAvgRating(hunt.getAvgRatingHunt());
 			huntBeans.add(huntBean);
 			
 		}

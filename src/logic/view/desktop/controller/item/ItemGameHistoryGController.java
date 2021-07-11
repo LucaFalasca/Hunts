@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import logic.bean.HuntBean;
 import logic.bean.PlayedHuntBean;
+import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.view.desktop.controller.ControllerWithLogin;
@@ -77,10 +78,14 @@ public class ItemGameHistoryGController extends ItemController{
 
 	@Override
 	public void start(String arg, Object param) {
+		var controller = new PlayHuntControl();
+		
 		playedHunt = (PlayedHuntBean) param;
 		huntBean = playedHunt.getPlayedHunt();
 		lbHuntName.setText(huntBean.getHuntName());
-		rtHunts.setRating(huntBean.getAvgRating());
+		var review = controller.getReview(huntBean);
+		if(review != null)
+			rtHunts.setRating(review.getVote());
 		cbFinish.setAllowIndeterminate(playedHunt.isFinished());
 		cbFinish.setDisable(true);
 		rtHunts.setDisable(true);

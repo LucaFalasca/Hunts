@@ -104,7 +104,8 @@ public class PlayHuntControl {
 		reviewDao.saveReview(review.getId(), review.getReviewer(), idHunt, review.getRating(), review.getText(), review.getDate());
 	}
 	
-	public List<ReviewBean> getReview(HuntBean huntBean) {
+	
+	public List<ReviewBean> getReviews(HuntBean huntBean) {
 		var reviewDao = new ReviewDao();
 		
 		var hunt = new Hunt();
@@ -121,12 +122,23 @@ public class PlayHuntControl {
 			reviewBean.setReviewDate(review.getDate());
 			reviewBean.setReviewText(review.getText());
 			reviewBean.setUsername(review.getReviewer());
+			reviewBean.setVote(review.getRating());
 			
 			reviewBeans.add(reviewBean);
 			
 		}
 		
 		return reviewBeans;
+	}
+
+	public ReviewBean getReview(HuntBean huntBean) {
+		List<ReviewBean> reviews = getReviews(huntBean);
+		for(ReviewBean review: reviews) {
+			if(review.getUsername().equals(huntBean.getUsername())) {
+				return review;
+			}
+		}
+		return null;
 	}
 
 	

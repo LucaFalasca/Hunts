@@ -81,8 +81,8 @@ public class HuntBean {
 		return avgRating;
 	}
 
-	public void setAvgRating(double d) {
-		this.avgRating = d;
+	public void setAvgRating(double rate) {
+		this.avgRating = rate;
 	}
 	
 	

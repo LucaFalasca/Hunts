@@ -47,7 +47,6 @@ public class ItemReviewGController extends ItemController{
 	@Override
 	public void start(String arg, Object param) {
 		var review = (ReviewBean) param;
-		
 		rtHunt.setRating(review.getVote());
 		lbUsername.setText(review.getUsername());
 		lbReviewText.setText(review.getReviewText());

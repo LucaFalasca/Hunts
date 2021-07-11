@@ -98,7 +98,7 @@ public class HuntInformationGController extends ItemController{
 		
 		ObservableList<ReviewBean> reviewsList = FXCollections.observableArrayList();
 		
-		reviewsList.setAll(controllerPlay.getReview(hb));
+		reviewsList.setAll(controllerPlay.getReviews(hb));
 		
 		lvHuntReview.setItems(reviewsList);
 		lvHuntReview.setCellFactory(review -> new ListCell<ReviewBean>() {
