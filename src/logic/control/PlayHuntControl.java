@@ -90,6 +90,31 @@ public class PlayHuntControl {
 		
 		reviewDao.saveReview(review.getId(), review.getReviewer(), idHunt, review.getRating(), review.getText(), review.getDate());
 	}
+	
+	public List<ReviewBean> getReview(HuntBean huntBean) {
+		var reviewDao = new ReviewDao();
+		
+		var hunt = new Hunt();
+		List<ReviewBean> reviewBeans = new ArrayList<>();
+		
+		hunt.setIdHunt(huntBean.getIdHunt());
+
+		var reviews = reviewDao.getReviewsByHunt(hunt);
+		
+		for(Review review : reviews) {
+			var reviewBean = new ReviewBean();
+			reviewBean.setIdHunt(huntBean.getIdHunt());
+			reviewBean.setNumReview(review.getId());
+			reviewBean.setReviewDate(review.getDate());
+			reviewBean.setReviewText(review.getText());
+			reviewBean.setUsername(review.getReviewer());
+			
+			reviewBeans.add(reviewBean);
+			
+		}
+		
+		return reviewBeans;
+	}
 
 	
 }
