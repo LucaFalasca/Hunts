@@ -122,7 +122,7 @@ public class ManageHuntControl {
 		huntBean.setObject(objectBean);
 		
 		var map = new MapBean();
-		if(huntBean.getMap() != null) {
+		if(hunt.getMap() != null) {
 			map.setId(hunt.getMap().getId());
 			map.setName(hunt.getMap().getName());
 			map.setImage(hunt.getMap().getImagePath());
