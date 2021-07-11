@@ -56,6 +56,7 @@ public class ItemHuntsGController extends ItemController{
     	item.add(String.valueOf(idHunt));
     	item.add(lbHuntCreator.getText());
     	createStage(controller, item, StringHardCode.HUNT_INFORMATION.toString());
+    	
     }
 
 	public AnchorPane getBox() {
