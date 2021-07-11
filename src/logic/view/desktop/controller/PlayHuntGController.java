@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -18,14 +19,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import logic.bean.AnswerBean;
 import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.RiddleBean;
+import logic.bean.ZoneBean;
 import logic.control.ManageHuntControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.parser.Parser;
+import logic.state.draw.DrawMachine;
+import logic.state.draw.states.OvalState;
+import logic.state.draw.states.RectangleState;
 import logic.view.desktop.controller.item.ItemRiddleShortController;
 
 public class PlayHuntGController extends ControllerWithLogin{
@@ -35,7 +42,9 @@ public class PlayHuntGController extends ControllerWithLogin{
 
     @FXML
     private Canvas canvasDraw;
-
+    private GraphicsContext gcDraw;
+    private DrawMachine drawMachine;
+    
     @FXML
     private ListView<RiddleBean> lvRiddle;
 
@@ -65,6 +74,10 @@ public class PlayHuntGController extends ControllerWithLogin{
     
 	@Override
 	protected void start(String arg, Object param) {
+		drawMachine = new DrawMachine();
+		gcDraw = canvasDraw.getGraphicsContext2D();
+        gcDraw.setFill(Color.web("0xeaed91", 0.5));
+		
 		lbClues.add(lbClue1);
 		lbClues.add(lbClue2);
 		lbClues.add(lbClue3);
@@ -116,8 +129,23 @@ public class PlayHuntGController extends ControllerWithLogin{
 	}
 	
 	private void setMap(MapBean map) {
-		if(map != null)
+		if(map != null) {
 			setImageByPath(map.getImage());
+			if(map.getZones() != null) {
+				for(ZoneBean zone : map.getZones()) {
+					if(zone.getShape().equals("Oval")) {
+						drawMachine.setState(OvalState.getInstance());
+					} else {
+						drawMachine.setState(RectangleState.getInstance());
+					}
+					double x1 = Parser.parseFromPercent(zone.getX1(), canvasDraw.getWidth());
+					double x2 = Parser.parseFromPercent(zone.getX2(), canvasDraw.getWidth());
+					double y1 = Parser.parseFromPercent(zone.getY1(), canvasDraw.getHeight());
+					double y2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
+					drawMachine.draw(gcDraw, x1, y1, x2, y2);
+				}
+			}
+		}
     }
 	
 	
