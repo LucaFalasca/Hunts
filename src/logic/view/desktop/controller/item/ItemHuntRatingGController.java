@@ -89,6 +89,7 @@ public class ItemHuntRatingGController extends ItemController{
 		lbNameHunt.setText(huntBean.getHuntName());
 		idHunt = huntBean.getIdHunt();
 		rtHunt.setRating(huntBean.getAvgRating());
+		rtHunt.setDisable(true);
 		
 	}
 

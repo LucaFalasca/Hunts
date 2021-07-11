@@ -83,6 +83,7 @@ public class ItemGameHistoryGController extends ItemController{
 		rtHunts.setRating(huntBean.getAvgRating());
 		cbFinish.setAllowIndeterminate(playedHunt.isFinished());
 		cbFinish.setDisable(true);
+		rtHunts.setDisable(true);
 		
 	}
 
