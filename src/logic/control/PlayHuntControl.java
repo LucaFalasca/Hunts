@@ -1,5 +1,6 @@
 package logic.control;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import logic.bean.HuntBean;
 import logic.bean.MapBean;
 import logic.bean.PlayedHuntBean;
 import logic.bean.ReviewBean;
+import logic.bean.RiddleBean;
 import logic.model.dao.HuntDao;
 import logic.model.dao.PlayHuntDao;
 import logic.model.dao.ReviewDao;
@@ -141,5 +143,23 @@ public class PlayHuntControl {
 		return null;
 	}
 
+	public void setHuntAsPlayed(int idHunt, String player) {
+		PlayHuntDao dao = new PlayHuntDao();
+		dao.setHuntAsPlayed(idHunt, player, LocalDate.now());
+	}
 	
+	public void finishHunt(int idHunt, String player, List<RiddleBean> riddles) {
+		
+		PlayHuntDao dao = new PlayHuntDao();
+		dao.setHuntAsFinished(idHunt, player);
+	}
+	
+	public boolean isRiddlesCompleted(List<RiddleBean> riddles) {
+		for(RiddleBean riddle: riddles) {
+			if(!riddle.isCompleted()) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

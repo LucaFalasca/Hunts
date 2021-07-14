@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="logic.view.desktop.controller.PlayHuntGController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.PlayHuntGController">
    <children>
       <BorderPane prefHeight="236.0" prefWidth="292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <right>
@@ -21,7 +21,7 @@
                   <StackPane maxHeight="500.0" maxWidth="500.0" minHeight="300.0" minWidth="300.0" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
                      <children>
                         <ImageView fx:id="ivMap" fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER" />
-                        <Canvas fx:id="canvasDraw" height="500.0" layoutX="300.0" layoutY="300.0" onMouseDragged="#handleMovedOnMap" onMousePressed="#handlePressedOnMap" onMouseReleased="#handleReleasedOnMap" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Canvas fx:id="canvasDraw" height="500.0" layoutX="300.0" layoutY="300.0" onMouseClicked="#handleClickOnMap" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <StackPane.margin>
                               <Insets />
                            </StackPane.margin>

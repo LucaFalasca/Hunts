@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -29,6 +31,8 @@ import logic.control.ManageHuntControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.UsernameNotLoggedException;
+import logic.model.entity.Map;
 import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.OvalState;
@@ -72,6 +76,9 @@ public class PlayHuntGController extends ControllerWithLogin{
     
     RiddleBean currentRiddle;
     
+    private MapBean map;
+    private HuntBean hunt;
+    
 	@Override
 	protected void start(String arg, Object param) {
 		drawMachine = new DrawMachine();
@@ -89,6 +96,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 				String username = (String) par.get(1);
 				
 				HuntBean hunt = controller.getHunt(id, username);
+				this.hunt = hunt;
 				MapBean map = hunt.getMap();
 				setMap(map);
 				riddleList.setAll(hunt.getRiddle());
@@ -126,10 +134,20 @@ public class PlayHuntGController extends ControllerWithLogin{
 			
 			
 		});
+		if(isLogged()) {
+			PlayHuntControl playHuntControl = new PlayHuntControl();
+			try {
+				playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
+			} catch (UsernameNotLoggedException e) {
+				showAlert(e.getMessage());
+				changeScene(Pages.LOGIN);
+			}
+		}
 	}
 	
 	private void setMap(MapBean map) {
 		if(map != null) {
+			this.map = map;
 			setImageByPath(map.getImage());
 			if(map.getZones() != null) {
 				for(ZoneBean zone : map.getZones()) {
@@ -173,34 +191,74 @@ public class PlayHuntGController extends ControllerWithLogin{
     	if(controller.answer(bean)) {
     		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
     		lvRiddle.refresh();
-    		if(huntIsCompleted()) {
-    			//Partita finita
+    		if(controller.isRiddlesCompleted(riddleList)) {
+    			Alert alert = new Alert(AlertType.INFORMATION);
+    			alert.setTitle("Vittoria!");
+    			alert.setHeaderText("Hai Vinto!");
+    			alert.showAndWait();
+    			if(isLogged()) {
+    				try {
+						controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
+					} catch (UsernameNotLoggedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    			}
+    			changeScene(Pages.MAIN_MENU);
     		}
 		}else {
     		//sbagliato
     	}
 	}
 
-    private boolean huntIsCompleted() {
-    	for(RiddleBean riddle: riddleList) {
-    		if(!riddle.isCompleted())	return false;
-    	}
-    	return true;
-    }
     
     @FXML
-    void handleMovedOnMap(MouseEvent event) {
-
+    void handleClickOnMap(MouseEvent event) {
+		double x = event.getX();
+		double y = event.getY();
+		
+		if(thereIsInAZoneRange(x, y, x, y)) {
+			for(ZoneBean zone: map.getZones()) {
+				double x1 = Parser.parseFromPercent(zone.getX1(), canvasDraw.getWidth());
+				double x2 = Parser.parseFromPercent(zone.getX2(), canvasDraw.getWidth());
+				double y1 = Parser.parseFromPercent(zone.getY1(), canvasDraw.getHeight());
+				double y2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
+				if(isBetween(x, x1, x2) && isBetween(y, y1, y2)) {
+					ManageHuntControl controller = new ManageHuntControl();
+					riddleList = (ObservableList<RiddleBean>) controller.getRiddleFromZone(hunt, zone);
+				}
+			}
+		}
+	}
+    
+    private boolean thereIsInAZoneRange(double x1, double y1, double x2,  double y2) {
+    	double rangeX = Math.abs(x2 - x1);
+    	double rangeY = Math.abs(y2 - y1);
+    	for(ZoneBean zone : map.getZones()) {
+    		double xz1;
+    		double xz2;
+    		double yz1;
+    		double yz2;
+    		
+    		xz1 = Parser.parseFromPercent(zone.getX1(), canvasDraw.getWidth());
+    		xz2 = Parser.parseFromPercent(zone.getX2(), canvasDraw.getWidth());
+    		yz1 = Parser.parseFromPercent(zone.getY1(), canvasDraw.getHeight());
+    		yz2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
+    		if(		isBetween(x1, xz1, xz2) && isBetween(y1, yz1, yz2)  || 
+    				isBetween(x1, xz1, xz2) && isBetween(y1 + rangeY, yz1, yz2) ||
+    				isBetween(x1 + rangeX, xz1, xz2) && isBetween(y1, yz1, yz2) ||
+    				isBetween(x1 + rangeX, xz1, xz2) && isBetween(y1 + rangeY, yz1, yz2)) {
+    			
+    			return true;
+    		}
+    	}
+    	return false;
     }
-
-    @FXML
-    void handlePressedOnMap(MouseEvent event) {
-
-    }
-
-    @FXML
-    void handleReleasedOnMap(MouseEvent event) {
-
+    
+    //Controlla se un numero è compreso tra i due
+    private boolean isBetween(double x, double y1, double y2) {
+    	if(y2 > y1)	return x < y2 && x > y1;
+    	else return x < y1 && x > y2;
     }
     
     @FXML
