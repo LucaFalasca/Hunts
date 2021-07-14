@@ -111,34 +111,28 @@ public class ManageMapGController extends ControllerWithLogin{
     
     private void setMap(int par) {
     	var controller = new ManageMapControl();
-		try {
-			var map = controller.getMapById(getUsername(), par);
-			idMap = map.getId();
-			if(map.getImage() != null) {
-				pathImage = map.getImage();
-				setImageByPath(pathImage);
-			}
-			tfMapName.setText(map.getName());
-			if(map.getZones() != null) {
-				zones.setAll(map.getZones());
-				for(ZoneBean zone : zones) {
-					if(zone.getShape().equals(OVAL)) {
-						drawMachine.setState(OvalState.getInstance());
-					} else {
-						drawMachine.setState(RectangleState.getInstance());
-					}
-					double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
-					double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
-					double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
-					double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
-					drawMachine.draw(gcDraw, x1, y1, x2, y2);
+		var map = controller.getMapById(getUsername(), par);
+		idMap = map.getId();
+		if(map.getImage() != null) {
+			pathImage = map.getImage();
+			setImageByPath(pathImage);
+		}
+		tfMapName.setText(map.getName());
+		if(map.getZones() != null) {
+			zones.setAll(map.getZones());
+			for(ZoneBean zone : zones) {
+				if(zone.getShape().equals(OVAL)) {
+					drawMachine.setState(OvalState.getInstance());
+				} else {
+					drawMachine.setState(RectangleState.getInstance());
 				}
+				double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+				double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+				double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+				double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
+				drawMachine.draw(gcDraw, x1, y1, x2, y2);
 			}
-			
-		} catch (UsernameNotLoggedException e) {
-			showAlert(e.getMessage());
-			changeScene(Pages.LOGIN);
-		} 
+		}
     }
     
     @FXML
@@ -294,11 +288,8 @@ public class ManageMapGController extends ControllerWithLogin{
     	if(pathImage != null) {
     		bean.setImage(pathImage);
     	}
-    	try {
-			idMap = control.save(getUsername(), bean);
-		} catch (UsernameNotLoggedException e) {
-			e.printStackTrace();
-		}
+		idMap = control.save(getUsername(), bean);
+		
     }
     
     @FXML

@@ -46,20 +46,13 @@ public class LeaveReviewGController extends ItemController{
     @FXML
     void handleLeaveReview(ActionEvent event) {
     	var controller = new PlayHuntControl();
-    	
     	var review = new ReviewBean();
     	
-    	try {
-			review.setUsername(mainController.getUsername());
-			review.setReviewText(txtReview.getText());
-			review.setVote(rtHunt.getRating());
-			review.setReviewDate(LocalDate.now());
-			review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
-		} catch (UsernameNotLoggedException e) {
-			showAlert(e.getMessage());
-			changeScene(Pages.MAIN_MENU);
-		}
-    	
+		review.setUsername(mainController.getUsername());
+		review.setReviewText(txtReview.getText());
+		review.setVote(rtHunt.getRating());
+		review.setReviewDate(LocalDate.now());
+		review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
     	controller.addReview(review);
     	
     	var stage = (Stage) ancReview.getScene().getWindow();

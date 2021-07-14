@@ -82,26 +82,15 @@ public class MainMenuGController extends ControllerWithLogin{
     		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
     		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
 			var controllerMaps = new ManageMapControl();
-    		try {
-    			
-    			apMaps.setDisable(false);
-    			mapsList.addAll(controllerMaps.getAllMaps(getUsername()));
-    			lvMaps.setItems(mapsList);
-    			
+    		
+			apMaps.setDisable(false);
+			mapsList.addAll(controllerMaps.getAllMaps(getUsername()));
+			lvMaps.setItems(mapsList);
+			
 
-				apHunts.setDisable(false);
-				huntList.addAll(controller.getAllHunts(getUsername()));
-    			lvMyHunts.setItems(huntList);
-				
-			} catch (UsernameNotLoggedException e) {
-				showAlert(e.getMessage());
-				changeScene(Pages.LOGIN);
-			}
-    		
-    		
-			
-			
-			
+			apHunts.setDisable(false);
+			huntList.addAll(controller.getAllHunts(getUsername()));
+			lvMyHunts.setItems(huntList);
 		}
 		
 		setCells();

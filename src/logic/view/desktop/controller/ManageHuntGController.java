@@ -187,32 +187,27 @@ public class ManageHuntGController extends ControllerWithLogin{
 		var idHunt = -1;
 		var idMap = -1;
 		MapBean mapBean = null;
-		try {
-			switch(arg) {
-				case "map":
-					List<?> ids = (List<?>) param;
-					idHunt = (Integer) ids.get(0);
-					idMap = (Integer) ids.get(1);
-					huntBean = manageHuntControl.getHunt(idHunt, getUsername());
-					mapBean = new ManageMapControl().getMapById(getUsername(), idMap);
-					huntBean.setMap(mapBean);
-					setHunt(huntBean);
-					break;
-				case "hunt":
-					idHunt = (int) param;
-					huntBean = manageHuntControl.getHunt(idHunt, getUsername());
-					setHunt(huntBean);
-					break;
-				default:
-					huntBean.setUsername(getUsername());
-					huntBean.setIdHunt(idHunt);
-					break;
-					
-			}
-			
-		} catch (UsernameNotLoggedException e) {
-			showAlert(e.getMessage());
-			changeScene(Pages.LOGIN);
+		
+		switch(arg) {
+			case "map":
+				List<?> ids = (List<?>) param;
+				idHunt = (Integer) ids.get(0);
+				idMap = (Integer) ids.get(1);
+				huntBean = manageHuntControl.getHunt(idHunt, getUsername());
+				mapBean = new ManageMapControl().getMapById(getUsername(), idMap);
+				huntBean.setMap(mapBean);
+				setHunt(huntBean);
+				break;
+			case "hunt":
+				idHunt = (int) param;
+				huntBean = manageHuntControl.getHunt(idHunt, getUsername());
+				setHunt(huntBean);
+				break;
+			default:
+				huntBean.setUsername(getUsername());
+				huntBean.setIdHunt(idHunt);
+				break;
+				
 		}
 
 		lbRiddle.setText(RIDDLE + rdlList.size());
@@ -398,13 +393,8 @@ public class ManageHuntGController extends ControllerWithLogin{
 		var controller = new ChooseMapGController(Pages.CHOOSE_MAP, getIstance());
 		List<MapBean> mapsList = null;
     	
-    	try {
-			mapsList = mpc.getAllMaps(getUsername());
-		} catch (UsernameNotLoggedException e) {
-			showAlert(e.getMessage());
-			changeScene(Pages.LOGIN);
-		}
-    	
+		mapsList = mpc.getAllMaps(getUsername());
+		
     	createStage(controller, mapsList, "Choose a map");
         
     }
@@ -444,15 +434,10 @@ public class ManageHuntGController extends ControllerWithLogin{
     	var mpc = new ManageMapControl();
     	MapBean mapBean = null;
     	if(idMap != -1) {
-			try {
-				mapBean = mpc.getMapById(getUsername(), idMap);
-				if(mapBean != null) {
-					huntBean.setMap(mapBean);
-					setMap(mapBean);
-				}
-			} catch (UsernameNotLoggedException e) {
-				showAlert(e.getMessage());
-				changeScene(Pages.LOGIN);
+			mapBean = mpc.getMapById(getUsername(), idMap);
+			if(mapBean != null) {
+				huntBean.setMap(mapBean);
+				setMap(mapBean);
 			}
 			
         }

@@ -136,12 +136,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 		});
 		if(isLogged()) {
 			PlayHuntControl playHuntControl = new PlayHuntControl();
-			try {
-				playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
-			} catch (UsernameNotLoggedException e) {
-				showAlert(e.getMessage());
-				changeScene(Pages.LOGIN);
-			}
+			playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
 		}
 	}
 	
@@ -197,12 +192,7 @@ public class PlayHuntGController extends ControllerWithLogin{
     			alert.setHeaderText("Hai Vinto!");
     			alert.showAndWait();
     			if(isLogged()) {
-    				try {
-						controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
-					} catch (UsernameNotLoggedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
     			}
     			changeScene(Pages.MAIN_MENU);
     		}

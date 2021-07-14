@@ -62,15 +62,10 @@ public class ProfileGController extends ControllerWithLogin{
 		var userController = new UserControl();
 		var playController = new PlayHuntControl();
 		var mapController = new ManageMapControl();
-		try {
-			huntsList.setAll(huntController.getAllHunts(getUsername()));
-			lbUserName.setText(getUsername());
-			historyHunt.setAll(playController.getPlayedHunt(getUsername()));
-			mapsList.setAll(mapController.getAllMaps(getUsername()));
-		} catch (UsernameNotLoggedException e) {
-			showAlert(e.getMessage());
-			changeScene(Pages.LOGIN);
-		}
+		huntsList.setAll(huntController.getAllHunts(getUsername()));
+		lbUserName.setText(getUsername());
+		historyHunt.setAll(playController.getPlayedHunt(getUsername()));
+		mapsList.setAll(mapController.getAllMaps(getUsername()));
 		
 		rtAvgHunts.setRating(userController.calculateAvgRate(huntsList));
 		rtAvgHunts.setDisable(true);

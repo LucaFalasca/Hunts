@@ -93,8 +93,15 @@ public abstract class ControllerWithLogin{
 		return logMachine.isLogged();
 	}
 	
-	protected String getUsername() throws UsernameNotLoggedException {
-		return logMachine.getUsername();
+	protected String getUsername() {
+		String username = null;
+		try {
+			username = logMachine.getUsername();
+		} catch (UsernameNotLoggedException e) {
+			showAlert(e.getMessage());
+			changeScene(Pages.LOGIN);
+		}
+		return username;
 	}
 	
 	protected void createStage(ItemController controller, List<?> item, String title) {
