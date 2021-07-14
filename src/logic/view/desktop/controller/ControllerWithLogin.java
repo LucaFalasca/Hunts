@@ -29,7 +29,7 @@ public abstract class ControllerWithLogin{
 	private Parent toolbar;
 	private ToolBarController toolBarController;
 	
-	private Alert alert = new Alert(AlertType.ERROR);
+	private Alert alert = new Alert(null);
 	
 	protected abstract void start(String arg, Object param);
 	
@@ -139,8 +139,13 @@ public abstract class ControllerWithLogin{
 	}
 	
 	protected void showAlert(String message) {
-		alert.setHeaderText("System Error");
-		alert.setContentText(message);
+		showAlert(AlertType.ERROR, "System Error", message);
+	}
+	
+	protected void showAlert(AlertType type , String title, String header) {
+		alert.setAlertType(type);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
 		alert.showAndWait();
 	}
 
