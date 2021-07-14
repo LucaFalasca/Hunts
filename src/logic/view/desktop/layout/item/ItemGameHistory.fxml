@@ -31,7 +31,7 @@
       </AnchorPane>
       <AnchorPane layoutX="140.0" layoutY="9.0">
          <children>
-            <Rating fx:id="rtHunts" layoutX="12.0" layoutY="-2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Rating fx:id="rtHunts" layoutX="12.0" layoutY="-2.0" rating="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="27.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">

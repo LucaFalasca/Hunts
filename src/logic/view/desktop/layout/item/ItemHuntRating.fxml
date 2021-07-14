@@ -33,7 +33,7 @@
          </children></AnchorPane>
       <AnchorPane layoutX="93.0" layoutY="4.0">
          <children>
-            <Rating fx:id="rtHunt" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Rating fx:id="rtHunt" rating="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
       <AnchorPane layoutX="283.0">
          <children>
