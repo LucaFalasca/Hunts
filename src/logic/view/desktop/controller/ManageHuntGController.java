@@ -58,6 +58,7 @@ public class ManageHuntGController extends ControllerWithLogin{
 	
 	@FXML
 	private Label lbObjectPath; 
+	
     @FXML
     private TextField tfHuntName;
 
@@ -132,6 +133,9 @@ public class ManageHuntGController extends ControllerWithLogin{
     @FXML
     private Label lbMapName;
     
+    @FXML
+    private Label lbHunt;
+    
     private ObservableList<String> zoneList = FXCollections.observableArrayList();
 	
     @FXML
@@ -183,6 +187,9 @@ public class ManageHuntGController extends ControllerWithLogin{
 		gcDraw = canvas.getGraphicsContext2D();
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
 		
+        lbMap.setText("Insert Map");
+        lbHunt.setText("Modify Hunt");
+        
 		var manageHuntControl = new ManageHuntControl();
 		var idHunt = -1;
 		var idMap = -1;
@@ -211,7 +218,6 @@ public class ManageHuntGController extends ControllerWithLogin{
 		}
 
 		lbRiddle.setText(RIDDLE + rdlList.size());
-		lbMap.setVisible(false);
     	cmbObject.setItems(objList);
     	cmbZone.setItems(zoneList);   	
     	tbRiddle.setItems(rdlList);

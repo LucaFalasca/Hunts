@@ -34,8 +34,49 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane prefHeight="364.0" prefWidth="940.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="340.0" prefWidth="447.0" BorderPane.alignment="CENTER">
                <children>
+                  <AnchorPane layoutY="44.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="83.0" text="Object" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="65.0" text="Name:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="65.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfObjectName" layoutX="110.0" layoutY="63.0" prefWidth="330.0" AnchorPane.rightAnchor="20.0" />
+                        <Label layoutX="14.0" layoutY="117.0" text="Description:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="117.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="txtDescription" layoutX="109.0" layoutY="117.0" prefHeight="82.0" prefWidth="330.0" AnchorPane.rightAnchor="20.0" />
+                        <Button fx:id="btnUploadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="15.0" prefWidth="15.0" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="20.0">
+                           <graphic>
+                              <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../resources/upload.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" layoutX="374.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="215.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <ImageView fx:id="ivObject" fitHeight="50.0" fitWidth="50.0" layoutX="97.0" layoutY="211.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="97.0" />
+                        <Label fx:id="lbObjectImg" layoutX="13.0" layoutY="205.0" text="Image:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                   <AnchorPane layoutY="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="Hunt Name:" AnchorPane.leftAnchor="14.0">
@@ -46,95 +87,30 @@
                         <TextField fx:id="tfHuntName" layoutX="106.0" layoutY="12.0" prefHeight="25.0" prefWidth="329.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutY="68.0" prefHeight="321.0" prefWidth="940.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-                     <children>
-                        <AnchorPane prefHeight="293.0" prefWidth="455.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="83.0" text="Object" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="14.0" layoutY="65.0" text="Name:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="65.0">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="tfObjectName" layoutX="110.0" layoutY="63.0" prefWidth="330.0" AnchorPane.rightAnchor="20.0" />
-                              <Label layoutX="14.0" layoutY="117.0" text="Description:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="117.0">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextArea fx:id="txtDescription" layoutX="109.0" layoutY="117.0" prefHeight="82.0" prefWidth="330.0" AnchorPane.rightAnchor="20.0" />
-                              <Button fx:id="btnUploadFile" alignment="CENTER" contentDisplay="CENTER" layoutX="110.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleUploadFile" prefHeight="15.0" prefWidth="15.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="20.0">
-                                 <graphic>
-                                    <ImageView fitHeight="17.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../../../resources/upload.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnAddToList" alignment="CENTER" contentDisplay="CENTER" layoutX="379.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleAddObject" prefHeight="9.0" prefWidth="59.0" text="Add" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Button>
-                              <ImageView fx:id="ivObject" fitHeight="88.0" fitWidth="121.0" layoutX="125.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="125.0" />
-                              <Label fx:id="lbObjectImg" layoutX="13.0" layoutY="205.0" text="Image:">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="460.0" layoutY="22.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
-                           <children>
-                              <TableView fx:id="tbObject" layoutY="14.0" prefHeight="295.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columns>
-                                    <TableColumn fx:id="cmName" prefWidth="75.0" text="Name" />
-                                    <TableColumn fx:id="cmDescription" prefWidth="75.0" text="Description" />
-                                    <TableColumn fx:id="cmObjButtons" prefWidth="75.0" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </AnchorPane>
                </children>
             </AnchorPane>
          </left>
          <center>
             <AnchorPane BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane prefHeight="300.0" prefWidth="340.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Button fx:id="btnCreateMap" layoutX="13.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="33.0" />
-                        <Button fx:id="btnChooseMap" layoutX="244.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleChooseMap" text="Choose map" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="33.0" />
-                        <StackPane layoutX="13.0" layoutY="65.0" prefHeight="300.0" prefWidth="315.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="65.0">
-                           <children>
-                              <ImageView fx:id="imgMap" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                              <Canvas fx:id="canvas" height="200.0" width="200.0" />
-                           </children>
-                        </StackPane>
-                        <Label fx:id="lbMap" alignment="CENTER" contentDisplay="CENTER" layoutX="133.0" layoutY="3.0" text="Map Name" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
+                        <TableView fx:id="tbObject" layoutX="-21.0" prefHeight="295.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="cmName" prefWidth="75.0" text="Name" />
+                              <TableColumn fx:id="cmDescription" prefWidth="75.0" text="Description" />
+                              <TableColumn fx:id="cmObjButtons" prefWidth="75.0" />
+                           </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </children>
             </AnchorPane>
          </center>
          <bottom>
-            <AnchorPane prefHeight="334.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="326.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane layoutY="-2.0" prefHeight="293.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
+                  <BorderPane layoutY="-2.0" prefHeight="328.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
                      <left>
                         <AnchorPane BorderPane.alignment="CENTER">
                            <children>
@@ -210,12 +186,15 @@
                                  </font>
                               </Label>
                            </children>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
                         </AnchorPane>
                      </left>
                      <center>
-                        <AnchorPane prefHeight="284.0" prefWidth="723.0" BorderPane.alignment="CENTER">
+                        <AnchorPane BorderPane.alignment="CENTER">
                            <children>
-                              <TableView fx:id="tbRiddle" layoutX="60.0" prefHeight="288.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="tbRiddle" layoutX="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
                                     <TableColumn fx:id="cmText" prefWidth="125.0" text="Text" />
                                     <TableColumn fx:id="cmSolution" prefWidth="100.0" text="Solution" />
@@ -234,7 +213,7 @@
                         </AnchorPane>
                      </center>
                      <bottom>
-                        <AnchorPane prefHeight="30.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+                        <AnchorPane BorderPane.alignment="CENTER">
                            <children>
                               <Button fx:id="btnSave" layoutX="240.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleSave" text="Save" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="8.0">
                                  <font>
@@ -254,13 +233,29 @@
                            </children>
                         </AnchorPane>
                      </bottom>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
                   </BorderPane>
                </children>
             </AnchorPane>
          </bottom>
+         <right>
+            <AnchorPane prefHeight="300.0" prefWidth="340.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnCreateMap" layoutX="13.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleCreateMap" text="Create Map" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="33.0" />
+                  <Button fx:id="btnChooseMap" layoutX="244.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleChooseMap" text="Choose map" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="33.0" />
+                  <StackPane layoutX="13.0" layoutY="65.0" prefHeight="300.0" prefWidth="315.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="65.0">
+                     <children>
+                        <ImageView fx:id="imgMap" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <Canvas fx:id="canvas" height="200.0" width="200.0" />
+                     </children>
+                  </StackPane>
+                  <Label fx:id="lbMap" alignment="CENTER" contentDisplay="CENTER" layoutX="133.0" layoutY="3.0" text="Map Name" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </right>
       </BorderPane>
    </children>
 </AnchorPane>
