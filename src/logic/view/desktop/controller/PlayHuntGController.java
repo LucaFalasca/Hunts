@@ -187,17 +187,14 @@ public class PlayHuntGController extends ControllerWithLogin{
     		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
     		lvRiddle.refresh();
     		if(controller.isRiddlesCompleted(riddleList)) {
-    			Alert alert = new Alert(AlertType.INFORMATION);
-    			alert.setTitle("Vittoria!");
-    			alert.setHeaderText("Hai Vinto!");
-    			alert.showAndWait();
+    			showAlert(AlertType.INFORMATION, "Victory!", "You have finished the Hunt");
     			if(isLogged()) {
 					controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
     			}
     			changeScene(Pages.MAIN_MENU);
     		}
 		}else {
-    		//sbagliato
+    		showAlert(AlertType.INFORMATION, "Wrong", "Wrong answer");
     	}
 	}
 
@@ -215,7 +212,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 				double y2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
 				if(isBetween(x, x1, x2) && isBetween(y, y1, y2)) {
 					ManageHuntControl controller = new ManageHuntControl();
-					riddleList = (ObservableList<RiddleBean>) controller.getRiddleFromZone(hunt, zone);
+					//riddleList = (ObservableList<RiddleBean>) controller.getRiddleFromZone(hunt, zone);
 				}
 			}
 		}
