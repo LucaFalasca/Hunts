@@ -9,10 +9,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.PlayHuntGController">
+<AnchorPane prefHeight="640.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.desktop.controller.PlayHuntGController">
    <children>
       <BorderPane prefHeight="236.0" prefWidth="292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <right>
@@ -55,12 +56,16 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfRisposta" layoutX="116.0" layoutY="94.0" prefHeight="43.0" prefWidth="552.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="188.0" AnchorPane.topAnchor="64.0" />
-                              <Button layoutX="598.0" layoutY="64.0" mnemonicParsing="false" onAction="#handleAnswer" prefHeight="39.0" prefWidth="108.0" text="Rispondi" AnchorPane.leftAnchor="598.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="64.0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Button>
+                              <HBox layoutX="8.0" layoutY="64.0">
+                                 <children>
+                                    <TextField fx:id="tfRisposta" prefHeight="43.0" prefWidth="552.0" />
+                                    <Button mnemonicParsing="false" onAction="#handleAnswer" prefHeight="39.0" prefWidth="108.0" text="Rispondi">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
                               <Button layoutX="12.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="43.0" prefWidth="148.0" text="Chiedi indizio" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="134.0">
                                  <font>
                                     <Font size="18.0" />
