@@ -11,11 +11,16 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%	
-	
+	session.removeAttribute("zones");
 	if(request.getParameter("play") != null){
 		String idHunt = request.getParameter("play").toString();
 		session.setAttribute("hunt", idHunt);
 		response.sendRedirect("PlayHunt.jsp");
+	}
+	if(request.getParameter("editMap") != null){
+		String idMap = request.getParameter("editMap").toString();
+		session.setAttribute("map", idMap);
+		response.sendRedirect("ManageMap.jsp");
 	}
 %>
 <html>
@@ -95,16 +100,18 @@
 							List<MapBean> mapBeans = controllerMaps.getAllMaps(session.getAttribute("username").toString());
 							for(MapBean mapBean : mapBeans) {
 						%>
+						
 						<li class="list-group-item">
-						<%
-								out.print(mapBean.getName());
-							
-				     	%>
-				     		
-				     		<div class="btn-group" role="group" aria-label="Basic example">
-							  <button type="button" class="btn btn-secondary">Edit</button>
-							  <button type="button" class="btn btn-secondary">Delete</button>
-							</div>
+							<form action = "MainMenu.jsp" name = "map<% out.print(mapBean.getId()); %>" method = "POST">
+								<%
+									out.print(mapBean.getName());
+				     			%>
+					     		
+					     		<div class="btn-group" role="group" aria-label="Basic example">
+								  <button type="submit" class="btn btn-secondary" name = "editMap" value = "<%= mapBean.getId()%>">Edit</button>
+								  <button type="button" class="btn btn-secondary">Delete</button>
+								</div>
+							</form>
 						</li>
 					     	<%
 								}
