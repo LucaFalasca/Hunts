@@ -79,15 +79,24 @@
 							%>
 							<li class="list-group-item">
 								<form action = "MainMenu.jsp" name = "hunt<%out.print(huntBean.getIdHunt()); %>" method = "POST">
-								
-							<%
-									out.print(huntBean.getHuntName());
-								
-					     	%>
-					     		
-						     		<div class="btn-group" role="group" aria-label="Basic example">
-									  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary">Play</button>
-									</div>
+									<table style="width:100%">
+										<tr>
+											<td style="width:40%" align = left>
+												<%= huntBean.getHuntName()%>
+											</td>
+											<td style="width:30%" align = left>
+												<img src="https://img.icons8.com/material-rounded/24/000000/user.png"/>
+												<%= huntBean.getUsername()%>
+											</td>
+											<td style="width:30%">
+									     		<div class="btn-group" role="group" aria-label="Basic example">
+												  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary btn-success btn-xs" style = "vertical-align: middle;">
+												  	<img src="https://img.icons8.com/ios/50/000000/play--v1.png" width="25" height="25"/>
+												  </button>
+												</div>
+											</td>
+										</tr>
+									</table>
 								</form>
 							</li>
 						     	<%
@@ -101,12 +110,19 @@
 				%>
 					
 				<div class="col-sm-3 text-center">
-					<div class="btn-group" role="group" aria-label="Basic example">
-				     	<h2>My Hunts</h2> 
-				     	<form action = "MainMenu.jsp" name = "newHunt" method = "POST">
-				     		<button type="submit" name = "addHunt" class="btn btn-secondary">+</button>
-				     	</form>
-			     	</div>
+						<table style="width:100%">
+							<tr>
+								<td style="width:70%">
+									<h2>My Hunts</h2>
+	     						</td>
+								<td style="width:30%">
+									<form action = "MainMenu.jsp" name = "newHunt" method = "POST">
+							     		<button type="submit" name = "addHunt" class="btn btn-secondary btn-circle"><img src="https://img.icons8.com/ios-glyphs/30/000000/plus-math.png" width="20" height="20"/></button>
+							     	</form>
+								</td>
+							</tr>
+						</table>
+			     	
 			    	<ul class="list-group">
 				     	<%
 				     		
@@ -114,16 +130,20 @@
 						%>
 						<li class="list-group-item">
 							<form action = "MainMenu.jsp" name = "hunt<%out.print(huntBean.getIdHunt()); %>" method = "POST">
-						<%
-								out.print(huntBean.getHuntName());
-							
-				     	%>
-				     		
-					     		<div class="btn-group" role="group" aria-label="Basic example">
-	   							  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary">Play</button>
-								  <button type="submit" class="btn btn-secondary" name = "editHunt" value = "<%= huntBean.getIdHunt() %>">Edit</button>
-								  <button type="submit" class="btn btn-secondary" name = "cancelMyHunt" value = "<%= huntBean.getIdHunt()%>">Delete</button>
-								</div>
+								<table style="width:100%">
+									<tr>
+										<td style="width:70%" align = left>
+											<%= huntBean.getHuntName()%>
+			     						</td>
+										<td style="width:30%">
+								     		<div class="btn-group" role="group" aria-label="Basic example">
+				   							  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary btn-success btn-xs"><img src="https://img.icons8.com/ios/50/000000/play--v1.png" width="25" height="25"/></button>
+											  <button type="submit" class="btn btn-secondary btn-primary" name = "editHunt" value = "<%= huntBean.getIdHunt() %>"><img src="https://img.icons8.com/fluent-systems-regular/100/000000/edit--v1.png" width="25" height="25"/></button>
+											  <button type="submit" class="btn btn-secondary btn-danger " name = "cancelMyHunt" value = "<%= huntBean.getIdHunt()%>"><img src="https://img.icons8.com/ios/50/000000/delete--v1.png" width="25" height="25"/></button>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</form>
 						</li>
 					     	<%
@@ -142,14 +162,19 @@
 						
 						<li class="list-group-item">
 							<form action = "MainMenu.jsp" name = "map<% out.print(mapBean.getId()); %>" method = "POST">
-								<%
-									out.print(mapBean.getName());
-				     			%>
-					     		
-					     		<div class="btn-group" role="group" aria-label="Basic example">
-								  <button type="submit" class="btn btn-secondary" name = "editMap" value = "<%= mapBean.getId()%>">Edit</button>
-								  <button type="submit" class="btn btn-secondary" name = "deleteMap" value = "<%= mapBean.getId()%>">Delete</button>
+								<table style="width:100%">
+									<tr>
+										<td style="width:70%" align = left>
+											<%= mapBean.getName()%>
+			     						</td>
+										<td style="width:30%">
+								     		<div class="btn-group" role="group" aria-label="Basic example">
+								  <button type="submit" class="btn btn-secondary btn-primary" name = "editMap" value = "<%= mapBean.getId()%>"><img src="https://img.icons8.com/fluent-systems-regular/100/000000/edit--v1.png" width="25" height="25"/></button>
+								  <button type="submit" class="btn btn-secondary btn-danger" name = "deleteMap" value = "<%= mapBean.getId()%>"><img src="https://img.icons8.com/ios/50/000000/delete--v1.png" width="25" height="25"/></button>
 								</div>
+										</td>
+									</tr>
+								</table>
 							</form>
 						</li>
 					     	<%
