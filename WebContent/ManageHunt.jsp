@@ -1,8 +1,10 @@
 <%@page import="logic.bean.HuntBean"%>
 <%@page import="logic.bean.RiddleBean"%>
 <%@page import="logic.bean.ObjectBean"%>
+<%@page import="logic.bean.MapBean"%>
 <%@page import="logic.enumeration.Pages"%>
 <%@page import="logic.control.ManageHuntControl"%>
+<%@page import="logic.control.ManageMapControl" %>
 <%@ page language="java" import="java.util.*,java.lang.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -22,20 +24,27 @@
 
 <%
 
+	List<RiddleBean> riddles = new ArrayList<>();
+	List<ObjectBean> objects = new ArrayList<>();
+	List<MapBean> maps = new ArrayList<>();
+	HuntBean hunt = null;
+	ManageHuntControl controllerHunt = new ManageHuntControl();
+	ManageMapControl controllerMap = new ManageMapControl();
+	MapBean map = null;
+	String username = null;
+	
 	if(session.getAttribute("username") == null && Pages.LOGIN.needLogin()){
 		response.sendRedirect(Pages.LOGIN.getWebPath());
 	} else {
-		String username = session.getAttribute("username").toString();
+		username = session.getAttribute("username").toString();
 	}
 	
-	List<RiddleBean> riddles = new ArrayList<>();
-	List<ObjectBean> objects = new ArrayList<>();
-	HuntBean hunt = null;
-	ManageHuntControl controller = new ManageHuntControl();
-	
+
+	maps = controllerMap.getAllMaps(username);
+
 	if(session.getAttribute("hunt") != null){
 		int idHunt = Integer.valueOf(session.getAttribute("hunt").toString());
-		hunt = controller.getHunt(idHunt, "pippo");
+		hunt = controllerHunt.getHunt(idHunt, "pippo");
 		riddles.addAll(hunt.getRiddle());
 		objects.addAll(hunt.getObject());
 	}
@@ -86,6 +95,18 @@
 		session.setAttribute("objects", objects);
 	}
 	
+	if(request.getParameter("chooseMapButton") != null) {
+        String mapName = request.getParameter("chooseMapButton");
+        if(maps != null){
+        	for(MapBean mapBean : maps){
+        		if(mapBean.getName() == mapName){
+        			map = controllerMap.getMapById(username, mapBean.getId());
+        			System.out.println(map);
+        		}
+        	}
+        }
+ 	}
+	
 	if(request.getParameter("save") != null){
 		hunt.setPrivate(true);
 		String idHunt = save(hunt, "pippo", riddles, objects, "try");
@@ -132,7 +153,15 @@
 
 		
 		<script type='text/javascript'>
-			
+			function getName(){
+				var nome = document.getElementById('chooseMap').value;
+				var form = document.getElementById('chooseMapForm');
+				var button = document.getElementById('chooseMapButton");
+				if(nome != ""){
+					button.value = nome;
+					form.submit;
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -201,7 +230,27 @@
 					</div>
 				</div>
 				<div class="col-lg-4 form-group" id = "map">
-					<!-- mappa -->
+					<div class="chooseMapConteiner">
+						<div class="form-group">
+						  <label for="chooseMap">Choose map:</label>
+						  <select class="form-control" name="chooseMap" id = "chooseMap">
+						  	<option>
+						  	</option>
+						  	<% 
+						  		for(MapBean mapBean : maps){ 
+						  	%>
+						  	<option>
+						  		<%= mapBean.getName() %>
+						  	</option>
+						  	<%
+						  		}
+						  	%>
+						  </select>
+						  <form action = "ManageHunt.jsp" method = "POST" name = "chooseMapForm" id = "chooseMapForm">
+								<button type = "button" name = "chooseMapButton" id = "chooseMapButton" onclick = "getName()"> Choose</button>
+						  </form>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
