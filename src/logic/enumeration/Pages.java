@@ -55,11 +55,11 @@ public enum Pages {
 	
 	public String getWebPath() {
 		switch(this) {
-			case MAIN_MENU:		return "";
-			case LOGIN: 		return "";
-			case MANAGE_HUNT: 	return "";
-			case MANAGE_MAP: 	return "";
-			case CHOOSE_MAP:    return "";
+			case MAIN_MENU:		return "MainMenu.jsp";
+			case LOGIN: 		return "Login.jsp";
+			case MANAGE_HUNT: 	return "ManageHunt.jsp";
+			case MANAGE_MAP: 	return "ManageMap.jsp";
+			case PLAY_HUNT:    return "PlayHunt.jsp";
 			default:			return MAIN_MENU.getWebPath();
 		}
 	}
