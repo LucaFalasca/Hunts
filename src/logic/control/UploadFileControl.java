@@ -17,6 +17,7 @@ public class UploadFileControl {
 		try {
 			url = "uploads\\" + file.getName();
 			saveFile(url, Files.readAllBytes(file.toPath()));
+			saveFile("WebContent\\" + url, Files.readAllBytes(file.toPath()));
 		} catch (IOException | NullPointerException e ) {
 			throw new LoadFileFailed();
 		}
@@ -30,6 +31,8 @@ public class UploadFileControl {
 		try (var outputStream = new FileOutputStream(file.getAbsolutePath())){
 			outputStream.write(data);
 		} catch (IOException e) {
+
+			e.printStackTrace();
 			throw new LoadFileFailed();
 		} 
 	}

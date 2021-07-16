@@ -80,11 +80,7 @@
 		  	</div>
 		  	<div class="row content">
 		  		<div class="col-sm-6 text-center"> 
-		  			<%
-		  			System.out.println(map.getImage().substring(10));
-		  			URL url = getClass().getClassLoader().getResource("mappppa.jpg");
-		  			%>
-		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; background: url('<%= url.getPath()%>');">
+		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; background: url('<%= "uploads/" + map.getImage().substring(8)%>'); background-size: 350px 350px;">
 					</canvas>
 					<%
 					if(map != null){
@@ -94,7 +90,7 @@
 								<script type="text/javascript">
 									var canvas = document.getElementById("canvas");
 									var ctx = canvas.getContext("2d");
-									ctx.fillStyle = "#eaed91";
+									ctx.fillStyle = "rgba(234, 237, 145, 0.5)";
 									var x1 = <%= Parser.parseFromPercent(zone.getX1(), 350)%>;
 									var y1 = <%= Parser.parseFromPercent(zone.getY1(), 350)%>;
 									var x2 = <%= Parser.parseFromPercent(zone.getX2(), 350)%>;
