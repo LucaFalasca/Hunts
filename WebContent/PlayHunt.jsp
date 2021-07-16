@@ -1,6 +1,9 @@
 <%@page import="logic.bean.HuntBean"%>
+<%@page import="logic.bean.MapBean"%>
 <%@page import="logic.bean.RiddleBean"%>
+<%@page import="logic.bean.ZoneBean"%>
 <%@page import="logic.enumeration.Pages"%>
+<%@page import="logic.parser.Parser"%>
 <%@page import="logic.control.ManageHuntControl"%>
 <%@page import="logic.control.PlayHuntControl"%>
 <%@ page language="java" import="java.util.*,java.lang.*"%>
@@ -16,10 +19,12 @@
 		response.sendRedirect(Pages.LOGIN.getWebPath());
 	}
 	HuntBean hunt = null;
+	MapBean map = null;
 	if(session.getAttribute("hunt") != null){
 		int idHunt = Integer.valueOf(session.getAttribute("hunt").toString());
 		ManageHuntControl controller = new ManageHuntControl();
 		hunt = controller.getHunt(idHunt, "");
+		map = hunt.getMap();
 	}
 	int riddleChoosen = -1;
 	if(request.getParameter("riddle") != null){
@@ -105,6 +110,29 @@
 		     	%>
 	    	</ul>
 		</div>
+		<div class="col-sm-6 text-center"> 
+		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; background: url('<%= "uploads/" + map.getImage().substring(8)%>'); background-size: 350px 350px;">
+					</canvas>
+					<%
+					if(map != null){
+						if(map.getZones() != null && !map.getZones().isEmpty()){
+							for(ZoneBean zone : map.getZones()){
+								%>
+								<script type="text/javascript">
+									var canvas = document.getElementById("canvas");
+									var ctx = canvas.getContext("2d");
+									ctx.fillStyle = "rgba(234, 237, 145, 0.5)";
+									var x1 = <%= Parser.parseFromPercent(zone.getX1(), 350)%>;
+									var y1 = <%= Parser.parseFromPercent(zone.getY1(), 350)%>;
+									var x2 = <%= Parser.parseFromPercent(zone.getX2(), 350)%>;
+									var y2 = <%= Parser.parseFromPercent(zone.getY2(), 350)%>;
+									ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+								</script>
+								<%
+							}
+						}
+					}%>
+		  		</div>
 	</div>
 	<%
 	if(riddleChoosen != -1){ 
