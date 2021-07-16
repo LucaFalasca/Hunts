@@ -95,8 +95,10 @@
 		session.setAttribute("objects", objects);
 	}
 	
-	if(request.getParameter("chooseMapButton") != null) {
-        String mapName = request.getParameter("chooseMapButton");
+	System.out.println("try5: ");
+	if(request.getParameter("chooseName") != null) {
+		System.out.println("dio");
+        String mapName = request.getParameter("chooseName");
         if(maps != null){
         	for(MapBean mapBean : maps){
         		if(mapBean.getName() == mapName){
@@ -155,13 +157,13 @@
 		<script type='text/javascript'>
 			function getName(){
 				var nome = document.getElementById('chooseMap').value;
-				var form = document.getElementById('chooseMapForm');
-				var button = document.getElementById('chooseMapButton");
 				if(nome != ""){
-					button.value = nome;
-					form.submit;
+					document.formMap.chooseName.value = nome;
+					document.formMap.submit();
+					alert("try" + document.formMap.chooseName.value);
 				}
 			}
+			
 		</script>
 	</head>
 	<body>
@@ -232,6 +234,7 @@
 				<div class="col-lg-4 form-group" id = "map">
 					<div class="chooseMapConteiner">
 						<div class="form-group">
+						
 						  <label for="chooseMap">Choose map:</label>
 						  <select class="form-control" name="chooseMap" id = "chooseMap">
 						  	<option>
@@ -246,8 +249,9 @@
 						  		}
 						  	%>
 						  </select>
-						  <form action = "ManageHunt.jsp" method = "POST" name = "chooseMapForm" id = "chooseMapForm">
-								<button type = "button" name = "chooseMapButton" id = "chooseMapButton" onclick = "getName()"> Choose</button>
+						  <form action = "ManageHunt.jsp" method = "POST" name = "formMap" >
+						  		<INPUT TYPE="hidden" name="chooseName">
+								<button type = "button" name = "chooseMapButton" onClick = "getName()"> Choose</button>
 						  </form>
 						</div>
 					</div>
