@@ -9,6 +9,8 @@
 <%@ page language="java" import="java.io.FileOutputStream"%>
 <%@ page language="java" import="java.io.File"%>
 <%@ page language="java" import="java.util.*,java.lang.*"%>
+<%@ page language="java" import="java.net.URL"%>
+
 <%
 	if(session.getAttribute("username") == null && Pages.MANAGE_MAP.needLogin()){
 		response.sendRedirect(Pages.LOGIN.getWebPath());
@@ -78,7 +80,11 @@
 		  	</div>
 		  	<div class="row content">
 		  		<div class="col-sm-6 text-center"> 
-		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000;">
+		  			<%
+		  			System.out.println(map.getImage().substring(10));
+		  			URL url = getClass().getClassLoader().getResource("mappppa.jpg");
+		  			%>
+		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; background: url('<%= url.getPath()%>');">
 					</canvas>
 					<%
 					if(map != null){
