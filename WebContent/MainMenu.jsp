@@ -14,6 +14,7 @@
 	session.removeAttribute("zones");
 	session.removeAttribute("riddles");
 	session.removeAttribute("objects");
+	String username = null;
 	
 	if(request.getParameter("play") != null){
 		String idHunt = request.getParameter("play").toString();
@@ -29,6 +30,28 @@
 		String idHunt = request.getParameter("editHunt").toString();
 		session.setAttribute("hunt", idHunt);
 		response.sendRedirect("ManageHunt.jsp");
+	}
+	
+	if(request.getParameter("username") != null){
+		username = request.getParameter("username");
+	}
+	if(request.getParameter("addHunt") != null){
+		response.sendRedirect("ManageHunt.jsp");
+	}
+	if(request.getParameter("cancelMyHunt") != null){
+		int idHunt = Integer.valueOf(request.getParameter("cancelMyHunt"));
+		ManageHuntControl controller = new ManageHuntControl();
+		HuntBean huntBean = new HuntBean();
+		huntBean.setIdHunt(idHunt);
+		huntBean.setUsername(username);
+		controller.deleteHunt(huntBean);
+		response.sendRedirect("MainMenu.jsp");
+	}
+	if(request.getParameter("deleteMap") != null){
+		int idMap = Integer.valueOf(request.getParameter("deleteMap"));
+		ManageMapControl controller = new ManageMapControl();
+		controller.deleteMap(idMap, username);
+		response.sendRedirect("MainMenu.jsp");
 	}
 %>
 <html>
@@ -56,6 +79,7 @@
 							%>
 							<li class="list-group-item">
 								<form action = "MainMenu.jsp" name = "hunt<%out.print(huntBean.getIdHunt()); %>" method = "POST">
+								
 							<%
 									out.print(huntBean.getHuntName());
 								
@@ -76,8 +100,13 @@
 					List<HuntBean> listHunt = controllerHunts.getAllHunts(session.getAttribute("username").toString());
 				%>
 					
-				<div class="col-sm-3 text-center"> 
-			     	<h2>My Hunts</h2>
+				<div class="col-sm-3 text-center">
+					<div class="btn-group" role="group" aria-label="Basic example">
+				     	<h2>My Hunts</h2> 
+				     	<form action = "MainMenu.jsp" name = "newHunt" method = "POST">
+				     		<button type="submit" name = "addHunt" class="btn btn-secondary">+</button>
+				     	</form>
+			     	</div>
 			    	<ul class="list-group">
 				     	<%
 				     		
@@ -91,9 +120,9 @@
 				     	%>
 				     		
 					     		<div class="btn-group" role="group" aria-label="Basic example">
-	   							  <button type="button" class="btn btn-secondary">Play</button>
-								  <button type="submit" class="btn btn-secondary" name = "editHunt" value = "<%out.print(huntBean.getIdHunt()); %>">Edit</button>
-								  <button type="button" class="btn btn-secondary">Delete</button>
+	   							  <button type="submit" name = "play" value = "<%out.print(huntBean.getIdHunt()); %>" class="btn btn-secondary">Play</button>
+								  <button type="submit" class="btn btn-secondary" name = "editHunt" value = "<%= huntBean.getIdHunt() %>">Edit</button>
+								  <button type="submit" class="btn btn-secondary" name = "cancelMyHunt" value = "<%= huntBean.getIdHunt()%>">Delete</button>
 								</div>
 							</form>
 						</li>
@@ -119,7 +148,7 @@
 					     		
 					     		<div class="btn-group" role="group" aria-label="Basic example">
 								  <button type="submit" class="btn btn-secondary" name = "editMap" value = "<%= mapBean.getId()%>">Edit</button>
-								  <button type="button" class="btn btn-secondary">Delete</button>
+								  <button type="submit" class="btn btn-secondary" name = "deleteMap" value = "<%= mapBean.getId()%>">Delete</button>
 								</div>
 							</form>
 						</li>
