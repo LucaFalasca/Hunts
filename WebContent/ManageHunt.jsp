@@ -136,201 +136,218 @@
 		</script>
 	</head>
 	<body>
-		 <div class="form-group">
-		    <label for="huntName">Hunt Name:</label>
-		    <input type="text" class="form-control" id="huntName">
-		 </div> 
-		 
-		 <h2>Insert object</h2>      
-		 <form>
-  			<div class="form-group">
-    			<label for="objName">Name:</label>
-    			<input type="text" class="form-control" name="name">
-  			</div>
-  			<div class="form-group">
+		<div class="container">
+			<div class="row" id = "name_hunt">
+				<div class="form-group">
+				   <label for="huntName">Hunt Name:</label>
+				   <input type="text" class="form-control" id="huntName">
+				</div> 
+			</div>
+			<div class="row">
+				<div class="col-lg-4 form-group" id = "insert_object">
+					<h2>Insert object</h2>      
+					<form>
+					<div class="form-group">
+			 			<label for="objName">Name:</label>
+			 			<input type="text" class="form-control" name="name">
+					</div>
+					<div class="form-group">
 			    <label for="description">Description:</label>
 			    <input type="text" class="form-control" name="description">
 			</div>
 			<input type="submit" name="addObject" value="Add object">
-		 </form>
-		 
-		 <div> 
-		  <table class="table table-bordered" id = "objectTable">
-		    <thead id = "theadObject">
-		      <tr>
-		        <th>
-		        	Object Name
-		        </th>
-		        <th>
-		        	Object Description
-		        </th>
-		      </tr>
-		    </thead>
-			<tbody id = "tbodyObject">
-				<%
-					for(int i = 0; i < objects.size(); i++){
-						ObjectBean obj = objects.get(i);
-				%>
-					<tr>
-						<th>
-							<%=
-								obj.getName()
+			</form>
+				</div>
+				<div class="col-lg-4 form-group" id = "object_list">
+					<div> 
+						<table class="table table-bordered" id = "objectTable">
+						    <thead id = "theadObject">
+						      <tr>
+						        <th>
+						        	Object Name
+						        </th>
+						        <th>
+						        	Object Description
+						        </th>
+						      </tr>
+						    </thead>
+							<tbody id = "tbodyObject">
+								<%
+									for(int i = 0; i < objects.size(); i++){
+										ObjectBean obj = objects.get(i);
+								%>
+									<tr>
+										<th>
+											<%=
+												obj.getName()
+											%>
+										</th>
+										<th>
+											<%=
+												obj.getDescription()	
+											%>
+										</th>
+										<th>
+											<form action = "ManageHunt.jsp" method = "POST" name = "deleteObject">
+												<button type = "submit" name = "deleteObject" value= "<%= i %>"> Delete</button>
+											</form>
+										</th>
+									</tr>
+								<%
+									}
+								%>
+							</tbody>	
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-4 form-group" id = "map">
+					<!-- mappa -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-4 form-group" id = "insert_riddle">
+					<h2>Insert new Riddle</h2>
+					
+					<form action = "ManageHunt.jsp" method = "POST" name = "riddlePost">
+		  			<div class="form-group">
+		    			<label for="riddle">Text:</label>
+		    			<input type="text" class="form-control" name="riddle">
+		  			</div>
+		  			<div class="form-group">
+					    <label for="solution">Solution:</label>
+					    <input type="text" class="form-control" name="solution">
+					</div>
+					<div class="form-group">
+					    <label for="clue1">Clue 1:</label>
+					    <input type="text" class="form-control" name="clue1">
+					</div>
+					<div class="form-group">
+					    <label for="clue2">Clue 2:</label>
+					    <input type="text" class="form-control" name="clue2">
+					</div>
+					<div class="form-group">
+					    <label for="clue3">clue 3</label>
+					    <input type="text" class="form-control" name="clue3">
+					</div>
+					<div class="form-group">
+					  <label for="objectName">Object list:</label>
+					  <select class="form-control" name="objectName">
+					  	<option></option>
+					  	<%
+					  		for(ObjectBean obj : objects){
+					  	%>
+					  	<option>
+					  		<%=
+					  			obj.getName()
+					  		%> 
+					  	</option>
+					  	<%
+					  		}
+					  	%>
+					  </select>
+					</div> 
+					<div class="form-group">
+					  <label for="zoneName">Zone list:</label>
+					  <select class="form-control" name="zoneName">
+					  	<option></option>
+					  
+					  </select>
+					</div> 
+					<input type="submit" name="addRiddle" value="Add riddle">
+				</form> 
+				</div>
+				<div class="col-lg-8 form-group" id = "riddle_list">
+					<div class="container">
+					<h2>Inserted Riddle</h2>         
+					<table class="table table-bordered" id = "riddleTable">
+						<thead id = theadRiddle>
+							<tr>
+								<th>
+									Riddle Text
+								</th>
+								<th>
+									Riddle Solution
+								</th>
+								<th>
+									Clue 1
+								</th>
+								<th>
+									Clue 2
+								</th>
+								<th>
+									Clue 3
+								</th>
+								<th>
+									Object
+								</th>
+								<th>
+									Zone
+								</th>
+							</tr>
+						</thead>
+						<tbody id = "tbodyRiddle">
+							<%
+								for(int i = 0; i < riddles.size(); i++){
+									RiddleBean rid = riddles.get(i);
 							%>
-						</th>
-						<th>
-							<%=
-								obj.getDescription()	
+								<tr>
+									<th>
+										<%=
+											rid.getRiddle()	
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getSolution()
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getClue1()
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getClue2()
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getClue3()
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getObjectName()
+										%>
+									</th>
+									<th>
+										<%=
+											rid.getZoneName()
+										%>
+									</th>
+									<th>
+										<form action = "ManageHunt.jsp" method = "POST" name = "deleteRiddle">
+											<button type = "submit" name = "deleteRiddle" value= "<%= i %>"> Delete</button>
+										</form>
+									</th>
+								</tr>
+							<%
+								}
 							%>
-						</th>
-						<th>
-							<form action = "ManageHunt.jsp" method = "POST" name = "deleteObject">
-								<button type = "submit" name = "deleteObject" value= "<%= i %>"> Delete</button>
-							</form>
-						</th>
-					</tr>
-				<%
-					}
-				%>
-			</tbody>	
-		  </table>
+						</tbody>
+					</table><br/>	
+					
+				</div>
+				</div>
+			</div>
+			<div class="row" id = "save_buttons">
+				<form action = "ManageHunt.jsp" method = "POST" name = "save">
+					<button type = "submit" name = "save" value= "Save">Save</button>
+					<button type = "submit" name = "exit" value= "Save&Exit">Save & Exit</button>
+					<button type = "submit" name = "publish" value= "Publish">Publish</button>
+				</form>
+			</div>
 		</div>
-		
-		<h2>Insert new Riddle</h2>
-		
-		<form action = "ManageHunt.jsp" method = "POST" name = "riddlePost">
-  			<div class="form-group">
-    			<label for="riddle">Text:</label>
-    			<input type="text" class="form-control" name="riddle">
-  			</div>
-  			<div class="form-group">
-			    <label for="solution">Solution:</label>
-			    <input type="text" class="form-control" name="solution">
-			</div>
-			<div class="form-group">
-			    <label for="clue1">Clue 1:</label>
-			    <input type="text" class="form-control" name="clue1">
-			</div>
-			<div class="form-group">
-			    <label for="clue2">Clue 2:</label>
-			    <input type="text" class="form-control" name="clue2">
-			</div>
-			<div class="form-group">
-			    <label for="clue3">clue 3</label>
-			    <input type="text" class="form-control" name="clue3">
-			</div>
-			<div class="form-group">
-			  <label for="objectName">Object list:</label>
-			  <select class="form-control" name="objectName">
-			  	<option></option>
-			  	<%
-			  		for(ObjectBean obj : objects){
-			  	%>
-			  	<option>
-			  		<%=
-			  			obj.getName()
-			  		%> 
-			  	</option>
-			  	<%
-			  		}
-			  	%>
-			  </select>
-			</div> 
-			<div class="form-group">
-			  <label for="zoneName">Zone list:</label>
-			  <select class="form-control" name="zoneName">
-			  	<option></option>
-			  
-			  </select>
-			</div> 
-			<input type="submit" name="addRiddle" value="Add riddle">
-		</form> 
-		
-		<div class="container">
-			<h2>Inserted Riddle</h2>         
-			<table class="table table-bordered" id = "riddleTable">
-				<thead id = theadRiddle>
-					<tr>
-						<th>
-							Riddle Text
-						</th>
-						<th>
-							Riddle Solution
-						</th>
-						<th>
-							Clue 1
-						</th>
-						<th>
-							Clue 2
-						</th>
-						<th>
-							Clue 3
-						</th>
-						<th>
-							Object
-						</th>
-						<th>
-							Zone
-						</th>
-					</tr>
-				</thead>
-				<tbody id = "tbodyRiddle">
-					<%
-						for(int i = 0; i < riddles.size(); i++){
-							RiddleBean rid = riddles.get(i);
-					%>
-						<tr>
-							<th>
-								<%=
-									rid.getRiddle()	
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getSolution()
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getClue1()
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getClue2()
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getClue3()
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getObjectName()
-								%>
-							</th>
-							<th>
-								<%=
-									rid.getZoneName()
-								%>
-							</th>
-							<th>
-								<form action = "ManageHunt.jsp" method = "POST" name = "deleteRiddle">
-									<button type = "submit" name = "deleteRiddle" value= "<%= i %>"> Delete</button>
-								</form>
-							</th>
-						</tr>
-					<%
-						}
-					%>
-				</tbody>
-			</table><br/>	
-			
-		</div>
-		<form action = "ManageHunt.jsp" method = "POST" name = "save">
-			<button type = "submit" name = "save" value= "Save">Save</button>
-			<button type = "submit" name = "exit" value= "Save&Exit">Save & Exit</button>
-			<button type = "submit" name = "publish" value= "Publish">Publish</button>
-		</form>
 	</body>
 </html>
