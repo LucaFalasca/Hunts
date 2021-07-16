@@ -16,6 +16,9 @@ public class ObjectBean {
 		this.description = description;
 		this.path = path;
 	}
+	
+	public ObjectBean() {
+	}
 
 	public String getName() {
 		return name;
