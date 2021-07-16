@@ -12,6 +12,9 @@
 <!DOCTYPE html>
 <%	
 	session.removeAttribute("zones");
+	session.removeAttribute("riddles");
+	session.removeAttribute("objects");
+	
 	if(request.getParameter("play") != null){
 		String idHunt = request.getParameter("play").toString();
 		session.setAttribute("hunt", idHunt);
@@ -21,6 +24,11 @@
 		String idMap = request.getParameter("editMap").toString();
 		session.setAttribute("map", idMap);
 		response.sendRedirect("ManageMap.jsp");
+	}
+	if(request.getParameter("editHunt") != null){
+		String idHunt = request.getParameter("editHunt").toString();
+		session.setAttribute("hunt", idHunt);
+		response.sendRedirect("ManageHunt.jsp");
 	}
 %>
 <html>
@@ -76,16 +84,18 @@
 							for(HuntBean huntBean : listHunt) {
 						%>
 						<li class="list-group-item">
+							<form action = "MainMenu.jsp" name = "hunt<%out.print(huntBean.getIdHunt()); %>" method = "POST">
 						<%
 								out.print(huntBean.getHuntName());
 							
 				     	%>
 				     		
-				     		<div class="btn-group" role="group" aria-label="Basic example">
-   							  <button type="button" class="btn btn-secondary">Play</button>
-							  <button type="button" class="btn btn-secondary">Edit</button>
-							  <button type="button" class="btn btn-secondary">Delete</button>
-							</div>
+					     		<div class="btn-group" role="group" aria-label="Basic example">
+	   							  <button type="button" class="btn btn-secondary">Play</button>
+								  <button type="submit" class="btn btn-secondary" name = "editHunt" value = "<%out.print(huntBean.getIdHunt()); %>">Edit</button>
+								  <button type="button" class="btn btn-secondary">Delete</button>
+								</div>
+							</form>
 						</li>
 					     	<%
 								}
