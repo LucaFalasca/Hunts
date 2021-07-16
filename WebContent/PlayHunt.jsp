@@ -49,11 +49,23 @@
 		answerBean.setRiddleAnswer(riddles.get(riddleChoosen).getSolution());
 		boolean isRight = controller.answer(answerBean);
 		if(isRight){
-			System.out.println("yeee");
+			riddles.get(riddleChoosen).setCompleted();
+			session.setAttribute("riddles", riddles);
+			if(controller.isRiddlesCompleted(riddles)){
+				session.removeAttribute("riddles");
+				session.removeAttribute("hunt");
+				%>
+					<script type="text/javascript">
+						alert("Hai vinto!");
+						window.location = "<%= Pages.MAIN_MENU.getWebPath()%>";
+					</script>
+				<%
+			}
 		}
 		else{
-			System.out.println("noooo");
+			
 		}
+		
 	}
 	
 	
@@ -76,6 +88,11 @@
 					<li class="list-group-item">
 						<form action = "PlayHunt.jsp" method = "POST">
 					<%
+							if(riddle.isCompleted()){
+								%>
+									<input type="checkbox" checked disabled>
+								<%
+							}
 							out.print(riddle.getRiddle());
 			     	%>
 				     		<div class="btn-group" role="group" aria-label="Basic example">
