@@ -11,7 +11,7 @@ import java.util.Scanner;
 import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 
 import logic.exception.NotConnectedException;
-import logic.exception.SQLError;
+import logic.exception.DatabaseException;
 
 public class Database {
 	
@@ -29,7 +29,7 @@ public class Database {
 		return conn;
 	}
 	
-	public static void changeDatabaseUser(Users user) throws NotConnectedException, SQLError {
+	public static void changeDatabaseUser(Users user) throws NotConnectedException, DatabaseException {
 		if(conn == null) {
 			throw new NotConnectedException();
 		}
@@ -37,14 +37,13 @@ public class Database {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				throw new SQLError();
+				throw new DatabaseException();
 			}
 			conn = connect(user);
 		}
 	}
 	
 	private static Connection connect(Users user) {
-		//var fileConfig = new File("db_conf.txt");
 		URL url = Database.class.getResource("/db_conf.txt");
 		
 		File fileConfig = new File(url.getPath());
