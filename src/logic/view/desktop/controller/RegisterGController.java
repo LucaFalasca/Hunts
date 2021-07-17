@@ -23,8 +23,7 @@ public class RegisterGController extends ControllerWithLogin{
 
     @Override
 	protected void start(String arg, Object param) {
-		// TODO Auto-generated method stub
-		
+		//This method is not needed
 	}
     
     @FXML

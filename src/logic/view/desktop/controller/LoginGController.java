@@ -74,12 +74,6 @@ public class LoginGController extends ControllerWithLogin{
     void handleLoginMenu(ActionEvent event) {
 		changeScene(Pages.LOGIN);
     }
-
-    @FXML
-    void HandleLoginGoogle(ActionEvent event) {
-    	//TODO
-    }
-
 	
 
 }

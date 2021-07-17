@@ -36,11 +36,6 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnLoginGoogle" layoutX="496.0" layoutY="321.0" mnemonicParsing="false" onAction="#HandleLoginGoogle" prefHeight="39.0" prefWidth="289.0" text="Login con Google" AnchorPane.leftAnchor="496.0" AnchorPane.rightAnchor="495.0" AnchorPane.topAnchor="321.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
                   <Label fx:id="lbError" alignment="CENTER" layoutX="622.0" layoutY="216.0" text="Error" textFill="#e41f1f" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="216.0">
                      <font>
                         <Font name="Georgia" size="15.0" />
