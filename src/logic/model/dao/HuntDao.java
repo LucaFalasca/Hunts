@@ -359,7 +359,7 @@ public class HuntDao {
 			stmt.setString(3, risposta);
 			stmt.setString(4, objectPremio);
 			stmt.setString(5, objectRisposta);
-			if(!(nomeZona == null || mappaZona == -1 || nomeZona == "")) {
+			if(!(nomeZona == null || mappaZona == -1 || nomeZona.equals(""))) {
 				stmt.setString(6, nomeZona);
 				stmt.setInt(7, mappaZona);
 			}
