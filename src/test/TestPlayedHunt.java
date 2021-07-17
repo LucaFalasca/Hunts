@@ -12,11 +12,13 @@ import logic.model.dao.PlayHuntDao;
 
 public class TestPlayedHunt {
 
+	final String USERNAME = "pippo";
+	
 	@Test
 	public void testGetPlayedHunt() {
 		var dao = new PlayHuntDao();
 		
-		var playedHunts = dao.getPlayedHunt("pippo");
+		var playedHunts = dao.getPlayedHunt(USERNAME);
 		var playedHunt = playedHunts.get(0);
 		
 		var hunt = playedHunt.getHunt();
@@ -33,13 +35,13 @@ public class TestPlayedHunt {
 	public void testSetHuntAsPlayed() {
 		var dao = new PlayHuntDao();
 		
-		assertDoesNotThrow(() -> dao.setHuntAsPlayed(1, "pippo", LocalDate.now()));
+		assertDoesNotThrow(() -> dao.setHuntAsPlayed(1, USERNAME, LocalDate.now()));
 	}
 	
 	@Test
 	public void testSetHuntAsFinished() {
 		var dao = new PlayHuntDao();
 		
-		assertDoesNotThrow(() -> dao.setHuntAsFinished(1, "pippo"));
+		assertDoesNotThrow(() -> dao.setHuntAsFinished(1, USERNAME));
 	}
 }
