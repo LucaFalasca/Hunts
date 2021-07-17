@@ -46,10 +46,13 @@
 			session.setAttribute("zones", map.getZones());
 		}
 	}
-	if(request.getParameter("save") != null || request.getParameter("save_exit") != null){
-		
+	if(request.getParameter("hiddenMapName") != null){
+		String name = request.getParameter("hiddenMapName");
+		String type = name.substring(0, 4);
+		name = name.substring(4);
+		map.setName(name);
 		controller.save(session.getAttribute("username").toString(), map);
-		if(request.getParameter("save_exit") != null)
+		if(type.equals("exit"));
 			response.sendRedirect("MainMenu.jsp");
 	}
 %>
@@ -57,10 +60,22 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-		<title>ManageMap</title>
-		<jsp:include page="NavBar.jsp"></jsp:include>
-	</head>
-	<body>
+	<title>ManageMap</title>
+	<jsp:include page="NavBar.jsp"></jsp:include>
+	<script type='text/javascript'>
+		function saveMap(type){
+			var name = document.getElementById("mapName").value;
+			if(name == ""){
+				alert("Insert Map name");
+			} else {
+				document.save.hiddenMapName.value = type + name;
+				document.save.submit();
+			}
+			
+		}
+	</script>
+</head>
+<body>
 		<div class="container-fluid text-center">    
 		  	<div class="row content">
 		  		<div class="col-sm-12 text-center"> 
@@ -69,7 +84,7 @@
 		  	</div>
 		  	<div class="row content">
 		  		<div class="col-sm-6 text-center"> 
-		  			<input type = "text" name = "name_map" placeholder = "Nome della mappa" <%if(map != null) %>value = "<%= map.getName()%>"/>
+		  			<input type = "text" name = "name_map" placeholder = "Nome della mappa" id = "mapName"<%if(map != null) %>value = "<%= map.getName()%>"/>
 		  		</div>
 		  		<div class="col-sm-1 text-center"> 
 		  			Zones
@@ -135,11 +150,12 @@
 		  	</div>
 	  		<div class="row content">
 	  		<form action = "ManageMap.jsp" name = "save" method = "POST">
+	  			<input type = "hidden" id = "hiddenMapName" name = "hiddenMapName">
 		  		<div class="col-sm-3 text-center"> 
-		  			<button type="submit" name = "save">Salva</button>
+		  			<button type="button" name = "save" id = "save" onClick = "saveMap('save')">Salva</button>
 		  		</div>
 		  		<div class="col-sm-3 text-center"> 
-		  			<button type="submit" name = "save_exit">Salva e esci</button>
+		  			<button type="button" name = "save_exit" id = "exit" onClick = "saveMap('exit')">Salva e esci</button>
 		  		</div>
 	  		</form>
 		  	</div>
