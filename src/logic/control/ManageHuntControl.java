@@ -46,16 +46,18 @@ public class ManageHuntControl {
 		
 		hunt.setRiddleList(riddle);
 		
-		for(var i = 0; i < huntBean.getObject().size(); i++) {
-			var obj = new RealObject();
-			
-			obj.setName(huntBean.getObject().get(i).getName());
-			
-			obj.setDescription(huntBean.getObject().get(i).getDescription());
-			
-			obj.setPath(huntBean.getObject().get(i).getPath());
-			
-			object.add(obj);
+		if(huntBean.getObject() != null) {
+			for(var i = 0; i < huntBean.getObject().size(); i++) {
+				var obj = new RealObject();
+				
+				obj.setName(huntBean.getObject().get(i).getName());
+				
+				obj.setDescription(huntBean.getObject().get(i).getDescription());
+				
+				obj.setPath(huntBean.getObject().get(i).getPath());
+				
+				object.add(obj);
+			}
 		}
 		
 		hunt.setObjectList(object);
