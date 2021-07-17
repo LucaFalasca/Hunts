@@ -29,20 +29,16 @@ public class RegisterGController extends ControllerWithLogin{
     
     @FXML
     void handleRegister(ActionEvent event) {
-    	try {
-	    	UserControl controller = new UserControl();
-	    	LoginBean bean = new LoginBean();
-	    	bean.setUsername(tfUserName.getText());
-	    	bean.setPassword(tfPassword.getText());
-	    	
-	    	if(controller.registerAccount(bean)) {
-	    		changeScene(Pages.MAIN_MENU, null, null);
-	    	} else {
-	    		showAlert("This username already exist");
-	    	}
-    	}catch(DatabaseException e) {
-			showAlert(e.getMessage());
-		}
+    	UserControl controller = new UserControl();
+    	LoginBean bean = new LoginBean();
+    	bean.setUsername(tfUserName.getText());
+    	bean.setPassword(tfPassword.getText());
+    	
+    	if(controller.registerAccount(bean)) {
+    		changeScene(Pages.MAIN_MENU, null, null);
+    	} else {
+    		showAlert("This username already exist");
+    	}
     }
 
 	

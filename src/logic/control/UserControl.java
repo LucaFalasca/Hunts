@@ -17,25 +17,29 @@ public class UserControl {
 		return dao.login(username, password);
 	}
 	
-	public boolean registerAccount(LoginBean bean) throws DatabaseException {
-		String username = bean.getUsername();
-		String password = bean.getPassword();
-		var failed = true;
-		
-		var dao = new UserDao();
-		
-		List<String> allUsers = dao.getAllUser();
-		
-		for(String name : allUsers) {
-			if(name.equals(username)) 
-				failed = false;
+	public boolean registerAccount(LoginBean bean) {
+		try {
+			String username = bean.getUsername();
+			String password = bean.getPassword();
+			var failed = true;
+			
+			var dao = new UserDao();
+			
+			List<String> allUsers = dao.getAllUser();
+			
+			for(String name : allUsers) {
+				if(name.equals(username)) 
+					failed = false;
+			}
+			
+			if(failed) {
+				dao.register(username, password);
+			}
+			
+			return failed;
+		}catch(DatabaseException e) {
+			return false;
 		}
-		
-		if(failed) {
-			dao.register(username, password);
-		}
-		
-		return failed;
 	}
 	
 	public double calculateAvgRate(List<HuntBean> huntBeans) {
