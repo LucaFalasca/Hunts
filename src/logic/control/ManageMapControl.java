@@ -24,7 +24,7 @@ public class ManageMapControl {
 		map.setName(name);
 		if(id != -1)				map.setId(id);
 		if(imagePath != null) 			map.setImagePath(imagePath);
-		if(!zonesBean.isEmpty()) {
+		if(zonesBean != null && !zonesBean.isEmpty()) {
 			List<Zone> zones = new ArrayList<>();
 			for(ZoneBean zb : zonesBean) {
 				Type type = null;
