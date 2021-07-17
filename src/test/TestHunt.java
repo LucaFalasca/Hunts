@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.Test;
 
+import logic.control.ManageHuntControl;
+import logic.control.PlayHuntControl;
 import logic.exception.DatabaseException;
 import logic.model.dao.HuntDao;
 
@@ -43,4 +45,5 @@ public class TestHunt {
 		
 		assertNotEquals(null, dao.searchHunt("a").get(0).getAvgRatingHunt());
 	}
+	
 }
