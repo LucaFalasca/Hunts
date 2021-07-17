@@ -31,8 +31,6 @@ public class UploadFileControl {
 		try (var outputStream = new FileOutputStream(file.getAbsolutePath())){
 			outputStream.write(data);
 		} catch (IOException e) {
-
-			e.printStackTrace();
 			throw new LoadFileFailed();
 		} 
 	}

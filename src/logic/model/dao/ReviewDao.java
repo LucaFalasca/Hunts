@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exception.DatabaseException;
 import logic.model.Database;
 import logic.model.entity.Hunt;
 import logic.model.entity.Review;
@@ -14,7 +15,7 @@ import logic.model.entity.Review;
 public class ReviewDao {
 
 	
-	public int saveReview(Review review, int hunt) {
+	public int saveReview(Review review, int hunt) throws DatabaseException {
 		return saveReview(review.getId(), 
 				review.getReviewer(), 
 				hunt, 
@@ -23,11 +24,11 @@ public class ReviewDao {
 				review.getDate());
 	}
 	
-	public List<Review> getReviewsByHunt(Hunt hunt){
+	public List<Review> getReviewsByHunt(Hunt hunt) throws DatabaseException{
 		return getReviewsByHunt(hunt.getIdHunt());
 	}
 	
-	public List<Review> getReviewsByHunt(int idHunt){
+	public List<Review> getReviewsByHunt(int idHunt) throws DatabaseException{
 		var conn = Database.getConnection();
 		
 		List<Review> reviews = new ArrayList<>();
@@ -65,13 +66,13 @@ public class ReviewDao {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		return reviews;
 	}
 	
-	public int saveReview(int idReview, String user, int idHunt, double rating, String text, LocalDate date) {
+	public int saveReview(int idReview, String user, int idHunt, double rating, String text, LocalDate date) throws DatabaseException {
 		var conn = Database.getConnection();
 		var id = -1;
 		
@@ -100,7 +101,7 @@ public class ReviewDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return id;
 	}

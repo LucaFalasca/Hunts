@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
+import logic.exception.DatabaseException;
 import logic.model.dao.PlayHuntDao;
 
 public class TestPlayedHunt {
@@ -15,7 +16,7 @@ public class TestPlayedHunt {
 	static final String USERNAME = "pippo";
 	
 	@Test
-	public void testGetPlayedHunt() {
+	public void testGetPlayedHunt() throws DatabaseException {
 		var dao = new PlayHuntDao();
 		
 		var playedHunts = dao.getPlayedHunt(USERNAME);

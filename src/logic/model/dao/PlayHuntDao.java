@@ -7,13 +7,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exception.DatabaseException;
 import logic.model.Database;
 import logic.model.entity.Hunt;
 import logic.model.entity.PlayedHunt;
 
 public class PlayHuntDao {
 
-	public List<PlayedHunt> getPlayedHunt(String username) {
+	public List<PlayedHunt> getPlayedHunt(String username) throws DatabaseException {
 		var conn = Database.getConnection();
 		List<PlayedHunt> hunts = new ArrayList<>();
 		
@@ -54,13 +55,13 @@ public class PlayHuntDao {
 			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return hunts;
 		
 	}
 	
-	public void setHuntAsPlayed(int idHunt, String player, LocalDate date) {
+	public void setHuntAsPlayed(int idHunt, String player, LocalDate date) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call set_hunt_as_played(?, ?, ?, ?);")){
@@ -75,11 +76,11 @@ public class PlayHuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 	
-	public void setHuntAsFinished(int idHunt, String player) {
+	public void setHuntAsFinished(int idHunt, String player) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call set_hunt_as_played(?, ?, ?, ?);")){
@@ -95,7 +96,7 @@ public class PlayHuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 }

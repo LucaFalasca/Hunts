@@ -7,13 +7,14 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
+import logic.exception.DatabaseException;
 import logic.model.dao.ReviewDao;
 import logic.model.entity.Review;
 
 public class TestReview {
 
 	@Test
-	public void testSaveReview() {
+	public void testSaveReview() throws DatabaseException {
 		var review = new Review();
 		review.setReviewer("pippo");
 		review.setText("Bella Mappa!");
@@ -26,14 +27,14 @@ public class TestReview {
 	}
 	
 	@Test
-	public void testGetReviewsByHuntAreNotNull() {
+	public void testGetReviewsByHuntAreNotNull() throws DatabaseException {
 		var dao = new ReviewDao();
 
 		assertNotEquals(null, dao.getReviewsByHunt(1));
 	}
 	
 	@Test
-	public void testGetReviewsByHuntAreNotEmpty() {
+	public void testGetReviewsByHuntAreNotEmpty() throws DatabaseException {
 		var dao = new ReviewDao();
 
 		var result = dao.getReviewsByHunt(1);
