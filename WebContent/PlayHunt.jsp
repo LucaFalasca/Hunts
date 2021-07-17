@@ -111,8 +111,10 @@
 	    	</ul>
 		</div>
 		<div class="col-sm-6 text-center"> 
-		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; background: url('<%= "uploads/" + map.getImage().substring(8)%>'); background-size: 350px 350px;">
+					<% if(map != null){%>
+		  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; <% if(map.getImage() != null){%>background: url('<%= "uploads/" + map.getImage().substring(8)%>'); <% }%>background-size: 350px 350px;">
 					</canvas>
+					<% }%>
 					<%
 					if(map != null){
 						if(map.getZones() != null && !map.getZones().isEmpty()){
