@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.enumeration.Type;
+import logic.exception.DatabaseException;
 import logic.model.Database;
 import logic.model.entity.Map;
 import logic.model.entity.Zone;
 
 public class MapDao {
 	
-	public Map getMapById(String username, int idMap) {
+	public Map getMapById(String username, int idMap) throws DatabaseException {
 		var conn = Database.getConnection();
 		var map = new Map(idMap);
 		try(CallableStatement stmt = conn.prepareCall("call get_map_by_id(?, ?);");) {
@@ -70,12 +71,12 @@ public class MapDao {
 			map.setZones(zones);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return map;
 	}
 	
-	public int saveMap(String username, Map map) {
+	public int saveMap(String username, Map map) throws DatabaseException {
 		var conn = Database.getConnection();
 		var id = 0;
 		try(CallableStatement stmt = conn.prepareCall("call save_map(?, ?, ?, ?);");) {
@@ -99,7 +100,7 @@ public class MapDao {
 			id = stmt.getInt(1);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		if(map.getZones() != null) {
 			List<Zone> zones = map.getZones();
@@ -111,7 +112,7 @@ public class MapDao {
 		return id;
 	}
 	
-	private void addZoneToMap(Zone zone, int idMap) {
+	private void addZoneToMap(Zone zone, int idMap) throws DatabaseException {
 		var conn = Database.getConnection();
 		try(CallableStatement stmt = conn.prepareCall("call add_zone_to_map(?, ?, ?, ?, ?, ?, ?);");) {
 			
@@ -140,11 +141,11 @@ public class MapDao {
 			
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 	
-	public List<Map> getMapList(String username){
+	public List<Map> getMapList(String username) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		List<Map> maps = new ArrayList<>();
@@ -174,13 +175,13 @@ public class MapDao {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		return maps;
 	}
 	
-	public void deleteMap(int id, String username) {
+	public void deleteMap(int id, String username) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try(CallableStatement stmt = conn.prepareCall("call delete_map_by_id(?, ?);")) {
@@ -196,7 +197,7 @@ public class MapDao {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 }

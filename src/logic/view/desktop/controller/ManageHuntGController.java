@@ -396,15 +396,17 @@ public class ManageHuntGController extends ControllerWithLogin{
 
     @FXML
     void handleChooseMap(ActionEvent event)  {
-    	
-    	var mpc = new ManageMapControl();
-		var controller = new ChooseMapGController(Pages.CHOOSE_MAP, getIstance());
-		List<MapBean> mapsList = null;
-    	
-		mapsList = mpc.getAllMaps(getUsername());
-		
-    	createStage(controller, mapsList, "Choose a map");
-        
+    	try {
+	    	var mpc = new ManageMapControl();
+			var controller = new ChooseMapGController(Pages.CHOOSE_MAP, getIstance());
+			List<MapBean> mapsList = null;
+	    	
+			mapsList = mpc.getAllMaps(getUsername());
+			
+	    	createStage(controller, mapsList, "Choose a map");
+    	} catch(DatabaseException e) {
+    		showAlert(e.getMessage());
+    	}
     }
 
     
@@ -439,16 +441,19 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
     
     public void setIdMap(int idMap) {
-    	var mpc = new ManageMapControl();
-    	MapBean mapBean = null;
-    	if(idMap != -1) {
-			mapBean = mpc.getMapById(getUsername(), idMap);
-			if(mapBean != null) {
-				huntBean.setMap(mapBean);
-				setMap(mapBean);
-			}
-			
-        }
+    	try {
+	    	var mpc = new ManageMapControl();
+	    	MapBean mapBean = null;
+	    	if(idMap != -1) {
+				mapBean = mpc.getMapById(getUsername(), idMap);
+				if(mapBean != null) {
+					huntBean.setMap(mapBean);
+					setMap(mapBean);
+				}
+	        }
+    	} catch(DatabaseException e) {
+    		showAlert(e.getMessage());
+    	}
     }
 
     @FXML

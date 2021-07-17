@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import logic.bean.MapBean;
 import logic.control.ManageMapControl;
+import logic.exception.DatabaseException;
 
 public class TestAddMap {
 	
@@ -13,7 +14,7 @@ public class TestAddMap {
 	
 	//Andrea Paolo Mancuso's Test
 	@Test
-	public void testAddMap() {
+	public void testAddMap() throws DatabaseException {
 		var map = new MapBean();
 		var controller = new ManageMapControl();
 		

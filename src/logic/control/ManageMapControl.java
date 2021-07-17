@@ -7,6 +7,7 @@ import java.util.List;
 import logic.bean.MapBean;
 import logic.bean.ZoneBean;
 import logic.enumeration.Type;
+import logic.exception.DatabaseException;
 import logic.exception.LoadFileFailed;
 import logic.model.dao.MapDao;
 import logic.model.entity.Map;
@@ -14,7 +15,7 @@ import logic.model.entity.Zone;
 
 public class ManageMapControl {
 	
-	public int save(String username, MapBean bean) {
+	public int save(String username, MapBean bean) throws DatabaseException {
 		int id = bean.getId();
 		String name = bean.getName();
 		String imagePath = bean.getImage();
@@ -52,7 +53,7 @@ public class ManageMapControl {
 		return dao.saveMap(username, map);
 	}
 	
-	public MapBean getMapById(String username, int id) {
+	public MapBean getMapById(String username, int id) throws DatabaseException {
 		var dao = new MapDao();
 		var map = dao.getMapById(username, id);
 		
@@ -78,7 +79,7 @@ public class ManageMapControl {
 		return bean;
 	}
 	
-	public List<MapBean> getAllMaps(String username){
+	public List<MapBean> getAllMaps(String username) throws DatabaseException {
 		var dao = new MapDao();
 		List<Map> maps = dao.getMapList(username);
 		
@@ -97,12 +98,12 @@ public class ManageMapControl {
 	}
 
 	
-	public String uploadFile(File file) throws LoadFileFailed {
+	public String uploadFile(File file) throws LoadFileFailed, DatabaseException {
 		var uploadFileControl = new UploadFileControl();
 		return uploadFileControl.uploadFile(file);
 	}
 	
-	public void deleteMap(int id, String username) {
+	public void deleteMap(int id, String username) throws DatabaseException {
 		var dao = new MapDao();
 		dao.deleteMap(id, username);
 	}

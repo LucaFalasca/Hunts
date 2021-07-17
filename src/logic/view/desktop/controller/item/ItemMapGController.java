@@ -9,6 +9,7 @@ import logic.bean.MapBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.view.desktop.controller.ControllerWithLogin;
 
 public class ItemMapGController extends ItemController{
@@ -35,9 +36,13 @@ public class ItemMapGController extends ItemController{
     
     @FXML
     void handleDeleteMap(ActionEvent event) {
-    	var controllerMap = new ManageMapControl();
-    	controllerMap.deleteMap(idMap, creatorName);
-    	changeScene(Pages.MAIN_MENU);
+    	try {
+	    	var controllerMap = new ManageMapControl();
+	    	controllerMap.deleteMap(idMap, creatorName);
+	    	changeScene(Pages.MAIN_MENU);
+    	} catch(DatabaseException e) {
+    		showAlert(e.getMessage());
+    	}
     }
 
     @FXML

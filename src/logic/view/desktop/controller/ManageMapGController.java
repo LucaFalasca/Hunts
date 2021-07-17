@@ -26,6 +26,7 @@ import logic.bean.ZoneBean;
 import logic.control.ManageMapControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.exception.LoadFileFailed;
 import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
@@ -109,29 +110,33 @@ public class ManageMapGController extends ControllerWithLogin{
 	}
     
     private void setMap(int par) {
-    	var controller = new ManageMapControl();
-		var map = controller.getMapById(getUsername(), par);
-		idMap = map.getId();
-		if(map.getImage() != null) {
-			pathImage = map.getImage();
-			setImageByPath(pathImage);
-		}
-		tfMapName.setText(map.getName());
-		if(map.getZones() != null) {
-			zones.setAll(map.getZones());
-			for(ZoneBean zone : zones) {
-				if(zone.getShape().equals(OVAL)) {
-					drawMachine.setState(OvalState.getInstance());
-				} else {
-					drawMachine.setState(RectangleState.getInstance());
-				}
-				double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
-				double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
-				double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
-				double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
-				drawMachine.draw(gcDraw, x1, y1, x2, y2);
+    	try {
+	    	var controller = new ManageMapControl();
+			var map = controller.getMapById(getUsername(), par);
+			idMap = map.getId();
+			if(map.getImage() != null) {
+				pathImage = map.getImage();
+				setImageByPath(pathImage);
 			}
-		}
+			tfMapName.setText(map.getName());
+			if(map.getZones() != null) {
+				zones.setAll(map.getZones());
+				for(ZoneBean zone : zones) {
+					if(zone.getShape().equals(OVAL)) {
+						drawMachine.setState(OvalState.getInstance());
+					} else {
+						drawMachine.setState(RectangleState.getInstance());
+					}
+					double x1 = Parser.parseFromPercent(zone.getX1(), canvasWidth);
+					double x2 = Parser.parseFromPercent(zone.getX2(), canvasWidth);
+					double y1 = Parser.parseFromPercent(zone.getY1(), canvasHeight);
+					double y2 = Parser.parseFromPercent(zone.getY2(), canvasHeight);
+					drawMachine.draw(gcDraw, x1, y1, x2, y2);
+				}
+			}
+    	} catch(DatabaseException e) {
+    		showAlert(e.getMessage());
+    	}
     }
     
     @FXML
@@ -150,20 +155,25 @@ public class ManageMapGController extends ControllerWithLogin{
     
     @FXML
     void handleUploadFile(ActionEvent event){
-    	var fileChooser = new FileChooser();
-    	fileChooser.setTitle("Choose Image");
-    	fileChooser.getExtensionFilters().addAll(
-    			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
-    			);
-    	var selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
-    	var controller = new ManageMapControl();
     	try {
-			pathImage = controller.uploadFile(selectedFile);
+	    	var fileChooser = new FileChooser();
+	    	fileChooser.setTitle("Choose Image");
+	    	fileChooser.getExtensionFilters().addAll(
+	    			new ExtensionFilter("Image", "*.png", "*.jpg", "*.jpeg", "*.gif")
+	    			);
+	    	var selectedFile = fileChooser.showOpenDialog(ivMap.getScene().getWindow());
+	    	var controller = new ManageMapControl();
+	    	
+				pathImage = controller.uploadFile(selectedFile);
+				setImageByPath(pathImage);
+    	
 		} catch (LoadFileFailed e) {
 			showAlert(e.getMessage());
-		}
+		} catch(DatabaseException e1) {
+    		showAlert(e1.getMessage());
+    	}
     	
-    	setImageByPath(pathImage);
+    	
     }
     
     private void setImageByPath(String path) {
@@ -282,13 +292,16 @@ public class ManageMapGController extends ControllerWithLogin{
     //Save
     @FXML
     void handleSave(ActionEvent event) {
-    	var control = new ManageMapControl();
-    	var bean = new MapBean(idMap, getMapName(), zones);
-    	if(pathImage != null) {
-    		bean.setImage(pathImage);
+    	try {
+	    	var control = new ManageMapControl();
+	    	var bean = new MapBean(idMap, getMapName(), zones);
+	    	if(pathImage != null) {
+	    		bean.setImage(pathImage);
+	    	}
+			idMap = control.save(getUsername(), bean);
+    	} catch(DatabaseException e) {
+    		showAlert(e.getMessage());
     	}
-		idMap = control.save(getUsername(), bean);
-		
     }
     
     @FXML
