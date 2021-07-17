@@ -1,6 +1,5 @@
 package logic.view.desktop.controller;
 
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +21,6 @@ import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.DatabaseException;
-import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemHuntGController;
 import logic.view.desktop.controller.item.ItemHuntsGController;
 import logic.view.desktop.controller.item.ItemMapGController;

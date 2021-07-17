@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
 import logic.control.UserControl;
 import logic.enumeration.Pages;
-import logic.exception.DatabaseException;
 
 public class RegisterGController extends ControllerWithLogin{
 

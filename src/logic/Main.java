@@ -4,7 +4,6 @@ import javafx.stage.Stage;
 import logic.enumeration.Pages;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.ToolBarController;
-import logic.view.desktop.controller.item.ItemController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

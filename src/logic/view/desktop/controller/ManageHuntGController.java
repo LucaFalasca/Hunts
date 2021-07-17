@@ -36,7 +36,6 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.DatabaseException;
 import logic.exception.LoadFileFailed;
-import logic.exception.UsernameNotLoggedException;
 import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.OvalState;

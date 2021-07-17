@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.Test;
 
-import logic.control.ManageHuntControl;
-import logic.control.PlayHuntControl;
 import logic.exception.DatabaseException;
 import logic.model.dao.HuntDao;
 

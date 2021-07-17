@@ -21,7 +21,6 @@ import logic.control.UserControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.DatabaseException;
-import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemGameHistoryGController;
 import logic.view.desktop.controller.item.ItemHuntRatingGController;
 import logic.view.desktop.controller.item.ItemMapGController;

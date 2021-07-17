@@ -8,8 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
-
 import logic.exception.NotConnectedException;
 import logic.exception.DatabaseException;
 

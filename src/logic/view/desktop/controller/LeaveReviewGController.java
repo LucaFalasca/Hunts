@@ -17,7 +17,6 @@ import logic.bean.ReviewBean;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.exception.DatabaseException;
-import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemController;
 
 public class LeaveReviewGController extends ItemController{

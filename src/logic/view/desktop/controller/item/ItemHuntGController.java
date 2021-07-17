@@ -1,16 +1,13 @@
 package logic.view.desktop.controller.item;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
