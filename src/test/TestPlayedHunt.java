@@ -12,7 +12,7 @@ import logic.model.dao.PlayHuntDao;
 
 public class TestPlayedHunt {
 
-	final String USERNAME = "pippo";
+	static final String USERNAME = "pippo";
 	
 	@Test
 	public void testGetPlayedHunt() {

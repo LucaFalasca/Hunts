@@ -223,7 +223,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 				double y1 = Parser.parseFromPercent(zone.getY1(), canvasDraw.getHeight());
 				double y2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
 				if(isBetween(x, x1, x2) && isBetween(y, y1, y2)) {
-					
+					//Need other development
 				}
 			}
 		}

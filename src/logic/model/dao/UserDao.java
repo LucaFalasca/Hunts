@@ -70,7 +70,7 @@ public class UserDao {
 					stmt.close();
 				
 			} catch (SQLException e) {
-				throw new DatabaseException();
+				e.printStackTrace();
 			}
 		}
 	}

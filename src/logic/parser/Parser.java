@@ -2,6 +2,10 @@ package logic.parser;
 
 public class Parser {
 
+	private Parser() {
+		
+	}
+	
 	public static double parseToPercent(double value, double max) {
 		return value * 100 / max;
 	}

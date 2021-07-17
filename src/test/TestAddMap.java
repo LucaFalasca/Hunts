@@ -9,6 +9,8 @@ import logic.control.ManageMapControl;
 
 public class TestAddMap {
 	
+	static final String USERNAME = "pippo";
+	
 	//Andrea Paolo Mancuso's Test
 	@Test
 	public void testAddMap() {
@@ -17,12 +19,12 @@ public class TestAddMap {
 		
 		map.setId(-1);
 		map.setName("test");
-		map.setCreatorName("pippo");
+		map.setCreatorName(USERNAME);
 		map.setImage(null);
 		map.setZones(null);
 		
-		assertNotEquals(-1, controller.save("pippo", map));
-		controller.deleteMap(map.getId(), "pippo");
+		assertNotEquals(-1, controller.save(USERNAME, map));
+		controller.deleteMap(map.getId(), USERNAME);
 	}
 
 }
