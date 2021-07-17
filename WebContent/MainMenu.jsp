@@ -11,6 +11,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%	
+	session.removeAttribute("hunt");
 	session.removeAttribute("zones");
 	session.removeAttribute("riddles");
 	session.removeAttribute("objects");
@@ -27,8 +28,10 @@
 		response.sendRedirect("ManageMap.jsp");
 	}
 	if(request.getParameter("editHunt") != null){
-		String idHunt = request.getParameter("editHunt").toString();
-		session.setAttribute("hunt", idHunt);
+		int idHunt = Integer.valueOf(request.getParameter("editHunt"));
+		HuntBean hunt = new HuntBean();
+		hunt.setIdHunt(idHunt);
+		session.setAttribute("hunt", hunt);
 		response.sendRedirect("ManageHunt.jsp");
 	}
 	
