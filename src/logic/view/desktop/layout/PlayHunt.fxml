@@ -39,7 +39,7 @@
                      <top>
                         <AnchorPane BorderPane.alignment="CENTER">
                            <children>
-                              <ListView fx:id="lvRiddle" layoutX="30.0" layoutY="85.0" onEditStart="#handleSelectRiddle" prefHeight="274.0" prefWidth="298.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="64.0" />
+                              <ListView fx:id="lvRiddle" layoutX="30.0" layoutY="85.0" prefHeight="274.0" prefWidth="298.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="64.0" />
                               <Label layoutX="574.0" layoutY="52.0" text="Riddles" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
                                  <font>
                                     <Font size="36.0" />

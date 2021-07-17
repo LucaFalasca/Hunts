@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -32,8 +31,6 @@ import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.DatabaseException;
-import logic.exception.UsernameNotLoggedException;
-import logic.model.entity.Map;
 import logic.parser.Parser;
 import logic.state.draw.DrawMachine;
 import logic.state.draw.states.OvalState;
@@ -97,11 +94,11 @@ public class PlayHuntGController extends ControllerWithLogin{
 					var id = Integer.valueOf((String) par.get(0));
 					String username = (String) par.get(1);
 					
-					HuntBean hunt = controller.getHunt(id, username);
-					this.hunt = hunt;
-					MapBean map = hunt.getMap();
-					setMap(map);
-					riddleList.setAll(hunt.getRiddle());
+					var huntBean = controller.getHunt(id, username);
+					this.hunt = huntBean;
+					var mapBean = huntBean.getMap();
+					setMap(mapBean);
+					riddleList.setAll(huntBean.getRiddle());
 				}catch(DatabaseException e) {
 					showAlert(e.getMessage());
 				}
@@ -113,20 +110,11 @@ public class PlayHuntGController extends ControllerWithLogin{
         	
 			@Override
 			public void changed(ObservableValue<? extends RiddleBean> arg0, RiddleBean arg1, RiddleBean arg2) {
-				boxAnswer.setVisible(true);
-				lbDomanda.setText(arg2.getRiddle());
-				currentRiddle = arg2;
-				if(arg2.getClue() != null) {
-					for(var i = 0; i < arg2.getClue().size(); i++)
-						lbClues.get(i).setText(arg2.getClueElement(i));
-					for(var i = 0; i < arg2.getClueUsed(); i++){
-						lbClues.get(i).setVisible(true);
-					}
-				}
+				change(arg2);
 			}
           });
 		
-		lvRiddle.setCellFactory(hunt -> new ListCell<RiddleBean>() {
+		lvRiddle.setCellFactory(huntTemp -> new ListCell<RiddleBean>() {
 			@Override
 			public void updateItem(RiddleBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
@@ -141,7 +129,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 		});
 		if(isLogged()) {
 			try {
-				PlayHuntControl playHuntControl = new PlayHuntControl();
+				var playHuntControl = new PlayHuntControl();
 				playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
 			}catch(DatabaseException e) {
 				showAlert(e.getMessage());
@@ -170,7 +158,18 @@ public class PlayHuntGController extends ControllerWithLogin{
 		}
     }
 	
-	
+	private void change(RiddleBean riddle) {
+		boxAnswer.setVisible(true);
+		lbDomanda.setText(riddle.getRiddle());
+		currentRiddle = riddle;
+		if(riddle.getClue() != null) {
+			for(var i = 0; i < riddle.getClue().size(); i++)
+				lbClues.get(i).setText(riddle.getClueElement(i));
+			for(var i = 0; i < riddle.getClueUsed(); i++){
+				lbClues.get(i).setVisible(true);
+			}
+		}
+	}
 	
 	private void setImageByPath(String path) {
     	var img = new Image("file:" + path, ivMap.getFitWidth(), ivMap.getFitHeight(), false, false);
@@ -224,8 +223,7 @@ public class PlayHuntGController extends ControllerWithLogin{
 				double y1 = Parser.parseFromPercent(zone.getY1(), canvasDraw.getHeight());
 				double y2 = Parser.parseFromPercent(zone.getY2(), canvasDraw.getHeight());
 				if(isBetween(x, x1, x2) && isBetween(y, y1, y2)) {
-					ManageHuntControl controller = new ManageHuntControl();
-					//riddleList = (ObservableList<RiddleBean>) controller.getRiddleFromZone(hunt, zone);
+					
 				}
 			}
 		}
@@ -261,8 +259,5 @@ public class PlayHuntGController extends ControllerWithLogin{
     	else return x < y1 && x > y2;
     }
     
-    @FXML
-    void handleSelectRiddle(ActionEvent event) {
-    	
-    }
+
 }
