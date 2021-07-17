@@ -31,6 +31,7 @@ import logic.control.ManageHuntControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.exception.UsernameNotLoggedException;
 import logic.model.entity.Map;
 import logic.parser.Parser;
@@ -90,16 +91,20 @@ public class PlayHuntGController extends ControllerWithLogin{
 		lbClues.add(lbClue3);
 		
 		if(arg != null && arg.equals(StringHardCode.HUNT.toString())) {
-				List<?> par = (List<?>) param;
-				var controller = new ManageHuntControl();
-				var id = Integer.valueOf((String) par.get(0));
-				String username = (String) par.get(1);
-				
-				HuntBean hunt = controller.getHunt(id, username);
-				this.hunt = hunt;
-				MapBean map = hunt.getMap();
-				setMap(map);
-				riddleList.setAll(hunt.getRiddle());
+				try {
+					List<?> par = (List<?>) param;
+					var controller = new ManageHuntControl();
+					var id = Integer.valueOf((String) par.get(0));
+					String username = (String) par.get(1);
+					
+					HuntBean hunt = controller.getHunt(id, username);
+					this.hunt = hunt;
+					MapBean map = hunt.getMap();
+					setMap(map);
+					riddleList.setAll(hunt.getRiddle());
+				}catch(DatabaseException e) {
+					showAlert(e.getMessage());
+				}
 			
 		}
 		lvRiddle.setItems(riddleList);
@@ -135,8 +140,12 @@ public class PlayHuntGController extends ControllerWithLogin{
 			
 		});
 		if(isLogged()) {
-			PlayHuntControl playHuntControl = new PlayHuntControl();
-			playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
+			try {
+				PlayHuntControl playHuntControl = new PlayHuntControl();
+				playHuntControl.setHuntAsPlayed(hunt.getIdHunt(), getUsername());
+			}catch(DatabaseException e) {
+				showAlert(e.getMessage());
+			}
 		}
 	}
 	
@@ -179,23 +188,27 @@ public class PlayHuntGController extends ControllerWithLogin{
 
     @FXML
     void handleAnswer(ActionEvent event) {
-    	var controller = new PlayHuntControl();
-    	var bean = new AnswerBean();
-    	bean.setRiddleAnswer(currentRiddle.getSolution());
-    	bean.setUserAnswer(tfRisposta.getText());
-    	if(controller.answer(bean)) {
-    		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
-    		lvRiddle.refresh();
-    		if(controller.isRiddlesCompleted(riddleList)) {
-    			showAlert(AlertType.INFORMATION, "Victory!", "You have finished the Hunt");
-    			if(isLogged()) {
-					controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
-    			}
-    			changeScene(Pages.MAIN_MENU);
-    		}
-		}else {
-    		showAlert(AlertType.INFORMATION, "Wrong", "Wrong answer");
-    	}
+    	try {
+	    	var controller = new PlayHuntControl();
+	    	var bean = new AnswerBean();
+	    	bean.setRiddleAnswer(currentRiddle.getSolution());
+	    	bean.setUserAnswer(tfRisposta.getText());
+	    	if(controller.answer(bean)) {
+	    		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
+	    		lvRiddle.refresh();
+	    		if(controller.isRiddlesCompleted(riddleList)) {
+	    			showAlert(AlertType.INFORMATION, "Victory!", "You have finished the Hunt");
+	    			if(isLogged()) {
+						controller.finishHunt(hunt.getIdHunt(), getUsername(), riddleList);
+	    			}
+	    			changeScene(Pages.MAIN_MENU);
+	    		}
+			}else {
+	    		showAlert(AlertType.INFORMATION, "Wrong", "Wrong answer");
+	    	}
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
 	}
 
     

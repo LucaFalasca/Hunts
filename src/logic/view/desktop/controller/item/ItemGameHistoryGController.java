@@ -19,6 +19,7 @@ import logic.bean.PlayedHuntBean;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.HuntInformationGController;
 import logic.view.desktop.controller.LeaveReviewGController;
@@ -78,17 +79,21 @@ public class ItemGameHistoryGController extends ItemController{
 
 	@Override
 	public void start(String arg, Object param) {
-		var controller = new PlayHuntControl();
-		
-		playedHunt = (PlayedHuntBean) param;
-		huntBean = playedHunt.getPlayedHunt();
-		lbHuntName.setText(huntBean.getHuntName());
-		var review = controller.getReview(huntBean);
-		if(review != null)
-			rtHunts.setRating(review.getVote());
-		cbFinish.setAllowIndeterminate(playedHunt.isFinished());
-		cbFinish.setDisable(true);
-		rtHunts.setDisable(true);
+		try {
+			var controller = new PlayHuntControl();
+			
+			playedHunt = (PlayedHuntBean) param;
+			huntBean = playedHunt.getPlayedHunt();
+			lbHuntName.setText(huntBean.getHuntName());
+			var review = controller.getReview(huntBean);
+			if(review != null)
+				rtHunts.setRating(review.getVote());
+			cbFinish.setAllowIndeterminate(playedHunt.isFinished());
+			cbFinish.setDisable(true);
+			rtHunts.setDisable(true);
+		}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
 		
 	}
 

@@ -34,6 +34,7 @@ import logic.control.ManageMapControl;
 import logic.control.UploadFileControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.exception.LoadFileFailed;
 import logic.exception.UsernameNotLoggedException;
 import logic.parser.Parser;
@@ -189,42 +190,44 @@ public class ManageHuntGController extends ControllerWithLogin{
 		
         lbMap.setText("Insert Map");
         lbHunt.setText("Modify Hunt");
-        
-		var manageHuntControl = new ManageHuntControl();
-		var idHunt = -1;
-		var idMap = -1;
-		MapBean mapBean = null;
-		
-		switch(arg) {
-			case "map":
-				List<?> ids = (List<?>) param;
-				idHunt = (Integer) ids.get(0);
-				idMap = (Integer) ids.get(1);
-				huntBean = manageHuntControl.getHunt(idHunt, getUsername());
-				mapBean = new ManageMapControl().getMapById(getUsername(), idMap);
-				huntBean.setMap(mapBean);
-				setHunt(huntBean);
-				break;
-			case "hunt":
-				idHunt = (int) param;
-				huntBean = manageHuntControl.getHunt(idHunt, getUsername());
-				setHunt(huntBean);
-				break;
-			default:
-				huntBean.setUsername(getUsername());
-				huntBean.setIdHunt(idHunt);
-				break;
-				
+        try {
+			var manageHuntControl = new ManageHuntControl();
+			var idHunt = -1;
+			var idMap = -1;
+			MapBean mapBean = null;
+			
+			switch(arg) {
+				case "map":
+					List<?> ids = (List<?>) param;
+					idHunt = (Integer) ids.get(0);
+					idMap = (Integer) ids.get(1);
+					huntBean = manageHuntControl.getHunt(idHunt, getUsername());
+					mapBean = new ManageMapControl().getMapById(getUsername(), idMap);
+					huntBean.setMap(mapBean);
+					setHunt(huntBean);
+					break;
+				case "hunt":
+					idHunt = (int) param;
+					huntBean = manageHuntControl.getHunt(idHunt, getUsername());
+					setHunt(huntBean);
+					break;
+				default:
+					huntBean.setUsername(getUsername());
+					huntBean.setIdHunt(idHunt);
+					break;
+					
+			}
+	
+			lbRiddle.setText(RIDDLE + rdlList.size());
+	    	cmbObject.setItems(objList);
+	    	cmbZone.setItems(zoneList);   	
+	    	tbRiddle.setItems(rdlList);
+	    	tbObject.setItems(objList);
+	    	
+	    	setTable();
+        }catch(DatabaseException e) {
+			showAlert(e.getMessage());
 		}
-
-		lbRiddle.setText(RIDDLE + rdlList.size());
-    	cmbObject.setItems(objList);
-    	cmbZone.setItems(zoneList);   	
-    	tbRiddle.setItems(rdlList);
-    	tbObject.setItems(objList);
-    	
-    	setTable();
-    	
 	}
 	
 	private void setTable() {
@@ -584,24 +587,28 @@ public class ManageHuntGController extends ControllerWithLogin{
     }
 
 	private int save() {
-		List<ObjectBean> objectBean = new ArrayList<>();
-		List<RiddleBean> riddleBean = new ArrayList<>();
-		
-		var manageHuntControl = new ManageHuntControl();
-		
-		huntBean.setHuntName(tfHuntName.getText());
-		for(RiddleBean rb : rdlList) 
-			riddleBean.add(rb);
+		try {
+			List<ObjectBean> objectBean = new ArrayList<>();
+			List<RiddleBean> riddleBean = new ArrayList<>();
 			
-		for(ObjectBean ob : objList)
-			objectBean.add(ob);
-		
-		huntBean.setRiddle(riddleBean);
-		huntBean.setObject(objectBean);
-		
-		
-		return manageHuntControl.saveHunt(huntBean);
-		
+			var manageHuntControl = new ManageHuntControl();
+			
+			huntBean.setHuntName(tfHuntName.getText());
+			for(RiddleBean rb : rdlList) 
+				riddleBean.add(rb);
+				
+			for(ObjectBean ob : objList)
+				objectBean.add(ob);
+			
+			huntBean.setRiddle(riddleBean);
+			huntBean.setObject(objectBean);
+			
+			
+			return manageHuntControl.saveHunt(huntBean);
+		}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
+		return -1;
 	}
     
 	private void cancelTextView() {

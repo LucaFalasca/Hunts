@@ -10,6 +10,7 @@ import logic.bean.MapBean;
 import logic.bean.PlayedHuntBean;
 import logic.bean.ReviewBean;
 import logic.bean.RiddleBean;
+import logic.exception.DatabaseException;
 import logic.model.dao.HuntDao;
 import logic.model.dao.PlayHuntDao;
 import logic.model.dao.ReviewDao;
@@ -19,7 +20,7 @@ import logic.model.entity.Review;
 
 public class PlayHuntControl {
 
-	public boolean answer(AnswerBean bean) {
+	public boolean answer(AnswerBean bean) throws DatabaseException {
 		String trueAnswer = bean.getRiddleAnswer().toLowerCase();
 		String userAnswer = bean.getUserAnswer().toLowerCase();
 		
@@ -27,7 +28,7 @@ public class PlayHuntControl {
 		
 	}
 
-	public List<HuntBean> getHuntsBySearch(String searchName) {
+	public List<HuntBean> getHuntsBySearch(String searchName) throws DatabaseException {
 		var huntDao = new HuntDao();
 		List<HuntBean> huntsBean = new ArrayList<>();
 		
@@ -50,7 +51,7 @@ public class PlayHuntControl {
 		
 	}
 	
-	public List<PlayedHuntBean> getPlayedHunt(String username) {
+	public List<PlayedHuntBean> getPlayedHunt(String username) throws DatabaseException{
 		var playedDao = new PlayHuntDao();
 		
 		List<PlayedHuntBean> playedHuntBean = new ArrayList<>();
@@ -79,7 +80,7 @@ public class PlayHuntControl {
 		return playedHuntBean;
 	}
 	
-	public void addReview(ReviewBean reviewBean) {
+	public void addReview(ReviewBean reviewBean) throws DatabaseException {
 		var reviewDao = new ReviewDao();
 		var review = new Review();
 		var idHunt = reviewBean.getIdHunt();
@@ -106,8 +107,7 @@ public class PlayHuntControl {
 		reviewDao.saveReview(review.getId(), review.getReviewer(), idHunt, review.getRating(), review.getText(), review.getDate());
 	}
 	
-	
-	public List<ReviewBean> getReviews(HuntBean huntBean) {
+	public List<ReviewBean> getReviews(HuntBean huntBean) throws DatabaseException {
 		var reviewDao = new ReviewDao();
 		
 		var hunt = new Hunt();
@@ -133,7 +133,7 @@ public class PlayHuntControl {
 		return reviewBeans;
 	}
 
-	public ReviewBean getReview(HuntBean huntBean) {
+	public ReviewBean getReview(HuntBean huntBean) throws DatabaseException {
 		List<ReviewBean> reviews = getReviews(huntBean);
 		for(ReviewBean review: reviews) {
 			if(review.getUsername().equals(huntBean.getUsername())) {
@@ -143,12 +143,12 @@ public class PlayHuntControl {
 		return null;
 	}
 
-	public void setHuntAsPlayed(int idHunt, String player) {
+	public void setHuntAsPlayed(int idHunt, String player) throws DatabaseException {
 		PlayHuntDao dao = new PlayHuntDao();
 		dao.setHuntAsPlayed(idHunt, player, LocalDate.now());
 	}
 	
-	public void finishHunt(int idHunt, String player, List<RiddleBean> riddles) {
+	public void finishHunt(int idHunt, String player, List<RiddleBean> riddles) throws DatabaseException {
 		
 		PlayHuntDao dao = new PlayHuntDao();
 		dao.setHuntAsFinished(idHunt, player);

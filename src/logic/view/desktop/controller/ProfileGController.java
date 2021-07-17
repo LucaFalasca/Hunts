@@ -20,6 +20,7 @@ import logic.control.PlayHuntControl;
 import logic.control.UserControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemGameHistoryGController;
 import logic.view.desktop.controller.item.ItemHuntRatingGController;
@@ -58,18 +59,23 @@ public class ProfileGController extends ControllerWithLogin{
 
 	@Override
 	protected void start(String arg, Object param) {
-		var huntController = new ManageHuntControl();
-		var userController = new UserControl();
-		var playController = new PlayHuntControl();
-		var mapController = new ManageMapControl();
-		huntsList.setAll(huntController.getAllHunts(getUsername()));
-		lbUserName.setText(getUsername());
-		historyHunt.setAll(playController.getPlayedHunt(getUsername()));
-		mapsList.setAll(mapController.getAllMaps(getUsername()));
-		
-		rtAvgHunts.setRating(userController.calculateAvgRate(huntsList));
-		rtAvgHunts.setDisable(true);
-		setListView();
+		try {
+			var huntController = new ManageHuntControl();
+			var userController = new UserControl();
+			var playController = new PlayHuntControl();
+			var mapController = new ManageMapControl();
+			huntsList.setAll(huntController.getAllHunts(getUsername()));
+			lbUserName.setText(getUsername());
+			historyHunt.setAll(playController.getPlayedHunt(getUsername()));
+			mapsList.setAll(mapController.getAllMaps(getUsername()));
+			
+			rtAvgHunts.setRating(userController.calculateAvgRate(huntsList));
+			rtAvgHunts.setDisable(true);
+			setListView();
+		}
+		catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
 		
 	}
 	

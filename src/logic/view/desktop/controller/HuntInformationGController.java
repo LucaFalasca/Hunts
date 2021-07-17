@@ -21,6 +21,7 @@ import logic.control.ManageHuntControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.view.desktop.controller.item.ItemController;
 import logic.view.desktop.controller.item.ItemMapGController;
 import logic.view.desktop.controller.item.ItemReviewGController;
@@ -85,38 +86,41 @@ public class HuntInformationGController extends ItemController{
 		
 		var username = (String) itemList.get(1);
 		
-		var controllerHunt = new ManageHuntControl();
-		var controllerPlay = new PlayHuntControl();
-		
-		var hb = controllerHunt.getHunt(idHunt, username);
-		lbHuntName.setText(hb.getHuntName());
-		lbCreatorName.setText(hb.getUsername());
-		var map = hb.getMap();
-		imgMap.setImage(new Image("File:" + map.getImage(), imgMap.getFitWidth(), imgMap.getFitHeight(), false, false));
-		rtHunt.setRating(hb.getAvgRating());
-		rtHunt.setDisable(true);
-		
-		ObservableList<ReviewBean> reviewsList = FXCollections.observableArrayList();
-		
-		reviewsList.setAll(controllerPlay.getReviews(hb));
-		
-		lvHuntReview.setItems(reviewsList);
-		lvHuntReview.setCellFactory(review -> new ListCell<ReviewBean>() {
-			@Override
-			public void updateItem(ReviewBean itemBean, boolean empty) {
-				super.updateItem(itemBean, empty);
-				if(itemBean != null) {
-					var newItem = new ItemReviewGController(Pages.ITEM_REVIEW, getIstance());
-					newItem.start(StringHardCode.REVIEW.toString(),itemBean);
-					setGraphic(newItem.getBox());
-					
-				} else {
-					setGraphic(null);
-					setText(null);
+		try {
+			var controllerHunt = new ManageHuntControl();
+			var controllerPlay = new PlayHuntControl();
+			
+			var hb = controllerHunt.getHunt(idHunt, username);
+			lbHuntName.setText(hb.getHuntName());
+			lbCreatorName.setText(hb.getUsername());
+			var map = hb.getMap();
+			imgMap.setImage(new Image("File:" + map.getImage(), imgMap.getFitWidth(), imgMap.getFitHeight(), false, false));
+			rtHunt.setRating(hb.getAvgRating());
+			rtHunt.setDisable(true);
+			
+			ObservableList<ReviewBean> reviewsList = FXCollections.observableArrayList();
+			
+			reviewsList.setAll(controllerPlay.getReviews(hb));
+			
+			lvHuntReview.setItems(reviewsList);
+			lvHuntReview.setCellFactory(review -> new ListCell<ReviewBean>() {
+				@Override
+				public void updateItem(ReviewBean itemBean, boolean empty) {
+					super.updateItem(itemBean, empty);
+					if(itemBean != null) {
+						var newItem = new ItemReviewGController(Pages.ITEM_REVIEW, getIstance());
+						newItem.start(StringHardCode.REVIEW.toString(),itemBean);
+						setGraphic(newItem.getBox());
+						
+					} else {
+						setGraphic(null);
+						setText(null);
+					}
 				}
-			}
-		});
-		
+			});
+		}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
 	}
 
 }

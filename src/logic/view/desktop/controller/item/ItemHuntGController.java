@@ -15,6 +15,7 @@ import logic.bean.HuntBean;
 import logic.control.ManageHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.HuntInformationGController;
 
@@ -45,12 +46,16 @@ public class ItemHuntGController extends ItemController{
     
     @FXML
     void handleDeleteHunt(ActionEvent event) {
-    	var controller = new ManageHuntControl();
-    	var huntBean = new HuntBean();
-    	huntBean.setIdHunt(idHunt);
-    	huntBean.setHuntName(lbHuntName.getText());
-    	controller.deleteHunt(huntBean);
-    	changeScene(Pages.MAIN_MENU);
+    	try {
+	    	var controller = new ManageHuntControl();
+	    	var huntBean = new HuntBean();
+	    	huntBean.setIdHunt(idHunt);
+	    	huntBean.setHuntName(lbHuntName.getText());
+	    	controller.deleteHunt(huntBean);
+	    	changeScene(Pages.MAIN_MENU);
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
 
     @FXML

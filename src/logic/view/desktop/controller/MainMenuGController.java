@@ -21,6 +21,7 @@ import logic.control.ManageMapControl;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
+import logic.exception.DatabaseException;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemHuntGController;
 import logic.view.desktop.controller.item.ItemHuntsGController;
@@ -75,26 +76,29 @@ public class MainMenuGController extends ControllerWithLogin{
 	ManageHuntControl controller = new ManageHuntControl();
     @Override
 	protected void start(String arg, Object param) {
-    	huntsList.addAll(controller.getAllHunts());
-		lvHunts.setItems(huntsList);
-		
-		if(isLogged()) {
-    		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
-    		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
-			var controllerMaps = new ManageMapControl();
-    		
-			apMaps.setDisable(false);
-			mapsList.addAll(controllerMaps.getAllMaps(getUsername()));
-			lvMaps.setItems(mapsList);
+    	try {
+	    	huntsList.addAll(controller.getAllHunts());
+			lvHunts.setItems(huntsList);
 			
-
-			apHunts.setDisable(false);
-			huntList.addAll(controller.getAllHunts(getUsername()));
-			lvMyHunts.setItems(huntList);
+			if(isLogged()) {
+	    		ObservableList<MapBean> mapsList = FXCollections.observableArrayList();
+	    		ObservableList<HuntBean> huntList = FXCollections.observableArrayList();
+				var controllerMaps = new ManageMapControl();
+	    		
+				apMaps.setDisable(false);
+				mapsList.addAll(controllerMaps.getAllMaps(getUsername()));
+				lvMaps.setItems(mapsList);
+				
+	
+				apHunts.setDisable(false);
+				huntList.addAll(controller.getAllHunts(getUsername()));
+				lvMyHunts.setItems(huntList);
+			}
+			
+			setCells();
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
 		}
-		
-		setCells();
-		
 	}
     
     private void setCells() {
@@ -167,15 +171,19 @@ public class MainMenuGController extends ControllerWithLogin{
     
     @FXML
     void handleSearch(ActionEvent event) {
-    	var searchName = tfSearchName.getText();
-    	
-    	if(searchName.equals("")) {
-    		remove();
-    	}
-    	else {
-    		var controllerPlay = new PlayHuntControl();
-			huntsList.setAll(controllerPlay.getHuntsBySearch(searchName));
-    	}
+    	try {
+	    	var searchName = tfSearchName.getText();
+	    	
+	    	if(searchName.equals("")) {
+	    		remove();
+	    	}
+	    	else {
+	    		var controllerPlay = new PlayHuntControl();
+				huntsList.setAll(controllerPlay.getHuntsBySearch(searchName));
+	    	}
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
     
     @FXML
@@ -184,8 +192,12 @@ public class MainMenuGController extends ControllerWithLogin{
     }
     
     private void remove() {
-    	huntsList.setAll(controller.getAllHunts());
-    	tfSearchName.setText("");
+    	try {
+	    	huntsList.setAll(controller.getAllHunts());
+	    	tfSearchName.setText("");
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
 }
 

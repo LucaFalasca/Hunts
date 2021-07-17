@@ -8,6 +8,7 @@ import logic.bean.MapBean;
 import logic.bean.ObjectBean;
 import logic.bean.RiddleBean;
 import logic.bean.ZoneBean;
+import logic.exception.DatabaseException;
 import logic.model.dao.HuntDao;
 import logic.model.entity.RealObject;
 import logic.model.entity.Riddle;
@@ -17,7 +18,7 @@ import logic.model.entity.Map;
 
 public class ManageHuntControl {
 	
-	public int saveHunt(HuntBean huntBean) {
+	public int saveHunt(HuntBean huntBean) throws DatabaseException {
 		var huntDao = new HuntDao();
 		
 		var hunt = new Hunt();
@@ -64,7 +65,6 @@ public class ManageHuntControl {
 			map.setId(huntBean.getMap().getId());
 			map.setName(huntBean.getMap().getName());
 			map.setImagePath(huntBean.getMap().getImage());
-			
 		} else {
 			map.setId(-1);
 		}
@@ -76,7 +76,7 @@ public class ManageHuntControl {
 		return huntDao.saveHunt(hunt);
 	}
 
-	public HuntBean getHunt(int idHunt, String username) {
+	public HuntBean getHunt(int idHunt, String username) throws DatabaseException {
 		var huntDao = new HuntDao();
 		var huntBean = new HuntBean();
 		List<Riddle> riddleList;
@@ -145,7 +145,7 @@ public class ManageHuntControl {
 		return huntBean;
 	}
 
-	public List<HuntBean> getAllHunts(String username) {
+	public List<HuntBean> getAllHunts(String username) throws DatabaseException{
 		List<HuntBean> huntBeans = new ArrayList<>();
 		var huntDao = new HuntDao();
 		List<Hunt> hunts;
@@ -171,16 +171,21 @@ public class ManageHuntControl {
 		return huntBeans;
 	}
 	
-	public List<HuntBean> getAllHunts(){
+	public List<HuntBean> getAllHunts() throws DatabaseException{
 		return getAllHunts(null);
 	}
 	
-	public void deleteHunt(HuntBean huntBean) {
+	public void deleteHunt(HuntBean huntBean) throws DatabaseException {
 		var huntDao = new HuntDao();
 		var hunt = new Hunt();
 		hunt.setCreatorName(huntBean.getHuntName());
 		hunt.setIdHunt(huntBean.getIdHunt());
 		huntDao.removeHunt(hunt);
+	}
+	
+	public List<RiddleBean> getRiddleFromZone(HuntBean hunt, ZoneBean Zone) throws DatabaseException{
+		return null;
+		
 	}
 	
 }

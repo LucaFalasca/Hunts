@@ -16,6 +16,7 @@ import logic.bean.PlayedHuntBean;
 import logic.bean.ReviewBean;
 import logic.control.PlayHuntControl;
 import logic.enumeration.Pages;
+import logic.exception.DatabaseException;
 import logic.exception.UsernameNotLoggedException;
 import logic.view.desktop.controller.item.ItemController;
 
@@ -45,19 +46,22 @@ public class LeaveReviewGController extends ItemController{
 
     @FXML
     void handleLeaveReview(ActionEvent event) {
-    	var controller = new PlayHuntControl();
-    	var review = new ReviewBean();
-    	
-		review.setUsername(mainController.getUsername());
-		review.setReviewText(txtReview.getText());
-		review.setVote(rtHunt.getRating());
-		review.setReviewDate(LocalDate.now());
-		review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
-    	controller.addReview(review);
-    	
-    	var stage = (Stage) ancReview.getScene().getWindow();
-    	stage.close();
-    	
+    	try {
+	    	var controller = new PlayHuntControl();
+	    	var review = new ReviewBean();
+	    	
+			review.setUsername(mainController.getUsername());
+			review.setReviewText(txtReview.getText());
+			review.setVote(rtHunt.getRating());
+			review.setReviewDate(LocalDate.now());
+			review.setIdHunt(playedHuntBean.getPlayedHunt().getIdHunt());
+	    	controller.addReview(review);
+	    	
+	    	var stage = (Stage) ancReview.getScene().getWindow();
+	    	stage.close();
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
     
 	@Override

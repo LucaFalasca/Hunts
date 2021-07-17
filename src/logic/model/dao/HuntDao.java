@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exception.DatabaseException;
 import logic.model.Database;
 import logic.model.entity.Hunt;
 import logic.model.entity.RealObject;
@@ -12,7 +13,7 @@ import logic.model.entity.Riddle;
 
 public class HuntDao {
 	
-	public int saveHunt(Hunt hunt) {
+	public int saveHunt(Hunt hunt) throws DatabaseException {
 		int mapId = hunt.getMap().getId();
 		int idHunt = addHunt(hunt.getIdHunt(), hunt.getHuntName(), hunt.getCreatorName(), true, hunt.isVisible(), mapId);
 		List<RealObject> objects = hunt.getObjectList();
@@ -34,7 +35,7 @@ public class HuntDao {
 		return idHunt;
 	}
 	
-	public Hunt getHuntById(int id, String username) {
+	public Hunt getHuntById(int id, String username) throws DatabaseException {
 		var conn = Database.getConnection();
 		var hunt = new Hunt();
 		
@@ -105,7 +106,7 @@ public class HuntDao {
 			}
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		for(var i = 0; i < riddleNumbers.size(); i++) {
@@ -124,7 +125,7 @@ public class HuntDao {
 		return hunt;
 	}
 	
-	public List<Hunt> getHuntList(String username){
+	public List<Hunt> getHuntList(String username) throws DatabaseException{
 		var conn = Database.getConnection();
 		
 		List<Hunt> hunts = new ArrayList<>();
@@ -144,7 +145,7 @@ public class HuntDao {
 			        var huntName = rs.getString(2);
 			        var indoor = rs.getBoolean(3);
 			        var visible = rs.getBoolean(4);
-			        var idMap = rs.getInt(5);
+			        //var idMap = rs.getInt(5);
 			        var avgRating = rs.getDouble(6);
 			        
 			        var hunt = new Hunt();
@@ -160,13 +161,13 @@ public class HuntDao {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		return hunts;
 	}
 	
-	public List<Hunt> getHuntList(){
+	public List<Hunt> getHuntList() throws DatabaseException{
 
 		var conn = Database.getConnection();
 		
@@ -186,7 +187,7 @@ public class HuntDao {
 					var creatorName = rs.getString(2);
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
-					var idMap = rs.getInt(5);
+					//var idMap = rs.getInt(5);
 					var avgRating = rs.getDouble(6);
 					
 					var hunt = new Hunt();
@@ -203,13 +204,13 @@ public class HuntDao {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		return hunts;
 	}
 	
-	public List<Hunt> searchHunt(String param){
+	public List<Hunt> searchHunt(String param) throws DatabaseException{
 		var conn = Database.getConnection();
 		List<Hunt> hunts = new ArrayList<>();
 		
@@ -231,7 +232,7 @@ public class HuntDao {
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
 					var isPrivate = rs.getBoolean(5);
-					var idMap = rs.getInt(6);
+					//var idMap = rs.getInt(6);
 					var avgRating = rs.getDouble(7);
 			        
 					var hunt = new Hunt();
@@ -249,13 +250,13 @@ public class HuntDao {
 			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		
 		return hunts;
 	}
 
-	private List<String> getClueByRiddle(int riddle, int hunt, String username){
+	private List<String> getClueByRiddle(int riddle, int hunt, String username) throws DatabaseException{
 		var conn = Database.getConnection();
 		List<String> clues = new ArrayList<>();
 		
@@ -281,12 +282,12 @@ public class HuntDao {
 			}
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return clues;
 	}
 	
-	private int addHunt(int codice, String nome, String username, boolean indoor, boolean isPrivate, int idMap) {
+	private int addHunt(int codice, String nome, String username, boolean indoor, boolean isPrivate, int idMap) throws DatabaseException {
 		var conn = Database.getConnection();
 		var id = 0;
 		
@@ -314,12 +315,12 @@ public class HuntDao {
 			id = stmt.getInt(1);
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return id;
 	}
 	
-	private void addObjectToHunt(String nome, int hunt, String immagine, String descrizione, String nomeZona, int mappaZona) {
+	private void addObjectToHunt(String nome, int hunt, String immagine, String descrizione, String nomeZona, int mappaZona) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_object_to_hunt(?, ?, ?, ?, ?, ?)")){
@@ -346,11 +347,11 @@ public class HuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 
-	private int addRiddleToHunt(int hunt, String domanda, String risposta, String objectPremio, String objectRisposta, String nomeZona, int mappaZona) {
+	private int addRiddleToHunt(int hunt, String domanda, String risposta, String objectPremio, String objectRisposta, String nomeZona, int mappaZona) throws DatabaseException {
 		var conn = Database.getConnection();
 		var idRiddle = 0;
 		
@@ -383,12 +384,12 @@ public class HuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 		return idRiddle;
 	}
 
-	private void addClueToRiddle(int riddle, int hunt, String testo) {
+	private void addClueToRiddle(int riddle, int hunt, String testo) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call add_clue_to_riddle(?, ?, ?)")){
@@ -406,11 +407,11 @@ public class HuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 	
-	public void removeHunt(Hunt hunt) {
+	public void removeHunt(Hunt hunt) throws DatabaseException {
 		var conn = Database.getConnection();
 		
 		try (CallableStatement stmt = conn.prepareCall("call delete_hunt_by_id(?, ?)")){
@@ -427,7 +428,7 @@ public class HuntDao {
 			
 		}
 		catch(SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		}
 	}
 
