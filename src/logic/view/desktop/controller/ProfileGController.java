@@ -86,9 +86,9 @@ public class ProfileGController extends ControllerWithLogin{
 			public void updateItem(MapBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
 				if(itemBean != null) {
-					var newItem = new ItemMapGController(Pages.ITEM_MAP, getIstance());
-					newItem.start(StringHardCode.MAP.toString(), itemBean);
-					setGraphic(newItem.getBox());
+					var item = new ItemMapGController(Pages.ITEM_MAP, getIstance());
+					item.start(StringHardCode.MAP.toString(), itemBean);
+					setGraphic(item.getBox());
 					
 				} else {
 					setGraphic(null);

@@ -13,9 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import logic.bean.HuntBean;
-import logic.bean.MapBean;
-import logic.bean.PlayedHuntBean;
 import logic.bean.ReviewBean;
 import logic.control.ManageHuntControl;
 import logic.control.PlayHuntControl;
@@ -23,7 +20,6 @@ import logic.enumeration.Pages;
 import logic.enumeration.StringHardCode;
 import logic.exception.DatabaseException;
 import logic.view.desktop.controller.item.ItemController;
-import logic.view.desktop.controller.item.ItemMapGController;
 import logic.view.desktop.controller.item.ItemReviewGController;
 import javafx.scene.image.Image;
 
