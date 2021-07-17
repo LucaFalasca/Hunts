@@ -12,9 +12,8 @@ public class UserDao {
 	
 	public boolean login(String username, String password) throws DatabaseException {
 		var conn = Database.getConnection();
-		CallableStatement stmt = null;
-		try {
-			stmt = conn.prepareCall("call login(?,?,?);");
+		
+		try(CallableStatement stmt = conn.prepareCall("call login(?,?,?);")) {
 			
 			//Input Param
 			stmt.setString(1, username);
@@ -34,22 +33,13 @@ public class UserDao {
 			
 		} catch (SQLException e) {
 			throw new DatabaseException();
-		} finally {
-			try {
-				if(stmt != null)
-					stmt.close();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 	}
 	
 	public void register(String username, String password) throws DatabaseException {
 		var conn = Database.getConnection();
-		CallableStatement stmt = null;
-		try {
-			stmt = conn.prepareCall("call add_user(?,?);");
+		
+		try(CallableStatement stmt = conn.prepareCall("call add_user(?,?);");) {
 			
 			//Input Param
 			stmt.setString(1, username);
@@ -64,23 +54,14 @@ public class UserDao {
 			
 		} catch (SQLException e) {
 			throw new DatabaseException();
-		} finally {
-			try {
-				if(stmt != null)
-					stmt.close();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 	}
 
 	public List<String> getAllUser() throws DatabaseException {
 		var conn = Database.getConnection();
-		CallableStatement stmt = null;
 		var allUsers = new ArrayList<String>();
-		try {
-			stmt = conn.prepareCall("call get_all_user(?,?);");
+		try(CallableStatement stmt = conn.prepareCall("call get_all_user(?,?);");) {
+			
 			
 			boolean haveResult = stmt.execute();
 			
@@ -93,15 +74,7 @@ public class UserDao {
 			}
 		} catch (SQLException e) {
 			throw new DatabaseException();
-		} finally {
-			try {
-				if(stmt != null)
-					stmt.close();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		
 		return allUsers;
 	}
