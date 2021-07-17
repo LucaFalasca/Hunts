@@ -7,21 +7,26 @@
 <jsp:setProperty name="loginBean" property="*"/>
 
 <%
-	boolean loginFail = false;
-    if (request.getParameter("login") != null) {
+	boolean registerFail = false;
+	System.out.println("Ok");
+    if (request.getParameter("register") != null) {
+    	System.out.println("AOOOOO");
     	UserControl controller = new UserControl();
-        if (controller.verifyAccount(loginBean)) {
-        	session.setAttribute("username", loginBean.getUsername());
-        	response.sendRedirect("MainMenu.jsp");
-        } else {
-			loginFail = true;
-        }
+    	System.out.println(loginBean.getUsername() + loginBean.getPassword());
+    	if(controller.registerAccount(loginBean)){
+    		response.sendRedirect("Login.jsp");
+    	}
+    	else{
+    		registerFail = true;
+    	}
+       	
+        
     }
 %>
 
 <html>
 <head>
-    <title>Login</title>
+    <title>Register</title>
     <jsp:include page="NavBar.jsp"></jsp:include>
     <style>
     	body,
@@ -36,7 +41,7 @@
 			width: 350px;
 			margin-top: auto;
 			margin-bottom: auto;
-			background: #f39c12;
+			background: #c0392b;
 			position: relative;
 			display: flex;
 			justify-content: center;
@@ -69,7 +74,7 @@
 		}
 		.login_btn {
 			width: 100%;
-			background: #c0392b !important;
+			background: #f39c12 !important;
 			color: white !important;
 		}
 		.login_btn:focus {
@@ -80,7 +85,7 @@
 			padding: 0 2rem;
 		}
 		.input-group-text {
-			background: #c0392b !important;
+			background: #f39c12 !important;
 			color: white !important;
 			border: 0 !important;
 			border-radius: 0.25rem 0 0 0.25rem !important;
@@ -106,12 +111,12 @@
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">
-					<form action="Login.jsp" name="myform" method="POST">
+					<form action="Register.jsp" name="myform" method="POST">
 						<%
-						if(loginFail){
+						if(registerFail){
 						%>
 						<div class="input-group mb-3">
-							<div style = "color: red;">Username or password are not correct</div>
+							<div style = "color: red;">Username is already in use</div>
 						</div>
 						<%
 						}
@@ -120,23 +125,23 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><img src="https://img.icons8.com/ios-filled/50/000000/user.png" width = "25px" heigth = "25px"/></span>
 							</div>
-							<input type="text" name="username" class="form-control input_user" value="" placeholder="username">
+							<input type="text" name="username" class="form-control input_user" value="" placeholder="Username">
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><img src="https://img.icons8.com/ios-glyphs/30/000000/key--v1.png" width = "25px" heigth = "25px"/></span>
 							</div>
-							<input type="password" name="password" class="form-control input_pass" value="" placeholder="password">
+							<input type="password" name="password" class="form-control input_pass" value="" placeholder="Password">
 						</div>
-							<div class="d-flex justify-content-center mt-3 login_container">
-				 	<button type="submit" name="login" class="btn login_btn">Login</button>
-				   </div>
+						<div class="d-flex justify-content-center mt-3 login_container">
+			 				<button type="submit" name="register" class="btn login_btn">Sign up</button>
+			   			</div>
 					</form>
 				</div>
 		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
-						Don't have an account? <a href="Register.jsp" class="ml-2">Sign Up</a>
+						Do you have an account? <a href="Login.jsp" class="ml-2">Login</a>
 					</div>
 				</div>
 			</div>

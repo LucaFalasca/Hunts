@@ -59,6 +59,7 @@
 		<meta charset="ISO-8859-1">
 		<title>Home</title>
 		<jsp:include page="NavBar.jsp"></jsp:include>
+		
 	</head>
 	<body>
 	

@@ -42,11 +42,23 @@
 		  		}else{
 		  			%>
 			        <li class="nav-item">
-			          <a class="nav-link" href="Login.jsp">Login</a>
+			          <a class="nav-link" href="Login.jsp">Sign in</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="Register.jsp">Sign up</a>
 			        </li>
 			        <%
 	 			}%>
       		</ul>
 		</div>
 </nav>
+<style>
+body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			background: #f0f0f2 !important;
+		}
+</style>
 
