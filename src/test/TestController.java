@@ -12,8 +12,8 @@ public class TestController {
 
 	@Test
 	public void testLoginController() throws DatabaseException {
-		UserControl controller = new UserControl();
-		LoginBean bean = new LoginBean();
+		var controller = new UserControl();
+		var bean = new LoginBean();
 		bean.setUsername("pippo");
 		bean.setPassword("pippopass");
 	

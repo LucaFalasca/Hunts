@@ -14,7 +14,7 @@ public class TestPlayedHunt {
 
 	@Test
 	public void testGetPlayedHunt() {
-		PlayHuntDao dao = new PlayHuntDao();
+		var dao = new PlayHuntDao();
 		
 		var playedHunts = dao.getPlayedHunt("pippo");
 		var playedHunt = playedHunts.get(0);
@@ -31,14 +31,14 @@ public class TestPlayedHunt {
 	
 	@Test
 	public void testSetHuntAsPlayed() {
-		PlayHuntDao dao = new PlayHuntDao();
+		var dao = new PlayHuntDao();
 		
 		assertDoesNotThrow(() -> dao.setHuntAsPlayed(1, "pippo", LocalDate.now()));
 	}
 	
 	@Test
 	public void testSetHuntAsFinished() {
-		PlayHuntDao dao = new PlayHuntDao();
+		var dao = new PlayHuntDao();
 		
 		assertDoesNotThrow(() -> dao.setHuntAsFinished(1, "pippo"));
 	}
