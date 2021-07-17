@@ -183,9 +183,4 @@ public class ManageHuntControl {
 		huntDao.removeHunt(hunt);
 	}
 	
-	public List<RiddleBean> getRiddleFromZone(HuntBean hunt, ZoneBean Zone) throws DatabaseException{
-		return null;
-		
-	}
-	
 }

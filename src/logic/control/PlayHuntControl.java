@@ -149,9 +149,10 @@ public class PlayHuntControl {
 	}
 	
 	public void finishHunt(int idHunt, String player, List<RiddleBean> riddles) throws DatabaseException {
-		
-		PlayHuntDao dao = new PlayHuntDao();
-		dao.setHuntAsFinished(idHunt, player);
+		if(isRiddlesCompleted(riddles)) {
+			PlayHuntDao dao = new PlayHuntDao();
+			dao.setHuntAsFinished(idHunt, player);
+		}
 	}
 	
 	public boolean isRiddlesCompleted(List<RiddleBean> riddles) {

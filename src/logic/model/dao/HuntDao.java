@@ -145,7 +145,6 @@ public class HuntDao {
 			        var huntName = rs.getString(2);
 			        var indoor = rs.getBoolean(3);
 			        var visible = rs.getBoolean(4);
-			        //var idMap = rs.getInt(5);
 			        var avgRating = rs.getDouble(6);
 			        
 			        var hunt = new Hunt();
@@ -187,7 +186,6 @@ public class HuntDao {
 					var creatorName = rs.getString(2);
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
-					//var idMap = rs.getInt(5);
 					var avgRating = rs.getDouble(6);
 					
 					var hunt = new Hunt();
@@ -232,7 +230,6 @@ public class HuntDao {
 					var nameHunt = rs.getString(3);
 					var indoor = rs.getBoolean(4);
 					var isPrivate = rs.getBoolean(5);
-					//var idMap = rs.getInt(6);
 					var avgRating = rs.getDouble(7);
 			        
 					var hunt = new Hunt();

@@ -63,7 +63,7 @@ public class UserDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		} finally {
 			try {
 				if(stmt != null)
