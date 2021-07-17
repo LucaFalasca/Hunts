@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import logic.enumeration.Pages;
 import logic.exception.PageNotFoundError;
 import logic.view.desktop.controller.ControllerWithLogin;
@@ -19,7 +21,8 @@ public abstract class ItemController extends ControllerWithLogin{
         try {
 			fxmlLoader.load();
 		} catch (IOException e) {
-			e.printStackTrace();
+			var alert = new Alert(AlertType.ERROR, "Error");
+			alert.showAndWait();
 		}
         
         this.mainController = mainController;

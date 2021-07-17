@@ -20,7 +20,7 @@ public class Database {
 		
 	}
 
-	public static Connection getConnection() {
+	public static Connection getConnection() throws DatabaseException {
 		if(conn == null) {
 			conn = connect(Users.NOT_LOGGED);
 		}
@@ -41,7 +41,7 @@ public class Database {
 		}
 	}
 	
-	private static Connection connect(Users user) {
+	private static Connection connect(Users user) throws DatabaseException {
 		URL url = Database.class.getResource("/db_conf.txt");
 		
 		File fileConfig = new File(url.getPath());
@@ -66,7 +66,7 @@ public class Database {
 			Class.forName(conf[1]);
 			conn = DriverManager.getConnection(conf[0], conf[2], conf[3]);
 		} catch (ClassNotFoundException | SQLException | FileNotFoundException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		} 
 		return conn;
 		

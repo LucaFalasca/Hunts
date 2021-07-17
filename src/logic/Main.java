@@ -6,6 +6,8 @@ import logic.view.desktop.controller.ControllerWithLogin;
 import logic.view.desktop.controller.ToolBarController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +45,8 @@ public class Main extends Application {
 			controller.changeScene(Pages.MAIN_MENU,null,null);
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			var alert = new Alert(AlertType.ERROR, "error opening the software ");
+			alert.showAndWait();
 		}
 	}
 	
