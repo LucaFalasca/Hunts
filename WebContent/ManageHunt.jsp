@@ -5,6 +5,7 @@
 <%@page import="logic.enumeration.Pages"%>
 <%@page import="logic.control.ManageHuntControl"%>
 <%@page import="logic.control.ManageMapControl" %>
+<%@page import="logic.exception.DatabaseException" %>
 <%@page import="logic.enumeration.Pages" %>
 <%@ page language="java" import="java.util.*,java.lang.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -114,9 +115,7 @@
 		session.setAttribute("objects", objects);
 	}
 	
-	System.out.println("try7: ");
 	if(request.getParameter("chooseName") != null) {
-		System.out.println("dio");
         String mapName = request.getParameter("chooseName");
         if(maps != null){
         	for(MapBean mapBean : maps){
@@ -128,7 +127,7 @@
         }
  	}
 	
-	if(request.getParameter("saveName") != null){
+		if(request.getParameter("saveName") != null){
 		String name = request.getParameter("saveName");
 		String type = name.substring(0, 4);
 		name = name.substring(4);
