@@ -5,11 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exception.DatabaseException;
 import logic.model.Database;
 
 public class UserDao {
 	
-	public boolean login(String username, String password) {
+	public boolean login(String username, String password) throws DatabaseException {
 		var conn = Database.getConnection();
 		CallableStatement stmt = null;
 		try {
@@ -32,7 +33,7 @@ public class UserDao {
 			return stmt.getBoolean(3);
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		} finally {
 			try {
 				if(stmt != null)
@@ -42,10 +43,9 @@ public class UserDao {
 				e.printStackTrace();
 			}
 		}
-		return false;
 	}
 	
-	public void register(String username, String password) {
+	public void register(String username, String password) throws DatabaseException {
 		var conn = Database.getConnection();
 		CallableStatement stmt = null;
 		try {
@@ -70,12 +70,12 @@ public class UserDao {
 					stmt.close();
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new DatabaseException();
 			}
 		}
 	}
 
-	public List<String> getAllUser() {
+	public List<String> getAllUser() throws DatabaseException {
 		var conn = Database.getConnection();
 		CallableStatement stmt = null;
 		var allUsers = new ArrayList<String>();
@@ -92,7 +92,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DatabaseException();
 		} finally {
 			try {
 				if(stmt != null)

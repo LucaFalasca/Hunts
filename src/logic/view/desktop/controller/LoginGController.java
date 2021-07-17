@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
 import logic.control.UserControl;
 import logic.enumeration.Pages;
+import logic.exception.DatabaseException;
 
 public class LoginGController extends ControllerWithLogin{
 
@@ -44,6 +45,7 @@ public class LoginGController extends ControllerWithLogin{
     
     @FXML
     void handleLogin(ActionEvent event) {
+    	try {
     		var loginController = new UserControl();
     		
     		var loginBean = new LoginBean();
@@ -63,6 +65,9 @@ public class LoginGController extends ControllerWithLogin{
 				lbError.setText("Username or Password are not correct");
 				lbError.setVisible(true);
     		}
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
     
     @FXML

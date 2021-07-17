@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import logic.bean.LoginBean;
 import logic.control.UserControl;
 import logic.enumeration.Pages;
+import logic.exception.DatabaseException;
 
 public class RegisterGController extends ControllerWithLogin{
 
@@ -28,16 +29,20 @@ public class RegisterGController extends ControllerWithLogin{
     
     @FXML
     void handleRegister(ActionEvent event) {
-    	UserControl controller = new UserControl();
-    	LoginBean bean = new LoginBean();
-    	bean.setUsername(tfUserName.getText());
-    	bean.setPassword(tfPassword.getText());
-    	
-    	if(controller.registerAccount(bean)) {
-    		changeScene(Pages.MAIN_MENU, null, null);
-    	} else {
-    		showAlert("This username already exist");
-    	}
+    	try {
+	    	UserControl controller = new UserControl();
+	    	LoginBean bean = new LoginBean();
+	    	bean.setUsername(tfUserName.getText());
+	    	bean.setPassword(tfPassword.getText());
+	    	
+	    	if(controller.registerAccount(bean)) {
+	    		changeScene(Pages.MAIN_MENU, null, null);
+	    	} else {
+	    		showAlert("This username already exist");
+	    	}
+    	}catch(DatabaseException e) {
+			showAlert(e.getMessage());
+		}
     }
 
 	

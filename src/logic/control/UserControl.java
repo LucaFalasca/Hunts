@@ -4,11 +4,12 @@ import java.util.List;
 
 import logic.bean.HuntBean;
 import logic.bean.LoginBean;
+import logic.exception.DatabaseException;
 import logic.model.dao.UserDao;
 
 public class UserControl {
 
-	public boolean verifyAccount(LoginBean bean) {
+	public boolean verifyAccount(LoginBean bean) throws DatabaseException {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
 		
@@ -16,7 +17,7 @@ public class UserControl {
 		return dao.login(username, password);
 	}
 	
-	public boolean registerAccount(LoginBean bean) {
+	public boolean registerAccount(LoginBean bean) throws DatabaseException {
 		String username = bean.getUsername();
 		String password = bean.getPassword();
 		var failed = true;
