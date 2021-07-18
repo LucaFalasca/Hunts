@@ -2,8 +2,6 @@ package logic.model.dao;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import logic.exception.DatabaseException;
 import logic.model.Database;
@@ -55,27 +53,5 @@ public class UserDao {
 		} catch (SQLException e) {
 			throw new DatabaseException();
 		} 
-	}
-
-	public List<String> getAllUser() throws DatabaseException {
-		var conn = Database.getConnection();
-		var allUsers = new ArrayList<String>();
-		try(CallableStatement stmt = conn.prepareCall("call get_all_user(?,?);");) {
-			
-			
-			boolean haveResult = stmt.execute();
-			
-			while(haveResult) {
-				var rs = stmt.getResultSet();
-				
-				while(rs.next()) {
-					allUsers.add(rs.getString(1));
-				}
-			}
-		} catch (SQLException e) {
-			throw new DatabaseException();
-		} 
-		
-		return allUsers;
 	}
 }
