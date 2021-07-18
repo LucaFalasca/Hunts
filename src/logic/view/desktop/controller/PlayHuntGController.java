@@ -118,10 +118,14 @@ public class PlayHuntGController extends ControllerWithLogin{
 			@Override
 			public void updateItem(RiddleBean itemBean, boolean empty) {
 				super.updateItem(itemBean, empty);
-				if(itemBean != null) {
+				if(itemBean != null || !empty) {
 					var newItem = new ItemRiddleShortController(Pages.ITEM_RIDDLE_SHORT, getIstance());
 					newItem.start(StringHardCode.RIDDLE.toString(),itemBean);
 					setGraphic(newItem.getBox());
+				}
+				else {
+					setGraphic(null);
+					setText("");
 				}
 			}
 			
@@ -193,7 +197,8 @@ public class PlayHuntGController extends ControllerWithLogin{
 	    	bean.setRiddleAnswer(currentRiddle.getSolution());
 	    	bean.setUserAnswer(tfRisposta.getText());
 	    	if(controller.answer(bean)) {
-	    		riddleList.get(lvRiddle.getSelectionModel().getSelectedIndex()).setCompleted();
+	    		int index = lvRiddle.getSelectionModel().getSelectedIndex();
+	    		riddleList.get(index).setCompleted();
 	    		lvRiddle.refresh();
 	    		if(controller.isRiddlesCompleted(riddleList)) {
 	    			showAlert(AlertType.INFORMATION, "Victory!", "You have finished the Hunt");
