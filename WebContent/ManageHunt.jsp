@@ -2,8 +2,10 @@
 <%@page import="logic.bean.RiddleBean"%>
 <%@page import="logic.bean.ObjectBean"%>
 <%@page import="logic.bean.MapBean"%>
+<%@page import="logic.bean.ZoneBean"%>
 <%@page import="logic.enumeration.Pages"%>
 <%@page import="logic.control.ManageHuntControl"%>
+<%@page import="logic.parser.Parser"%>
 <%@page import="logic.control.ManageMapControl" %>
 <%@page import="logic.exception.DatabaseException" %>
 <%@page import="logic.enumeration.Pages" %>
@@ -48,6 +50,7 @@
 		hunt = (HuntBean) session.getAttribute("hunt");
 		if(hunt.getIdHunt() != 0){
 			hunt = controllerHunt.getHunt(hunt.getIdHunt(), username);
+			map = hunt.getMap();
 			riddles.addAll(hunt.getRiddle());
 			objects.addAll(hunt.getObject());
 		}
@@ -149,6 +152,7 @@
 		hunt.setRiddle(riddles);
 		hunt.setObject(objects);
 		hunt.setUsername(username);
+		hunt.setMap(map);
 		int idHunt = controller.saveHunt(hunt);
 		hunt.setIdHunt(idHunt);
 		session.setAttribute("hunt", hunt);
@@ -174,7 +178,6 @@
 				if(nome != ""){
 					document.formMap.chooseName.value = nome;
 					document.formMap.submit();
-					alert("try" + document.formMap.chooseName.value);
 				}
 			}
 			
@@ -315,6 +318,29 @@
 						  		<INPUT TYPE="hidden" name="chooseName">
 								<button type = "button" name = "chooseMapButton" onClick = "getName()"> Choose</button>
 						  </form>
+						  <% if(map != null){%>
+				  			<canvas id="canvas" width="350" height="350" style="border:1px solid #000000; <% if(map.getImage() != null){%>background: url('<%= "uploads/" + map.getImage().substring(8)%>'); <% }%>background-size: 350px 350px;">
+							</canvas>
+							<% }%>
+							<%
+							if(map != null){
+								if(map.getZones() != null && !map.getZones().isEmpty()){
+									for(ZoneBean zone : map.getZones()){
+										%>
+										<script type="text/javascript">
+											var canvas = document.getElementById("canvas");
+											var ctx = canvas.getContext("2d");
+											ctx.fillStyle = "rgba(234, 237, 145, 0.5)";
+											var x1 = <%= Parser.parseFromPercent(zone.getX1(), 350)%>;
+											var y1 = <%= Parser.parseFromPercent(zone.getY1(), 350)%>;
+											var x2 = <%= Parser.parseFromPercent(zone.getX2(), 350)%>;
+											var y2 = <%= Parser.parseFromPercent(zone.getY2(), 350)%>;
+											ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+										</script>
+										<%
+									}
+								}
+							}%>
 						</div>
 					</div>
 				</div>
