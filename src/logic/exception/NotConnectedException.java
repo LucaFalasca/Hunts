@@ -1,5 +1,6 @@
 package logic.exception;
 
+//Exception Mancuso
 public class NotConnectedException extends Exception {
 
 	

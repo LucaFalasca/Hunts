@@ -1,5 +1,6 @@
 package logic.exception;
 
+//Exception Mancuso
 public class LoadFileFailed extends Exception{
 	
 	private static final long serialVersionUID = 1L;
