@@ -7,6 +7,7 @@ import org.junit.Test;
 import logic.control.PlayHuntControl;
 import logic.exception.DatabaseException;
 
+//Test Falasca
 public class TestHuntSearch {
 
 	@Test

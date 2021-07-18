@@ -7,6 +7,7 @@ import org.junit.Test;
 import logic.exception.DatabaseException;
 import logic.model.dao.HuntDao;
 
+//Test Falasca
 public class TestHunt {
 	
 	@Test

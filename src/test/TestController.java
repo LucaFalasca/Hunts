@@ -8,6 +8,7 @@ import logic.bean.LoginBean;
 import logic.control.UserControl;
 import logic.exception.DatabaseException;
 
+//Test Falasca
 public class TestController {
 
 	@Test

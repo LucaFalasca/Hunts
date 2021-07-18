@@ -7,10 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+//Luca Falasca's selenium test
 public class TestAnswerWeb {
 	
 	@Test
-	//Luca Falasca's selenium test
 	public void testgui() {
 		System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
 		WebDriver driver = new ChromeDriver();

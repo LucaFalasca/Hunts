@@ -11,6 +11,7 @@ import org.junit.Test;
 import logic.exception.DatabaseException;
 import logic.model.dao.PlayHuntDao;
 
+//Test Falasca
 public class TestPlayedHunt {
 
 	static final String USERNAME = "pippo";
