@@ -188,7 +188,7 @@ public class ManageHuntGController extends ControllerWithLogin{
         gcDraw.setFill(Color.web("0xeaed91", 0.5));
 		
         lbMap.setText("Insert Map");
-        lbHunt.setText("Modify Hunt");
+        
         try {
 			var manageHuntControl = new ManageHuntControl();
 			var idHunt = -1;
@@ -209,10 +209,12 @@ public class ManageHuntGController extends ControllerWithLogin{
 					idHunt = (int) param;
 					huntBean = manageHuntControl.getHunt(idHunt, getUsername());
 					setHunt(huntBean);
+					lbHunt.setText("Modify Hunt");
 					break;
 				default:
 					huntBean.setUsername(getUsername());
 					huntBean.setIdHunt(idHunt);
+					lbHunt.setText("Create Hunt");
 					break;
 					
 			}

@@ -45,6 +45,7 @@ public class PlayHuntControl {
 				map.setId(hunt.getMap().getId());
 				hb.setMap(map);
 			}
+			hb.setAvgRating(hunt.getAvgRatingHunt());
 			huntsBean.add(hb);
 		}
 		return huntsBean;

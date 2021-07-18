@@ -57,6 +57,7 @@ public class LeaveReviewGController extends ItemController{
 	    	controller.addReview(review);
 	    	
 	    	var stage = (Stage) ancReview.getScene().getWindow();
+	    	changeScene(Pages.PROFILE);
 	    	stage.close();
     	}catch(DatabaseException e) {
 			showAlert(e.getMessage());
